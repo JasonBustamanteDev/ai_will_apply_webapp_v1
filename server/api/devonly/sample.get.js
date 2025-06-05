@@ -5,4 +5,3 @@ export default defineEventHandler(async (event) => {
     console.log("jj8", env_config.public.SUPABASE_PROJECT_URL)
     return { detail: "success" };
 });
-s
