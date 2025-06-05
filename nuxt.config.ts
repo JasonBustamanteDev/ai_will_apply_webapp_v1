@@ -3,12 +3,13 @@ export default defineNuxtConfig({
     devtools: { enabled: true },
 
     modules: [
-        "@nuxt/eslint",
-        "@nuxt/fonts",
-        "@nuxt/icon",
-        "@nuxt/image",
-        "@nuxt/test-utils",
-        "@nuxt/ui",
+      "@nuxt/eslint",
+      "@nuxt/fonts",
+      "@nuxt/icon",
+      "@nuxt/image",
+      "@nuxt/test-utils",
+      "@nuxt/ui",
+      "@pinia/nuxt",
     ],
 
     runtimeConfig: {
