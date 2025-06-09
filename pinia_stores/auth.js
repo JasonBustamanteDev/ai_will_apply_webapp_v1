@@ -44,7 +44,7 @@ export const useSupabaseAuthStore = defineStore(
                 await supabaseClient.value.auth.signInWithOAuth({
                     provider: "google",
                     options: {
-                        redirectTo: "http://localhost:4010/devonly/login", //! this cannot point to localhost in prod
+                        redirectTo: `${env.public.BASE_URL}/devonly/auth_playground`,
                     },
                 });
             if (error) {

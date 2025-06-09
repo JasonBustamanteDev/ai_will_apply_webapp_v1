@@ -27,6 +27,7 @@ export default defineNuxtConfig({
             // Public keys (available on both client and server)
             SUPABASE_PROJECT_URL: process.env.SUPABASE_PROJECT_URL,
             SUPABASE_PUBLIC_ANON_API_KEY: process.env.SUPABASE_PUBLIC_ANON_API_KEY,
+            BASE_URL: process.env.BASE_URL,
         },
     },
 });
