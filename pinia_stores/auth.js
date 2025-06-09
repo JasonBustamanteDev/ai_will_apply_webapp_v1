@@ -1,7 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
 import { get } from "lodash";
 
-export const useAuthStore = defineStore("pinia_auth", {
+export const useOptionsAuthStore = defineStore("pinia_auth_options", {
     state: () => ({
         supabaseClient: null,
         currentSession: null,

@@ -1,5 +1,5 @@
 <script setup>
-import { useAuthStore } from "@/pinia_stores/auth";
+import { useCompositionAuthStore } from "@/pinia_stores/auth2";
 // Everything you wrap around NuxtPage or place beside Nuxtpage will apply to each page you make
 // This allows you to add global content
 
@@ -7,9 +7,8 @@ import { useAuthStore } from "@/pinia_stores/auth";
 
 onMounted(async () => {
     // Initialize the supabase client
-    const authStore = useAuthStore();
-    await authStore.initializeSupabaseClient();
-    console.log(authStore.userData);
+    const authStore = useCompositionAuthStore();
+    await authStore.methods.initializeSupabaseClient();
 });
 </script>
 
