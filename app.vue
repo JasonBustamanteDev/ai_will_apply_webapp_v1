@@ -1,14 +1,11 @@
 <script setup>
-import { useCompositionAuthStore } from "@/pinia_stores/auth2";
+import { useSupabaseAuthStore } from "~/pinia_stores/auth";
 // Everything you wrap around NuxtPage or place beside Nuxtpage will apply to each page you make
 // This allows you to add global content
 
-// Look this up: https://ui.nuxt.com/components/input#within-a-formfield
-
 onMounted(async () => {
-    // Initialize the supabase client
-    const authStore = useCompositionAuthStore();
-    await authStore.methods.initializeSupabaseClient();
+    // Initialize the supabase client by declaring the store when the app starts up
+    useSupabaseAuthStore();
 });
 </script>
 

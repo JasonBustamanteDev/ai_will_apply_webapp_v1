@@ -1,13 +1,13 @@
 <script setup>
-import { useCompositionAuthStore } from "@/pinia_stores/auth2";
+import { useSupabaseAuthStore } from "~/pinia_stores/auth";
 
-const authStore = useCompositionAuthStore();
+const authStore = useSupabaseAuthStore();
 </script>
 
 <template>
     <div>
-        <p>Am I online? {{ authStore.readOnly.isAuthenticated }}</p>
-        <p>Session data {{ authStore.readOnly.sessionData }}</p>
+        <p>Am I online? {{ authStore.computed.isAuthenticated }}</p>
+
         <UButton @click="authStore.methods.googleSignIn"
             >Sign In or Sign Up using Google</UButton
         >
@@ -24,6 +24,7 @@ const authStore = useCompositionAuthStore();
         <UButton @click="authStore.methods.googleRefreshSession" color="info"
             >Refresh Session</UButton
         >
+        <p>Current Session {{ authStore.state.currentSession }}</p>
     </div>
 </template>
 

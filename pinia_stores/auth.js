@@ -1,40 +1,47 @@
 import { createClient } from "@supabase/supabase-js";
-import { get } from "lodash";
 
-export const useOptionsAuthStore = defineStore("pinia_auth_options", {
-    state: () => ({
-        supabaseClient: null,
-        currentSession: null,
-    }),
-    getters: {
-        sessionData: (state) => {
-            return {
-                accessToken: get(state.currentSession, ["access_token"]),
-                providerToken: get(state.currentSession, ["provider_token"]),
-                refreshToken: get(state.currentSession, ["refresh_token"]),
-                isAuthenticated: !!state.currentSession, //! not up to date all the time
-                tokenDetails: {
-                    expiryTime: get(state.currentSession, ["refresh_token"]),
-                    timeLimitInSeconds: get(state.currentSession, [
-                        "expires_in",
-                    ]),
-                },
-            };
-        },
-    },
-    actions: {
-        async initializeSupabaseClient() {
-            const env = useRuntimeConfig();
-            const supabaseClient = createClient(
+export const useSupabaseAuthStore = defineStore(
+    "pinia_auth_composition",
+    () => {
+        const env = useRuntimeConfig();
+        const supabaseClient = ref(
+            createClient(
                 env.public.SUPABASE_PROJECT_URL,
                 env.public.SUPABASE_PUBLIC_ANON_API_KEY
-            );
-            this.supabaseClient = supabaseClient;
-        },
+            )
+        );
 
-        async googleSignIn() {
+        const currentSession = ref(null);
+        const isAuthenticated = computed(() => !!currentSession.value);
+
+        // The following callback function fires each time an auth event goes off
+        supabaseClient.value.auth.onAuthStateChange((event, session) => {
+            currentSession.value = session;
+
+            switch (event) {
+                case "INITIAL_SESSION":
+                    console.log("initial session");
+                    break;
+                case "SIGNED_IN":
+                    console.log("Signed into aiwillapply");
+                    break;
+                case "SIGNED_OUT":
+                    console.log("Signed out of aiwillapply");
+                    break;
+                case "PASSWORD_RECOVERY":
+                    break;
+                case "TOKEN_REFRESHED":
+                    console.log("token refreshed");
+                    break;
+                case "USER_UPDATED":
+                    console.log("user updated");
+                    break;
+            }
+        });
+
+        const googleSignIn = async () => {
             const { data, error } =
-                await this.supabaseClient.auth.signInWithOAuth({
+                await supabaseClient.value.auth.signInWithOAuth({
                     provider: "google",
                     options: {
                         redirectTo: "http://localhost:4010/devonly/login", //! this cannot point to localhost in prod
@@ -44,38 +51,52 @@ export const useOptionsAuthStore = defineStore("pinia_auth_options", {
                 console.error("Problem signing into google");
                 return;
             }
-        },
+        };
 
-        async googleSignOut() {
-            const { error } = await this.supabaseClient.auth.signOut();
+        const googleSignOut = async () => {
+            const { error } = await supabaseClient.value.auth.signOut();
             if (error) {
                 console.error("Had trouble signing out of Google");
                 return;
             }
-        },
+        };
 
-        async googleGetCurrentSession() {
-            const { data, error } = await this.supabaseClient.auth.getSession();
+        const googleGetCurrentSession = async () => {
+            // Checking session does not always make a request in the Network tab (can use frequently)
+            const { data, error } =
+                await supabaseClient.value.auth.getSession();
             if (error) {
                 // Handle error
                 console.error("Auth session failed", error);
             }
-            this.currentSession = data;
+            currentSession.value = data.session;
+            console.log("googleGetCurrentSession ", data.session);
+        };
 
-            console.log("googleGetCurrentSession", data);
-        },
-
-        async googleRefreshSession() {
-            const { data, error } = await this.supabaseClient.auth.refreshSession(); // prettier-ignore
+        const googleRefreshSession = async () => {
+            const { data, error } = await supabaseClient.value.auth.refreshSession(); // prettier-ignore
             const { session, user } = data;
 
             if (error) {
                 // Handle error
                 console.error("getNewSession failed", error);
             }
-            this.currentSession = session;
-        },
-    },
-});
+            currentSession.value = session;
+        };
 
-//! TODO add error handling in case Supabase client fails to start up
+        return {
+            state: {
+                currentSession,
+            },
+            computed: {
+                isAuthenticated,
+            },
+            methods: {
+                googleSignIn,
+                googleSignOut,
+                googleGetCurrentSession,
+                googleRefreshSession,
+            },
+        };
+    }
+);
