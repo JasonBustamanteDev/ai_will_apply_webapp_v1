@@ -100,3 +100,7 @@ export const useSupabaseAuthStore = defineStore(
         };
     }
 );
+
+// TODO: add error handling for these methods
+// https://masteringnuxt.com/blog/how-to-use-error-handling-to-create-rock-solid-apps
+// test out flows on http://localhost:4010/devonly/auth_playground
