@@ -5,28 +5,20 @@ export const useAuthStore = defineStore("pinia_auth", {
     state: () => ({
         supabaseClient: null,
         currentSession: null,
-        authData: null,
     }),
     getters: {
-        userData: (state) => {
-            return get(state.currentSession, ["user"]);
-        },
-        isAuthenticated: (state) => {
-            return !!state.currentSession;
-        },
-        accessToken: (state) => {
-            return get(state.currentSession, ["access_token"]);
-        },
-        providerToken: (state) => {
-            return get(state.currentSession, ["provider_token"]);
-        },
-        refreshToken: (state) => {
-            return get(state.currentSession, ["refresh_token"]);
-        },
-        tokenExpiryDetails: (state) => {
+        sessionData: (state) => {
             return {
-                expiryTime: get(state.currentSession, ["refresh_token"]),
-                timeLimitInSeconds: get(state.currentSession, ["expires_in"]),
+                accessToken: get(state.currentSession, ["access_token"]),
+                providerToken: get(state.currentSession, ["provider_token"]),
+                refreshToken: get(state.currentSession, ["refresh_token"]),
+                isAuthenticated: !!state.currentSession, //! not up to date all the time
+                tokenDetails: {
+                    expiryTime: get(state.currentSession, ["refresh_token"]),
+                    timeLimitInSeconds: get(state.currentSession, [
+                        "expires_in",
+                    ]),
+                },
             };
         },
     },
@@ -52,7 +44,6 @@ export const useAuthStore = defineStore("pinia_auth", {
                 console.error("Problem signing into google");
                 return;
             }
-            this.userAuthData = data;
         },
 
         async googleSignOut() {
@@ -70,7 +61,8 @@ export const useAuthStore = defineStore("pinia_auth", {
                 console.error("Auth session failed", error);
             }
             this.currentSession = data;
-            console.log(data)
+
+            console.log("googleGetCurrentSession", data);
         },
 
         async googleRefreshSession() {
@@ -82,7 +74,6 @@ export const useAuthStore = defineStore("pinia_auth", {
                 console.error("getNewSession failed", error);
             }
             this.currentSession = session;
-            this.userAuthData = user;
         },
     },
 });

@@ -8,6 +8,7 @@ const authStore = useAuthStore();
     <div>
         <!-- <p>Am I online? {{ authStore.isAuthenticated }}</p> -->
         <!-- <p>User data {{ authStore.userData }}</p> -->
+        <p>User data {{ authStore.userAuthData }}</p>
         <UButton @click="authStore.googleSignIn"
             >Sign In or Sign Up using Google</UButton
         >
