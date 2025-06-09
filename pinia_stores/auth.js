@@ -1,5 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 import { get } from "lodash";
+
 export const useAuthStore = defineStore("pinia_auth", {
     state: () => ({
         supabaseClient: null,
@@ -9,6 +10,9 @@ export const useAuthStore = defineStore("pinia_auth", {
     getters: {
         userData: (state) => {
             return get(state.currentSession, ["user"]);
+        },
+        isAuthenticated: (state) => {
+            return !!state.currentSession;
         },
         accessToken: (state) => {
             return get(state.currentSession, ["access_token"]);
@@ -65,7 +69,8 @@ export const useAuthStore = defineStore("pinia_auth", {
                 // Handle error
                 console.error("Auth session failed", error);
             }
-            this.currentSession = data; //! wha tu looking at
+            this.currentSession = data;
+            console.log(data)
         },
 
         async googleRefreshSession() {
