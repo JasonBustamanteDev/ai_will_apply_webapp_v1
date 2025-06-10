@@ -1,5 +1,5 @@
 <script setup>
-import { useSupabaseAuthStore } from "~/pinia_stores/auth";
+import { useSupabaseAuthStore } from "~/pinia_stores/supabase_auth";
 // Everything you wrap around NuxtPage or place beside Nuxtpage will apply to each page you make
 // This allows you to add global content
 

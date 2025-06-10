@@ -1,5 +1,5 @@
 <script setup>
-import { useSupabaseAuthStore } from "~/pinia_stores/auth";
+import { useSupabaseAuthStore } from "~/pinia_stores/supabase_auth";
 
 const authStore = useSupabaseAuthStore();
 </script>
