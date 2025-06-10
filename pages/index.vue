@@ -4,11 +4,9 @@ import { useSupabaseAuthStore } from "~/pinia_stores/supabase_auth";
 
 definePageMeta({
     middleware: defineNuxtRouteMiddleware((to, from) => {
-        const authStore = useSupabaseAuthStore();
+        const auth_cookie = useCookie("awa_auth");
         return navigateTo(
-            authStore.computed.isAuthenticated
-                ? PAGE_URLS.DASHBOARD
-                : PAGE_URLS.LOGIN
+            auth_cookie.value ? PAGE_URLS.DASHBOARD : PAGE_URLS.LOGIN
         );
     }),
 });

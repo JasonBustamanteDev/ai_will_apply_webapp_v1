@@ -16,6 +16,7 @@ export const useSupabaseAuthStore = defineStore(
 
         // The following callback function fires each time an auth event goes off
         supabaseClient.value.auth.onAuthStateChange((event, session) => {
+            console.log("session val", session);
             currentSession.value = session;
 
             switch (event) {
@@ -24,6 +25,12 @@ export const useSupabaseAuthStore = defineStore(
                     break;
                 case "SIGNED_IN":
                     console.log("Signed into aiwillapply");
+                    const cookieName = "awa_auth";
+                    const cookieValue = session;
+
+                    const cookie = useCookie(cookieName);
+                    cookie.value = cookieValue;
+
                     break;
                 case "SIGNED_OUT":
                     console.log("Signed out of aiwillapply");
@@ -44,7 +51,7 @@ export const useSupabaseAuthStore = defineStore(
                 await supabaseClient.value.auth.signInWithOAuth({
                     provider: "google",
                     options: {
-                        redirectTo: `${env.public.BASE_URL}/devonly/auth_playground`,
+                        redirectTo: `${env.public.BASE_URL}/devonly/authplayground`,
                     },
                 });
             if (error) {
@@ -103,4 +110,4 @@ export const useSupabaseAuthStore = defineStore(
 
 // TODO: add error handling for these methods
 // https://masteringnuxt.com/blog/how-to-use-error-handling-to-create-rock-solid-apps
-// test out flows on http://localhost:4010/devonly/auth_playground
+// test out flows on http://localhost:4010/devonly/authplayground
