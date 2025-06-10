@@ -73,3 +73,7 @@ bun run preview
 ```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+
+FUTURE TESTS TO WRITE
+- Make sure the middleware methods that redirect to different URLs point to pages that actually exist and have certain text on them
+- At the moment every filename change can break functionality

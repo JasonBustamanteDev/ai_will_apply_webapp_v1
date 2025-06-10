@@ -1,8 +1,10 @@
 import { useSupabaseAuthStore } from "~/pinia_stores/supabase_auth";
+import { PAGE_URLS } from "~/shared/globals";
 
 export default defineNuxtRouteMiddleware((to, from) => {
+    // If user is not authenticated, redirect to login page
     const authStore = useSupabaseAuthStore();
     if (authStore.computed.isAuthenticated === false) {
-        return navigateTo("/");
+        return navigateTo(PAGE_URLS.LOGIN);
     }
 });

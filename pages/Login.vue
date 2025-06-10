@@ -1,7 +1,4 @@
 <script setup>
-definePageMeta({
-    middleware: ["redirect-if-unauthorized"],
-});
 </script>
 
 <template>
