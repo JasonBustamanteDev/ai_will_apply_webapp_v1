@@ -1,0 +1,3 @@
+App must rely exlusively on server side rendering or else Supabase + Cookies will not work properly
+If you don't like this, adopt a JWT approach instead of relying on cookies (tried and failed)
+https://supabase.com/docs/guides/auth/sessions#using-http-only-cookies-to-store-access-and-refresh-tokens

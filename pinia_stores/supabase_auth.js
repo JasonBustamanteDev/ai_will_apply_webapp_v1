@@ -1,4 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
+import { AUTH_STRINGS } from "~/shared/globals";
 
 export const useSupabaseAuthStore = defineStore(
     "pinia_auth_composition",
@@ -16,29 +17,35 @@ export const useSupabaseAuthStore = defineStore(
 
         // The following callback function fires each time an auth event goes off
         supabaseClient.value.auth.onAuthStateChange((event, session) => {
-            console.log("session val", session);
             currentSession.value = session;
+            const cookie = useCookie(AUTH_STRINGS.AUTH_COOKIE_NAME);
 
             switch (event) {
+                // Emitted right after the Supabase client is constructed and the initial session from storage is loaded.
                 case "INITIAL_SESSION":
-                    console.log("initial session");
+                    // Check session object in cookie. If expiresAt is in the past, delete the cookie
+                    if (cookie.value) {
+                        const currentUnix = getCurrentUnixTimestamp();
+                        const cookieExpirationUnix = cookie.value["expires_at"];
+                        if (currentUnix >= cookieExpirationUnix) {
+                            cookie.value = null;
+                        }
+                    }
                     break;
                 case "SIGNED_IN":
-                    console.log("Signed into aiwillapply");
-                    const cookieName = "awa_auth";
-                    const cookieValue = session;
-
-                    const cookie = useCookie(cookieName);
-                    cookie.value = cookieValue;
-
+                    // Save the session json object as the value for the app's auth cookie
+                    cookie.value = session;
                     break;
                 case "SIGNED_OUT":
-                    console.log("Signed out of aiwillapply");
-                    break;
-                case "PASSWORD_RECOVERY":
+                    // Delete the auth cookie when the user is logged out
+                    cookie.value = null;
                     break;
                 case "TOKEN_REFRESHED":
-                    console.log("token refreshed");
+                    // If token is refreshed, save the new cookie details 
+                    cookie.value = session;
+                    break;
+                case "PASSWORD_RECOVERY":
+                    console.log("password recovery");
                     break;
                 case "USER_UPDATED":
                     console.log("user updated");
@@ -107,6 +114,8 @@ export const useSupabaseAuthStore = defineStore(
         };
     }
 );
+
+const getCurrentUnixTimestamp = () => Math.floor(Date.now() / 1000);
 
 // TODO: add error handling for these methods
 // https://masteringnuxt.com/blog/how-to-use-error-handling-to-create-rock-solid-apps
