@@ -1,15 +1,15 @@
 <script setup>
-import { PAGE_URLS } from "~/shared/globals";
+import { AUTH_STRINGS } from "~/shared/globals";
 import { useSupabaseAuthStore } from "~/pinia_stores/supabase_auth";
 
-// definePageMeta({
-//     middleware: defineNuxtRouteMiddleware((to, from) => {
-//         const auth_cookie = useCookie("awa_auth");
-//         return navigateTo(
-//             auth_cookie.value ? PAGE_URLS.DASHBOARD : PAGE_URLS.LOGIN
-//         );
-//     }),
-// });
+definePageMeta({
+    middleware: defineNuxtRouteMiddleware((to, from) => {
+        const auth_cookie = useCookie(AUTH_STRINGS.AUTH_COOKIE_NAME);
+        return navigateTo(
+            auth_cookie.value ? PAGE_URLS.DASHBOARD : PAGE_URLS.LOGIN
+        );
+    }),
+});
 </script>
 
 <template>

@@ -1,6 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
 import { AUTH_STRINGS } from "~/shared/globals";
 
+//! TODO: Manually refresh token if it expires by checking what unix timestamp at current moment is (probably should pay for supabase pro to make the tokens expire in less than an hour)
 export const useSupabaseAuthStore = defineStore(
     "pinia_auth_composition",
     () => {
@@ -58,7 +59,7 @@ export const useSupabaseAuthStore = defineStore(
                 await supabaseClient.value.auth.signInWithOAuth({
                     provider: "google",
                     options: {
-                        redirectTo: `${env.public.BASE_URL}/devonly/authplayground`,
+                        redirectTo: `${env.public.BASE_URL}/devonly/authplayground`, //! dev only
                     },
                 });
             if (error) {
