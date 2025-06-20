@@ -20,6 +20,10 @@ const props = defineProps({
         type: String,
         default: "/",
     },
+    showButton: {
+        type: Boolean,
+        default: true,
+    },
 });
 
 const isLoading = ref(false);
@@ -36,6 +40,7 @@ const handleBackToHome = async () => {
             <h1 class="error-title">{{ title }}</h1>
             <p class="error-message">{{ message }}</p>
             <button
+                v-if="showButton"
                 @click="handleBackToHome"
                 class="back-button"
                 :class="{ loading: isLoading }"
@@ -54,6 +59,7 @@ const handleBackToHome = async () => {
     align-items: center;
     justify-content: center;
     background-color: #f8f9fa;
+    height: 100vh;
     padding: 40px 20px;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
         Ubuntu, Cantarell, sans-serif;

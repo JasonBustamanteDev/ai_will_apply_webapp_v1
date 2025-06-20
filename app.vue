@@ -12,10 +12,17 @@ onMounted(async () => {
 <template>
     <UApp>
         <div class="pageBoundary">
-            <div class="fillerDiv"></div>
+            <SharedFillerDiv />
             <NuxtPage />
-            <div class="fillerDiv"></div>
+            <SharedFillerDiv />
         </div>
+        <ErrorPage
+            class="mobile-view"
+            errorCode=""
+            title="Mobile not currently supported"
+            message="Please view this website on desktop with a screen over 13 inches wide"
+            :showButton="false"
+        />
     </UApp>
 </template>
 
@@ -26,18 +33,21 @@ onMounted(async () => {
 
 <style lang="scss" scoped>
 $layout-small: 1250px;
-
 .pageBoundary {
     display: none; // hide content for small viewprts since we do not support mobile
     height: 100%;
     min-height: 100vh;
     overflow-x: hidden;
+    width: 100%;
+    background-color: #f8f9fa;
 }
 @media (min-width: $layout-small) {
     .pageBoundary {
         display: grid;
         grid-template-columns: 1fr 1200px 1fr;
-        width: 100%;
+    }
+    .mobile-view {
+        display: none;
     }
 }
 </style>

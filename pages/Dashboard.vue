@@ -1,22 +1,10 @@
 <script setup></script>
 
 <template>
-    <ErrorPage/>
+    <ErrorPage
+        errorCode=""
+        title="App does not work on mobile"
+        message="Please view this website on desktop"
+        :showButton="false"
+    />
 </template>
-<!-- 
-<style lang="scss" scoped>
-.pageContainerComponent {
-    height: 100vh;
-}
-@media (min-width: 20rem) {
-    .pageContainerComponent {
-        background: red;
-    }
-}
-
-@media (min-width: 40rem) {
-    .pageContainerComponent {
-        background: blue;
-    }
-}
-</style> -->
