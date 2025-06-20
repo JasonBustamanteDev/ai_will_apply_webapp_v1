@@ -73,7 +73,6 @@ export const useSupabaseAuthStore = defineStore(
                 console.error("Auth session failed", error);
             }
             currentSession.value = data.session;
-            console.log("googleGetCurrentSession ", data.session);
         };
 
         const googleRefreshSession = async () => {

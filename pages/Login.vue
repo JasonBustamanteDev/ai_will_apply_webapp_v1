@@ -1,4 +1,7 @@
 <script setup>
+definePageMeta({
+    middleware: ["redirect-to-dashboard-if-authenticated"],
+});
 </script>
 
 <template>

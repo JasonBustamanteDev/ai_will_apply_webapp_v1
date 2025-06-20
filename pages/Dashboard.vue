@@ -1,10 +1,9 @@
-<script setup></script>
+<script setup>
+definePageMeta({
+    middleware: ["redirect-to-login-page-if-not-authenticated"],
+});
+</script>
 
 <template>
-    <ErrorPage
-        errorCode=""
-        title="App does not work on mobile"
-        message="Please view this website on desktop"
-        :showButton="false"
-    />
+    <p>Dashboard</p>
 </template>
