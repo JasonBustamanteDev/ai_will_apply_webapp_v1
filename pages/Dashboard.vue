@@ -1,7 +1,7 @@
 <script setup></script>
 
 <template>
-    <div class="pageContainerComponent">d</div>
+    <ErrorPage/>
 </template>
 <!-- 
 <style lang="scss" scoped>
