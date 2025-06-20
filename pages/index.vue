@@ -1,5 +1,5 @@
 <script setup>
-import { AUTH_STRINGS } from "~/shared/globals";
+import { AUTH_STRINGS, PAGE_URLS } from "~/shared/globals";
 import { useSupabaseAuthStore } from "~/pinia_stores/supabase_auth";
 
 definePageMeta({
