@@ -1,7 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-import { AUTH_STRINGS } from "~/shared/utils/globals";
 
-//! TODO: Manually refresh token if it expires by checking what unix timestamp at current moment is (probably should pay for supabase pro to make the tokens expire in less than an hour)
 export const useSupabaseAuthStore = defineStore(
     "pinia_auth_composition",
     () => {
@@ -24,24 +22,12 @@ export const useSupabaseAuthStore = defineStore(
             switch (event) {
                 // Emitted right after the Supabase client is constructed and the initial session from storage is loaded.
                 case "INITIAL_SESSION":
-                    // Check session object in cookie. If 'expiresAt' field is in the past, delete the cookie
-                    if (cookie.value) {
-                        console.log("cookie present")
-                        const currentUnix = getCurrentUnixTimestamp();
-                        const cookieExpirationUnix = cookie.value["expires_at"];
-                        //! Disable cookie deletion temporarily to see how SB handles an expired token
-                        // if (currentUnix >= cookieExpirationUnix) {
-                        //     cookie.value = null;
-                        // }
-                    }
                     break;
                 case "SIGNED_IN":
-
                     // Save the session json object as the value for the app's auth cookie
                     cookie.value = session;
                     break;
                 case "SIGNED_OUT":
-                    console.log("signed out")
                     // Delete the auth cookie when the user is logged out
                     cookie.value = null;
                     break;
@@ -50,10 +36,8 @@ export const useSupabaseAuthStore = defineStore(
                     cookie.value = session;
                     break;
                 case "PASSWORD_RECOVERY":
-                    console.log("password recovery");
                     break;
                 case "USER_UPDATED":
-                    console.log("user updated");
                     break;
             }
         });
@@ -119,8 +103,6 @@ export const useSupabaseAuthStore = defineStore(
         };
     }
 );
-
-const getCurrentUnixTimestamp = () => Math.floor(Date.now() / 1000);
 
 // TODO: add error handling for these methods
 // https://masteringnuxt.com/blog/how-to-use-error-handling-to-create-rock-solid-apps
