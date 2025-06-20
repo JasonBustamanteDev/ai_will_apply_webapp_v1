@@ -1,7 +1,7 @@
 <script setup>
-definePageMeta({
-    middleware: ["redirect-to-login-page-if-not-authenticated"],
-});
+// definePageMeta({
+//     middleware: ["redirect-to-login-page-if-not-authenticated"],
+// });
 </script>
 
 <template>
