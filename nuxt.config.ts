@@ -1,5 +1,8 @@
 export default defineNuxtConfig({
     compatibilityDate: "2025-05-15",
+    future: {
+        compatibilityVersion: 4,
+    },
     devtools: { enabled: true },
     devServer: {
         port: 4010,
@@ -26,7 +29,8 @@ export default defineNuxtConfig({
         public: {
             // Public keys (available on both client and server)
             SUPABASE_PROJECT_URL: process.env.SUPABASE_PROJECT_URL,
-            SUPABASE_PUBLIC_ANON_API_KEY: process.env.SUPABASE_PUBLIC_ANON_API_KEY,
+            SUPABASE_PUBLIC_ANON_API_KEY:
+                process.env.SUPABASE_PUBLIC_ANON_API_KEY,
             BASE_URL: process.env.BASE_URL,
         },
     },

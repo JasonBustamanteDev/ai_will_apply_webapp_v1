@@ -11,9 +11,33 @@ onMounted(async () => {
 
 <template>
     <UApp>
-        <div>
-            <p>This message always appears atop each pages</p>
-            <NuxtPage />
+        <div class="pageBoundary">
+            <!-- <div class="pageContainer"> -->
+                <!-- <div style="height: 200px; "></div>
+                <div style="height: 200px; "></div>
+                <div style="height: 200px; "></div>
+                <div style="height: 200px; "></div>
+                <div style="height: 200px; "></div>
+                <div style="height: 200px; "></div>
+                <div style="height: 200px; "></div>
+                <div style="height: 200px; "></div>
+                <div style="height: 200px; "></div>
+                <div style="height: 200px; "></div>
+                <div style="height: 200px; "></div>
+                <div style="height: 200px; "></div>
+                <div style="height: 200px; "></div>
+                <div style="height: 200px; "></div>
+                <div style="height: 200px; "></div>
+                <div style="height: 200px; "></div>
+                <div style="height: 200px; "></div>
+                <div style="height: 200px; "></div>
+                <div style="height: 200px; "></div>
+                <div style="height: 200px; "></div>
+                <div style="height: 200px; "></div>
+                <div style="height: 200px; "></div>
+                <div style="height: 200px; "></div> -->
+                <NuxtPage />
+            <!-- </div> -->
         </div>
     </UApp>
 </template>
@@ -21,4 +45,18 @@ onMounted(async () => {
 <style>
 @import "tailwindcss";
 @import "@nuxt/ui";
+</style>
+
+<style lang="scss" scoped>
+.pageBoundary {
+    min-height: 100vh;
+    height: 100%;
+    background: #F5DEB3;
+}
+@media (min-width: 20rem) {
+}
+
+@media (min-width: 40rem) {
+    
+}
 </style>

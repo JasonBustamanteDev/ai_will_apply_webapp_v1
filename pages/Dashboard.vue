@@ -1,11 +1,22 @@
-<script setup>
-
-</script>
+<script setup></script>
 
 <template>
-    <div>Job site section + filters</div>
+    <div class="pageContainerComponent">d</div>
 </template>
+<!-- 
+<style lang="scss" scoped>
+.pageContainerComponent {
+    height: 100vh;
+}
+@media (min-width: 20rem) {
+    .pageContainerComponent {
+        background: red;
+    }
+}
 
-<style lang="scss">
-
-</style>
+@media (min-width: 40rem) {
+    .pageContainerComponent {
+        background: blue;
+    }
+}
+</style> -->
