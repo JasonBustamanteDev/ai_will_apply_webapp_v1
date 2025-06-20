@@ -12,32 +12,9 @@ onMounted(async () => {
 <template>
     <UApp>
         <div class="pageBoundary">
-            <!-- <div class="pageContainer"> -->
-                <!-- <div style="height: 200px; "></div>
-                <div style="height: 200px; "></div>
-                <div style="height: 200px; "></div>
-                <div style="height: 200px; "></div>
-                <div style="height: 200px; "></div>
-                <div style="height: 200px; "></div>
-                <div style="height: 200px; "></div>
-                <div style="height: 200px; "></div>
-                <div style="height: 200px; "></div>
-                <div style="height: 200px; "></div>
-                <div style="height: 200px; "></div>
-                <div style="height: 200px; "></div>
-                <div style="height: 200px; "></div>
-                <div style="height: 200px; "></div>
-                <div style="height: 200px; "></div>
-                <div style="height: 200px; "></div>
-                <div style="height: 200px; "></div>
-                <div style="height: 200px; "></div>
-                <div style="height: 200px; "></div>
-                <div style="height: 200px; "></div>
-                <div style="height: 200px; "></div>
-                <div style="height: 200px; "></div>
-                <div style="height: 200px; "></div> -->
-                <NuxtPage />
-            <!-- </div> -->
+            <div class="fillerDiv"></div>
+            <NuxtPage />
+            <div class="fillerDiv"></div>
         </div>
     </UApp>
 </template>
@@ -48,15 +25,19 @@ onMounted(async () => {
 </style>
 
 <style lang="scss" scoped>
-.pageBoundary {
-    min-height: 100vh;
-    height: 100%;
-    background: #F5DEB3;
-}
-@media (min-width: 20rem) {
-}
+$layout-small: 1250px;
 
-@media (min-width: 40rem) {
-    
+.pageBoundary {
+    display: none; // hide content for small viewprts since we do not support mobile
+    height: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+@media (min-width: $layout-small) {
+    .pageBoundary {
+        display: grid;
+        grid-template-columns: 1fr 1200px 1fr;
+        width: 100%;
+    }
 }
 </style>

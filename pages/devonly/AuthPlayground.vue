@@ -24,7 +24,9 @@ const authStore = useSupabaseAuthStore();
         <UButton @click="authStore.methods.googleRefreshSession" color="info"
             >Refresh Session</UButton
         >
-        <p>Current Session {{ authStore.state.currentSession }}</p>
+        <p style="word-break: break-all; white-space: pre-wrap;">
+            Current Session {{ authStore.state.currentSession }}
+        </p>
     </div>
 </template>
 
