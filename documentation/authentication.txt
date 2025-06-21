@@ -1,3 +1,5 @@
-App must rely exlusively on server side rendering or else Supabase + Cookies will not work properly
-If you don't like this, adopt a JWT approach instead of relying on cookies (tried and failed)
-https://supabase.com/docs/guides/auth/sessions#using-http-only-cookies-to-store-access-and-refresh-tokens
+AUTHENTICATION
+When a user logs in, their session data is saved in local storage
+In supabase_auth.js, we save the session data to state shared project-wide
+When we make requests to protected endpoints, we send the session data with the request body
+We verify the JWT using server side middleware

@@ -32,7 +32,8 @@ onMounted(async () => {
 </style>
 
 <style lang="scss" scoped>
-$layout-small: 1250px;
+// $layout-small: 1250px; //! bring back
+$layout-small: 50px;
 .pageBoundary {
     display: none; // hide content for small viewprts since we do not support mobile
     height: 100%;

@@ -16,7 +16,6 @@ export const useSupabaseAuthStore = defineStore(
 
         // The following callback function fires each time an auth event goes off
         supabaseClient.value.auth.onAuthStateChange((event, session) => {
-            const cookie = useCookie(AUTH_STRINGS.AUTH_COOKIE_NAME);
             currentSession.value = session;
 
             switch (event) {
@@ -24,16 +23,10 @@ export const useSupabaseAuthStore = defineStore(
                 case "INITIAL_SESSION":
                     break;
                 case "SIGNED_IN":
-                    // Save the session json object as the value for the app's auth cookie
-                    cookie.value = session;
                     break;
                 case "SIGNED_OUT":
-                    // Delete the auth cookie when the user is logged out
-                    cookie.value = null;
                     break;
                 case "TOKEN_REFRESHED":
-                    // If token is refreshed, save the new cookie details
-                    cookie.value = session;
                     break;
                 case "PASSWORD_RECOVERY":
                     break;
