@@ -1,8 +1,4 @@
-<script setup>
-definePageMeta({
-    middleware: ["redirect-to-dashboard-if-authenticated"],
-});
-</script>
+<script setup></script>
 
 <template>
     <div>Login Form goes here. Support email/pass as well</div>

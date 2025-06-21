@@ -1,9 +1,8 @@
 <script setup>
-// definePageMeta({
-//     middleware: ["redirect-to-login-page-if-not-authenticated"],
-// });
+// import { SharedLoadingSpinner } from '#components';
 </script>
 
 <template>
-    <p>Dashboard</p>
+    <SharedLoadingSpinner />
+    <!-- <SharedLoader/> -->
 </template>
