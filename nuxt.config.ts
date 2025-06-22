@@ -8,6 +8,9 @@ export default defineNuxtConfig({
     devServer: {
         port: 4010,
     },
+    experimental: {
+        appManifest: false, // disables a dev.json GET request from being made on each page load
+    },
 
     modules: [
         "@nuxt/eslint",
