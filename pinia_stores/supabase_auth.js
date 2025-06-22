@@ -12,7 +12,7 @@ export const useSupabaseAuthStore = defineStore(
         );
 
         const currentSession = ref(null);
-        const isAuthenticated = computed(() => !!currentSession.value);
+        const sessionExists = computed(() => !!currentSession.value);
 
         // The following callback function fires each time an auth event goes off
         supabaseClient.value.auth.onAuthStateChange((event, session) => {
@@ -84,7 +84,7 @@ export const useSupabaseAuthStore = defineStore(
                 currentSession,
             },
             computed: {
-                isAuthenticated,
+                sessionExists: sessionExists,
             },
             methods: {
                 googleSignIn,

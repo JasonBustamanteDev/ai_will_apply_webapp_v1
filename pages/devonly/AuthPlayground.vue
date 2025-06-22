@@ -6,7 +6,6 @@ const authStore = useSupabaseAuthStore();
 
 <template>
     <div>
-        <p>Britta Am I online? {{ authStore.computed.isAuthenticated }}</p>
 
         <UButton @click="authStore.methods.googleSignIn"
             >Sign In or Sign Up using Google</UButton
