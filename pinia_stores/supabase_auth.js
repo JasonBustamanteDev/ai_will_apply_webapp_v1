@@ -1,8 +1,10 @@
 import { createClient } from "@supabase/supabase-js";
+import { useCustomToast } from "@/pinia_stores/toast";
 
 export const useSupabaseAuthStore = defineStore(
     "pinia_auth_composition",
     () => {
+        const { showToast } = useCustomToast();
         const env = useRuntimeConfig();
         const supabaseClient = ref(
             createClient(
@@ -36,47 +38,84 @@ export const useSupabaseAuthStore = defineStore(
         });
 
         const googleSignIn = async () => {
-            const { data, error } =
-                await supabaseClient.value.auth.signInWithOAuth({
-                    provider: "google",
-                    options: {
-                        redirectTo: `${env.public.BASE_URL}/devonly/authplayground`, //! dev only
-                    },
-                });
-            if (error) {
-                console.error("Problem signing into google");
-                return;
+            try {
+                const { data, error } =
+                    await supabaseClient.value.auth.signInWithOAuth({
+                        provider: "google",
+                        options: {
+                            redirectTo: `${env.public.BASE_URL}/devonly/authplayground`, //! dev only
+                            // redirectTo: `${env.public.BASE_URL}/`, //! test if this works
+                        },
+                    });
+                if (error) {
+                    throwErrorObject(
+                        "Google Sign In Error",
+                        "Something went wrong while signing in with Google. Please reload and try again"
+                    );
+                }
+            } catch (err) {
+                showToast(
+                    "Google Sign In Error",
+                    err?.message || ERROR_MESSAGES.GENERIC
+                );
             }
         };
 
         const googleSignOut = async () => {
-            const { error } = await supabaseClient.value.auth.signOut();
-            if (error) {
-                console.error("Had trouble signing out of Google");
-                return;
+            try {
+                const { error } = await supabaseClient.value.auth.signOut();
+                if (error) {
+                    throwErrorObject(
+                        "Google Sign Out Error",
+                        "Something went wrong while signing out with Google. Please reload and try again"
+                    );
+                }
+            } catch (err) {
+                showToast(
+                    "Google Sign Out Error",
+                    err?.message || ERROR_MESSAGES.GENERIC
+                );
             }
         };
 
         const googleGetCurrentSession = async () => {
-            // Checking session does not always make a request in the Network tab (can use frequently)
-            const { data, error } =
-                await supabaseClient.value.auth.getSession();
-            if (error) {
-                // Handle error
-                console.error("Auth session failed", error);
+            try {
+                // Checking session does not always make a request in the Network tab (can use frequently)
+                const { data, error } = await supabaseClient.value.auth.getSession(); // prettier-ignore
+                if (error) {
+                    throwErrorObject(
+                        "Google Session Fetch Error",
+                        "Something went wrong while retreiving session with Google. Please reload and try again"
+                    );
+                }
+                currentSession.value = data.session;
+            } catch (err) {
+                showToast(
+                    "Google Session Fetch Error",
+                    err?.message || ERROR_MESSAGES.GENERIC
+                );
             }
-            currentSession.value = data.session;
         };
 
         const googleRefreshSession = async () => {
-            const { data, error } = await supabaseClient.value.auth.refreshSession(); // prettier-ignore
-            const { session, user } = data;
+            try {
+                const { data, error } = await supabaseClient.value.auth.refreshSession(); // prettier-ignore
+                const { session, user } = data;
 
-            if (error) {
-                // Handle error
-                console.error("getNewSession failed", error);
+                if (error) {
+                    throwErrorObject(
+                        "Google Refresh Session Error",
+                        "Something went wrong while refreshing session with Google. Please reload and try again"
+                    );
+                }
+
+                currentSession.value = session;
+            } catch (err) {
+                showToast(
+                    "Google Refresh Session Error",
+                    err?.message || ERROR_MESSAGES.GENERIC
+                );
             }
-            currentSession.value = session;
         };
 
         return {
@@ -95,7 +134,3 @@ export const useSupabaseAuthStore = defineStore(
         };
     }
 );
-
-// TODO: add error handling for these methods
-// https://masteringnuxt.com/blog/how-to-use-error-handling-to-create-rock-solid-apps
-// test out flows on http://localhost:4010/devonly/authplayground

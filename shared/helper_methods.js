@@ -1,7 +1,3 @@
-export const getCurrentUnixTimestamp = function () {
-    return Math.floor(Date.now() / 1000);
-};
-
 export const getAuthSessionFromLocalStorage = function (supabase_project_url) {
     const trimmed_project_url = supabase_project_url
         .replace(/^https:\/\//, "")
