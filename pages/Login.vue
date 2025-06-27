@@ -6,7 +6,6 @@ definePageMeta({
 });
 
 const authStore = useSupabaseAuthStore();
-const loading = ref(false);
 </script>
 
 <template>
@@ -14,7 +13,10 @@ const loading = ref(false);
         <div class="form-wrapper">
             <div class="header">
                 <div class="icon-container">
-                    <UIcon name="mdi:account-supervisor-circle" class="account-icon" />
+                    <UIcon
+                        name="mdi:account-supervisor-circle"
+                        class="account-icon"
+                    />
                 </div>
                 <h2 class="title">Login or Sign Up Here</h2>
                 <p class="subtitle">Please sign in to continue.</p>
@@ -24,18 +26,15 @@ const loading = ref(false);
                 <div>
                     <button
                         @click="authStore.methods.googleSignIn"
-                        :disabled="loading"
                         class="google-button"
                     >
                         <span class="icon-wrapper">
                             <SvgGoogle />
                         </span>
-                        {{ loading ? "Signing in..." : "Sign in with Google" }}
+                        Sign in with Google
                     </button>
                 </div>
             </div>
-
-            
         </div>
     </div>
 </template>
