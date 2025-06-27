@@ -43,8 +43,8 @@ export const useSupabaseAuthStore = defineStore(
                     await supabaseClient.value.auth.signInWithOAuth({
                         provider: "google",
                         options: {
-                            redirectTo: `${env.public.BASE_URL}/devonly/authplayground`, //! dev only
-                            // redirectTo: `${env.public.BASE_URL}/`, //! test if this works
+                            // Redirect to login page. The middleware will direct the user to the dashboard
+                            redirectTo: `${env.public.BASE_URL}/login`,
                         },
                     });
                 if (error) {
