@@ -7,7 +7,7 @@ import { useCustomToast } from "@/pinia_stores/toast";
 onMounted(async () => {
     // Initialize the supabase client by declaring the store when the app starts up
     useSupabaseAuthStore();
-    useCustomToast()
+    useCustomToast();
 });
 </script>
 

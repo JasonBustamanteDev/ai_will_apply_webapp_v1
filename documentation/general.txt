@@ -1,0 +1,2 @@
+Icons: https://icones.js.org/
+NuxtUI icon components: https://ui.nuxt.com/getting-started/icons/nuxt#icon-component
