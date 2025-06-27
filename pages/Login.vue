@@ -31,9 +31,9 @@ const signInWithGoogle = async () => {};
                         />
                     </svg>
                 </div>
-                <h2 class="title">Sign in to your account</h2>
+                <h2 class="title">Login or Sign Up Here</h2>
                 <p class="subtitle">
-                    Welcome back! Please sign in to continue.
+                    Please sign in to continue.
                 </p>
             </div>
 
