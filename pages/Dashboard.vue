@@ -6,5 +6,7 @@ definePageMeta({
 </script>
 
 <template>
-    <div>dash</div>
+    <div>
+        <SharedNavbar />
+    </div>
 </template>
