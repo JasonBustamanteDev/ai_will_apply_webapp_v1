@@ -23,19 +23,13 @@ const items = [
             label: "My Account",
             icon: "i-simple-icons-github",
             // badge: "3.8k",
-            to: "https://github.com/nuxt/ui",
+            // to: "https://github.com/nuxt/ui",
             // target: "_blank",
             children: [
                 {
                     label: "Sign out",
                     icon: "i-lucide-file-text",
-                    description: "Use NuxtLink with superpowers.",
-                    to: "/components/link",
-                },
-                {
-                    label: "Link",
-                    icon: "i-lucide-file-text",
-                    description: "Use NuxtLink with superpowers.",
+                    description: "",
                     to: "/components/link",
                 },
             ],
@@ -50,6 +44,8 @@ const items = [
         variant="link"
         :items="items"
         class="nuxtui-navbar"
+        :highlight="true"
+        contentOrientation="vertical"
     />
 </template>
 
