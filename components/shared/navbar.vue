@@ -46,13 +46,14 @@ const items = [
         class="nuxtui-navbar"
         :highlight="true"
         contentOrientation="vertical"
-        
-    /> 
+        :ui="{
+            linkLabel: 'px-1',
+        }"
+    />
 </template>
 
 <style lang="scss" scoped>
 .nuxtui-navbar {
     width: 100%;
 }
-
 </style>
