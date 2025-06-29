@@ -3,17 +3,18 @@ const items = [
     [
         {
             label: "Job Search",
-            icon: "i-lucide-book-open",
+            icon: "garden:search-fill-12",
             to: "/getting-started",
         },
         {
             label: "Applicant Profiles",
-            icon: "i-lucide-database",
+            icon: "majesticons:user-group",
+            icon: "mage:user-circle-fill",
             to: "/composables",
         },
         {
             label: "Pricing",
-            icon: "i-lucide-box",
+            icon: "material-symbols:personalized-recommendations",
             to: "/components",
             active: true,
         },
@@ -21,7 +22,7 @@ const items = [
     [
         {
             label: "My Account",
-            icon: "i-simple-icons-github",
+            icon: "famicons:person",
             // badge: "3.8k",
             // to: "https://github.com/nuxt/ui",
             // target: "_blank",
