@@ -15,7 +15,6 @@ const items = [
             label: "Pricing",
             icon: "material-symbols:personalized-recommendations",
             to: "/pricing",
-            active: true,
         },
     ],
     [
@@ -29,7 +28,7 @@ const items = [
                 {
                     label: "Sign out",
                     icon: "si:sign-out-alt-fill",
-                    // description: "",
+                    description: "",
                     to: "/components/link",
                 },
             ],
