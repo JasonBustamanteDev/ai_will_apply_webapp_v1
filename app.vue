@@ -28,9 +28,25 @@ onMounted(async () => {
     </UApp>
 </template>
 
+<!--  prettier-ignore -->
 <style>
 @import "tailwindcss";
 @import "@nuxt/ui";
+
+/* Increase the tailwind font size classes */
+.text-xs { font-size: 0.875rem !important; }    /* increased from 0.75rem */
+.text-sm { font-size: 1rem !important; }        /* increased from 0.875rem */
+.text-base { font-size: 1.125rem !important; }  /* increased from 1rem */
+.text-lg { font-size: 1.25rem !important; }     /* increased from 1.125rem */
+.text-xl { font-size: 1.375rem !important; }    /* increased from 1.25rem */
+.text-2xl { font-size: 1.625rem !important; }   /* increased from 1.5rem */
+.text-3xl { font-size: 2rem !important; }       /* increased from 1.875rem */
+.text-4xl { font-size: 2.5rem !important; }     /* increased from 2.25rem */
+.text-5xl { font-size: 3.25rem !important; }    /* increased from 3rem */
+.text-6xl { font-size: 4rem !important; }       /* increased from 3.75rem */
+.text-7xl { font-size: 5rem !important; }       /* increased from 4.5rem */
+.text-8xl { font-size: 6.5rem !important; }     /* increased from 6rem */
+.text-9xl { font-size: 8.5rem !important; }     /* increased from 8rem */
 </style>
 
 <style lang="scss" scoped>
