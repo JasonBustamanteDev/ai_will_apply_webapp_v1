@@ -1,6 +1,5 @@
 <script setup>
 definePageMeta({
-    // Redirect to /login if no session exists in Local Storage
     middleware: ["redirect-if-no-auth-session-client"],
 });
 </script>
@@ -8,5 +7,6 @@ definePageMeta({
 <template>
     <div>
         <SharedNavbar />
+        <p class="pt-6">FUTURE CONTENT: Select a profile then edit each profile's data (used for job searching)</p>
     </div>
 </template>

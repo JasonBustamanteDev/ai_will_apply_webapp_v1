@@ -1,7 +1,6 @@
 <script setup>
 import { useSupabaseAuthStore } from "~/pinia_stores/supabase_auth";
 definePageMeta({
-    // Redirect to /dashboard session exists in Local Storage
     middleware: ["redirect-if-auth-session-exists-client"],
 });
 

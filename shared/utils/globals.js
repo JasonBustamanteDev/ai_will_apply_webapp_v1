@@ -1,8 +1,10 @@
 // https://nuxt.com/docs/guide/directory-structure/shared
 
 export const PAGE_URLS = {
-    DASHBOARD: "/dashboard",
     LOGIN: "/login",
+    SEARCH: "/search",
+    PROFILES: "/profiles",
+    GUIDE: "/guide",
 };
 
 export const throwErrorObject = function (name, message, code = 500) {

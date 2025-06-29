@@ -4,18 +4,17 @@ const items = [
         {
             label: "Job Search",
             icon: "garden:search-fill-12",
-            to: "/getting-started",
+            to: "/search",
         },
         {
             label: "Applicant Profiles",
-            icon: "majesticons:user-group",
             icon: "mage:user-circle-fill",
-            to: "/composables",
+            to: "/profiles",
         },
         {
             label: "Pricing",
             icon: "material-symbols:personalized-recommendations",
-            to: "/components",
+            to: "/pricing",
             active: true,
         },
     ],
@@ -29,8 +28,8 @@ const items = [
             children: [
                 {
                     label: "Sign out",
-                    icon: "i-lucide-file-text",
-                    description: "",
+                    icon: "si:sign-out-alt-fill",
+                    // description: "",
                     to: "/components/link",
                 },
             ],

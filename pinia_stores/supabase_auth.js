@@ -43,7 +43,6 @@ export const useSupabaseAuthStore = defineStore(
                     await supabaseClient.value.auth.signInWithOAuth({
                         provider: "google",
                         options: {
-                            // Redirect to login page. The middleware will direct the user to the dashboard
                             redirectTo: `${env.public.BASE_URL}/login`,
                         },
                     });

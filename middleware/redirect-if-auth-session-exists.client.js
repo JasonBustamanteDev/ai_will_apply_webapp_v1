@@ -7,7 +7,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
         env_config.public.SUPABASE_PROJECT_URL
     );
 
-    if (session) return navigateTo(PAGE_URLS.DASHBOARD);
+    if (session) return navigateTo(PAGE_URLS.SEARCH);
 
     return;
 });
