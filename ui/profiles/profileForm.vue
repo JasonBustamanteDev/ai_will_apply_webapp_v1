@@ -1,19 +1,26 @@
 <script setup>
 import { object, string, number, date } from "yup";
+import { verifyMinStringLength } from "~/shared/helper_methods";
+
 const MESSAGES = {
-    REQUIRED: "This field is requried",
+    REQUIRED: "This field is required",
 };
 
 const profileSchema = object({
     // PERSONAL INFO
-    firstName: string().required(MESSAGES.REQUIRED), //! enforce min length
-    lastName: string().required(MESSAGES.REQUIRED), //! enforce min length
+    firstName: string()
+        .required(MESSAGES.REQUIRED)
+        .test("min-length-no-whitespace", "No empty names", (value) => verifyMinStringLength(value, 1)), // prettier-ignore
+    lastName: string()
+        .required(MESSAGES.REQUIRED)
+        .test("min-length-no-whitespace", "No empty names", (value) => verifyMinStringLength(value, 1)), // prettier-ignore
     age: number()
-        .required("Age is required")
-        .min(1, "Age must be at least 1")
+        .required(MESSAGES.REQUIRED)
+        .min(13, "Age must be 13 or higher")
         .integer("Age must be a whole number")
-        .positive("Age must be a positive number"),
-    email: string().email("Invalid email").required("Required"),
+        .positive("Age must be 13 or higher")
+        .test("min-age", "Age must be 13 or higher", (value) => value >= 13),
+    email: string().email("Invalid email").required(MESSAGES.REQUIRED),
 
     //#region My Custom Section
     // gender
@@ -59,6 +66,7 @@ const profileSchema = object({
 });
 
 const formState = reactive({
+    // These keys must match the name attributes on UFormField elements
     firstName: undefined,
     lastName: undefined,
     age: undefined,
@@ -70,7 +78,8 @@ const onSubmit = async function () {
         let user = await profileSchema.validate();
         console.log(user);
     } catch (err) {
-        console.log(err);
+        console.error(err);
+        console.log(profileSchema);
     }
 };
 </script>
@@ -82,32 +91,35 @@ const onSubmit = async function () {
         class="space-y-4 uform-element"
         @submit="onSubmit"
     >
-        <UFormField label="First Name" name="First Name" class="mb-0">
+        <UFormField label="First Name" name="firstName" class="mb-0">
             <UInput v-model="formState.firstName" class="w-full" />
         </UFormField>
-        <UFormField label="Last Name" name="Last Name" class="mb-0">
+        <UFormField label="Last Name" name="lastName" class="mb-0">
             <UInput v-model="formState.lastName" class="w-full" />
         </UFormField>
-        <UFormField label="Age" name="Age" class="mb-0">
+        <UFormField label="Age" name="age" class="mb-0">
             <UInput v-model="formState.age" type="number" class="w-full" />
         </UFormField>
-
         <UFormField label="Email" name="email" class="mb-0">
             <UInput v-model="formState.email" class="w-full" />
         </UFormField>
 
         <div></div>
         <div></div>
+        <div></div>
+        <div></div>
 
-        <UButton type="submit"> Submit </UButton>
+        <UButton type="submit" @click="onSubmit"> Submit </UButton>
     </UForm>
 </template>
 
 <style lang="scss" scoped>
+@import "../../assets/scss/main.scss";
+
 .uform-element {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     gap: 1rem;
-    margin-top: 1rem;
+    margin-top: $navbar-height + 20px;
 }
 </style>

@@ -8,3 +8,6 @@ export const getAuthSessionFromLocalStorage = function (supabase_project_url) {
 
     return sessionString ? JSON.parse(sessionString) : null;
 };
+
+export const verifyMinStringLength = (value, requiredLength) =>
+    value && value.replace(/\s/g, "").length >= requiredLength;
