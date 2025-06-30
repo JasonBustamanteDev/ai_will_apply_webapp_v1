@@ -56,6 +56,19 @@ onMounted(async () => {
     margin-top: $navbar-height;
     padding-inline: 10px;
 }
+
+* {
+    font-family: var(
+        --default-font-family,
+        ui-sans-serif,
+        system-ui,
+        sans-serif,
+        "Apple Color Emoji",
+        "Segoe UI Emoji",
+        "Segoe UI Symbol",
+        "Noto Color Emoji"
+    );
+}
 </style>
 
 <style lang="scss" scoped>
@@ -67,7 +80,7 @@ onMounted(async () => {
     min-height: 100vh;
     overflow-x: hidden;
     width: 100%;
-    background-color: #f8f9fa;
+    background-color: $light-theme-bg;
 }
 @media (min-width: $layout-small) {
     .pageBoundary {

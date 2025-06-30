@@ -52,17 +52,17 @@ const handleBackToHome = async () => {
     </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
+@import "../../assets/scss/main.scss";
+
 .error-page {
     min-height: 400px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #f8f9fa;
+    background-color: $light-theme-bg;
     height: 100vh;
     padding: 40px 20px;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-        Ubuntu, Cantarell, sans-serif;
 }
 
 .error-content {
