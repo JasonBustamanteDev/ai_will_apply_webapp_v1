@@ -55,7 +55,7 @@ onMounted(async () => {
 </style>
 
 <style lang="scss" scoped>
-$layout-small: 1000px;
+$layout-small: 1024px;
 .pageBoundary {
     display: none; // hide content for small viewports since we do not support mobile
     height: 100%;
@@ -67,7 +67,7 @@ $layout-small: 1000px;
 @media (min-width: $layout-small) {
     .pageBoundary {
         display: grid;
-        grid-template-columns: 1fr $layout-small 1fr;
+        grid-template-columns: 1fr 1000px 1fr;
     }
     .mobile-view {
         display: none;
