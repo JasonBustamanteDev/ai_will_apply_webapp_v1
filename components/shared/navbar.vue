@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 const items = [
     [
         {
@@ -10,6 +10,11 @@ const items = [
             label: "Applicant Profiles",
             icon: "mage:user-circle-fill",
             to: "/profiles",
+        },
+        {
+            label: "Guide",
+            icon: "ic:round-school",
+            to: "/guide",
         },
         {
             label: "Pricing",
@@ -29,7 +34,7 @@ const items = [
                     label: "Sign out",
                     icon: "si:sign-out-alt-fill",
                     description: "",
-                    to: "/components/link",
+                    to: "/signout", // signs out using middleware
                 },
             ],
         },
