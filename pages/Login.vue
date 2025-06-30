@@ -1,5 +1,7 @@
 <script setup>
 import { useSupabaseAuthStore } from "~/pinia_stores/supabase_auth";
+import GoogleSvg from "~/ui/svgs/google.vue";
+
 definePageMeta({
     middleware: ["redirect-if-auth-session-exists-client"],
 });
@@ -28,7 +30,7 @@ const authStore = useSupabaseAuthStore();
                         class="google-button"
                     >
                         <span class="icon-wrapper">
-                            <SvgGoogle />
+                            <GoogleSvg />
                         </span>
                         Sign in with Google
                     </button>
