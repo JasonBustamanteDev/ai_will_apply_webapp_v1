@@ -1,6 +1,9 @@
 <script setup>
 import { object, string, number, date } from "yup";
-import { verifyMinStringLength } from "~/shared/helper_methods";
+import {
+    verifyMinStringLength,
+    cleanPhoneNumber,
+} from "~/shared/helper_methods";
 import { genders } from "~/ui/profiles/personalDetails/personalDetails.js";
 
 const MESSAGES = {
@@ -28,17 +31,33 @@ const profileSchema = object({
             genders.map((g) => g.value),
             "Please select a valid gender option"
         ),
+    phoneNumber: string()
+        .required(MESSAGES.REQUIRED)
+        .test(
+            "phone-validation",
+            "Please enter a valid phone number",
+            function (value) {
+                if (!value) return false;
 
+                // Remove spaces, dashes, and other formatting characters (keep + for international)
+                const cleaned = cleanPhoneNumber(value);
+
+                // Check if it's a valid phone number (10-15 digits, optionally starting with +)
+                return /^(\+?[1-9]\d{9,14})$/.test(cleaned);
+            }
+        ),
     //#region My Custom Section
-    // phone
+    // REMAINING
+    // portfolio
+    // race / ethnicity
+    // security clearance
+
+    // LOCATION
     // address
     // city
     // state or province
     // zip code or postal code
     // country
-    // portfolio
-    // race / ethnicity
-    // security clearance
 
     // SOCIALS
     // linkedin
@@ -57,7 +76,7 @@ const profileSchema = object({
 
     // cover letter
 
-    // // EDUCATION
+    // EDUCATION
     // major
     // college name
     // College city
@@ -78,6 +97,7 @@ const formState = reactive({
     age: undefined,
     email: undefined,
     gender: undefined,
+    phoneNumber: undefined,
 });
 
 const onSubmit = async function () {
@@ -116,6 +136,9 @@ const onSubmit = async function () {
                 :items="genders"
                 class="w-full"
             />
+        </UFormField>
+        <UFormField label="Phone Number" name="phoneNumber" class="mb-0">
+            <UInput v-model="formState.phoneNumber" class="w-full" />
         </UFormField>
 
         <div></div>
