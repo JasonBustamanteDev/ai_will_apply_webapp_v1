@@ -7,6 +7,8 @@ definePageMeta({
 <template>
     <div>
         <SharedNavbar />
-        <p class="pt-6">FUTURE CONTENT: List 3 tiers of plans</p>
+        <div class="global-layout-container">
+            <p class="pt-6">FUTURE CONTENT: List 3 tiers of plans</p>
+        </div>
     </div>
 </template>
