@@ -1,6 +1,7 @@
 <script setup>
 import { object, string, number, date } from "yup";
 import { verifyMinStringLength } from "~/shared/helper_methods";
+import { genders } from "~/ui/profiles/personalDetails/personalDetails.js";
 
 const MESSAGES = {
     REQUIRED: "This field is required",
@@ -21,9 +22,14 @@ const profileSchema = object({
         .positive("Age must be 13 or higher")
         .test("min-age", "Age must be 13 or higher", (value) => value >= 13),
     email: string().email("Invalid email").required(MESSAGES.REQUIRED),
+    gender: string()
+        .required(MESSAGES.REQUIRED)
+        .oneOf(
+            genders.map((g) => g.value),
+            "Please select a valid gender option"
+        ),
 
     //#region My Custom Section
-    // gender
     // phone
     // address
     // city
@@ -71,6 +77,7 @@ const formState = reactive({
     lastName: undefined,
     age: undefined,
     email: undefined,
+    gender: undefined,
 });
 
 const onSubmit = async function () {
@@ -103,6 +110,13 @@ const onSubmit = async function () {
         <UFormField label="Email" name="email" class="mb-0">
             <UInput v-model="formState.email" class="w-full" />
         </UFormField>
+        <UFormField label="Gender" name="gender" class="mb-0">
+            <USelect
+                v-model="formState.gender"
+                :items="genders"
+                class="w-full"
+            />
+        </UFormField>
 
         <div></div>
         <div></div>
@@ -111,6 +125,7 @@ const onSubmit = async function () {
 
         <UButton type="submit" @click="onSubmit"> Submit </UButton>
     </UForm>
+    <p>{{ formState }}</p>
 </template>
 
 <style lang="scss" scoped>
@@ -120,7 +135,7 @@ const onSubmit = async function () {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: 95px 95px 95px 95px;
-    gap: 1rem;
+    gap: 0.5rem 1rem;
     margin-top: $navbar-height + 20px;
 }
 </style>
