@@ -47,7 +47,7 @@ const items = [
         color="neutral"
         variant="link"
         :items="items"
-        class="nuxtui-navbar"
+        class="w-[1000px] bg-[#f8f9fa] fixed top-0 left-0 right-0 mx-auto z-50"
         :highlight="true"
         contentOrientation="vertical"
         :ui="{
@@ -55,9 +55,3 @@ const items = [
         }"
     />
 </template>
-
-<style lang="scss" scoped>
-.nuxtui-navbar {
-    width: 100%;
-}
-</style>

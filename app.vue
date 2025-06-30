@@ -47,11 +47,15 @@ onMounted(async () => {
 .text-7xl { font-size: 5rem !important; }       /* increased from 4.5rem */
 .text-8xl { font-size: 6.5rem !important; }     /* increased from 6rem */
 .text-9xl { font-size: 8.5rem !important; }     /* increased from 8rem */
+
+.global-layout-container {
+    margin-top: 50.85px; /* 50.85px is the height of the navbar. Margin must equal or exceed this */
+    padding-inline: 10px;
+}
 </style>
 
 <style lang="scss" scoped>
-// $layout-small: 1250px; //! bring back in production
-$layout-small: 50px;
+$layout-small: 1000px;
 .pageBoundary {
     display: none; // hide content for small viewprts since we do not support mobile
     height: 100%;
@@ -63,7 +67,7 @@ $layout-small: 50px;
 @media (min-width: $layout-small) {
     .pageBoundary {
         display: grid;
-        grid-template-columns: 1fr 1200px 1fr;
+        grid-template-columns: 1fr $layout-small 1fr;
     }
     .mobile-view {
         display: none;

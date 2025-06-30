@@ -7,6 +7,204 @@ definePageMeta({
 <template>
     <div>
         <SharedNavbar />
-        <p class="pt-6">FUTURE CONTENT: All the supported platforms and prefilled filters</p>
+        <div class="global-layout-container">
+            <p class="pb-8">
+                FUTURE CONTENT 1: All the supported platforms and prefilled
+                filters
+            </p>
+            <p class="pb-8">
+                FUTURE CONTENT: All the supported platforms and prefilled
+                filters
+            </p>
+            <p class="pb-8">
+                FUTURE CONTENT: All the supported platforms and prefilled
+                filters
+            </p>
+            <p class="pb-8">
+                FUTURE CONTENT: All the supported platforms and prefilled
+                filters
+            </p>
+            <p class="pb-8">
+                FUTURE CONTENT: All the supported platforms and prefilled
+                filters
+            </p>
+            <p class="pb-8">
+                FUTURE CONTENT: All the supported platforms and prefilled
+                filters
+            </p>
+            <p class="pb-8">
+                FUTURE CONTENT: All the supported platforms and prefilled
+                filters
+            </p>
+            <p class="pb-8">
+                FUTURE CONTENT: All the supported platforms and prefilled
+                filters
+            </p>
+            <p class="pb-8">
+                FUTURE CONTENT: All the supported platforms and prefilled
+                filters
+            </p>
+            <p class="pb-8">
+                FUTURE CONTENT: All the supported platforms and prefilled
+                filters
+            </p>
+            <p class="pb-8">
+                FUTURE CONTENT: All the supported platforms and prefilled
+                filters
+            </p>
+            <p class="pb-8">
+                FUTURE CONTENT: All the supported platforms and prefilled
+                filters
+            </p>
+            <p class="pb-8">
+                FUTURE CONTENT: All the supported platforms and prefilled
+                filters
+            </p>
+            <p class="pb-8">
+                FUTURE CONTENT: All the supported platforms and prefilled
+                filters
+            </p>
+            <p class="pb-8">
+                FUTURE CONTENT: All the supported platforms and prefilled
+                filters
+            </p>
+            <p class="pb-8">
+                FUTURE CONTENT: All the supported platforms and prefilled
+                filters
+            </p>
+            <p class="pb-8">
+                FUTURE CONTENT: All the supported platforms and prefilled
+                filters
+            </p>
+            <p class="pb-8">
+                FUTURE CONTENT: All the supported platforms and prefilled
+                filters
+            </p>
+            <p class="pb-8">
+                FUTURE CONTENT: All the supported platforms and prefilled
+                filters
+            </p>
+            <p class="pb-8">
+                FUTURE CONTENT: All the supported platforms and prefilled
+                filters
+            </p>
+            <p class="pb-8">
+                FUTURE CONTENT: All the supported platforms and prefilled
+                filters
+            </p>
+            <p class="pb-8">
+                FUTURE CONTENT: All the supported platforms and prefilled
+                filters
+            </p>
+            <p class="pb-8">
+                FUTURE CONTENT: All the supported platforms and prefilled
+                filters
+            </p>
+            <p class="pb-8">
+                FUTURE CONTENT: All the supported platforms and prefilled
+                filters
+            </p>
+            <p class="pb-8">
+                FUTURE CONTENT: All the supported platforms and prefilled
+                filters
+            </p>
+            <p class="pb-8">
+                FUTURE CONTENT: All the supported platforms and prefilled
+                filters
+            </p>
+            <p class="pb-8">
+                FUTURE CONTENT: All the supported platforms and prefilled
+                filters
+            </p>
+            <p class="pb-8">
+                FUTURE CONTENT: All the supported platforms and prefilled
+                filters
+            </p>
+            <p class="pb-8">
+                FUTURE CONTENT: All the supported platforms and prefilled
+                filters
+            </p>
+            <p class="pb-8">
+                FUTURE CONTENT: All the supported platforms and prefilled
+                filters
+            </p>
+            <p class="pb-8">
+                FUTURE CONTENT: All the supported platforms and prefilled
+                filters
+            </p>
+            <p class="pb-8">
+                FUTURE CONTENT: All the supported platforms and prefilled
+                filters
+            </p>
+            <p class="pb-8">
+                FUTURE CONTENT: All the supported platforms and prefilled
+                filters
+            </p>
+            <p class="pb-8">
+                FUTURE CONTENT: All the supported platforms and prefilled
+                filters
+            </p>
+            <p class="pb-8">
+                FUTURE CONTENT: All the supported platforms and prefilled
+                filters
+            </p>
+            <p class="pb-8">
+                FUTURE CONTENT: All the supported platforms and prefilled
+                filters
+            </p>
+            <p class="pb-8">
+                FUTURE CONTENT: All the supported platforms and prefilled
+                filters
+            </p>
+            <p class="pb-8">
+                FUTURE CONTENT: All the supported platforms and prefilled
+                filters
+            </p>
+            <p class="pb-8">
+                FUTURE CONTENT: All the supported platforms and prefilled
+                filters
+            </p>
+            <p class="pb-8">
+                FUTURE CONTENT: All the supported platforms and prefilled
+                filters
+            </p>
+            <p class="pb-8">
+                FUTURE CONTENT: All the supported platforms and prefilled
+                filters
+            </p>
+            <p class="pb-8">
+                FUTURE CONTENT: All the supported platforms and prefilled
+                filters
+            </p>
+            <p class="pb-8">
+                FUTURE CONTENT: All the supported platforms and prefilled
+                filters
+            </p>
+            <p class="pb-8">
+                FUTURE CONTENT: All the supported platforms and prefilled
+                filters
+            </p>
+            <p class="pb-8">
+                FUTURE CONTENT: All the supported platforms and prefilled
+                filters
+            </p>
+            <p class="pb-8">
+                FUTURE CONTENT: All the supported platforms and prefilled
+                filters
+            </p>
+            <p class="pb-8">
+                FUTURE CONTENT: All the supported platforms and prefilled
+                filters
+            </p>
+            <p class="pb-8">
+                FUTURE CONTENT: All the supported platforms and prefilled
+                filters
+            </p>
+            <p class="pb-8">
+                FUTURE CONTENT: All the supported platforms and prefilled
+                filters
+            </p>
+        </div>
+        
     </div>
 </template>
