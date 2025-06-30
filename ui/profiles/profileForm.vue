@@ -119,6 +119,7 @@ const onSubmit = async function () {
 .uform-element {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 95px 95px 95px 95px;
     gap: 1rem;
     margin-top: $navbar-height + 20px;
 }
