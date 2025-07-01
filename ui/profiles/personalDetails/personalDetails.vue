@@ -1,5 +1,5 @@
 <script setup>
-import { object, string, number, date } from "yup";
+import { object, string, number } from "yup";
 import {
     verifyMinStringLength,
     cleanPhoneNumber,

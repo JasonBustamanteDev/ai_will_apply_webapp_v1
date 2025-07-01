@@ -1,5 +1,5 @@
 <script setup>
-import ProfileForm from "~/ui/profiles/profileForm.vue";
+import PersonalDetailsForm from "~/ui/profiles/personalDetails/personalDetails.vue";
 
 definePageMeta({
     middleware: ["redirect-if-no-auth-session-client"],
@@ -10,7 +10,7 @@ definePageMeta({
     <div>
         <SharedNavbar />
         <div class="global-layout-container">
-            <ProfileForm />
+            <PersonalDetailsForm />
         </div>
     </div>
 </template>
