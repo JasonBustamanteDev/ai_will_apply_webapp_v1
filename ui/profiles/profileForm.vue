@@ -12,6 +12,7 @@ import {
 
 const MESSAGES = {
     REQUIRED: "This field is required",
+    // TODO: add more messages that are reused
 };
 
 const profileSchema = object({
@@ -120,6 +121,7 @@ const formState = reactive({
 const onSubmit = async function () {
     try {
         let user = await profileSchema.validate();
+        // TODO: send request to backend
         console.log(user);
     } catch (err) {
         console.error(err);
