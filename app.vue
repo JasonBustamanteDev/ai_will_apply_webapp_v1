@@ -50,10 +50,11 @@ onMounted(async () => {
 </style>
 
 <style lang="scss">
-@import "./assets/scss/main.scss";
+@use "/assets/scss/main.scss" as main;
+
 
 .global-layout-container {
-    margin-top: $navbar-height;
+    margin-top: main.$navbar-height;
     padding-inline: 10px;
 }
 
@@ -72,7 +73,7 @@ onMounted(async () => {
 </style>
 
 <style lang="scss" scoped>
-@import "./assets/scss/main.scss";
+@use "/assets/scss/main.scss" as main;
 
 .pageBoundary {
     display: none; // hide content for small viewports since we do not support mobile
@@ -80,9 +81,9 @@ onMounted(async () => {
     min-height: 100vh;
     overflow-x: hidden;
     width: 100%;
-    background-color: $light-theme-bg;
+    background-color: main.$light-theme-bg;
 }
-@media (min-width: $layout-small) {
+@media (min-width: main.$layout-small) {
     .pageBoundary {
         display: grid;
         grid-template-columns: 1fr 1000px 1fr; // CTRL F 1000px project wide

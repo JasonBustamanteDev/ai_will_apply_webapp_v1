@@ -207,14 +207,14 @@ const onSubmit = async function () {
 </template>
 
 <style lang="scss" scoped>
-@import "../../assets/scss/main.scss";
+@use "/assets/scss/main.scss" as main;
 
 .uform-element {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: 95px 95px 120px;
     gap: 0.5rem 1rem;
-    margin-top: $navbar-height + 20px;
+    margin-top: main.$navbar-height + 20px;
 }
 
 .submit-button-container {

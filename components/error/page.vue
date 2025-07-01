@@ -53,14 +53,14 @@ const handleBackToHome = async () => {
 </template>
 
 <style scoped lang="scss">
-@import "../../assets/scss/main.scss";
+@use "/assets/scss/main.scss" as main;
 
 .error-page {
     min-height: 400px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: $light-theme-bg;
+    background-color: main.$light-theme-bg;
     height: 100vh;
     padding: 40px 20px;
 }
