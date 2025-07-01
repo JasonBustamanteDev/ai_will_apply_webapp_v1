@@ -16,7 +16,6 @@ const MESSAGES = {
 };
 
 const profileSchema = object({
-    // PERSONAL INFO
     firstName: string()
         .required(MESSAGES.REQUIRED)
         .test("min-length-no-whitespace", "No empty names", (value) => verifyMinStringLength(value, 1)), // prettier-ignore
@@ -61,11 +60,13 @@ const profileSchema = object({
         booleanOptions.map((g) => g.value),
         "Please select a valid option"
     ),
+    portfolioUrl: string()
+        .url("Enter a valid URL, like https://example.com")
+        .matches(/^https?:\/\/.+/, "URL must start with http:// or https://"),
 
     //#region My Custom Section
     // REMAINING
     // portfolio
-    // security clearance
 
     // LOCATION
     // address
@@ -116,6 +117,7 @@ const formState = reactive({
     ethnicity: undefined,
     securityClearance: undefined,
     disability: undefined,
+    portfolioUrl: undefined,
 });
 
 const onSubmit = async function () {
@@ -189,14 +191,20 @@ const onSubmit = async function () {
             />
         </UFormField>
 
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
+        <!-- This field must be on the last row, where height is more than 95px (error msg runs long)-->
+        <UFormField label="Portfolio URL" name="portfolioUrl" class="mb-0">
+            <UInput v-model="formState.portfolioUrl" class="w-full" />
+        </UFormField>
 
-        <UButton type="submit" @click="onSubmit"> Submit </UButton>
+        <div class="submit-button-container">
+            <UButton
+                type="submit"
+                class="w-full justify-center"
+                @click="onSubmit"
+                >Submit</UButton
+            >
+        </div>
     </UForm>
-    <p>{{ formState }}</p>
 </template>
 
 <style lang="scss" scoped>
@@ -205,8 +213,13 @@ const onSubmit = async function () {
 .uform-element {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: 95px 95px 95px 95px;
+    grid-template-rows: 95px 95px 120px;
     gap: 0.5rem 1rem;
     margin-top: $navbar-height + 20px;
+}
+
+.submit-button-container {
+    grid-column-start: 1;
+    grid-column-end: 5;
 }
 </style>
