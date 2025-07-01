@@ -12,7 +12,8 @@ import {
 
 const MESSAGES = {
     REQUIRED: "This field is required",
-    // TODO: add more messages that are reused
+    MIN_AGE: "Age must be 13 or higher",
+    VALID_OPTION: "Please select a valid option",
 };
 
 const profileSchema = object({
@@ -24,10 +25,10 @@ const profileSchema = object({
         .test("min-length-no-whitespace", "No empty names", (value) => verifyMinStringLength(value, 1)), // prettier-ignore
     age: number()
         .required(MESSAGES.REQUIRED)
-        .min(13, "Age must be 13 or higher")
+        .min(13, MESSAGES.MIN_AGE)
         .integer("Age must be a whole number")
-        .positive("Age must be 13 or higher")
-        .test("min-age", "Age must be 13 or higher", (value) => value >= 13),
+        .positive(MESSAGES.MIN_AGE)
+        .test("min-age", MESSAGES.MIN_AGE, (value) => value >= 13),
     email: string().email("Invalid email").required(MESSAGES.REQUIRED),
     phoneNumber: string()
         .required(MESSAGES.REQUIRED)
@@ -46,27 +47,25 @@ const profileSchema = object({
         ),
     gender: string().oneOf(
         genders.map((g) => g.value),
-        "Please select a valid option"
+        MESSAGES.VALID_OPTION
     ),
     ethnicity: string().oneOf(
         ethnicGroups.map((g) => g.value),
-        "Please select a valid option"
+        MESSAGES.VALID_OPTION
     ),
     securityClearance: string().oneOf(
         booleanOptions.map((g) => g.value),
-        "Please select a valid option"
+        MESSAGES.VALID_OPTION
     ),
     disability: string().oneOf(
         booleanOptions.map((g) => g.value),
-        "Please select a valid option"
+        MESSAGES.VALID_OPTION
     ),
     portfolioUrl: string()
-        .url("Enter a valid URL, like https://example.com")
+        .url("Enter a valid URL like https://example.com")
         .matches(/^https?:\/\/.+/, "URL must start with http:// or https://"),
 
     //#region My Custom Section
-    // REMAINING
-    // portfolio
 
     // LOCATION
     // address
