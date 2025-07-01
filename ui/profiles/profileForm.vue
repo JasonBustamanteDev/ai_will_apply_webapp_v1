@@ -4,7 +4,11 @@ import {
     verifyMinStringLength,
     cleanPhoneNumber,
 } from "~/shared/helper_methods";
-import { genders } from "~/ui/profiles/personalDetails/personalDetails.js";
+import {
+    genders,
+    ethnicGroups,
+    booleanOptions,
+} from "~/ui/profiles/personalDetails/personalDetails.js";
 
 const MESSAGES = {
     REQUIRED: "This field is required",
@@ -25,12 +29,6 @@ const profileSchema = object({
         .positive("Age must be 13 or higher")
         .test("min-age", "Age must be 13 or higher", (value) => value >= 13),
     email: string().email("Invalid email").required(MESSAGES.REQUIRED),
-    gender: string()
-        .required(MESSAGES.REQUIRED)
-        .oneOf(
-            genders.map((g) => g.value),
-            "Please select a valid gender option"
-        ),
     phoneNumber: string()
         .required(MESSAGES.REQUIRED)
         .test(
@@ -46,10 +44,26 @@ const profileSchema = object({
                 return /^(\+?[1-9]\d{9,14})$/.test(cleaned);
             }
         ),
+    gender: string().oneOf(
+        genders.map((g) => g.value),
+        "Please select a valid option"
+    ),
+    ethnicity: string().oneOf(
+        ethnicGroups.map((g) => g.value),
+        "Please select a valid option"
+    ),
+    securityClearance: string().oneOf(
+        booleanOptions.map((g) => g.value),
+        "Please select a valid option"
+    ),
+    disability: string().oneOf(
+        booleanOptions.map((g) => g.value),
+        "Please select a valid option"
+    ),
+
     //#region My Custom Section
     // REMAINING
     // portfolio
-    // race / ethnicity
     // security clearance
 
     // LOCATION
@@ -98,6 +112,9 @@ const formState = reactive({
     email: undefined,
     gender: undefined,
     phoneNumber: undefined,
+    ethnicity: undefined,
+    securityClearance: undefined,
+    disability: undefined,
 });
 
 const onSubmit = async function () {
@@ -139,6 +156,35 @@ const onSubmit = async function () {
         </UFormField>
         <UFormField label="Phone Number" name="phoneNumber" class="mb-0">
             <UInput v-model="formState.phoneNumber" class="w-full" />
+        </UFormField>
+        <UFormField label="Ethnicity" name="ethnicity" class="mb-0">
+            <USelect
+                v-model="formState.ethnicity"
+                :items="ethnicGroups"
+                class="w-full"
+            />
+        </UFormField>
+        <UFormField
+            label="Security Clearance"
+            name="securityClearance"
+            class="mb-0"
+        >
+            <USelect
+                v-model="formState.securityClearance"
+                :items="booleanOptions"
+                class="w-full"
+            />
+        </UFormField>
+        <UFormField
+            label="Do you have a disability?"
+            name="disability"
+            class="mb-0"
+        >
+            <USelect
+                v-model="formState.disability"
+                :items="booleanOptions"
+                class="w-full"
+            />
         </UFormField>
 
         <div></div>
