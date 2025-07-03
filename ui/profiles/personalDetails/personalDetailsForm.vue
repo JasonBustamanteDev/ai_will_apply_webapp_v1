@@ -188,7 +188,7 @@ const onSubmit = async function () {
             <UInput v-model="formState.portfolioUrl" class="w-full" />
         </UFormField>
 
-        <div class="submit-button-container">
+        <div class="uform-submit-button-container">
             <UButton
                 type="submit"
                 class="w-full justify-center"
@@ -199,17 +199,4 @@ const onSubmit = async function () {
     </UForm>
 </template>
 
-<style lang="scss" scoped>
-
-.uform-element {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: 95px 95px 120px;
-    gap: 0.5rem 1rem;
-}
-
-.submit-button-container {
-    grid-column-start: 1;
-    grid-column-end: 5;
-}
-</style>
+<style lang="scss" scoped></style>
