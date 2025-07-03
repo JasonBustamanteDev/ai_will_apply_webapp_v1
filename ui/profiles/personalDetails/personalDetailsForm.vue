@@ -194,7 +194,6 @@ const onSubmit = async function () {
             />
         </UFormField>
 
-        <!-- This field must be on the last row, where height is more than 95px (error msg runs long)-->
         <UFormField
             label="Portfolio URL"
             name="portfolioUrl"
