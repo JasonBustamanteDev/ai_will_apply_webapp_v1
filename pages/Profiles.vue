@@ -14,12 +14,22 @@ definePageMeta({
     <div>
         <SharedNavbar />
         <div class="global-layout-container">
-            <CollapseComponent title="Personal Details" :isComplete="true">
-                <PersonalDetailsForm />
-            </CollapseComponent>
-            <CollapseComponent title="Location" :isComplete="false">
-                <LocationForm />
-            </CollapseComponent>
+            <section class="multiple-forms-container">
+                <CollapseComponent title="Personal Details" :isComplete="true">
+                    <PersonalDetailsForm />
+                </CollapseComponent>
+                <CollapseComponent title="Location" :isComplete="false">
+                    <LocationForm />
+                </CollapseComponent>
+            </section>
         </div>
     </div>
 </template>
+
+<style lang="scss" scoped>
+.multiple-forms-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+</style>
