@@ -4,13 +4,6 @@ import { object, string, number } from "yup";
 import { countriesList } from "./countries";
 import { usaDict, canadaDict } from "./provinces";
 import { verifyMinStringLength } from "~/shared/helper_methods";
-// LOCATION
-// country (list of countries)
-// address (mandatory string)
-// city (mandatory string)
-// zip code or postal code (optional string field)
-
-// state or province (optional list if country is USA or Canada If not, provide a text field)
 
 const MESSAGES = {
     REQUIRED: "This field is required",
