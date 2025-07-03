@@ -2,6 +2,7 @@
 
 <template>
     <ErrorPage />
+    
 </template>
 
 <style lang="scss"></style>

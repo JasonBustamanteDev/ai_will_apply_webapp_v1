@@ -1,3 +1,5 @@
+import tailwindcss from "@tailwindcss/vite";
+
 export default defineNuxtConfig({
     ssr: false,
     compatibilityDate: "2025-05-15",
@@ -11,6 +13,12 @@ export default defineNuxtConfig({
     experimental: {
         appManifest: false, // disables a dev.json GET request from being made on each page load
     },
+
+    // vite and css required for daisyUI
+    vite: {
+        plugins: [tailwindcss()],
+    },
+    css: ["~/assets/app.css"],
 
     modules: [
         "@nuxt/eslint",

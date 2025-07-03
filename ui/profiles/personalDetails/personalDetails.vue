@@ -135,7 +135,7 @@ const onSubmit = async function () {
     <UForm
         :schema="profileSchema"
         :state="formState"
-        class="space-y-4 uform-element"
+        class="space-y-4 uform-element pt-4"
         @submit="onSubmit"
     >
         <UFormField label="First Name" name="firstName" class="mb-0">
@@ -207,14 +207,12 @@ const onSubmit = async function () {
 </template>
 
 <style lang="scss" scoped>
-@use "/assets/scss/main.scss" as main;
 
 .uform-element {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: 95px 95px 120px;
     gap: 0.5rem 1rem;
-    margin-top: main.$navbar-height + 20px;
 }
 
 .submit-button-container {

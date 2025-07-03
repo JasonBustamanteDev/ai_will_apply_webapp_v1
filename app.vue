@@ -52,10 +52,10 @@ onMounted(async () => {
 <style lang="scss">
 @use "/assets/scss/main.scss" as main;
 
-
 .global-layout-container {
     margin-top: main.$navbar-height;
     padding-inline: 10px;
+    padding-top: 40px;
 }
 
 * {
