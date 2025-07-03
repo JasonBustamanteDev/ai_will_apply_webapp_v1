@@ -214,4 +214,16 @@ const onSubmit = async function () {
     </UForm>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.uform-element {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 95px 95px 95px auto;
+    gap: 0.5rem 1rem;
+}
+
+.uform-submit-button-container {
+    grid-column-start: 1;
+    grid-column-end: 5;
+}
+</style>
