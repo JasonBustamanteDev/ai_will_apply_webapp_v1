@@ -40,9 +40,10 @@ const onSubmit = async function () {
         @submit="onSubmit"
     >
         <UFormField label="Country" name="country" class="mb-0">
-            <USelect
+            <USelectMenu
                 v-model="formState.country"
                 :items="countriesList"
+                value-key="value"
                 class="w-full"
             />
         </UFormField>
