@@ -75,38 +75,6 @@ const profileSchema = object({
                 );
             }
         ),
-
-    //#region My Custom Section
-
-    // SOCIALS
-    // linkedin
-    // twitter
-    // github
-
-    // PREFERENCES
-    // current salary
-    // expected salary
-    // notice period
-    // total experience
-    // companies to exclude from search
-    // willing to relocate
-    // driving liscence
-    // veteran status
-
-    // cover letter
-
-    // EDUCATION
-    // major
-    // college name
-    // College city
-    // College State
-    // time-start
-    // time-end
-    // gpa
-
-    // // EXTREME
-    // skills list
-    //#endregion
 });
 
 const formState = reactive({
