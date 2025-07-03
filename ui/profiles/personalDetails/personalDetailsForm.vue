@@ -62,8 +62,19 @@ const profileSchema = object({
         MESSAGES.VALID_OPTION
     ),
     portfolioUrl: string()
-        .url("Enter a valid URL like https://example.com")
-        .matches(/^https?:\/\/.+/, "URL must start with http:// or https://"),
+        .nullable()
+        .notRequired()
+        .test(
+            "url-or-empty",
+            "Enter a valid URL like https://example.com",
+            function (value) {
+                if (!value || value === "") return true;
+                return (
+                    /^https?:\/\/.+/.test(value) &&
+                    this.createError === undefined
+                );
+            }
+        ),
 
     //#region My Custom Section
 
@@ -184,7 +195,11 @@ const onSubmit = async function () {
         </UFormField>
 
         <!-- This field must be on the last row, where height is more than 95px (error msg runs long)-->
-        <UFormField label="Portfolio URL" name="portfolioUrl" class="mb-0">
+        <UFormField
+            label="Portfolio URL"
+            name="portfolioUrl"
+            class="mb-0 col-span-2"
+        >
             <UInput v-model="formState.portfolioUrl" class="w-full" />
         </UFormField>
 

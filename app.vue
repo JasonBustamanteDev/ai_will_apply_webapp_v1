@@ -75,7 +75,7 @@ onMounted(async () => {
 .uform-element {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: 95px 95px 120px;
+    grid-template-rows: 95px 95px 95px;
     gap: 0.5rem 1rem;
 }
 
