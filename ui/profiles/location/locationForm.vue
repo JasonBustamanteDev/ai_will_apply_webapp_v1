@@ -8,11 +8,17 @@ import { countriesList } from "./countries";
 // state or province (optional list if country is USA or Canada If not, provide a text field)
 // zip code or postal code (optional string field)
 
+const MESSAGES = {
+    REQUIRED: "This field is required",
+};
+
 const locationSchema = object({
-    country: string().oneOf(
-        countriesList.map((g) => g.value),
-        "Select a valid country"
-    ),
+    country: string()
+        .required(MESSAGES.REQUIRED)
+        .oneOf(
+            countriesList.map((g) => g.value),
+            "Select a valid country"
+        ),
 });
 
 const formState = reactive({
