@@ -8,7 +8,7 @@ import {
     genders,
     ethnicGroups,
     booleanOptions,
-} from "~/ui/profiles/personalDetails/personalDetails.js";
+} from "~/ui/profiles/personalDetails/personalDetailsForm.js";
 
 const MESSAGES = {
     REQUIRED: "This field is required",
@@ -66,13 +66,6 @@ const profileSchema = object({
         .matches(/^https?:\/\/.+/, "URL must start with http:// or https://"),
 
     //#region My Custom Section
-
-    // LOCATION
-    // address
-    // city
-    // state or province
-    // zip code or postal code
-    // country
 
     // SOCIALS
     // linkedin

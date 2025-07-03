@@ -1,5 +1,6 @@
 <script setup>
-import PersonalDetailsForm from "~/ui/profiles/personalDetails/personalDetails.vue";
+import PersonalDetailsForm from "~/ui/profiles/personalDetails/personalDetailsForm.vue";
+import LocationForm from "~/ui/profiles/location/locationForm.vue";
 import CollapseComponent from "~/ui/profiles/shared/collapse.vue";
 
 definePageMeta({
@@ -13,8 +14,11 @@ definePageMeta({
     <div>
         <SharedNavbar />
         <div class="global-layout-container">
-            <CollapseComponent title="Personal Details" :isComplete="false">
+            <CollapseComponent title="Personal Details" :isComplete="true">
                 <PersonalDetailsForm />
+            </CollapseComponent>
+            <CollapseComponent title="Location" :isComplete="false">
+                <LocationForm />
             </CollapseComponent>
         </div>
     </div>
