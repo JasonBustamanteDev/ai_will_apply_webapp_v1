@@ -12,5 +12,10 @@ export const getAuthSessionFromLocalStorage = function (supabase_project_url) {
 export const verifyMinStringLength = (value, requiredLength) =>
     value && value.replace(/\s/g, "").length >= requiredLength;
 
+export const cleanPhoneNumber = (str) => str.replace(/[\s\-]/g, "");
 
-export const cleanPhoneNumber = (str) => str.replace(/[\s\-]/g, '')
+export const emptyOrMinLengthStringAccepted = function (value, strLength = 1) {
+    // Accepts empty strings, but if a string is provided we demand a min length with space chars excluded
+    if (!value || value === "") return true;
+    return verifyMinStringLength(value, strLength);
+};

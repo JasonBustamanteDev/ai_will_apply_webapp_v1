@@ -1,13 +1,15 @@
 <script setup>
 import PersonalDetailsForm from "~/ui/profiles/personalDetails/personalDetailsForm.vue";
 import LocationForm from "~/ui/profiles/location/locationForm.vue";
+import EducationForm from "~/ui/profiles/education/educationForm.vue";
 import CollapseComponent from "~/ui/profiles/shared/collapse.vue";
 
 definePageMeta({
     middleware: ["redirect-if-no-auth-session-client"],
 });
 
-// TODO: Dynamically show complete or is not compelte based on whether the form is submitted or not
+// TODO: Dynamically show complete or is not complete based on whether the form is submitted or not
+// TODO: Make it so all required forms are submitted (optional ones don't have to be)
 </script>
 
 <template>
@@ -29,6 +31,7 @@ definePageMeta({
                 <CollapseComponent title="Location" :isComplete="true">
                     <LocationForm />
                 </CollapseComponent>
+                <EducationForm/>
             </section>
         </SharedPageContainerWithNavbar>
     </div>

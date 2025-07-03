@@ -1,8 +1,8 @@
 <script setup>
-import { object, string, number } from "yup";
+import { object, string } from "yup";
 import { countriesList } from "./countries";
 import { usaDict, canadaDict } from "./provinces";
-import { verifyMinStringLength } from "~/shared/helper_methods";
+import { emptyOrMinLengthStringAccepted } from "~/shared/helper_methods";
 
 const MESSAGES = {
     REQUIRED: "This field is required",
@@ -21,9 +21,8 @@ const locationSchema = object({
         .test(
             "min-length-no-whitespace",
             "No addresses comprised of empty spaces",
-            function (value) {
-                if (!value || value === "") return true;
-                return verifyMinStringLength(value, 1);
+            (value) => {
+                return emptyOrMinLengthStringAccepted(value, 1);
             }
         ),
     city: string()
@@ -61,6 +60,7 @@ const formState = reactive({
 watch(
     () => formState.country,
     function (newCountry, oldCountry) {
+        // Clear the province field each time the country changes
         formState.provinceState = undefined;
     },
     { immediate: false, deep: true }
@@ -94,7 +94,6 @@ const onSubmit = async () => {
                 class="w-full"
             />
         </UFormField>
-
         <UFormField label="City **" name="city" class="mb-0">
             <UInput v-model="formState.city" class="w-full" />
         </UFormField>
@@ -117,6 +116,7 @@ const onSubmit = async () => {
                 type="submit"
                 class="w-full justify-center"
                 @click="onSubmit"
+                color="secondary"
                 >Submit</UButton
             >
         </div>

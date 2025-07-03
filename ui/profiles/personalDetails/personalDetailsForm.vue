@@ -174,6 +174,7 @@ const onSubmit = async function () {
             <UButton
                 type="submit"
                 class="w-full justify-center"
+                color="secondary"
                 @click="onSubmit"
                 >Submit</UButton
             >
