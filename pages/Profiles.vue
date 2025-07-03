@@ -12,18 +12,25 @@ definePageMeta({
 
 <template>
     <div>
-        <SharedNavbar />
-        <div class="global-layout-container">
+        <SharedPageContainerWithNavbar>
             <section class="multiple-forms-container">
-                <p>Complete all required forms below to unlock the job search feature</p>
+                <div>
+                    <p>
+                        Complete all required forms below to unlock the job search
+                        feature
+                    </p>
+                    <p>
+                        All required fields have labels that end with asterisks <span class="font-extrabold">**</span>
+                    </p>
+                </div>
                 <CollapseComponent title="Personal Details" :isComplete="true">
                     <PersonalDetailsForm />
                 </CollapseComponent>
-                <CollapseComponent title="Location" :isComplete="false">
+                <CollapseComponent title="Location" :isComplete="true">
                     <LocationForm />
                 </CollapseComponent>
             </section>
-        </div>
+        </SharedPageContainerWithNavbar>
     </div>
 </template>
 

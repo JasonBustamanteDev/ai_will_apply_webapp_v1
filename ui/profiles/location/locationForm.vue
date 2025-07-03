@@ -86,7 +86,7 @@ const onSubmit = async () => {
         class="space-y-4 uform-element pt-4"
         @submit="onSubmit"
     >
-        <UFormField label="Country" name="country" class="mb-0">
+        <UFormField label="Country **" name="country" class="mb-0">
             <USelectMenu
                 :key="formState.country"
                 v-model="formState.country"
@@ -96,14 +96,14 @@ const onSubmit = async () => {
             />
         </UFormField>
 
-        <UFormField label="City" name="city" class="mb-0">
+        <UFormField label="City **" name="city" class="mb-0">
             <UInput v-model="formState.city" class="w-full" />
         </UFormField>
-        <UFormField label="Postal Code" name="postalCode" class="mb-0">
+        <UFormField label="Postal Code **" name="postalCode" class="mb-0">
             <UInput v-model="formState.postalCode" class="w-full" />
         </UFormField>
         <UFormField
-            label="Province or State or Region"
+            label="Province or State or Region **"
             name="provinceState"
             class="mb-0 col-span-2"
         >

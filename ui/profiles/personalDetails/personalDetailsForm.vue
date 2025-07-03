@@ -110,17 +110,20 @@ const onSubmit = async function () {
         class="space-y-4 uform-element pt-4"
         @submit="onSubmit"
     >
-        <UFormField label="First Name" name="firstName" class="mb-0">
+        <UFormField label="First Name **" name="firstName" class="mb-0">
             <UInput v-model="formState.firstName" class="w-full" />
         </UFormField>
-        <UFormField label="Last Name" name="lastName" class="mb-0">
+        <UFormField label="Last Name **" name="lastName" class="mb-0">
             <UInput v-model="formState.lastName" class="w-full" />
         </UFormField>
-        <UFormField label="Age" name="age" class="mb-0">
+        <UFormField label="Age **" name="age" class="mb-0">
             <UInput v-model="formState.age" type="number" class="w-full" />
         </UFormField>
-        <UFormField label="Email" name="email" class="mb-0">
+        <UFormField label="Email **" name="email" class="mb-0">
             <UInput v-model="formState.email" class="w-full" />
+        </UFormField>
+        <UFormField label="Phone Number **" name="phoneNumber" class="mb-0">
+            <UInput v-model="formState.phoneNumber" class="w-full" />
         </UFormField>
         <UFormField label="Gender" name="gender" class="mb-0">
             <USelect
@@ -128,9 +131,6 @@ const onSubmit = async function () {
                 :items="genders"
                 class="w-full"
             />
-        </UFormField>
-        <UFormField label="Phone Number" name="phoneNumber" class="mb-0">
-            <UInput v-model="formState.phoneNumber" class="w-full" />
         </UFormField>
         <UFormField label="Ethnicity" name="ethnicity" class="mb-0">
             <USelect
