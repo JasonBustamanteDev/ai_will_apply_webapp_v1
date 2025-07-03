@@ -15,6 +15,7 @@ definePageMeta({
         <SharedNavbar />
         <div class="global-layout-container">
             <section class="multiple-forms-container">
+                <p>Complete all forms to unlock the job search feature!</p>
                 <CollapseComponent title="Personal Details" :isComplete="true">
                     <PersonalDetailsForm />
                 </CollapseComponent>
