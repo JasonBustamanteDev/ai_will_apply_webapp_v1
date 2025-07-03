@@ -1,4 +1,3 @@
-``
 <script setup>
 import { object, string, number } from "yup";
 import { countriesList } from "./countries";
