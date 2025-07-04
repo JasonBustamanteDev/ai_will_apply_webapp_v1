@@ -43,7 +43,6 @@ const educationSchema = object({
     gpa: string("Invalid number")
         .nullable()
         .notRequired()
-        // .typeError("Please enter a valid GPA")
         .test("gpa", "Type a decimal between 1 to 5", (value) => {
             if (value === undefined || value === "") return true;
             try {
@@ -63,7 +62,7 @@ const educationSchema = object({
         .test("start-date", "YYYY-MM format required", (value) =>
             emptyOrMinLengthStringAccepted(value, 1)
         ),
-    isFinished: string().required(MESSAGES.REQUIRED),
+    isFinished: boolean().required(MESSAGES.REQUIRED),
 });
 
 const formState = reactive({
@@ -120,7 +119,7 @@ const onSubmit = async () => {
             name="institutionProvince"
             class="mb-0"
         >
-            <UInput v-model="formState.institutionProvince" class="w-full" />
+            <UInput v-model="formState.institutionProvince" class="w-full" placeholder="Example: 'Ontario' or 'ON'" />
         </UFormField>
         <UFormField
             label="Start Date **"
@@ -150,7 +149,7 @@ const onSubmit = async () => {
         </UFormField>
         
         <UFormField label="GPA" name="gpa" class="mb-0">
-            <UInput v-model="formState.gpa" class="w-full" />
+            <UInput v-model="formState.gpa" class="w-full" placeholder="Number between 1 to 4"/>
         </UFormField>
 
         <div class="uform-submit-button-container">

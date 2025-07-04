@@ -16,8 +16,8 @@ export const genders = [
         value: "other",
     },
     {
-        label: "Prefer not to say",
-        value: undefined, // this undefined value exists so you can
+        label: "Would rather not say",
+        value: null,
     },
 ];
 
@@ -52,7 +52,7 @@ export const ethnicGroups = [
     },
     {
         label: "Would rather not say",
-        value: undefined,
+        value: null,
     },
 ];
 

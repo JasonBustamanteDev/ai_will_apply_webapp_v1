@@ -1,5 +1,5 @@
 <script setup>
-import { object, string, number } from "yup";
+import { object, string, number, boolean } from "yup";
 import {
     verifyMinStringLength,
     cleanPhoneNumber,
@@ -45,11 +45,11 @@ const profileSchema = object({
                 return /^(\+?[1-9]\d{9,14})$/.test(cleaned);
             }
         ),
-    gender: string().oneOf(
+    gender: string().nullable().oneOf(
         genders.map((g) => g.value),
         MESSAGES.VALID_OPTION
     ),
-    ethnicity: string().oneOf(
+    ethnicity: string().nullable().oneOf(
         ethnicGroups.map((g) => g.value),
         MESSAGES.VALID_OPTION
     ),
@@ -59,14 +59,11 @@ const profileSchema = object({
             educationLevels.map((g) => g.value),
             MESSAGES.VALID_OPTION
         ),
-    securityClearance: string().oneOf(
+    securityClearance: string().nullable().oneOf(
         booleanPlusEmptyOptions.map((g) => g.value),
         MESSAGES.VALID_OPTION
     ),
-    disability: string().oneOf(
-        booleanPlusEmptyOptions.map((g) => g.value),
-        MESSAGES.VALID_OPTION
-    ),
+    disability: boolean().nullable(),
     portfolioUrl: string()
         .nullable()
         .notRequired()
@@ -184,7 +181,7 @@ const onSubmit = async function () {
             name="portfolioUrl"
             class="mb-0 col-span-2"
         >
-            <UInput v-model="formState.portfolioUrl" class="w-full" />
+            <UInput v-model="formState.portfolioUrl" class="w-full" placeholder="Example: https://example.com"/>
         </UFormField>
 
         <div class="uform-submit-button-container">

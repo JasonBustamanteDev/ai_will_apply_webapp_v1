@@ -121,7 +121,7 @@ const onSubmit = async () => {
             name="provinceState"
             class="mb-0 col-span-2"
         >
-            <UInput v-model="formState.provinceState" class="w-full" />
+            <UInput v-model="formState.provinceState" class="w-full" placeholder="Example: 'Ontario' or 'ON'" />
         </UFormField>
         <UFormField label="Address" name="address" class="mb-0 col-span-2">
             <UInput v-model="formState.address" class="w-full" />

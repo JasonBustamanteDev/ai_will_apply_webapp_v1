@@ -1,25 +1,25 @@
 export const booleanOptions = [
     {
         label: "Yes",
-        value: "yes",
+        value: true,
     },
     {
         label: "No",
-        value: "no",
+        value: false,
     },
 ];
 
 export const booleanPlusEmptyOptions = [
     {
         label: "Yes",
-        value: "yes",
+        value: true,
     },
     {
         label: "No",
-        value: "no",
+        value: false,
     },
     {
-        label: "Prefer not to say",
-        value: undefined,
+        label: "Would rather not say",
+        value: null,
     },
 ];
