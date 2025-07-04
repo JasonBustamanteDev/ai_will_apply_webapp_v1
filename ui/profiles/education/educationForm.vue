@@ -3,10 +3,9 @@ import { object, string } from "yup";
 import { emptyOrMinLengthStringAccepted } from "~/shared/helper_methods";
 
 // EDUCATION (everything is optional)
-// institution (non empty string)
-// major (non empty string)
-// highest level of education (non empty string)
-// college name
+// institutionName (non empty string)
+
+// field of study (non empty string)
 // College city
 // College State
 // time-start
@@ -15,35 +14,49 @@ import { emptyOrMinLengthStringAccepted } from "~/shared/helper_methods";
 
 // TODO: Submit better contain a changed value
 const MESSAGES = {
-    ONLY_EMPTY: "Answer must not only consist of empty spaces",
+    REQUIRED: "This field is required",
+    ONLY_EMPTY: "Answer cannot be empty spaces",
 };
 
 const educationSchema = object({
-    institution: string()
-        .nullable()
-        .notRequired()
-        .test("major", MESSAGES.ONLY_EMPTY, (value) =>
+    institutionName: string()
+        .required(MESSAGES.REQUIRED)
+        .test("institutionName", MESSAGES.ONLY_EMPTY, (value) =>
+            emptyOrMinLengthStringAccepted(value, 1)
+        ),
+    fieldOfStudy: string()
+        .required(MESSAGES.REQUIRED)
+        .test("fieldOfStudy", MESSAGES.ONLY_EMPTY, (value) =>
+            emptyOrMinLengthStringAccepted(value, 1)
+        ),
+    institutionCity: string()
+        .required(MESSAGES.REQUIRED)
+        .test("institutionCity", MESSAGES.ONLY_EMPTY, (value) =>
+            emptyOrMinLengthStringAccepted(value, 1)
+        ),
+    institutionProvince: string()
+        .required(MESSAGES.REQUIRED)
+        .test("institutionProvince", MESSAGES.ONLY_EMPTY, (value) =>
             emptyOrMinLengthStringAccepted(value, 1)
         ),
 });
 
 const formState = reactive({
     // These keys must match the name attributes on UFormField elements
-    institution: undefined,
+    institutionName: undefined,
+    fieldOfStudy: undefined,
+    institutionCity: undefined,
+    institutionProvince: undefined,
 
-    college: undefined,
-    collegeCity: undefined,
-    collegeState: undefined,
-    gpa: undefined,
-    startDate: undefined,
-    endDate: undefined,
-    highestLevelOfEducation: undefined
+    // gpa: undefined,
+    // startDate: undefined,
+    // endDate: undefined,
 });
 
 const onSubmit = async () => {
     try {
         let user = await educationSchema.validate();
-        // TODO: send request to backend
+        // TODO: send request to backend. Make sure t
         console.log(user);
     } catch (err) {
         console.error(err);
@@ -60,9 +73,32 @@ const onSubmit = async () => {
         color="secondary"
         @submit="onSubmit"
     >
-        <UFormField label="Major **" name="major" class="mb-0">
-            <UInput v-model="formState.major" class="w-full" />
+        <UFormField
+            label="Institution Name **"
+            name="institutionName"
+            class="mb-0"
+        >
+            <UInput v-model="formState.institutionName" class="w-full" />
         </UFormField>
+        <UFormField label="Field of Study **" name="fieldOfStudy" class="mb-0">
+            <UInput v-model="formState.fieldOfStudy" class="w-full" />
+        </UFormField>
+        <UFormField label="Institution City **" name="institutionCity" class="mb-0">
+            <UInput v-model="formState.institutionCity" class="w-full" />
+        </UFormField>
+        <UFormField label="Institution Province or State **" name="institutionProvince" class="mb-0">
+            <UInput v-model="formState.institutionProvince" class="w-full" />
+        </UFormField>
+
+        <div class="uform-submit-button-container">
+            <UButton
+                type="submit"
+                class="w-full justify-center"
+                @click="onSubmit"
+                color="secondary"
+                >Submit</UButton
+            >
+        </div>
     </UForm>
 </template>
 
@@ -70,7 +106,7 @@ const onSubmit = async () => {
 .uform-element {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: 95px 120px auto;
+    grid-template-rows: 95px 95px auto;
     gap: 0.5rem 1rem;
 }
 
