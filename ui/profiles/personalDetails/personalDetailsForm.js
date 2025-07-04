@@ -56,21 +56,6 @@ export const ethnicGroups = [
     },
 ];
 
-export const booleanOptions = [
-    {
-        label: "Yes",
-        value: "yes",
-    },
-    {
-        label: "No",
-        value: "no",
-    },
-    {
-        label: "Prefer not to say",
-        value: undefined,
-    },
-];
-
 export const educationLevels = [
     {
         label: "High School",

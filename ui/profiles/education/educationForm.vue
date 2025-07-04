@@ -1,6 +1,7 @@
 <script setup>
-import { object, string } from "yup";
+import { object, string, boolean } from "yup";
 import { emptyOrMinLengthStringAccepted } from "~/shared/helper_methods";
+import { booleanOptions } from "~/ui/profiles/shared/util.js";
 
 // EDUCATION (everything is optional)
 // institutionName (non empty string)
@@ -39,6 +40,30 @@ const educationSchema = object({
         .test("institutionProvince", MESSAGES.ONLY_EMPTY, (value) =>
             emptyOrMinLengthStringAccepted(value, 1)
         ),
+    gpa: string("Invalid number")
+        .nullable()
+        .notRequired()
+        // .typeError("Please enter a valid GPA")
+        .test("gpa", "Type a decimal between 1 to 5", (value) => {
+            if (value === undefined || value === "") return true;
+            try {
+                const num = Number(value);
+                return value >= 1 && value <= 5;
+            } catch {
+                return false;
+            }
+        }),
+    startDate: string()
+        .required(MESSAGES.REQUIRED)
+        .test("start-date", "YYYY-MM format required", (value) =>
+            emptyOrMinLengthStringAccepted(value, 1)
+        ),
+    endDate: string()
+        .required(MESSAGES.REQUIRED)
+        .test("start-date", "YYYY-MM format required", (value) =>
+            emptyOrMinLengthStringAccepted(value, 1)
+        ),
+    isFinished: string().required(MESSAGES.REQUIRED),
 });
 
 const formState = reactive({
@@ -47,10 +72,10 @@ const formState = reactive({
     fieldOfStudy: undefined,
     institutionCity: undefined,
     institutionProvince: undefined,
-
-    // gpa: undefined,
-    // startDate: undefined,
-    // endDate: undefined,
+    gpa: undefined,
+    startDate: undefined,
+    endDate: undefined,
+    isFinished: undefined,
 });
 
 const onSubmit = async () => {
@@ -83,11 +108,49 @@ const onSubmit = async () => {
         <UFormField label="Field of Study **" name="fieldOfStudy" class="mb-0">
             <UInput v-model="formState.fieldOfStudy" class="w-full" />
         </UFormField>
-        <UFormField label="Institution City **" name="institutionCity" class="mb-0">
+        <UFormField
+            label="Institution City **"
+            name="institutionCity"
+            class="mb-0"
+        >
             <UInput v-model="formState.institutionCity" class="w-full" />
         </UFormField>
-        <UFormField label="Institution Province or State **" name="institutionProvince" class="mb-0">
+        <UFormField
+            label="Institution Province or State **"
+            name="institutionProvince"
+            class="mb-0"
+        >
             <UInput v-model="formState.institutionProvince" class="w-full" />
+        </UFormField>
+        <UFormField
+            label="Start Date **"
+            name="startDate"
+            class="mb-0"
+            
+        >
+            <UInput v-model="formState.startDate" class="w-full" placeholder="YYYY-MM" />
+        </UFormField>
+        <UFormField
+            label="Currently Attending **"
+            name="isFinished"
+            class="mb-0"
+        >
+            <URadioGroup
+                v-model="formState.isFinished"
+                orientation="horizontal"
+                variant="list"
+                :items="booleanOptions"
+                class="mt-2"
+                size="xl"
+                :ui="{ item: 'mr-5' }"
+            />
+        </UFormField>
+        <UFormField label="End Date **" name="endDate" class="mb-0" >
+            <UInput v-model="formState.endDate" class="w-full" placeholder="YYYY-MM"/>
+        </UFormField>
+        
+        <UFormField label="GPA" name="gpa" class="mb-0">
+            <UInput v-model="formState.gpa" class="w-full" />
         </UFormField>
 
         <div class="uform-submit-button-container">
@@ -100,6 +163,7 @@ const onSubmit = async () => {
             >
         </div>
     </UForm>
+    <p>{{ formState }}</p>
 </template>
 
 <style lang="scss" scoped>

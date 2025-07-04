@@ -7,9 +7,9 @@ import {
 import {
     genders,
     ethnicGroups,
-    booleanOptions,
     educationLevels,
 } from "~/ui/profiles/personalDetails/personalDetailsForm.js";
+import { booleanPlusEmptyOptions } from "~/ui/profiles/shared/util.js";
 
 const MESSAGES = {
     REQUIRED: "This field is required",
@@ -60,11 +60,11 @@ const profileSchema = object({
             MESSAGES.VALID_OPTION
         ),
     securityClearance: string().oneOf(
-        booleanOptions.map((g) => g.value),
+        booleanPlusEmptyOptions.map((g) => g.value),
         MESSAGES.VALID_OPTION
     ),
     disability: string().oneOf(
-        booleanOptions.map((g) => g.value),
+        booleanPlusEmptyOptions.map((g) => g.value),
         MESSAGES.VALID_OPTION
     ),
     portfolioUrl: string()
@@ -163,7 +163,7 @@ const onSubmit = async function () {
         >
             <USelect
                 v-model="formState.securityClearance"
-                :items="booleanOptions"
+                :items="booleanPlusEmptyOptions"
                 class="w-full"
             />
         </UFormField>
@@ -174,7 +174,7 @@ const onSubmit = async function () {
         >
             <USelect
                 v-model="formState.disability"
-                :items="booleanOptions"
+                :items="booleanPlusEmptyOptions"
                 class="w-full"
             />
         </UFormField>
