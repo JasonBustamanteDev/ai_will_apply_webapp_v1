@@ -82,29 +82,8 @@ const formState = reactive({
     institutionProvince: undefined,
     gpa: undefined,
     startDate: undefined,
-    currentlyAttending: undefined,
     endDate: undefined,
-});
-
-watch(
-    () => formState.currentlyAttending,
-    function (newVal, oldVal) {
-        console.log([oldVal, "->", newVal]);
-        if (newVal === true) {
-            // Set endDate to 'current' if Currently Attending is selected to be true
-            formState.endDate = CURRENT_STRING;
-            return;
-        }
-        if (newVal === false) {
-            // Clear endDate if Currently Attending is selected to be false
-            formState.endDate = undefined;
-        }
-    },
-    { immediate: false, deep: true }
-);
-// Disable the endDate field if Currently Attending is selected to be true
-const isEndDateDisabled = computed(() => {
-    return !!formState.currentlyAttending;
+    currentlyAttending: undefined,
 });
 
 const onSubmit = async () => {
@@ -162,6 +141,13 @@ const onSubmit = async () => {
                 placeholder="YYYY-MM"
             />
         </UFormField>
+        <UFormField label="End Date **" name="endDate" class="mb-0">
+            <UInput
+                v-model="formState.endDate"
+                class="w-full"
+                placeholder="YYYY-MM"
+            />
+        </UFormField>
         <UFormField
             label="Currently Attending **"
             name="currentlyAttending"
@@ -175,14 +161,6 @@ const onSubmit = async () => {
                 class="mt-2"
                 size="xl"
                 :ui="{ item: 'mr-5' }"
-            />
-        </UFormField>
-        <UFormField label="End Date **" name="endDate" class="mb-0">
-            <UInput
-                v-model="formState.endDate"
-                :disabled="isEndDateDisabled"
-                class="w-full"
-                placeholder="YYYY-MM"
             />
         </UFormField>
 
@@ -204,7 +182,7 @@ const onSubmit = async () => {
             >
         </div>
     </UForm>
-    <p>{{ formState }}</p>
+    <p>{{ educationSchema }}</p>
 </template>
 
 <style lang="scss" scoped>

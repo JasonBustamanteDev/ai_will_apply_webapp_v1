@@ -2,7 +2,7 @@
 import { object, string } from "yup";
 import { countriesList } from "./countries";
 import { usaDict, canadaDict } from "./provinces";
-import { emptyOrMinLengthStringAccepted } from "~/shared/helper_methods";
+import { emptyOrMinLengthStringAccepted, verifyMinStringLength } from "~/shared/helper_methods";
 
 const MESSAGES = {
     REQUIRED: "This field is required",
