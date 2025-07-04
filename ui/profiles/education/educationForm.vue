@@ -81,7 +81,7 @@ const formState = reactive({
 
 const onSubmit = async () => {
     try {
-        let user = await educationSchema.validate();
+        let user = await educationSchema.validate(formState);
         // TODO: send request to backend. Make sure t
         console.log(user);
     } catch (err) {

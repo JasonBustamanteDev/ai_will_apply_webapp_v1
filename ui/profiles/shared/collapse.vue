@@ -1,6 +1,7 @@
 <script setup>
 const props = defineProps({
     isComplete: { type: Boolean },
+    isOptional: { type: Boolean, default: false },
     title: { type: String },
 });
 
@@ -17,6 +18,11 @@ const props = defineProps({
         <div class="collapse-title font-semibold">
             <span class="mr-8">{{ props.title }}</span>
             <UBadge v-if="props.isComplete" label="complete" />
+            <UBadge
+                v-else-if="!props.isComplete && props.isOptional"
+                label="optional + incomplete"
+                class="custom-badge"
+            />
             <UBadge v-else label="incomplete" color="error" />
         </div>
 
@@ -26,4 +32,11 @@ const props = defineProps({
     </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.custom-badge {
+    --badge-bg: #ff6b35;
+    --badge-text: #ffffff;
+    background-color: var(--badge-bg) !important;
+    color: var(--badge-text) !important;
+}
+</style>

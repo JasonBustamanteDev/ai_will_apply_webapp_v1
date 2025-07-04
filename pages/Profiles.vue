@@ -19,14 +19,16 @@ definePageMeta({
             <section class="multiple-forms-container">
                 <div>
                     <p>
-                        Complete all required forms below to unlock the job search
-                        feature
+                        Complete all required forms below to unlock the job
+                        search feature
                     </p>
                     <p>
-                        All required fields have labels that end with asterisks <span class="font-extrabold">**</span>
+                        All required fields have labels that end with asterisks
+                        <span class="font-extrabold">**</span>
                     </p>
                     <p class="font-bold">
-                        Do not forget to hit the submit button after filling in a form
+                        Do not forget to hit the submit button after filling in
+                        a form
                     </p>
                 </div>
                 <CollapseComponent title="Personal Details" :isComplete="true">
@@ -35,7 +37,9 @@ definePageMeta({
                 <CollapseComponent title="Location" :isComplete="true">
                     <LocationForm />
                 </CollapseComponent>
-                <EducationForm/>
+                <CollapseComponent title="University or College" :isComplete="false" :isOptional="true">
+                    <EducationForm />
+                </CollapseComponent>
             </section>
         </SharedPageContainerWithNavbar>
     </div>

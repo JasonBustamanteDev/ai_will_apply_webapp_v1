@@ -97,7 +97,7 @@ const formState = reactive({
 
 const onSubmit = async function () {
     try {
-        let user = await profileSchema.validate();
+        let user = await profileSchema.validate(formState);
         // TODO: send request to backend
         console.log(user);
     } catch (err) {
@@ -121,7 +121,7 @@ const onSubmit = async function () {
             <UInput v-model="formState.lastName" class="w-full" />
         </UFormField>
         <UFormField label="Age **" name="age" class="mb-0">
-            <UInputNumber v-model="formState.age" class="w-full" />
+            <UInputNumber v-model="formState.age" class="w-full" color="neutral" />
         </UFormField>
         <UFormField label="Email **" name="email" class="mb-0">
             <UInput v-model="formState.email" class="w-full" />

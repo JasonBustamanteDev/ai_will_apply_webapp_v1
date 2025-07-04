@@ -75,7 +75,7 @@ watch(
 
 const onSubmit = async () => {
     try {
-        let user = await locationSchema.validate();
+        let user = await locationSchema.validate(formState);
         // TODO: send request to backend
         console.log(user);
     } catch (err) {
