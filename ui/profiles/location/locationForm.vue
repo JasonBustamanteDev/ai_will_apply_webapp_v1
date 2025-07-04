@@ -64,10 +64,10 @@ const formState = reactive({
     citizenship: undefined,
 });
 
+// Clear the province field each time the country changes
 watch(
     () => formState.country,
     function (newCountry, oldCountry) {
-        // Clear the province field each time the country changes
         formState.provinceState = undefined;
     },
     { immediate: false, deep: true }
@@ -121,7 +121,11 @@ const onSubmit = async () => {
             name="provinceState"
             class="mb-0 col-span-2"
         >
-            <UInput v-model="formState.provinceState" class="w-full" placeholder="Example: 'Ontario' or 'ON'" />
+            <UInput
+                v-model="formState.provinceState"
+                class="w-full"
+                placeholder="Example: 'Ontario' or 'ON'"
+            />
         </UFormField>
         <UFormField label="Address" name="address" class="mb-0 col-span-2">
             <UInput v-model="formState.address" class="w-full" />

@@ -2,6 +2,7 @@
 import { object, string, boolean } from "yup";
 import { emptyOrMinLengthStringAccepted } from "~/shared/helper_methods";
 import { booleanOptions } from "~/ui/profiles/shared/util.js";
+import { isValidYearMonth } from "./educationForm";
 
 // EDUCATION (everything is optional)
 // institutionName (non empty string)
@@ -18,6 +19,7 @@ const MESSAGES = {
     REQUIRED: "This field is required",
     ONLY_EMPTY: "Answer cannot be empty spaces",
 };
+const CURRENT_STRING = "current";
 
 const educationSchema = object({
     institutionName: string()
@@ -54,15 +56,22 @@ const educationSchema = object({
         }),
     startDate: string()
         .required(MESSAGES.REQUIRED)
-        .test("start-date", "YYYY-MM format required", (value) =>
-            emptyOrMinLengthStringAccepted(value, 1)
-        ),
+        .test("start-date", "YYYY-MM format required", (value) => {
+            return isValidYearMonth(value);
+        }),
     endDate: string()
         .required(MESSAGES.REQUIRED)
-        .test("start-date", "YYYY-MM format required", (value) =>
-            emptyOrMinLengthStringAccepted(value, 1)
-        ),
-    isFinished: boolean().required(MESSAGES.REQUIRED),
+        .test("start-date", "YYYY-MM format required", (value) => {
+            console.log(value);
+            if (value === CURRENT_STRING) {
+                console.log("return true");
+                return true;
+            }
+
+            console.log("Ridic", isValidYearMonth(value));
+            return isValidYearMonth(value);
+        }),
+    currentlyAttending: boolean().required(MESSAGES.REQUIRED),
 });
 
 const formState = reactive({
@@ -73,8 +82,29 @@ const formState = reactive({
     institutionProvince: undefined,
     gpa: undefined,
     startDate: undefined,
+    currentlyAttending: undefined,
     endDate: undefined,
-    isFinished: undefined,
+});
+
+watch(
+    () => formState.currentlyAttending,
+    function (newVal, oldVal) {
+        console.log([oldVal, "->", newVal]);
+        if (newVal === true) {
+            // Set endDate to 'current' if Currently Attending is selected to be true
+            formState.endDate = CURRENT_STRING;
+            return;
+        }
+        if (newVal === false) {
+            // Clear endDate if Currently Attending is selected to be false
+            formState.endDate = undefined;
+        }
+    },
+    { immediate: false, deep: true }
+);
+// Disable the endDate field if Currently Attending is selected to be true
+const isEndDateDisabled = computed(() => {
+    return !!formState.currentlyAttending;
 });
 
 const onSubmit = async () => {
@@ -119,23 +149,26 @@ const onSubmit = async () => {
             name="institutionProvince"
             class="mb-0"
         >
-            <UInput v-model="formState.institutionProvince" class="w-full" placeholder="Example: 'Ontario' or 'ON'" />
+            <UInput
+                v-model="formState.institutionProvince"
+                class="w-full"
+                placeholder="Example: 'Ontario' or 'ON'"
+            />
         </UFormField>
-        <UFormField
-            label="Start Date **"
-            name="startDate"
-            class="mb-0"
-            
-        >
-            <UInput v-model="formState.startDate" class="w-full" placeholder="YYYY-MM" />
+        <UFormField label="Start Date **" name="startDate" class="mb-0">
+            <UInput
+                v-model="formState.startDate"
+                class="w-full"
+                placeholder="YYYY-MM"
+            />
         </UFormField>
         <UFormField
             label="Currently Attending **"
-            name="isFinished"
+            name="currentlyAttending"
             class="mb-0"
         >
             <URadioGroup
-                v-model="formState.isFinished"
+                v-model="formState.currentlyAttending"
                 orientation="horizontal"
                 variant="list"
                 :items="booleanOptions"
@@ -144,12 +177,21 @@ const onSubmit = async () => {
                 :ui="{ item: 'mr-5' }"
             />
         </UFormField>
-        <UFormField label="End Date **" name="endDate" class="mb-0" >
-            <UInput v-model="formState.endDate" class="w-full" placeholder="YYYY-MM"/>
+        <UFormField label="End Date **" name="endDate" class="mb-0">
+            <UInput
+                v-model="formState.endDate"
+                :disabled="isEndDateDisabled"
+                class="w-full"
+                placeholder="YYYY-MM"
+            />
         </UFormField>
-        
+
         <UFormField label="GPA" name="gpa" class="mb-0">
-            <UInput v-model="formState.gpa" class="w-full" placeholder="Number between 1 to 4"/>
+            <UInput
+                v-model="formState.gpa"
+                class="w-full"
+                placeholder="Number between 1 to 4"
+            />
         </UFormField>
 
         <div class="uform-submit-button-container">
