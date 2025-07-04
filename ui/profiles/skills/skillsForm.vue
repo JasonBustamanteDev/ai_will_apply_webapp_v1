@@ -1,13 +1,9 @@
 <script setup>
-    // // EXTREME
-    // cover letter
-    // skills list
+// // EXTREME
+// cover letter
+// skills list
 </script>
 
-<template>
-  
-</template>
+<template></template>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>
