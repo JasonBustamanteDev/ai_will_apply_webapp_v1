@@ -62,13 +62,6 @@ const educationSchema = object({
     endDate: string()
         .required(MESSAGES.REQUIRED)
         .test("start-date", "YYYY-MM format required", (value) => {
-            console.log(value);
-            if (value === CURRENT_STRING) {
-                console.log("return true");
-                return true;
-            }
-
-            console.log("Ridic", isValidYearMonth(value));
             return isValidYearMonth(value);
         }),
     currentlyAttending: boolean().required(MESSAGES.REQUIRED),
@@ -182,7 +175,6 @@ const onSubmit = async () => {
             >
         </div>
     </UForm>
-    <p>{{ educationSchema }}</p>
 </template>
 
 <style lang="scss" scoped>
