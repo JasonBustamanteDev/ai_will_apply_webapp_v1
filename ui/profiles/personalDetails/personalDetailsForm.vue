@@ -26,9 +26,8 @@ const profileSchema = object({
         .test("min-length-no-whitespace", "No empty names", (value) => verifyMinStringLength(value, 1)), // prettier-ignore
     age: number()
         .required(MESSAGES.REQUIRED)
-        .min(13, MESSAGES.MIN_AGE)
+        .typeError("Please enter a valid age")
         .integer("Age must be a whole number")
-        .positive(MESSAGES.MIN_AGE)
         .test("min-age", MESSAGES.MIN_AGE, (value) => value >= 13),
     email: string().email("Invalid email").required(MESSAGES.REQUIRED),
     phoneNumber: string()
@@ -125,7 +124,7 @@ const onSubmit = async function () {
             <UInput v-model="formState.lastName" class="w-full" />
         </UFormField>
         <UFormField label="Age **" name="age" class="mb-0">
-            <UInput v-model="formState.age" type="number" class="w-full" />
+            <UInputNumber v-model="formState.age" class="w-full" />
         </UFormField>
         <UFormField label="Email **" name="email" class="mb-0">
             <UInput v-model="formState.email" class="w-full" />
