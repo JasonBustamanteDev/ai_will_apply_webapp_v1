@@ -8,6 +8,7 @@ import {
     genders,
     ethnicGroups,
     booleanOptions,
+    educationLevels,
 } from "~/ui/profiles/personalDetails/personalDetailsForm.js";
 
 const MESSAGES = {
@@ -53,6 +54,12 @@ const profileSchema = object({
         ethnicGroups.map((g) => g.value),
         MESSAGES.VALID_OPTION
     ),
+    educationLevel: string()
+        .required(MESSAGES.REQUIRED)
+        .oneOf(
+            educationLevels.map((g) => g.value),
+            MESSAGES.VALID_OPTION
+        ),
     securityClearance: string().oneOf(
         booleanOptions.map((g) => g.value),
         MESSAGES.VALID_OPTION
@@ -89,6 +96,7 @@ const formState = reactive({
     securityClearance: undefined,
     disability: undefined,
     portfolioUrl: undefined,
+    educationLevel: undefined,
 });
 
 const onSubmit = async function () {
@@ -125,6 +133,16 @@ const onSubmit = async function () {
         <UFormField label="Phone Number **" name="phoneNumber" class="mb-0">
             <UInput v-model="formState.phoneNumber" class="w-full" />
         </UFormField>
+        <UFormField
+            label="Highest Education Level **"
+            name="educationLevel"
+            class="mb-0"
+        >
+            <USelect
+                v-model="formState.educationLevel"
+                :items="educationLevels"
+                class="w-full"
+        /></UFormField>
         <UFormField label="Gender" name="gender" class="mb-0">
             <USelect
                 v-model="formState.gender"

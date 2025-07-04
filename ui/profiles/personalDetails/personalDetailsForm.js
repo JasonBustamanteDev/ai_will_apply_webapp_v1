@@ -70,3 +70,22 @@ export const booleanOptions = [
         value: undefined,
     },
 ];
+
+export const educationLevels = [
+    {
+        label: "High School",
+        value: "high_school",
+    },
+    {
+        label: "Bachelor's Degree",
+        value: "bachelors",
+    },
+    {
+        label: "Master's",
+        value: "masters",
+    },
+    {
+        label: "PhD",
+        value: "phd",
+    },
+];
