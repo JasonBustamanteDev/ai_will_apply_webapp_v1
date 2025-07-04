@@ -46,6 +46,12 @@ const locationSchema = object({
                 else return verifyMinStringLength(lowercaseValue, 1);
             }
         ),
+    citizenship: string()
+        .required(MESSAGES.REQUIRED)
+        .oneOf(
+            countriesList.map((g) => g.value),
+            "Select a valid country"
+        ),
 });
 
 const formState = reactive({
@@ -55,6 +61,7 @@ const formState = reactive({
     city: undefined,
     postalCode: undefined,
     provinceState: undefined,
+    citizenship: undefined,
 });
 
 watch(
@@ -89,6 +96,15 @@ const onSubmit = async () => {
             <USelectMenu
                 :key="formState.country"
                 v-model="formState.country"
+                :items="countriesList"
+                value-key="value"
+                class="w-full"
+            />
+        </UFormField>
+        <UFormField label="Citizenship **" name="citizenship" class="mb-0">
+            <USelectMenu
+                :key="formState.citizenship"
+                v-model="formState.citizenship"
                 :items="countriesList"
                 value-key="value"
                 class="w-full"

@@ -10,6 +10,7 @@ definePageMeta({
 
 // TODO: Dynamically show complete or is not complete based on whether the form is submitted or not
 // TODO: Make it so all required forms are submitted (optional ones don't have to be)
+// TODO: Have a copy paste feature for profiles.
 </script>
 
 <template>
@@ -23,6 +24,9 @@ definePageMeta({
                     </p>
                     <p>
                         All required fields have labels that end with asterisks <span class="font-extrabold">**</span>
+                    </p>
+                    <p class="font-bold">
+                        Do not forget to hit the submit button after filling in a form
                     </p>
                 </div>
                 <CollapseComponent title="Personal Details" :isComplete="true">

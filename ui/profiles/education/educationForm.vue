@@ -1,5 +1,5 @@
 <script setup>
-import { object, string, number } from "yup";
+import { object, string } from "yup";
 import { emptyOrMinLengthStringAccepted } from "~/shared/helper_methods";
 
 // EDUCATION (everything is optional)
