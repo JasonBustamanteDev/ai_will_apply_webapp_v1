@@ -9,8 +9,21 @@ const proficiencyOptions = [
     { label: "Basic", value: "basic" },
 ];
 
+// Check if the last language entry is complete
+const isLastLanguageComplete = computed(() => {
+    if (languages.value.length === 0) return true;
+
+    const lastLanguage = languages.value[languages.value.length - 1];
+    return (
+        lastLanguage.language.trim() !== "" &&
+        lastLanguage.proficiency.trim() !== ""
+    );
+});
+
 const addLanguage = () => {
-    languages.value.push({ language: "", proficiency: "" });
+    if (isLastLanguageComplete.value) {
+        languages.value.push({ language: "", proficiency: "" });
+    }
 };
 
 const removeLanguage = (index) => {
