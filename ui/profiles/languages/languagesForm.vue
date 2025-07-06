@@ -1,4 +1,5 @@
 <script setup>
+import AddLanguageButton from "./subcomponents/addLangButton.vue";
 const languages = ref([{ language: "English", proficiency: "native" }]);
 
 const proficiencyOptions = [
@@ -32,6 +33,11 @@ const removeLanguage = (index) => {
 </script>
 
 <template>
+    <AddLanguageButton
+        v-if="languages.length === 0"
+        :isDisabled="!isLastLanguageComplete"
+        @addLangToList="addLanguage"
+    />
     <div
         v-for="(lang, index) in languages"
         :key="index"
@@ -54,15 +60,11 @@ const removeLanguage = (index) => {
             @click="removeLanguage(index)"
             class="mb-1"
         />
+        <AddLanguageButton
+            v-if="index === languages.length - 1"
+            :isDisabled="!isLastLanguageComplete"
+            @addLangToList="addLanguage"
+        />
     </div>
-    <UButton
-        icon="i-heroicons-plus"
-        variant="outline"
-        color="neutral"
-        @click="addLanguage"
-        class="w-48"
-    >
-        Add Language
-    </UButton>
     <p>{{ languages }}</p>
 </template>
