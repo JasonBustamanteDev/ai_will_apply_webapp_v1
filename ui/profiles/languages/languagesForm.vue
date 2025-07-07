@@ -1,5 +1,5 @@
 <script setup>
-import AddLanguageButton from "./subcomponents/addLangButton.vue";
+import AddRowButton from "@/ui/profiles/shared/addRowButton.vue";
 import { verifyMinStringLength } from "~/shared/helper_methods";
 import { some } from "lodash";
 
@@ -35,21 +35,10 @@ const proficiencyOptions = [
     },
 ];
 
-// Check if the last language entry is complete
-const isLastLanguageComplete = computed(() => {
-    if (languages.value.length === 0) return true;
-
-    const lastLanguage = languages.value[languages.value.length - 1];
-    return (
-        lastLanguage.language.trim() !== "" &&
-        lastLanguage.proficiency.trim() !== ""
-    );
-});
-
 const addLanguage = () => {
     languages.value.push({
         language: "",
-        proficiency: "",
+        proficiency: "native",
         langError: false,
         proficiencyError: false,
     });
@@ -64,17 +53,8 @@ const onSubmit = () => {
     for (const obj of languages.value) {
         const item_lang = obj.language;
         const item_proficiency = obj.proficiency;
-
-        if (!verifyMinStringLength(item_lang, 1)) {
-            obj.langError = true;
-        } else {
-            obj.langError = false;
-        }
-        if (!verifyMinStringLength(item_proficiency, 1)) {
-            obj.proficiencyError = true;
-        } else {
-            obj.proficiencyError = false;
-        }
+        obj.langError = !verifyMinStringLength(item_lang, 1);
+        obj.proficiencyError = !verifyMinStringLength(item_proficiency, 1);
     }
 
     if (some(languages.value, "error")) return;
@@ -84,9 +64,11 @@ const onSubmit = () => {
 
 <template>
     <div class="flex flex-col gap-3">
-
         <section>
-            <p>Enter the full language name.  Ex: 'English' (not 'ENG' or other abbreviations)</p>
+            <p>
+                Enter the full language name. Ex: 'English' (not 'ENG' or other
+                abbreviations)
+            </p>
             <p>Minimum 1 language required</p>
         </section>
         <div
@@ -96,7 +78,7 @@ const onSubmit = () => {
         >
             <UInput
                 v-model="lang.language"
-                placeholder="Full language name. Ex. 'English'"
+                placeholder="Enter language"
                 class="w-64"
                 :highlight="lang.langError"
                 :color="lang.langError ? 'error' : ''"
@@ -116,11 +98,12 @@ const onSubmit = () => {
                 :disabled="languages.length === 1"
                 class="mb-1"
             />
-            <AddLanguageButton
+            <AddRowButton
                 v-if="index === languages.length - 1 || languages.length === 1"
-                :isDisabled="!isLastLanguageComplete"
-                @addLangToList="addLanguage"
-            />
+                :isDisabled="false"
+                @addRow="addLanguage"
+                >Add Language</AddRowButton
+            >
         </div>
         <div class="uform-submit-button-container mt-7">
             <UButton

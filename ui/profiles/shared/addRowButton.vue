@@ -17,10 +17,10 @@ const props = defineProps({
         variant="outline"
         color="neutral"
         :disabled="props.isDisabled"
-        @click="$emit('addLangToList')"
+        @click="$emit('addRow')"
         class="w-48"
     >
-        Add Language
+        <slot></slot>
     </UButton>
 </template>
 

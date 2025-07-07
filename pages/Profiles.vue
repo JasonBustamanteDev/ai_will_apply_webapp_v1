@@ -4,6 +4,9 @@ import LocationForm from "~/ui/profiles/location/locationForm.vue";
 import EducationForm from "~/ui/profiles/education/educationForm.vue";
 import CollapseComponent from "~/ui/profiles/shared/collapse.vue";
 import LanguagesForm from "~/ui/profiles/languages/languagesForm.vue";
+import SkillsForm from "~/ui/profiles/skills/skillsForm.vue";
+import SocialsForm from "~/ui/profiles/socials/socialsForm.vue";
+import PreferenceForm from "~/ui/profiles/preferences/preferenceForm.vue";
 
 definePageMeta({
     middleware: ["redirect-if-no-auth-session-client"],
@@ -47,6 +50,13 @@ definePageMeta({
                     :isOptional="true"
                 >
                     <EducationForm />
+                </CollapseComponent>
+                <CollapseComponent
+                    title="Skills"
+                    :isComplete="false"
+                    :isOptional="true"
+                >
+                    <SkillsForm />
                 </CollapseComponent>
             </section>
         </SharedPageContainerWithNavbar>

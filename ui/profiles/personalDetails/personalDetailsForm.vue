@@ -45,24 +45,30 @@ const profileSchema = object({
                 return /^(\+?[1-9]\d{9,14})$/.test(cleaned);
             }
         ),
-    gender: string().nullable().oneOf(
-        genders.map((g) => g.value),
-        MESSAGES.VALID_OPTION
-    ),
-    ethnicity: string().nullable().oneOf(
-        ethnicGroups.map((g) => g.value),
-        MESSAGES.VALID_OPTION
-    ),
+    gender: string()
+        .nullable()
+        .oneOf(
+            genders.map((g) => g.value),
+            MESSAGES.VALID_OPTION
+        ),
+    ethnicity: string()
+        .nullable()
+        .oneOf(
+            ethnicGroups.map((g) => g.value),
+            MESSAGES.VALID_OPTION
+        ),
     educationLevel: string()
         .required(MESSAGES.REQUIRED)
         .oneOf(
             educationLevels.map((g) => g.value),
             MESSAGES.VALID_OPTION
         ),
-    securityClearance: string().nullable().oneOf(
-        booleanPlusEmptyOptions.map((g) => g.value),
-        MESSAGES.VALID_OPTION
-    ),
+    securityClearance: string()
+        .nullable()
+        .oneOf(
+            booleanPlusEmptyOptions.map((g) => g.value),
+            MESSAGES.VALID_OPTION
+        ),
     disability: boolean().nullable(),
     portfolioUrl: string()
         .nullable()
@@ -121,7 +127,14 @@ const onSubmit = async function () {
             <UInput v-model="formState.lastName" class="w-full" />
         </UFormField>
         <UFormField label="Age **" name="age" class="mb-0">
-            <UInputNumber v-model="formState.age" class="w-full" color="neutral" />
+            <UInputNumber
+                v-model="formState.age"
+                :min="13"
+                :max="120"
+                :defaultValue="18"
+                class="w-full"
+                color="neutral"
+            />
         </UFormField>
         <UFormField label="Email **" name="email" class="mb-0">
             <UInput v-model="formState.email" class="w-full" />
@@ -181,7 +194,11 @@ const onSubmit = async function () {
             name="portfolioUrl"
             class="mb-0 col-span-2"
         >
-            <UInput v-model="formState.portfolioUrl" class="w-full" placeholder="Example: https://example.com"/>
+            <UInput
+                v-model="formState.portfolioUrl"
+                class="w-full"
+                placeholder="Example: https://example.com"
+            />
         </UFormField>
 
         <div class="uform-submit-button-container">
