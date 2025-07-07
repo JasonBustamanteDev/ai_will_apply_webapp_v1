@@ -28,11 +28,19 @@ const formState = reactive({
     willingToRelocate: true,
     driversLicense: true,
     reliableTransportation: true,
-    veteranStatus: undefined,
+    veteranStatus: false,
     companyBlacklist: ["Some terrible company"],
 });
 
-const onSubmit = async () => {};
+const onSubmit = async () => {
+    try {
+        let user = await preferenceSchema.validate(formState);
+        // TODO: send request to backend
+        console.log(user);
+    } catch (err) {
+        console.error(err);
+    }
+};
 </script>
 
 <template>
@@ -116,9 +124,9 @@ const onSubmit = async () => {};
             />
         </UFormField>
         <UFormField
-            label="Do you have a reliable mode of transportation? **"
+            label="Do you own a Car? **"
             name="reliableTransportation"
-            class="mb-0 col-span-2"
+            class="mb-0"
         >
             <URadioGroup
                 v-model="formState.reliableTransportation"
@@ -131,17 +139,33 @@ const onSubmit = async () => {};
             />
         </UFormField>
         <UFormField
-            label="Avoid applying to these companies"
+            label="Are you a veteran? **"
+            name="veteranStatus"
+            class="mb-0"
+        >
+            <URadioGroup
+                v-model="formState.veteranStatus"
+                orientation="horizontal"
+                variant="list"
+                :items="booleanOptions"
+                class="mt-2"
+                size="xl"
+                :ui="{ item: 'mr-5' }"
+            />
+        </UFormField>
+        <UFormField
+            label="Avoid applying to these companies:"
             name="companyBlacklist"
             class="mb-0 col-span-4"
         >
             <UInputTags
                 v-model="formState.companyBlacklist"
-                class="w-full h-auto"
+                :max="20"
+                class="w-full h-auto mb-12"
             />
         </UFormField>
 
-         <div class="uform-submit-button-container">
+        <div class="uform-submit-button-container">
             <UButton
                 type="submit"
                 class="w-full justify-center"
@@ -157,7 +181,7 @@ const onSubmit = async () => {};
 .uform-element {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: repeat(3, 80px) auto;
+    grid-template-rows: repeat(2, 80px) auto auto;
     gap: 0.5rem 1rem;
 }
 
