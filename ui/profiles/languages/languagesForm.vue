@@ -1,13 +1,38 @@
 <script setup>
 import AddLanguageButton from "./subcomponents/addLangButton.vue";
-const languages = ref([{ language: "English", proficiency: "native" }]);
+import { verifyMinStringLength } from "~/shared/helper_methods";
+import { some } from "lodash";
+
+const languages = ref([
+    {
+        language: "English",
+        proficiency: "native",
+        langError: false,
+        proficiencyError: false,
+    },
+]);
 
 const proficiencyOptions = [
-    { label: "Native", value: "native" },
-    { label: "Fluent", value: "fluent" },
-    { label: "Advanced", value: "advanced" },
-    { label: "Intermediate", value: "intermediate" },
-    { label: "Basic", value: "basic" },
+    {
+        label: "Native",
+        value: "native",
+    },
+    {
+        label: "Fluent",
+        value: "fluent",
+    },
+    {
+        label: "Advanced",
+        value: "advanced",
+    },
+    {
+        label: "Intermediate",
+        value: "intermediate",
+    },
+    {
+        label: "Basic",
+        value: "basic",
+    },
 ];
 
 // Check if the last language entry is complete
@@ -22,7 +47,12 @@ const isLastLanguageComplete = computed(() => {
 });
 
 const addLanguage = () => {
-    languages.value.push({ language: "", proficiency: "" });
+    languages.value.push({
+        language: "",
+        proficiency: "",
+        langError: false,
+        proficiencyError: false,
+    });
 };
 
 const removeLanguage = (index) => {
@@ -30,7 +60,25 @@ const removeLanguage = (index) => {
 };
 
 const onSubmit = () => {
+    // Check if each field is filled - render error if it isn't and clear errors if it is
+    for (const obj of languages.value) {
+        const item_lang = obj.language;
+        const item_proficiency = obj.proficiency;
 
+        if (!verifyMinStringLength(item_lang, 1)) {
+            obj.langError = true;
+        } else {
+            obj.langError = false;
+        }
+        if (!verifyMinStringLength(item_proficiency, 1)) {
+            obj.proficiencyError = true;
+        } else {
+            obj.proficiencyError = false;
+        }
+    }
+
+    if (some(languages.value, "error")) return;
+    console.log("Submit form", languages.value);
 };
 </script>
 
@@ -46,15 +94,15 @@ const onSubmit = () => {
                 v-model="lang.language"
                 placeholder="Full language name. Ex. 'English'"
                 class="w-64"
-                highlight 
-                color=""
+                :highlight="lang.langError"
+                :color="lang.langError ? 'error' : ''"
             />
             <USelect
                 v-model="lang.proficiency"
                 :items="proficiencyOptions"
                 class="w-36"
-                highlight 
-                color=""
+                :highlight="lang.proficiencyError"
+                :color="lang.proficiencyError ? 'error' : ''"
             />
             <UButton
                 icon="i-heroicons-trash"
@@ -70,7 +118,7 @@ const onSubmit = () => {
                 @addLangToList="addLanguage"
             />
         </div>
-        <div class="uform-submit-button-container">
+        <div class="uform-submit-button-container mt-7">
             <UButton
                 type="submit"
                 class="w-full justify-center"
@@ -80,7 +128,6 @@ const onSubmit = () => {
             >
         </div>
     </div>
-    <p>{{ languages }}</p>
 </template>
 
 <style lang="scss"></style>
