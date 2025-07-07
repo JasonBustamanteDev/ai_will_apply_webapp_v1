@@ -70,20 +70,6 @@ const profileSchema = object({
             MESSAGES.VALID_OPTION
         ),
     disability: boolean().nullable(),
-    portfolioUrl: string()
-        .nullable()
-        .notRequired()
-        .test(
-            "url-or-empty",
-            "Enter a valid URL like https://example.com",
-            function (value) {
-                if (!value || value === "") return true;
-                return (
-                    /^https?:\/\/.+/.test(value) &&
-                    this.createError === undefined
-                );
-            }
-        ),
 });
 
 const formState = reactive({
@@ -97,7 +83,6 @@ const formState = reactive({
     ethnicity: undefined,
     securityClearance: undefined,
     disability: undefined,
-    portfolioUrl: undefined,
     educationLevel: undefined,
 });
 
@@ -185,18 +170,6 @@ const onSubmit = async () => {
                 v-model="formState.disability"
                 :items="booleanPlusEmptyOptions"
                 class="w-full"
-            />
-        </UFormField>
-
-        <UFormField
-            label="Portfolio URL"
-            name="portfolioUrl"
-            class="mb-0 col-span-2"
-        >
-            <UInput
-                v-model="formState.portfolioUrl"
-                class="w-full"
-                placeholder="Example: https://example.com"
             />
         </UFormField>
 
