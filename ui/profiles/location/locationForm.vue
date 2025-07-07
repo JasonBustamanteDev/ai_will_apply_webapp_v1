@@ -80,7 +80,6 @@ const onSubmit = async () => {
         console.log(user);
     } catch (err) {
         console.error(err);
-        console.log(locationSchema);
     }
 };
 </script>

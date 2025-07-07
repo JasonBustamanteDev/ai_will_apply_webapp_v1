@@ -2,6 +2,20 @@
 import { object, string } from "yup";
 
 const socialSchema = object({
+    portfolioUrl: string()
+        .nullable()
+        .notRequired()
+        .test(
+            "url-or-empty",
+            "Enter a valid URL like https://example.com",
+            function (value) {
+                if (!value || value === "") return true;
+                return (
+                    /^https?:\/\/.+/.test(value) &&
+                    this.createError === undefined
+                );
+            }
+        ),
     linkedin: string()
         .nullable()
         .notRequired()
@@ -132,6 +146,7 @@ const socialSchema = object({
 
 const formState = reactive({
     // These keys must match the name attributes on UFormField elements
+    portfolioUrl: "",
     linkedin: "",
     github: "",
     twitter: "",
@@ -149,7 +164,7 @@ const onSubmit = async () => {
         console.log(user);
     } catch (err) {
         console.error(err);
-        console.log(profileSchema);
+        console.log(socialSchema);
     }
 };
 </script>
@@ -161,6 +176,17 @@ const onSubmit = async () => {
         class="space-y-4 uform-element pt-4"
         @submit="onSubmit"
     >
+        <UFormField
+            label="Portfolio URL"
+            name="portfolioUrl"
+            class="mb-0 col-span-2"
+        >
+            <UInput
+                v-model="formState.portfolioUrl"
+                class="w-full"
+                placeholder="https://example.com"
+            />
+        </UFormField>
         <UFormField label="LinkedIn" name="linkedin" class="mb-0 col-span-2">
             <UInput v-model="formState.linkedin" class="w-full" />
         </UFormField>

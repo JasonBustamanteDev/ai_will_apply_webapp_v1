@@ -59,13 +59,13 @@ definePageMeta({
                     <EducationForm />
                 </CollapseComponent>
                 <CollapseComponent
-                    title="Social Media Links"
+                    title="Portfolio + Social Media Links"
                     :isComplete="false"
                     :isOptional="true"
                 >
                     <SocialsForm />
                 </CollapseComponent>
-                
+
                 <PreferenceForm/>
             </section>
         </SharedPageContainerWithNavbar>
