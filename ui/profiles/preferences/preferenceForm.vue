@@ -137,9 +137,19 @@ const onSubmit = async () => {};
         >
             <UInputTags
                 v-model="formState.companyBlacklist"
-                class="w-full h-10"
+                class="w-full h-auto"
             />
         </UFormField>
+
+         <div class="uform-submit-button-container">
+            <UButton
+                type="submit"
+                class="w-full justify-center"
+                @click="onSubmit"
+                color="secondary"
+                >Submit</UButton
+            >
+        </div>
     </UForm>
 </template>
 

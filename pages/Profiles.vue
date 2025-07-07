@@ -41,6 +41,13 @@ definePageMeta({
                 <CollapseComponent title="Location" :isComplete="true">
                     <LocationForm />
                 </CollapseComponent>
+                <CollapseComponent
+                    title="Preferences"
+                    :isComplete="true"
+                    :isOptional="false"
+                >
+                    <PreferenceForm />
+                </CollapseComponent>
                 <CollapseComponent title="Languages" :isComplete="false">
                     <LanguagesForm />
                 </CollapseComponent>
@@ -65,8 +72,6 @@ definePageMeta({
                 >
                     <SocialsForm />
                 </CollapseComponent>
-
-                <PreferenceForm/>
             </section>
         </SharedPageContainerWithNavbar>
     </div>
