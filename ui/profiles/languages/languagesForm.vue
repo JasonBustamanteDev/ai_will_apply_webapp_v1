@@ -84,7 +84,11 @@ const onSubmit = () => {
 
 <template>
     <div class="flex flex-col gap-3">
-        <p>Enter how many languages you can speak, and at what level</p>
+
+        <section>
+            <p>Enter the full language name.  Ex: 'English' (not 'ENG' or other abbreviations)</p>
+            <p>Minimum 1 language required</p>
+        </section>
         <div
             v-for="(lang, index) in languages"
             :key="index"
