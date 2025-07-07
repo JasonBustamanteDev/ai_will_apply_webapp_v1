@@ -58,6 +58,8 @@ definePageMeta({
                 >
                     <SkillsForm />
                 </CollapseComponent>
+
+                <SocialsForm />
             </section>
         </SharedPageContainerWithNavbar>
     </div>
