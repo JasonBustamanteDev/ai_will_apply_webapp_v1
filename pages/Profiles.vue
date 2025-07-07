@@ -65,6 +65,8 @@ definePageMeta({
                 >
                     <SocialsForm />
                 </CollapseComponent>
+                
+                <PreferenceForm/>
             </section>
         </SharedPageContainerWithNavbar>
     </div>
