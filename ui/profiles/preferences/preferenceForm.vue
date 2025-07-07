@@ -141,7 +141,6 @@ const onSubmit = async () => {};
             />
         </UFormField>
     </UForm>
-    <p>{{ formState }}</p>
 </template>
 
 <style lang="scss" scoped>
