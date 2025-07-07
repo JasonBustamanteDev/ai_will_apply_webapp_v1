@@ -1,5 +1,5 @@
 <script setup>
-import { object, string, number, boolean } from "yup";
+import { object, string, number, boolean, array } from "yup";
 import { booleanOptions } from "~/ui/profiles/shared/util.js";
 import { verifyMinStringLength } from "~/shared/helper_methods";
 
@@ -27,6 +27,10 @@ const preferenceSchema = object({
     driversLicense: boolean().required(MESSAGES.REQUIRED),
     reliableTransportation: boolean().required(MESSAGES.REQUIRED),
     veteranStatus: boolean().required(MESSAGES.REQUIRED),
+    companyBlacklist: array()
+        .of(string().required())
+        .min(0)
+        .required(MESSAGES.REQUIRED),
 });
 
 const formState = reactive({
@@ -38,6 +42,7 @@ const formState = reactive({
     driversLicense: true,
     reliableTransportation: true,
     veteranStatus: undefined,
+    companyBlacklist: ["Some terrible company"],
 });
 
 const onSubmit = async () => {};
@@ -138,14 +143,25 @@ const onSubmit = async () => {};
                 :ui="{ item: 'mr-5' }"
             />
         </UFormField>
+        <UFormField
+            label="Avoid applying to these companies"
+            name="companyBlacklist"
+            class="mb-0 col-span-4"
+        >
+            <UInputTags
+                v-model="formState.companyBlacklist"
+                class="w-full h-10"
+            />
+        </UFormField>
     </UForm>
+    <p>{{ formState }}</p>
 </template>
 
 <style lang="scss" scoped>
 .uform-element {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: 95px 95px 95px auto;
+    grid-template-rows: repeat(3, 80px) auto;
     gap: 0.5rem 1rem;
 }
 
