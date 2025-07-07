@@ -1,17 +1,22 @@
 <script setup>
 import AddRowButton from "@/ui/profiles/shared/addRowButton.vue";
 import { verifyMinStringLength } from "~/shared/helper_methods";
-import { cloneDeep, some } from "lodash";
+import { some } from "lodash";
 
 const MIN_YEARS = 1;
 const MAX_YEARS = 100;
 
 const defaultYearsOfExperience = ref(2);
-const newSkillObject = { name: "", years: defaultYearsOfExperience.value, nameError: false }; // prettier-ignore
-const skills = ref([cloneDeep(newSkillObject)]);
+const skills = ref([
+    { name: "", years: defaultYearsOfExperience.value, nameError: false },
+]);
 
 const addSkill = () => {
-    skills.value.push(cloneDeep(newSkillObject));
+    skills.value.push({
+        name: "",
+        years: defaultYearsOfExperience.value,
+        nameError: false,
+    });
 };
 const removeSkill = (index) => {
     skills.value.splice(index, 1);
