@@ -1,5 +1,6 @@
 <script setup>
 import { object, string, number, boolean } from "yup";
+import { booleanOptions } from "~/ui/profiles/shared/util.js";
 import { verifyMinStringLength } from "~/shared/helper_methods";
 
 // PREFERENCES
@@ -7,11 +8,11 @@ import { verifyMinStringLength } from "~/shared/helper_methods";
 // expected annual salary  (number)
 // notice period in days (number)
 
-// total experience (number)
-// companies to exclude from search (tags, list of strings)
 // willing to relocate (radio yes or no)
-// driving liscence (radio yes or no)
+// driving licence (radio yes or no)
 // veteran status (radio yes or no)
+
+// companies to exclude from search (tags, list of strings)
 
 const MESSAGES = {
     REQUIRED: "This field is required",
@@ -21,6 +22,11 @@ const preferenceSchema = object({
     currentAnnualSalary: number().required(MESSAGES.REQUIRED),
     expectedAnnualSalary: number().required(MESSAGES.REQUIRED),
     noticePeriod: number().required(MESSAGES.REQUIRED),
+
+    willingToRelocate: boolean().required(MESSAGES.REQUIRED),
+    driversLicense: boolean().required(MESSAGES.REQUIRED),
+    reliableTransportation: boolean().required(MESSAGES.REQUIRED),
+    veteranStatus: boolean().required(MESSAGES.REQUIRED),
 });
 
 const formState = reactive({
@@ -28,6 +34,10 @@ const formState = reactive({
     currentAnnualSalary: 40000,
     expectedAnnualSalary: 60000,
     noticePeriod: 14,
+    willingToRelocate: true,
+    driversLicense: true,
+    reliableTransportation: true,
+    veteranStatus: undefined,
 });
 
 const onSubmit = async () => {};
@@ -80,6 +90,52 @@ const onSubmit = async () => {};
                 :step="1"
                 class="w-full"
                 color="neutral"
+            />
+        </UFormField>
+
+        <UFormField
+            label="Willing to Relocate **"
+            name="willingToRelocate"
+            class="mb-0"
+        >
+            <URadioGroup
+                v-model="formState.willingToRelocate"
+                orientation="horizontal"
+                variant="list"
+                :items="booleanOptions"
+                class="mt-2"
+                size="xl"
+                :ui="{ item: 'mr-5' }"
+            />
+        </UFormField>
+        <UFormField
+            label="Have Driver's Licence **"
+            name="driversLicense"
+            class="mb-0"
+        >
+            <URadioGroup
+                v-model="formState.driversLicense"
+                orientation="horizontal"
+                variant="list"
+                :items="booleanOptions"
+                class="mt-2"
+                size="xl"
+                :ui="{ item: 'mr-5' }"
+            />
+        </UFormField>
+        <UFormField
+            label="Do you have a reliable mode of transportation? **"
+            name="reliableTransportation"
+            class="mb-0 col-span-2"
+        >
+            <URadioGroup
+                v-model="formState.reliableTransportation"
+                orientation="horizontal"
+                variant="list"
+                :items="booleanOptions"
+                class="mt-2"
+                size="xl"
+                :ui="{ item: 'mr-5' }"
             />
         </UFormField>
     </UForm>
