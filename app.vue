@@ -56,6 +56,7 @@ onMounted(async () => {
     margin-top: main.$navbar-height;
     padding-inline: 10px;
     padding-top: 40px;
+    padding-bottom: 80px;
 }
 
 * {
