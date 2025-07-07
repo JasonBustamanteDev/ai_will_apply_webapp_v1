@@ -1,18 +1,6 @@
 <script setup>
 import { object, string, number, boolean, array } from "yup";
 import { booleanOptions } from "~/ui/profiles/shared/util.js";
-import { verifyMinStringLength } from "~/shared/helper_methods";
-
-// PREFERENCES
-// current annual salary (number)
-// expected annual salary  (number)
-// notice period in days (number)
-
-// willing to relocate (radio yes or no)
-// driving licence (radio yes or no)
-// veteran status (radio yes or no)
-
-// companies to exclude from search (tags, list of strings)
 
 const MESSAGES = {
     REQUIRED: "This field is required",
@@ -22,7 +10,6 @@ const preferenceSchema = object({
     currentAnnualSalary: number().required(MESSAGES.REQUIRED),
     expectedAnnualSalary: number().required(MESSAGES.REQUIRED),
     noticePeriod: number().required(MESSAGES.REQUIRED),
-
     willingToRelocate: boolean().required(MESSAGES.REQUIRED),
     driversLicense: boolean().required(MESSAGES.REQUIRED),
     reliableTransportation: boolean().required(MESSAGES.REQUIRED),
