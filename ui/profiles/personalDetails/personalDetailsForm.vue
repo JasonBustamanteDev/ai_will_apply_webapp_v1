@@ -101,7 +101,7 @@ const formState = reactive({
     educationLevel: undefined,
 });
 
-const onSubmit = async function () {
+const onSubmit = async () => {
     try {
         let user = await profileSchema.validate(formState);
         // TODO: send request to backend

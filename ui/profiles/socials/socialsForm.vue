@@ -7,7 +7,7 @@ const socialSchema = object({
         .notRequired()
         .test(
             "linkedin-url-or-empty",
-            "Enter a valid URL like https://www.linkedin.com/in/john-smith/",
+            "Enter a valid URL like linkedin.com/in/john-smith/",
             function (value) {
                 if (!value || value === "") return true;
 
@@ -28,7 +28,7 @@ const socialSchema = object({
         .notRequired()
         .test(
             "github-url-or-empty",
-            "Enter a valid URL like https://github.com/username",
+            "Enter a valid URL like github.com/username",
             function (value) {
                 if (!value || value === "") return true;
 
@@ -49,7 +49,7 @@ const socialSchema = object({
         .notRequired()
         .test(
             "twitter-url-or-empty",
-            "Enter a valid URL like https://twitter.com/username",
+            "Enter a valid URL like twitter.com/username",
             function (value) {
                 if (!value || value === "") return true;
 
@@ -65,6 +65,69 @@ const socialSchema = object({
                 );
             }
         ),
+    instagram: string()
+        .nullable()
+        .notRequired()
+        .test(
+            "instagram-url-or-empty",
+            "Enter a valid URL like instagram.com/username",
+            function (value) {
+                if (!value || value === "") return true;
+
+                // Add https:// if missing
+                const normalizedValue =
+                    value.startsWith("http://") || value.startsWith("https://")
+                        ? value
+                        : `https://${value}`;
+
+                // Check if it's a valid Instagram URL
+                return /^https?:\/\/(www\.)?instagram\.com\/[a-zA-Z0-9._]+\/?$/.test(
+                    normalizedValue
+                );
+            }
+        ),
+    tiktok: string()
+        .nullable()
+        .notRequired()
+        .test(
+            "tiktok-url-or-empty",
+            "Enter a valid TikTok URL like tiktok.com/@username",
+            function (value) {
+                if (!value || value === "") return true;
+
+                // Add https:// if missing
+                const normalizedValue =
+                    value.startsWith("http://") || value.startsWith("https://")
+                        ? value
+                        : `https://${value}`;
+
+                // Check if it's a valid TikTok URL
+                return /^https?:\/\/(www\.)?tiktok\.com\/@[a-zA-Z0-9._]+\/?$/.test(
+                    normalizedValue
+                );
+            }
+        ),
+    youtube: string()
+        .nullable()
+        .notRequired()
+        .test(
+            "youtube-url-or-empty",
+            "Enter a valid YouTube URL like youtube.com/@username",
+            function (value) {
+                if (!value || value === "") return true;
+
+                // Add https:// if missing
+                const normalizedValue =
+                    value.startsWith("http://") || value.startsWith("https://")
+                        ? value
+                        : `https://${value}`;
+
+                // Check if it's a valid YouTube URL
+                return /^https?:\/\/(www\.)?youtube\.com\/@[a-zA-Z0-9._-]+\/?$/.test(
+                    normalizedValue
+                );
+            }
+        ),
 });
 
 const formState = reactive({
@@ -72,9 +135,12 @@ const formState = reactive({
     linkedin: undefined,
     github: undefined,
     twitter: undefined,
+    instagram: undefined,
+    tiktok: undefined,
+    youtube: undefined,
 });
 
-const onSubmit = async function () {
+const onSubmit = async () => {
     try {
         let user = await socialSchema.validate(formState);
         // TODO: send request to backend
@@ -99,9 +165,27 @@ const onSubmit = async function () {
         <UFormField label="Github" name="github" class="mb-0 col-span-2">
             <UInput v-model="formState.github" class="w-full" />
         </UFormField>
+        <UFormField label="Instagram" name="instagram" class="mb-0 col-span-2">
+            <UInput v-model="formState.instagram" class="w-full" />
+        </UFormField>
         <UFormField label="Twitter" name="twitter" class="mb-0 col-span-2">
             <UInput v-model="formState.twitter" class="w-full" />
         </UFormField>
+        <UFormField label="Tiktok" name="tiktok" class="mb-0 col-span-2">
+            <UInput v-model="formState.tiktok" class="w-full" />
+        </UFormField>
+        <UFormField label="Youtube" name="youtube" class="mb-0 col-span-2">
+            <UInput v-model="formState.youtube" class="w-full" />
+        </UFormField>
+        <div class="uform-submit-button-container">
+            <UButton
+                type="submit"
+                class="w-full justify-center"
+                @click="onSubmit"
+                color="secondary"
+                >Submit</UButton
+            >
+        </div>
     </UForm>
 </template>
 
@@ -109,7 +193,7 @@ const onSubmit = async function () {
 .uform-element {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: 95px 95px auto; 
+    grid-template-rows: 95px 95px 95px auto;
     gap: 0.5rem 1rem;
 }
 

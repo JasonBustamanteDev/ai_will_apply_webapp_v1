@@ -22,7 +22,7 @@ const removeSkill = (index) => {
     skills.value.splice(index, 1);
 };
 
-const onSubmit = () => {
+const onSubmit = async () => {
     for (const obj of skills.value) {
         const skillName = obj.name;
         obj.nameError = !verifyMinStringLength(skillName, 1);
@@ -96,6 +96,6 @@ const onSubmit = () => {
 .multiple-forms-container {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 1.5rem;
 }
 </style>
