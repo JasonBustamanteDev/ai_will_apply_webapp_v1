@@ -45,20 +45,19 @@ definePageMeta({
                     <LanguagesForm />
                 </CollapseComponent>
                 <CollapseComponent
+                    title="Skills"
+                    :isComplete="false"
+                    :isOptional="false"
+                >
+                    <SkillsForm />
+                </CollapseComponent>
+                <CollapseComponent
                     title="University or College"
                     :isComplete="false"
                     :isOptional="true"
                 >
                     <EducationForm />
                 </CollapseComponent>
-                <CollapseComponent
-                    title="Skills"
-                    :isComplete="false"
-                    :isOptional="true"
-                >
-                    <SkillsForm />
-                </CollapseComponent>
-
                 <CollapseComponent
                     title="Social Media Links"
                     :isComplete="false"
