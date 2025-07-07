@@ -13,7 +13,7 @@ onMounted(async () => {
 
 <template>
     <UApp>
-        <div class="pageBoundary">
+        <div class="pageBoundary content-shift-guard">
             <SharedFillerDiv />
             <NuxtPage />
             <SharedFillerDiv />
@@ -69,6 +69,11 @@ onMounted(async () => {
         "Segoe UI Symbol",
         "Noto Color Emoji"
     );
+}
+
+.content-shift-guard {
+    overflow-x: hidden;
+    padding-left: calc(100vw - 100%); // prevents content shifting due to y scrollbar
 }
 </style>
 
