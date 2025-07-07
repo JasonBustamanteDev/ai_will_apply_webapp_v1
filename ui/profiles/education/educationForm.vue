@@ -1,18 +1,8 @@
 <script setup>
 import { object, string, boolean } from "yup";
 import { emptyOrMinLengthStringAccepted } from "~/shared/helper_methods";
-import { booleanOptions } from "~/ui/profiles/shared/util.js";
+import { booleanOptions, radioStyleObject } from "~/ui/profiles/shared/util.js"; // this is used in template
 import { isValidYearMonth } from "./educationForm";
-
-// EDUCATION (everything is optional)
-// institutionName (non empty string)
-
-// field of study (non empty string)
-// College city
-// College State
-// time-start
-// time-end
-// gpa
 
 // TODO: Submit better contain a changed value
 const MESSAGES = {
@@ -153,7 +143,7 @@ const onSubmit = async () => {
                 :items="booleanOptions"
                 class="mt-2"
                 size="xl"
-                :ui="{ item: 'mr-5' }"
+                :ui="radioStyleObject"
             />
         </UFormField>
 

@@ -1,6 +1,6 @@
 <script setup>
 import { object, string, number, boolean, array } from "yup";
-import { booleanOptions } from "~/ui/profiles/shared/util.js";
+import { booleanOptions, radioStyleObject } from "~/ui/profiles/shared/util.js"; // this is used in template
 
 const MESSAGES = {
     REQUIRED: "This field is required",
@@ -105,7 +105,7 @@ const onSubmit = async () => {
                 :items="booleanOptions"
                 class="mt-2"
                 size="xl"
-                :ui="{ item: 'mr-5' }"
+                :ui="radioStyleObject"
             />
         </UFormField>
         <UFormField
@@ -120,7 +120,7 @@ const onSubmit = async () => {
                 :items="booleanOptions"
                 class="mt-2"
                 size="xl"
-                :ui="{ item: 'mr-5' }"
+                :ui="radioStyleObject"
             />
         </UFormField>
         <UFormField
@@ -135,7 +135,7 @@ const onSubmit = async () => {
                 :items="booleanOptions"
                 class="mt-2"
                 size="xl"
-                :ui="{ item: 'mr-5' }"
+                :ui="radioStyleObject"
             />
         </UFormField>
         <UFormField
@@ -150,7 +150,7 @@ const onSubmit = async () => {
                 :items="booleanOptions"
                 class="mt-2"
                 size="xl"
-                :ui="{ item: 'mr-5' }"
+                :ui="radioStyleObject"
             />
         </UFormField>
         <UFormField

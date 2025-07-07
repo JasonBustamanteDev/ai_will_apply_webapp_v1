@@ -23,3 +23,5 @@ export const booleanPlusEmptyOptions = [
         value: null,
     },
 ];
+
+export const radioStyleObject = { item: "mr-3" };
