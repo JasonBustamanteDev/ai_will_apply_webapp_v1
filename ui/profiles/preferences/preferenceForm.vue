@@ -25,9 +25,9 @@ const preferenceSchema = object({
 
 const formState = reactive({
     // These keys must match the name attributes on UFormField elements
-    currentAnnualSalary: undefined,
-    expectedAnnualSalary: undefined,
-    noticePeriod: undefined,
+    currentAnnualSalary: 40000,
+    expectedAnnualSalary: 60000,
+    noticePeriod: 14,
 });
 
 const onSubmit = async () => {};
@@ -49,7 +49,6 @@ const onSubmit = async () => {};
                 v-model="formState.currentAnnualSalary"
                 :min="0"
                 :max="10000000"
-                :defaultValue="30000"
                 :step="1000"
                 class="w-full"
                 color="neutral"
@@ -64,7 +63,6 @@ const onSubmit = async () => {};
                 v-model="formState.expectedAnnualSalary"
                 :min="0"
                 :max="10000000"
-                :defaultValue="30000"
                 :step="1000"
                 class="w-full"
                 color="neutral"
@@ -79,7 +77,6 @@ const onSubmit = async () => {};
                 v-model="formState.noticePeriod"
                 :min="0"
                 :max="720"
-                :defaultValue="14"
                 :step="1"
                 class="w-full"
                 color="neutral"

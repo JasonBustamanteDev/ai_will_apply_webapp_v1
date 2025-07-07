@@ -24,11 +24,8 @@ const profileSchema = object({
     lastName: string()
         .required(MESSAGES.REQUIRED)
         .test("min-length-no-whitespace", "No empty names", (value) => verifyMinStringLength(value, 1)), // prettier-ignore
-    age: number()
-        .required(MESSAGES.REQUIRED)
-        .typeError("Please enter a valid age")
-        .integer("Age must be a whole number")
-        .test("min-age", MESSAGES.MIN_AGE, (value) => value >= 13),
+    age: number().required(MESSAGES.REQUIRED),
+    yearsOfExperience: number().required(MESSAGES.REQUIRED),
     email: string().email("Invalid email").required(MESSAGES.REQUIRED),
     phoneNumber: string()
         .required(MESSAGES.REQUIRED)
@@ -76,7 +73,8 @@ const formState = reactive({
     // These keys must match the name attributes on UFormField elements
     firstName: undefined,
     lastName: undefined,
-    age: undefined,
+    age: 18,
+    yearsOfExperience: 2,
     email: undefined,
     gender: undefined,
     phoneNumber: undefined,
@@ -115,7 +113,6 @@ const onSubmit = async () => {
                 v-model="formState.age"
                 :min="13"
                 :max="120"
-                :defaultValue="18"
                 class="w-full"
                 color="neutral"
             />
@@ -125,6 +122,20 @@ const onSubmit = async () => {
         </UFormField>
         <UFormField label="Phone Number **" name="phoneNumber" class="mb-0">
             <UInput v-model="formState.phoneNumber" class="w-full" />
+        </UFormField>
+        <UFormField
+            label="Years of Experience **"
+            name="yearsOfExperience"
+            class="mb-0"
+        >
+            <UInputNumber
+                v-model="formState.yearsOfExperience"
+                :min="0"
+                :max="100"
+                :step="1"
+                class="w-full"
+                color="neutral"
+            />
         </UFormField>
         <UFormField
             label="Highest Education Level **"

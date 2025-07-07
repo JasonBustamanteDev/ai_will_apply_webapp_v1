@@ -6,14 +6,26 @@ const socialSchema = object({
         .nullable()
         .notRequired()
         .test(
-            "url-or-empty",
-            "Enter a valid URL like https://example.com",
+            "portfolio-url-or-empty",
+            "Enter a valid URL like yoursite.com",
             function (value) {
                 if (!value || value === "") return true;
-                return (
-                    /^https?:\/\/.+/.test(value) &&
-                    this.createError === undefined
-                );
+
+                // Add https:// if missing
+                const normalizedValue =
+                    value.startsWith("http://") || value.startsWith("https://")
+                        ? value
+                        : `https://${value}`;
+
+                // Check if it's a valid URL format
+                try {
+                    const url = new URL(normalizedValue);
+                    return (
+                        url.protocol === "http:" || url.protocol === "https:"
+                    );
+                } catch {
+                    return false;
+                }
             }
         ),
     linkedin: string()
@@ -105,7 +117,7 @@ const socialSchema = object({
         .notRequired()
         .test(
             "tiktok-url-or-empty",
-            "Enter a valid TikTok URL like tiktok.com/@username",
+            "Enter a valid URL like tiktok.com/@username",
             function (value) {
                 if (!value || value === "") return true;
 
@@ -126,7 +138,7 @@ const socialSchema = object({
         .notRequired()
         .test(
             "youtube-url-or-empty",
-            "Enter a valid YouTube URL like youtube.com/@username",
+            "Enter a valid URL like youtube.com/@username",
             function (value) {
                 if (!value || value === "") return true;
 
@@ -188,22 +200,46 @@ const onSubmit = async () => {
             />
         </UFormField>
         <UFormField label="LinkedIn" name="linkedin" class="mb-0 col-span-2">
-            <UInput v-model="formState.linkedin" class="w-full" />
+            <UInput
+                v-model="formState.linkedin"
+                class="w-full"
+                placeholder="linkedin.com/in/jason-bustamante"
+            />
         </UFormField>
         <UFormField label="Github" name="github" class="mb-0 col-span-2">
-            <UInput v-model="formState.github" class="w-full" />
+            <UInput
+                v-model="formState.github"
+                class="w-full"
+                placeholder="github.com/username"
+            />
         </UFormField>
         <UFormField label="Instagram" name="instagram" class="mb-0 col-span-2">
-            <UInput v-model="formState.instagram" class="w-full" />
+            <UInput
+                v-model="formState.instagram"
+                class="w-full"
+                placeholder="instagram.com/username"
+            />
         </UFormField>
         <UFormField label="Twitter" name="twitter" class="mb-0 col-span-2">
-            <UInput v-model="formState.twitter" class="w-full" />
+            <UInput
+                v-model="formState.twitter"
+                class="w-full"
+                placeholder="x.com/username"
+            />
         </UFormField>
         <UFormField label="Tiktok" name="tiktok" class="mb-0 col-span-2">
-            <UInput v-model="formState.tiktok" class="w-full" />
+            <UInput
+                v-model="formState.tiktok"
+                class="w-full"
+                placeholder="tiktok.com/@username"
+            />
         </UFormField>
         <UFormField label="Youtube" name="youtube" class="mb-0 col-span-2">
-            <UInput v-model="formState.youtube" class="w-full" />
+            <UInput
+                v-model="formState.youtube"
+                class="w-full"
+                placeholder="youtube.com/@username"
+            />
         </UFormField>
         <div class="uform-submit-button-container">
             <UButton
@@ -221,7 +257,7 @@ const onSubmit = async () => {
 .uform-element {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: 95px 95px 95px auto;
+    grid-template-rows: 95px 95px 95px 95px auto;
     gap: 0.5rem 1rem;
 }
 

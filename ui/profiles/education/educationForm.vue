@@ -161,7 +161,7 @@ const onSubmit = async () => {
             <UInput
                 v-model="formState.gpa"
                 class="w-full"
-                placeholder="Number between 1 to 4"
+                placeholder="Decimal between 1 to 4"
             />
         </UFormField>
 
