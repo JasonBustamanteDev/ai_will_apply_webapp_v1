@@ -117,7 +117,7 @@ const onSubmit = async () => {
             <UInput v-model="formState.phoneNumber" class="w-full" />
         </UFormField>
         <UFormField
-            label="Years of Experience **"
+            label="Years of Experience in Field **"
             name="yearsOfExperience"
             class="mb-0"
         >
