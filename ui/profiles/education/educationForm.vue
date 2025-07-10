@@ -1,15 +1,13 @@
 <script setup>
 import { object, string, boolean } from "yup";
 import { emptyOrMinLengthStringAccepted } from "~/shared/helper_methods";
-import { booleanOptions, radioStyleObject } from "~/ui/profiles/shared/util.js"; // this is used in template
-import { isValidYearMonth } from "./educationForm";
+import { booleanOptions, radioStyleObject, isValidYearMonth } from "~/ui/profiles/shared/util.js"; // this is used in template
 
 // TODO: Submit better contain a changed value
 const MESSAGES = {
     REQUIRED: "This field is required",
     ONLY_EMPTY: "Answer cannot be empty spaces",
 };
-const CURRENT_STRING = "current";
 
 const educationSchema = object({
     institutionName: string()

@@ -35,12 +35,15 @@ definePageMeta({
                         a form
                     </p>
                 </div>
+
                 <CollapseComponent title="Personal Details" :isComplete="true">
                     <PersonalDetailsForm />
                 </CollapseComponent>
+
                 <CollapseComponent title="Location" :isComplete="true">
                     <LocationForm />
                 </CollapseComponent>
+
                 <CollapseComponent
                     title="Preferences"
                     :isComplete="true"
@@ -48,9 +51,11 @@ definePageMeta({
                 >
                     <PreferenceForm />
                 </CollapseComponent>
+
                 <CollapseComponent title="Languages" :isComplete="false">
                     <LanguagesForm />
                 </CollapseComponent>
+
                 <CollapseComponent
                     title="Skills"
                     :isComplete="false"
@@ -58,6 +63,7 @@ definePageMeta({
                 >
                     <SkillsForm />
                 </CollapseComponent>
+
                 <CollapseComponent
                     title="University or College"
                     :isComplete="false"
@@ -65,6 +71,7 @@ definePageMeta({
                 >
                     <EducationForm />
                 </CollapseComponent>
+                
                 <CollapseComponent
                     title="Portfolio + Social Media Links"
                     :isComplete="false"

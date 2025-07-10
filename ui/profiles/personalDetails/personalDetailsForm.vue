@@ -24,7 +24,7 @@ const profileSchema = object({
         .required(MESSAGES.REQUIRED)
         .test(
             "phone-validation",
-            "Please enter a valid phone number",
+            "Enter a valid phone number",
             function (value) {
                 if (!value) return false;
 
