@@ -1,7 +1,7 @@
 <script setup>
 import { object, string, boolean } from "yup";
-import { emptyOrMinLengthStringAccepted } from "~/shared/helper_methods";
-import { booleanOptions, radioStyleObject, isValidYearMonth } from "~/ui/profiles/shared/util.js"; // this is used in template
+import { emptyOrMinLengthStringAccepted, isValidYearMonth } from "~/shared/helper_methods";
+import { booleanOptions, radioStyleObject } from "~/ui/profiles/shared/util.js"; //  prettier-ignore
 
 // TODO: Submit better contain a changed value
 const MESSAGES = {

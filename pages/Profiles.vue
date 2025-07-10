@@ -7,6 +7,7 @@ import LanguagesForm from "~/ui/profiles/languages/languagesForm.vue";
 import SkillsForm from "~/ui/profiles/skills/skillsForm.vue";
 import SocialsForm from "~/ui/profiles/socials/socialsForm.vue";
 import PreferenceForm from "~/ui/profiles/preferences/preferenceForm.vue";
+import WorkExperienceForm from "~/ui/profiles/workExperience/workExperienceForm.vue";
 
 definePageMeta({
     middleware: ["redirect-if-no-auth-session-client"],
@@ -71,7 +72,7 @@ definePageMeta({
                 >
                     <EducationForm />
                 </CollapseComponent>
-                
+
                 <CollapseComponent
                     title="Portfolio + Social Media Links"
                     :isComplete="false"
@@ -79,6 +80,8 @@ definePageMeta({
                 >
                     <SocialsForm />
                 </CollapseComponent>
+
+                <WorkExperienceForm/>
             </section>
         </SharedPageContainerWithNavbar>
     </div>
