@@ -144,7 +144,7 @@ const onSubmit = () => {
         <AddRowButton :isDisabled="false" @addRow="addExperienceRow"
             >Add Experience</AddRowButton
         >
-        <RemoveRowButton :isDisabled="false" @removeRow="removeExperienceRow"
+        <RemoveRowButton :isDisabled="workExperienceList.length < 2" @removeRow="removeExperienceRow"
             >Remove Last Experience in List</RemoveRowButton
         >
     </section>
