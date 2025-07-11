@@ -2,6 +2,7 @@
 import { object, string, boolean } from "yup";
 import { verifyMinStringLength, isValidYearMonth } from "~/shared/helper_methods"; // prettier-ignore
 import { booleanOptions, radioStyleObject } from "~/ui/profiles/shared/util.js";
+import InputLabelSlot from "~/ui/profiles/shared/inputLabelSlot.vue";
 
 /*
 job title
@@ -20,59 +21,34 @@ const MESSAGES = {
     ONLY_EMPTY: "Answer cannot be empty spaces",
 };
 
-// const workExperienceSchema = object({
-//     jobTitle: string()
-//         .required(MESSAGES.REQUIRED)
-//         .test("job-title", MESSAGES.ONLY_EMPTY, (value) =>
-//             emptyOrMinLengthStringAccepted(value, 1)
-//         ),
-//     location: string()
-//         .required(MESSAGES.REQUIRED)
-//         .test("job-location", MESSAGES.ONLY_EMPTY, (value) =>
-//             emptyOrMinLengthStringAccepted(value, 1)
-//         ),
-//     startDate: string()
-//         .required(MESSAGES.REQUIRED)
-//         .test("start-date", "YYYY-MM format required", (value) => {
-//             return isValidYearMonth(value);
-//         }),
-//     endDate: string()
-//         .required(MESSAGES.REQUIRED)
-//         .test("start-date", "YYYY-MM format required", (value) => {
-//             return isValidYearMonth(value);
-//         }),
-//     currentlyWorkingThere: boolean().required(MESSAGES.REQUIRED),
-// });
+const currentlyThereOptions = [
+    { label: "I still work here", value: true },
+    { label: "I no longer work there", value: false },
+];
 
 const workExperienceList = ref([
     {
         jobTitle: "",
-        location: "",
-        startDate: "",
-        endDate: "",
-        currentlyWorkingThere: false,
+        company: "",
+        years: undefined,
+        currentlyThere: false,
 
         jobTitleError: false,
-        locationError: false,
-        startDateError: false,
-        endDateError: false,
-        currentlyWorkingThereError: false,
+        companyError: false,
+        currentlyThereError: false,
     },
- ]);
+]);
 
 const addExperienceRow = () => {
     workExperienceList.value.push({
         jobTitle: "",
-        location: "",
-        startDate: "",
-        endDate: "",
-        currentlyWorkingThere: false,
+        company: "",
+        years: 1,
+        currentlyThere: false,
 
         jobTitleError: false,
-        locationError: false,
-        startDateError: false,
-        endDateError: false,
-        currentlyWorkingThereError: false,
+        companyError: false,
+        currentlyThereError: false,
     });
 };
 
@@ -82,24 +58,14 @@ const removeExperienceRow = (index) => {
 
 const onSubmit = () => {
     // Check if each field is filled - render error if it isn't and clear errors if it is
-    for (const obj of languages.value) {
+    for (const obj of workExperienceList.value) {
         obj.jobTitleError = !verifyMinStringLength(obj.jobTitle, 1);
-        obj.locationError = !verifyMinStringLength(obj.location, 1);
-        obj.startDateError = !isValidYearMonth(obj.startDate);
-        obj.endDateError = !isValidYearMonth(obj.endDate);
-        obj.currentlyWorkingThereError =
-            obj.currentlyWorkingThere === false ||
-            obj.currentlyWorkingThere === true;
+        obj.companyError = !verifyMinStringLength(obj.company, 1);
     }
 
     if (
         workExperienceList.value.some(
-            (item) =>
-                item.jobTitleError ||
-                item.locationError ||
-                item.startDateError ||
-                item.endDateError ||
-                item.currentlyWorkingThereError
+            (item) => item.jobTitleError || item.companyError
         )
     ) {
         return;
@@ -109,49 +75,80 @@ const onSubmit = () => {
 </script>
 
 <template>
+    <!-- <section>
+
+    </section> -->
     <div
         v-for="(row, index) in workExperienceList"
         :key="index"
-        class="flex items-end gap-3"
+        class="uform-element"
     >
         <UInput
             v-model="row.jobTitle"
             placeholder=""
-            class="w-64"
             :highlight="row.jobTitleError"
             :color="row.jobTitleError ? 'error' : ''"
-        />
+        >
+            <InputLabelSlot labelText="Job Title" />
+        </UInput>
         <UInput
-            v-model="row.location"
+            v-model="row.company"
             placeholder=""
-            class="w-64"
-            :highlight="row.locationError"
-            :color="row.locationError ? 'error' : ''"
+            :highlight="row.companyError"
+            :color="row.companyError ? 'error' : ''"
+        >
+            <InputLabelSlot labelText="Company" />
+        </UInput>
+        <UInputNumber
+            v-model="row.years"
+            :min="0"
+            :max="120"
+            class="w-full"
+            color="neutral"
+            placeholder="Years"
         />
-        <UInput
+        <!-- <UInput
             v-model="row.startDate"
-            placeholder=""
-            class="w-64"
+            placeholder="YYYY-MM"
             :highlight="row.startDateError"
             :color="row.startDateError ? 'error' : ''"
-        />
-        <UInput
-            v-model="row.endDate"
-            placeholder=""
-            class="w-64"
-            :highlight="row.endDateError"
-            :color="row.endDateError ? 'error' : ''"
-        />
+        >
+            <InputLabelSlot labelText="Years" />
+        </UInput> -->
+
         <URadioGroup
-            v-model="row.currentlyWorkingThere"
+            v-model="row.currentlyThere"
             orientation="horizontal"
             variant="list"
-            :items="booleanOptions"
-            class="mt-2"
-            size="xl"
+            :items="currentlyThereOptions"
+            size="lg"
             :ui="radioStyleObject"
+            class="my-auto"
         />
+    </div>
+
+    <div class="uform-submit-button-container">
+        <UButton
+            type="submit"
+            class="w-full justify-center"
+            @click="onSubmit"
+            color="secondary"
+            >Submit</UButton
+        >
     </div>
 </template>
 
-<style lang="scss"></style>
+<style lang="scss">
+.uform-element {
+    display: grid;
+    grid-template-columns: 1fr 1fr 0.5fr 1.5fr;
+    // grid-template-rows: repeat(2, 80px) auto auto;
+    gap: 1rem;
+    width: 100%;
+}
+
+.uform-submit-button-container {
+    grid-column-start: 1;
+    grid-column-end: 5;
+}
+</style>
