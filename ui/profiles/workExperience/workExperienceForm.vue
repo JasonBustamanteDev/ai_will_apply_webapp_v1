@@ -25,7 +25,7 @@ const MESSAGES = {
 
 const currentlyThereOptions = [
     { label: "I still work here", value: true },
-    { label: "I no longer work there", value: false },
+    { label: "I no longer work here", value: false },
 ];
 
 const workExperienceList = ref([
