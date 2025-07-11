@@ -5,6 +5,9 @@ export default defineEventHandler(async (event) => {
         authMiddleware(event);
         return { detail: "POST worked", result: "decoded" };
     } catch (err) {
-        //! Handle error. Make sure to send a similar response object compared to success, with ane rror code 
+        const error_code = err?.statusCode || 500;
+        const error_message = err?.statusMessage || "Something went wrong";
+        setResponseStatus(event, error_code);
+        return { detail: error_message, data: null };
     }
 });
