@@ -1,4 +1,4 @@
-import { authMiddleware } from "~/server/utils/authMiddleware";
+import { authMiddleware } from "~/server/server_middleware/authMiddleware";
 
 export default defineEventHandler(async (event) => {
     try {
