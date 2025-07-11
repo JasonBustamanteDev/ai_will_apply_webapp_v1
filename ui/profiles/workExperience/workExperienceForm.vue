@@ -31,7 +31,7 @@ const workExperienceList = ref([
     {
         jobTitle: "",
         company: "",
-        years: undefined,
+        years: null,
         currentlyThere: false,
 
         jobTitleError: false,
@@ -46,7 +46,7 @@ const areAllRowsValid = () => {
     for (const obj of workExperienceList.value) {
         obj.jobTitleError = !verifyMinStringLength(obj.jobTitle, 1);
         obj.companyError = !verifyMinStringLength(obj.company, 1);
-        obj.yearsError = !obj.yearsError;
+        obj.yearsError = obj.years === null || obj.years < 1 ? true : false;
     }
 
     const errorExists = workExperienceList.value.some(
@@ -63,7 +63,7 @@ const addExperienceRow = () => {
     workExperienceList.value.push({
         jobTitle: "",
         company: "",
-        years: undefined,
+        years: null,
         currentlyThere: false,
 
         jobTitleError: false,
