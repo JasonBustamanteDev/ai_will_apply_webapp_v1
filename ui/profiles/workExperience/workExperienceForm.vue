@@ -1,27 +1,10 @@
 <script setup>
 import { object, string, boolean } from "yup";
-import { verifyMinStringLength, isValidYearMonth } from "~/shared/helper_methods"; // prettier-ignore
+import { verifyMinStringLength, isValidNumericString } from "~/shared/helper_methods"; // prettier-ignore
 import { booleanOptions, radioStyleObject } from "~/ui/profiles/shared/util.js";
 import InputLabelSlot from "~/ui/profiles/shared/inputLabelSlot.vue";
 import AddRowButton from "@/ui/profiles/shared/addRowButton.vue";
 import RemoveRowButton from "../shared/removeRowButton.vue";
-
-/*
-job title
-company
-location
-
-start date
-end date
-currently attending
-
-description 
-*/
-
-const MESSAGES = {
-    REQUIRED: "This field is required",
-    ONLY_EMPTY: "Answer cannot be empty spaces",
-};
 
 const currentlyThereOptions = [
     { label: "I still work here", value: true },
@@ -47,7 +30,9 @@ const areAllRowsValid = () => {
     for (const obj of workExperienceList.value) {
         obj.jobTitleError = !verifyMinStringLength(obj.jobTitle, 1);
         obj.companyError = !verifyMinStringLength(obj.company, 1);
-        obj.yearsError = obj.years === null || obj.years < 1 ? true : false;
+
+        const yearsValue = obj.years;
+        obj.yearsError  = !yearsValue || !isValidNumericString(yearsValue) || Number(yearsValue) <= 0; // prettier-ignore
     }
 
     const errorExists = workExperienceList.value.some(
@@ -118,15 +103,14 @@ const onSubmit = () => {
             >
                 <InputLabelSlot labelText="Company **" />
             </UInput>
-            <UInputNumber
+            <UInput
                 v-model="row.years"
-                :min="1"
-                :max="120"
                 class="w-full"
-                placeholder="Years"
+                placeholder="number"
                 :highlight="row.yearsError"
-                :color="row.yearsError ? 'error' : 'neutral'"
-            />
+                :color="row.yearsError ? 'error' : ''"
+                ><InputLabelSlot labelText="Years **"
+            /></UInput>
 
             <URadioGroup
                 v-model="row.currentlyThere"
@@ -144,7 +128,9 @@ const onSubmit = () => {
         <AddRowButton :isDisabled="false" @addRow="addExperienceRow"
             >Add Experience</AddRowButton
         >
-        <RemoveRowButton :isDisabled="workExperienceList.length < 2" @removeRow="removeExperienceRow"
+        <RemoveRowButton
+            :isDisabled="workExperienceList.length < 2"
+            @removeRow="removeExperienceRow"
             >Remove Last Experience in List</RemoveRowButton
         >
     </section>

@@ -18,7 +18,13 @@ const profileSchema = object({
         .required(MESSAGES.REQUIRED)
         .test("min-length-no-whitespace", "No empty names", (value) => verifyMinStringLength(value, 1)), // prettier-ignore
     age: number().required(MESSAGES.REQUIRED),
-    yearsOfExperience: number().required(MESSAGES.REQUIRED),
+    yearsOfExperience: number()
+        .typeError("Enter a valid number")
+        .required(MESSAGES.REQUIRED)
+        .test("yearsExpValidation", "Must be above 0", function (value) {
+            if (value <= 0) return false;
+            return true;
+        }),
     email: string().email("Invalid email").required(MESSAGES.REQUIRED),
     phoneNumber: string()
         .required(MESSAGES.REQUIRED)
@@ -121,13 +127,10 @@ const onSubmit = async () => {
             name="yearsOfExperience"
             class="mb-0"
         >
-            <UInputNumber
+            <UInput
                 v-model="formState.yearsOfExperience"
-                :min="0"
-                :max="100"
-                :step="1"
                 class="w-full"
-                color="neutral"
+                placeholder=""
             />
         </UFormField>
         <UFormField
