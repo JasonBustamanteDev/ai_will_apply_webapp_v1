@@ -74,7 +74,7 @@ const addExperienceRow = () => {
 };
 
 const removeExperienceRow = (index) => {
-    workExperienceList.value.splice(index, 1);
+    workExperienceList.value.pop();
 };
 
 const onSubmit = () => {
@@ -127,15 +127,16 @@ const onSubmit = () => {
                 class="my-auto"
             />
         </div>
-        <p>{{ workExperienceList }}</p>
     </section>
 
-    <AddRowButton :isDisabled="false" @addRow="addExperienceRow"
-        >Add Experience</AddRowButton
-    >
-    <AddRowButton :isDisabled="false" @addRow="removeExperienceRow"
-        >Remove Experience</AddRowButton
-    >
+    <section class="flex gap-4">
+        <AddRowButton :isDisabled="false" @addRow="addExperienceRow"
+            >Add Experience</AddRowButton
+        >
+        <AddRowButton :isDisabled="false" @addRow="removeExperienceRow"
+            >Remove Experience</AddRowButton
+        >
+    </section>
 
     <div class="uform-submit-button-container">
         <UButton
