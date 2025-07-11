@@ -4,6 +4,7 @@ import { verifyMinStringLength, isValidYearMonth } from "~/shared/helper_methods
 import { booleanOptions, radioStyleObject } from "~/ui/profiles/shared/util.js";
 import InputLabelSlot from "~/ui/profiles/shared/inputLabelSlot.vue";
 import AddRowButton from "@/ui/profiles/shared/addRowButton.vue";
+import RemoveRowButton from "../shared/removeRowButton.vue";
 
 /*
 job title
@@ -85,7 +86,17 @@ const onSubmit = () => {
 </script>
 
 <template>
-    <section class="multiple-forms-container">
+    <section class="mb-6">
+        <p>
+            Enter the most recent work experiences first, then the older ones
+            afterwards
+        </p>
+        <p>
+            This impacts which experience the AI will refer to when answering
+            questions
+        </p>
+    </section>
+    <section class="multiple-forms-container mb-6">
         <div
             v-for="(row, index) in workExperienceList"
             :key="index"
@@ -97,7 +108,7 @@ const onSubmit = () => {
                 :highlight="row.jobTitleError"
                 :color="row.jobTitleError ? 'error' : ''"
             >
-                <InputLabelSlot labelText="Job Title" />
+                <InputLabelSlot labelText="Job Title **" />
             </UInput>
             <UInput
                 v-model="row.company"
@@ -105,7 +116,7 @@ const onSubmit = () => {
                 :highlight="row.companyError"
                 :color="row.companyError ? 'error' : ''"
             >
-                <InputLabelSlot labelText="Company" />
+                <InputLabelSlot labelText="Company **" />
             </UInput>
             <UInputNumber
                 v-model="row.years"
@@ -129,12 +140,12 @@ const onSubmit = () => {
         </div>
     </section>
 
-    <section class="flex gap-4">
+    <section class="flex gap-4 mb-6">
         <AddRowButton :isDisabled="false" @addRow="addExperienceRow"
             >Add Experience</AddRowButton
         >
-        <AddRowButton :isDisabled="false" @addRow="removeExperienceRow"
-            >Remove Experience</AddRowButton
+        <RemoveRowButton :isDisabled="false" @removeRow="removeExperienceRow"
+            >Remove Last Experience in List</RemoveRowButton
         >
     </section>
 
@@ -152,14 +163,20 @@ const onSubmit = () => {
 <style lang="scss">
 .uform-element {
     display: grid;
-    grid-template-columns: 1fr 1fr 0.5fr 1.5fr;
+    grid-template-columns: 0.8fr 1fr 0.5fr 1.5fr;
     // grid-template-rows: repeat(2, 80px) auto auto;
-    gap: 1rem;
+    gap: 2rem 1rem;
     width: 100%;
 }
 
 .uform-submit-button-container {
     grid-column-start: 1;
     grid-column-end: 5;
+}
+
+.multiple-forms-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
 }
 </style>

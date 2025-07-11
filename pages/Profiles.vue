@@ -66,6 +66,14 @@ definePageMeta({
                 </CollapseComponent>
 
                 <CollapseComponent
+                    title="Work Experience"
+                    :isComplete="false"
+                    :isOptional="false"
+                >
+                    <WorkExperienceForm />
+                </CollapseComponent>
+
+                <CollapseComponent
                     title="University or College"
                     :isComplete="false"
                     :isOptional="true"
@@ -80,8 +88,6 @@ definePageMeta({
                 >
                     <SocialsForm />
                 </CollapseComponent>
-
-                <WorkExperienceForm/>
             </section>
         </SharedPageContainerWithNavbar>
     </div>

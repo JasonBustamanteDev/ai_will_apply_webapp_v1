@@ -9,12 +9,12 @@ const props = defineProps({
 
 <template>
     <UButton
-        icon="i-heroicons-plus"
+        icon="i-heroicons-minus"
         variant="outline"
         color="neutral"
         :disabled="props.isDisabled"
-        @click="$emit('addRow')"
-        class="w-48"
+        @click="$emit('removeRow')"
+        class="w-72"
     >
         <slot></slot>
     </UButton>
