@@ -1,4 +1,4 @@
-import { authMiddleware } from "./authMiddleware.js";
+import { authMiddleware } from "./checkIfUserIsAuthenticated.js";
 
 export const paidUserMiddleware = (event) => {
     // Check to see if user is authenticated first

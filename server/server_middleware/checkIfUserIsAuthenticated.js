@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 
-export const authMiddleware = (event) => {
+export const checkIfUserIsAuthenticated = (event) => {
     try {
         // Extract bearer token from headers
         let accessToken = getHeader(event, "authorization");
@@ -29,6 +29,8 @@ export const authMiddleware = (event) => {
                 statusMessage: "JWT is not valid",
             });
         }
+
+        return { accessToken };
     } catch (err) {
         // If an error occurs while inspecting the JWT, raise an error for your middleware
         throw createError({
