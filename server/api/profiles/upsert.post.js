@@ -14,8 +14,13 @@ export default defineEventHandler(async (event) => {
 
         const uploadObject = {
             id: auth_id,
+            profileName: body.profileName,
             updated_at: getCurrentUTCTimestamp(),
         };
+
+        for (const formName in body.formData) {
+            uploadObject[formName] = { data: body.formData[formName] };
+        }
 
         const { data, error } = await supabaseClient
             .from("jobSearchProfiles")
@@ -23,9 +28,12 @@ export default defineEventHandler(async (event) => {
             .select();
 
         if (error) {
+            console.log(error);
             setResponseStatus(event, 500);
             return {
-                detail: "Error occurred when upserting profile data",
+                detail: `Error occurred when upserting profile data: ${
+                    error?.message || ""
+                }`,
                 data: null,
             };
         }
