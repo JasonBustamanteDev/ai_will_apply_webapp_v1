@@ -42,3 +42,4 @@ export const isValidYearMonth = function (dateString) {
 export const isValidNumericString = (str) => {
     return !Number.isNaN(Number(str)) && str.trim() !== "";
 };
+

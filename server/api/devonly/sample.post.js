@@ -1,4 +1,4 @@
-import { checkIfUserIsAuthenticated } from "~/server/server_middleware/checkIfUserIsAuthenticated";
+import { checkIfUserIsAuthenticated } from "~/server/manual_middleware/checkIfUserIsAuthenticated";
 
 export default defineEventHandler(async (event) => {
     try {

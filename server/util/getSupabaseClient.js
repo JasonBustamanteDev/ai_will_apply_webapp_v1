@@ -15,3 +15,20 @@ export const getSupabaseClient = (event, accessToken) => {
         }
     );
 };
+
+export const getSupabaseUserDetails = async (supabaseClient, accessToken) => {
+    const { data: { user }, error } = await supabaseClient.auth.getUser(accessToken); // prettier-ignore
+
+    if (error) {
+        throw {
+            statusCode: 500,
+            statusMessage: "Something went wrong when fetching user auth data",
+        };
+    }
+    
+    return {
+        auth_id: user.id,
+        email: user.email,
+        name: user.user_metadata.name,
+    };
+};
