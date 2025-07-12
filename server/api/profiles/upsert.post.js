@@ -17,9 +17,8 @@ export default defineEventHandler(async (event) => {
             profileName: body.profileName,
             updated_at: getCurrentUTCTimestamp(),
         };
-
         for (const formName in body.formData) {
-            uploadObject[formName] = { data: body.formData[formName] };
+            uploadObject[formName] = body.formData[formName];
         }
 
         const { data, error } = await supabaseClient
