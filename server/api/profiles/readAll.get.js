@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
         const { data, error } = await supabaseClient
             .from(PROFILES_TABLE_NAME)
             .select("*")
-            .order("profileName", { ascending: false });
+            .order("profileName", { ascending: true });
 
         if (error) {
             setResponseStatus(event, 500);
