@@ -16,13 +16,10 @@ export default defineEventHandler(async (event) => {
         );
 
         // Count how many profiles the user has
-        const {
-            count: profileCount,
-            error: profileCountError,
-            data: profileCountData,
-        } = await supabaseClient
-            .from(PROFILES_TABLE_NAME)
-            .select("*", { count: "exact" });
+        const { count: profileCount, error: profileCountError } =
+            await supabaseClient
+                .from(PROFILES_TABLE_NAME)
+                .select("*", { count: "exact" });
 
         if (profileCountError) {
             setResponseStatus(event, 500);

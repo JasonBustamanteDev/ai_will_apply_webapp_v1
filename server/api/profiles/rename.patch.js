@@ -1,10 +1,13 @@
 import { getSupabaseClient, getSupabaseUserDetails } from "~/server/util/getSupabaseClient"; // prettier-ignore
 import { checkIfUserIsAuthenticated } from "~/server/manual_middleware/checkIfUserIsAuthenticated";
 import { getCurrentUTCTimestamp } from "~/shared/server_helpers.js";
+import { PROFILES_TABLE_NAME } from "~/server/util/server_globals";
 
 export default defineEventHandler(async (event) => {
     try {
-        const body = await readBody(event);
+        const { newProfileName, oldProfileName } = await readBody(event);
+        if (newProfileName === oldProfileName) return { detail: "success" };
+
         const { accessToken } = checkIfUserIsAuthenticated(event);
         const supabaseClient = getSupabaseClient(event, accessToken);
         const { auth_id } = await getSupabaseUserDetails(
@@ -12,25 +15,22 @@ export default defineEventHandler(async (event) => {
             accessToken
         );
 
-        const uploadObject = {
-            id: auth_id,
-            profileName: body.newProfileName,
+        const updateObject = {
+            profileName: newProfileName,
             updated_at: getCurrentUTCTimestamp(),
         };
 
-        const { data, error } = await supabaseClient
-            .from("jobSearchProfiles")
-            .upsert(uploadObject)
-            .select();
+        const { error } = await supabaseClient
+            .from(PROFILES_TABLE_NAME)
+            .update(updateObject)
+            .eq("id", auth_id)
+            .eq("profileName", oldProfileName);
 
         if (error) {
-            console.log(error);
             setResponseStatus(event, 500);
+            const msg = error.code == 23505 ? "Profile name already in use" : (error?.message || ""); // prettier-ignore
             return {
-                detail: `Error occurred when renaming profile: ${
-                    error?.message || ""
-                }`,
-                data: null,
+                detail: `Error occurred when renaming profile: ${msg}`,
             };
         }
 
