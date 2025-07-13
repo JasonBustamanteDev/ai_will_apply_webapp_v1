@@ -1,4 +1,4 @@
-import { getAuthSessionFromLocalStorage } from "~/shared/helper_methods";
+import { getAuthSessionFromLocalStorage } from "~/shared/client_helpers";
 
 // This runs on the client side since the file ends in .client.js
 export default defineNuxtRouteMiddleware((to, from) => {

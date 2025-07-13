@@ -1,6 +1,6 @@
 <script setup>
 import AddRowButton from "@/ui/profiles/shared/addRowButton.vue";
-import { verifyMinStringLength } from "~/shared/helper_methods";
+import { verifyMinStringLength } from "~/shared/client_helpers";
 import { some } from "lodash";
 
 const MIN_YEARS = 1;

@@ -1,1 +1,0 @@
-export const getCurrentUTCTimestamp = () => new Date().toISOString();

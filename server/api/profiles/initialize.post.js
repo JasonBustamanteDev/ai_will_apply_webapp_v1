@@ -1,9 +1,6 @@
 import { getSupabaseClient, getSupabaseUserDetails } from "~/server/util/getSupabaseClient"; // prettier-ignore
 import { checkIfUserIsAuthenticated } from "~/server/manual_middleware/checkIfUserIsAuthenticated";
-import {
-    MAX_PROFILES,
-    PROFILES_TABLE_NAME,
-} from "~/server/util/server_globals";
+import { MAX_PROFILES, PROFILES_TABLE_NAME, DEFAULT_SUCCESS_RETURN } from "~/server/util/server_constants"; // prettier-ignore
 
 export default defineEventHandler(async (event) => {
     try {
@@ -49,7 +46,7 @@ export default defineEventHandler(async (event) => {
             };
         }
 
-        return { detail: "success" };
+        return DEFAULT_SUCCESS_RETURN;
     } catch (err) {
         const error_code = err?.statusCode || 500;
         const error_message = err?.statusMessage || err?.message || "Something went wrong"; // prettier-ignore
