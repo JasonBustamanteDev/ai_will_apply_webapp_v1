@@ -10,7 +10,7 @@ const props = defineProps({
 <template>
     <div class="card bg-base-100 w-full shadow-sm">
         <div class="card-body card-content-custom">
-            <h2 class="card-title text-lg">{{ props.profileName }}</h2>
+            <h2 class="card-header text-lg">{{ props.profileName }}</h2>
             <section>
                 <p class="text-sm">
                     Last Modified: {{ props.lastModifiedDate }}
@@ -49,5 +49,11 @@ const props = defineProps({
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+}
+.card-header {
+    font-size: 1.25rem;
+    font-weight: 600;
+    // min-height:0;
+    // min-width: 0;
 }
 </style>

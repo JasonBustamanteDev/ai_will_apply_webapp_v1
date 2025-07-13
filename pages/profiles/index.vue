@@ -40,6 +40,14 @@ const deleteProfile = () => {};
                 @editCallback="editProfile"
                 @deleteCallback="deleteProfile"
             />
+            <ProfileCard
+                :profileName="'European Resume Lamda Seven Nine hhhhhhhhhhhhhhhhhhhhhhhhh'"
+                :lastModifiedDate="'2024-09-08'"
+                :completionFraction="'2/9'"
+                :isReady="true"
+                @editCallback="editProfile"
+                @deleteCallback="deleteProfile"
+            />
         </section>
     </SharedPageContainerWithNavbar>
 </template>
