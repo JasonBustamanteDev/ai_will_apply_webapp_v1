@@ -5,7 +5,7 @@ export default defineEventHandler(async (event) => {
     try {
         const { accessToken } = checkIfUserIsAuthenticated(event);
         const supabaseClient = getSupabaseClient(event, accessToken);
-        const profileName = getRouterParam(event, "profileName");
+        const profileName = decodeURI(getRouterParam(event, "profileName"));
 
         // RLS policy applies a WHERE clause automatically (a user can only search through docs with their own uid)
         const { error } = await supabaseClient
@@ -20,7 +20,7 @@ export default defineEventHandler(async (event) => {
             };
         }
 
-        return { detail: "success" };
+        return { detail: "success", profileName };
     } catch (err) {
         const error_code = err?.statusCode || 500;
         const error_message = err?.statusMessage || err?.message || "Something went wrong"; // prettier-ignore
