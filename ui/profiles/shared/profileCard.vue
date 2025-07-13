@@ -6,7 +6,7 @@ const props = defineProps({
 </script>
 
 <template>
-    <div class="card bg-base-100 w-60 shadow-sm">
+    <div class="card bg-base-100 w-full shadow-sm">
         <div class="card-body card-content-custom">
             <h2 class="card-title">{{ props.profileName }}</h2>
             <section>

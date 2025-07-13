@@ -13,7 +13,7 @@ const deleteProfile = () => {};
         <section class="card-container">
             <div
                 @click="createNewProfile"
-                class="cursor-pointer card bg-base-100 w-60 shadow-sm"
+                class="cursor-pointer card bg-base-100 w-full shadow-sm"
             >
                 <div class="card-body items-center text-center">
                     <div class="w-[40px] mx-auto mb-3">
@@ -37,7 +37,7 @@ const deleteProfile = () => {};
 <style lang="scss">
 .card-container {
     display: grid;
-    grid-template-columns: 0.8fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 200px;
     gap: 1rem;
 }
