@@ -39,10 +39,16 @@ export default defineEventHandler(async (event) => {
             };
         }
 
-        //! Prevent same profileName from being used
         const { error: insertError } = await supabaseClient
             .from(PROFILES_TABLE_NAME)
             .insert({ id: auth_id, profileName: body.profileName });
+
+        if (insertError) {
+            setResponseStatus(event, 500);
+            return {
+                detail: `Error occurred when initializing new profile: ${insertError?.message || ""}`, // prettier-ignore
+            };
+        }
 
         return { detail: "success" };
     } catch (err) {
