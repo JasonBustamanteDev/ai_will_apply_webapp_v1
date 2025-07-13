@@ -1,5 +1,6 @@
 import { getSupabaseClient } from "~/server/util/getSupabaseClient";
 import { checkIfUserIsAuthenticated } from "~/server/manual_middleware/checkIfUserIsAuthenticated";
+import { PROFILES_TABLE_NAME } from "~/server/util/server_constants";
 
 export default defineEventHandler(async (event) => {
     try {
@@ -9,7 +10,7 @@ export default defineEventHandler(async (event) => {
 
         // RLS policy applies a WHERE clause automatically (a user can only search through docs with their own uid)
         const { error } = await supabaseClient
-            .from("jobSearchProfiles")
+            .from(PROFILES_TABLE_NAME)
             .delete()
             .eq("profileName", profileName);
 

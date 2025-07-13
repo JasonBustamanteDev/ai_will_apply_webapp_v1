@@ -1,5 +1,6 @@
 import { getSupabaseClient } from "~/server/util/getSupabaseClient";
 import { checkIfUserIsAuthenticated } from "~/server/manual_middleware/checkIfUserIsAuthenticated";
+import { PROFILES_TABLE_NAME } from "~/server/util/server_constants";
 
 export default defineEventHandler(async (event) => {
     try {
@@ -8,7 +9,7 @@ export default defineEventHandler(async (event) => {
 
         // RLS policy applies a WHERE clause automatically (filters by auth uid)
         const { data, error } = await supabaseClient
-            .from("jobSearchProfiles")
+            .from(PROFILES_TABLE_NAME)
             .select("*")
             .order("profileName", { ascending: false });
 
