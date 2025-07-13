@@ -12,21 +12,22 @@ export default defineEventHandler(async (event) => {
             accessToken
         );
 
-        const uploadObject = { updated_at: getCurrentUTCTimestamp() };
-        for (const formName in body.formData) {
-            uploadObject[formName] = body.formData[formName];
-        }
+        const uploadObject = {
+            id: auth_id,
+            profileName: body.newProfileName,
+            updated_at: getCurrentUTCTimestamp(),
+        };
 
         const { data, error } = await supabaseClient
             .from("jobSearchProfiles")
-            .update(uploadObject)
-            .eq("id", auth_id)
-            .eq("profileName", body.profileName);
+            .upsert(uploadObject)
+            .select();
 
         if (error) {
+            console.log(error);
             setResponseStatus(event, 500);
             return {
-                detail: `Error occurred when saving profile data: ${
+                detail: `Error occurred when renaming profile: ${
                     error?.message || ""
                 }`,
                 data: null,

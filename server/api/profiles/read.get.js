@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
         if (error) {
             setResponseStatus(event, 500);
             return {
-                detail: "Error occurred when fetching profile data",
+                detail: "Error occurred when reading profile data",
                 data: null,
             };
         }
