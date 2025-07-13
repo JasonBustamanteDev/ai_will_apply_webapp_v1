@@ -20,7 +20,10 @@ const deleteProfile = () => {};
                         <AddProfileSvg />
                     </div>
                     <h2 class="card-title text-lg">Create New Profile</h2>
-                    <p class="text-sm">Enter your information then use the profile when applying for jobs</p>
+                    <p class="text-sm">
+                        Enter your information then use the profile when
+                        applying for jobs
+                    </p>
                 </div>
             </div>
 
@@ -61,12 +64,11 @@ const deleteProfile = () => {};
     gap: 1rem;
     height: 100%;
     padding: 24px;
-
 }
 .card-container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 240px;
+    grid-template-rows: repeat(2, 240px);
     gap: 1rem;
 }
 </style>

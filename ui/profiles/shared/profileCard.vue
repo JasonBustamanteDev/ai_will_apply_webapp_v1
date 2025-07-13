@@ -53,7 +53,12 @@ const props = defineProps({
 .card-header {
     font-size: 1.25rem;
     font-weight: 600;
-    // min-height:0;
-    // min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    line-clamp: 1;
+    word-break: break-word;
 }
 </style>
