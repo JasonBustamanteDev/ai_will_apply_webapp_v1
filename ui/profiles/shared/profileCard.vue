@@ -2,16 +2,22 @@
 const props = defineProps({
     profileName: { type: String },
     lastModifiedDate: { type: String },
+    completionFraction: { type: String },
+    isReady: { type: Boolean },
 });
 </script>
 
 <template>
     <div class="card bg-base-100 w-full shadow-sm">
         <div class="card-body card-content-custom">
-            <h2 class="card-title">{{ props.profileName }}</h2>
+            <h2 class="card-title text-lg">{{ props.profileName }}</h2>
             <section>
-                <p>Forms completed: 3/8</p>
-                <p>Last Modified: {{ props.lastModifiedDate }}</p>
+                <p class="text-sm">
+                    Last Modified: {{ props.lastModifiedDate }}
+                </p>
+                <p class="text-sm">
+                    Forms completed: {{ props.completionFraction }}
+                </p>
             </section>
             <section class="flex gap-4">
                 <UButton

@@ -19,14 +19,16 @@ const deleteProfile = () => {};
                     <div class="w-[40px] mx-auto mb-3">
                         <AddProfileSvg />
                     </div>
-                    <h2 class="card-title">Create New Profile</h2>
-                    <p>Upload resume then enter your information</p>
+                    <h2 class="card-title text-lg">Create New Profile</h2>
+                    <p class="text-sm">Upload resume then enter your information</p>
                 </div>
             </div>
 
             <ProfileCard
-                profileName="Canadian Resume"
-                lastModifiedDate="2024-09-08"
+                :profileName="'Canadian Resume'"
+                :lastModifiedDate="'2024-09-08'"
+                :completionFraction="'2/9'"
+                :isReady="false"
                 @editCallback="editProfile"
                 @deleteCallback="deleteProfile"
             />
@@ -38,7 +40,7 @@ const deleteProfile = () => {};
 .card-container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 200px;
+    grid-template-rows: 240px;
     gap: 1rem;
 }
 </style>
