@@ -1,6 +1,5 @@
 import { getSupabaseClient, getSupabaseUserDetails } from "~/server/util/getSupabaseClient"; // prettier-ignore
 import { checkIfUserIsAuthenticated } from "~/server/manual_middleware/checkIfUserIsAuthenticated";
-import { getCurrentUTCTimestamp } from "~/shared/server_helpers.js";
 import {
     MAX_PROFILES,
     PROFILES_TABLE_NAME,
@@ -16,7 +15,7 @@ export default defineEventHandler(async (event) => {
             accessToken
         );
 
-        // Ensure the user hasn't exceeded their max number of profiles
+        // Count how many profiles the user has
         const {
             count: profileCount,
             error: profileCountError,
@@ -25,13 +24,6 @@ export default defineEventHandler(async (event) => {
             .from(PROFILES_TABLE_NAME)
             .select("*", { count: "exact" });
 
-        if (profileCount >= MAX_PROFILES) {
-            setResponseStatus(event, 422);
-            return {
-                detail: `The max number of profiles have been used (${MAX_PROFILES}). Delete a profile before creating a new one`,
-            };
-        }
-
         if (profileCountError) {
             setResponseStatus(event, 500);
             return {
@@ -39,10 +31,20 @@ export default defineEventHandler(async (event) => {
             };
         }
 
+        // If the user has the maximum amount, rejject the request
+        if (profileCount >= MAX_PROFILES) {
+            setResponseStatus(event, 422);
+            return {
+                detail: `The max number of profiles have been used (${MAX_PROFILES}). Delete a profile before creating a new one`,
+            };
+        }
+
+        // Insert the new profile
         const { error: insertError } = await supabaseClient
             .from(PROFILES_TABLE_NAME)
             .insert({ id: auth_id, profileName: body.profileName });
 
+        // An error will occur if a duplicate profile name is used already since it violates the table's UK constraint
         if (insertError) {
             setResponseStatus(event, 500);
             return {

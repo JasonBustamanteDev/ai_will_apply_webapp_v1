@@ -1,6 +1,7 @@
 import { getSupabaseClient, getSupabaseUserDetails } from "~/server/util/getSupabaseClient"; // prettier-ignore
 import { checkIfUserIsAuthenticated } from "~/server/manual_middleware/checkIfUserIsAuthenticated";
 import { getCurrentUTCTimestamp } from "~/shared/server_helpers.js";
+import { PROFILES_TABLE_NAME } from "~/server/util/server_globals";
 
 export default defineEventHandler(async (event) => {
     try {
@@ -17,8 +18,8 @@ export default defineEventHandler(async (event) => {
             uploadObject[formName] = body.formData[formName];
         }
 
-        const { data, error } = await supabaseClient
-            .from("jobSearchProfiles")
+        const { error } = await supabaseClient
+            .from(PROFILES_TABLE_NAME)
             .update(uploadObject)
             .eq("id", auth_id)
             .eq("profileName", body.profileName);
