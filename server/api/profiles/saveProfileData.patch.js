@@ -12,19 +12,16 @@ export default defineEventHandler(async (event) => {
             accessToken
         );
 
-        const uploadObject = {
-            id: auth_id,
-            profileName: body.profileName,
-            updated_at: getCurrentUTCTimestamp(),
-        };
+        const uploadObject = { updated_at: getCurrentUTCTimestamp() };
         for (const formName in body.formData) {
             uploadObject[formName] = body.formData[formName];
         }
 
         const { data, error } = await supabaseClient
             .from("jobSearchProfiles")
-            .upsert(uploadObject)
-            .select();
+            .update(uploadObject)
+            .eq("id", auth_id)
+            .eq("profileName", body.profileName);
 
         if (error) {
             console.log(error);
