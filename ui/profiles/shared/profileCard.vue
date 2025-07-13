@@ -18,6 +18,12 @@ const props = defineProps({
                 <p class="text-sm">
                     Forms completed: {{ props.completionFraction }}
                 </p>
+                <p v-if="!isReady" class="text-sm font-bold">
+                    {{ "Incomplete ❌" }}
+                </p>
+                <p v-else class="text-sm">
+                    {{ "Ready for use ✅" }}
+                </p>
             </section>
             <section class="flex gap-4">
                 <UButton

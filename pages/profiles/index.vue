@@ -15,12 +15,12 @@ const deleteProfile = () => {};
                 @click="createNewProfile"
                 class="cursor-pointer card bg-base-100 w-full shadow-sm"
             >
-                <div class="card-body items-center text-center">
+                <div class="create-new-card text-center">
                     <div class="w-[40px] mx-auto mb-3">
                         <AddProfileSvg />
                     </div>
                     <h2 class="card-title text-lg">Create New Profile</h2>
-                    <p class="text-sm">Upload resume then enter your information</p>
+                    <p class="text-sm">Enter your information then use the profile when applying for jobs</p>
                 </div>
             </div>
 
@@ -32,11 +32,29 @@ const deleteProfile = () => {};
                 @editCallback="editProfile"
                 @deleteCallback="deleteProfile"
             />
+            <ProfileCard
+                :profileName="'American Resume'"
+                :lastModifiedDate="'2024-09-08'"
+                :completionFraction="'2/9'"
+                :isReady="true"
+                @editCallback="editProfile"
+                @deleteCallback="deleteProfile"
+            />
         </section>
     </SharedPageContainerWithNavbar>
 </template>
 
 <style lang="scss">
+.create-new-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    height: 100%;
+    padding: 24px;
+
+}
 .card-container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
