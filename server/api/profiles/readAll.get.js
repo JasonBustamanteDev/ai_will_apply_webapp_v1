@@ -36,15 +36,17 @@ const formatReadProfilesData = (profileList) => {
         const updatedAt = x.updatedAt;
         return {
             profileName: x.profileName,
-            personalDetails: x.personalDetails,
-            location: x.location,
-            preferences: x.preferences,
-            languages: x.languages,
-            skills: x.skills,
-            workExperience: x.workExperience,
-            education: x.education,
-            mediaLinks: x.mediaLinks,
             lastUpdated: extractFormattedDate(updatedAt || createdAt),
+            formData: {
+                personalDetails: x.personalDetails,
+                location: x.location,
+                preferences: x.preferences,
+                languages: x.languages,
+                skills: x.skills,
+                workExperience: x.workExperience,
+                education: x.education,
+                mediaLinks: x.mediaLinks,
+            },
         };
     });
 };
