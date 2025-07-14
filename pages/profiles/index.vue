@@ -1,6 +1,20 @@
 <script setup>
 import AddProfileSvg from "~/ui/svgs/addProfile.vue";
 import ProfileCard from "~/ui/profiles/shared/profileCard.vue";
+import { getProfiles } from "~/ui/profiles/apiCalls/getProfiles.js";
+import { getAuthSessionFromLocalStorage } from "~/shared/client_helpers";
+
+const env_config = useRuntimeConfig();
+
+const profileList = ref([]);
+
+onMounted(async () => {
+    const profileData = await getProfiles(
+        env_config.public.SUPABASE_PROJECT_URL
+    );
+    profileList.value = profileData
+    //! TODO: error handle profileData
+});
 
 const createNewProfile = () => {};
 const editProfile = () => {};
@@ -28,6 +42,19 @@ const deleteProfile = () => {};
             </div>
 
             <ProfileCard
+                v-for="(entry, index) in profileList"
+                :key="index"
+                :profileName="entry.profileName"
+                :lastModifiedDate="'2024-09-08'"
+                :completionFraction="'2/9'"
+                :isReady="false"
+                @editCallback="editProfile"
+                @deleteCallback="deleteProfile"
+            />
+
+            
+
+            <!-- <ProfileCard
                 :profileName="'Canadian Resume'"
                 :lastModifiedDate="'2024-09-08'"
                 :completionFraction="'2/9'"
@@ -50,8 +77,9 @@ const deleteProfile = () => {};
                 :isReady="true"
                 @editCallback="editProfile"
                 @deleteCallback="deleteProfile"
-            />
+            /> -->
         </section>
+        <p>{{ profileList }}</p>
     </SharedPageContainerWithNavbar>
 </template>
 

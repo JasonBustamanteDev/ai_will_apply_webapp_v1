@@ -1,6 +1,6 @@
 <script setup>
 import PersonalDetailsForm from "~/ui/profiles/personalDetails/personalDetailsForm.vue";
-import LocationForm from "~/ui/profiles/location/locationForm.vue";
+import LocationForm from "~/ui/profiles/views/location/locationForm.vue";
 import EducationForm from "~/ui/profiles/education/educationForm.vue";
 import CollapseComponent from "~/ui/profiles/shared/collapse.vue";
 import LanguagesForm from "~/ui/profiles/languages/languagesForm.vue";

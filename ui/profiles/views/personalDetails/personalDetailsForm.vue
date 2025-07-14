@@ -2,7 +2,7 @@
 import { object, string, number, boolean } from "yup";
 import { verifyMinStringLength, cleanPhoneNumber } from "~/shared/client_helpers"; // prettier-ignore
 import { genders, ethnicGroups, educationLevels } from "~/ui/profiles/personalDetails/personalDetailsForm.js"; // prettier-ignore
-import { booleanPlusEmptyOptions } from "~/ui/profiles/shared/util.js";
+import { booleanPlusEmptyOptions } from "~/ui/profiles/shared/constants.js";
 
 const MESSAGES = {
     REQUIRED: "This field is required",

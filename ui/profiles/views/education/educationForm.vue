@@ -1,7 +1,7 @@
 <script setup>
 import { object, string, boolean } from "yup";
 import { emptyOrMinLengthStringAccepted, isValidYearMonth } from "~/shared/client_helpers";
-import { booleanOptions, radioStyleObject } from "~/ui/profiles/shared/util.js"; //  prettier-ignore
+import { booleanOptions, radioStyleObject } from "~/ui/profiles/shared/constants.js"; //  prettier-ignore
 
 // TODO: Submit better contain a changed value
 const MESSAGES = {
