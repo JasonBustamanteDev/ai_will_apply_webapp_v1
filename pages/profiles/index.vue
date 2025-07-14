@@ -12,7 +12,7 @@ onMounted(async () => {
     const profileData = await getProfiles(
         env_config.public.SUPABASE_PROJECT_URL
     );
-    profileList.value = profileData
+    profileList.value = profileData;
     //! TODO: error handle profileData
 });
 
@@ -45,14 +45,12 @@ const deleteProfile = () => {};
                 v-for="(entry, index) in profileList"
                 :key="index"
                 :profileName="entry.profileName"
-                :lastModifiedDate="'2024-09-08'"
-                :completionFraction="'2/9'"
+                :lastModifiedDate="entry.lastUpdated"
                 :isReady="false"
+                :completionFraction="'2/9'"
                 @editCallback="editProfile"
                 @deleteCallback="deleteProfile"
             />
-
-            
 
             <!-- <ProfileCard
                 :profileName="'Canadian Resume'"

@@ -1,9 +1,6 @@
 import { getSupabaseClient } from "~/server/util/getSupabaseClient";
 import { checkIfUserIsAuthenticated } from "~/server/manual_middleware/checkIfUserIsAuthenticated";
-import {
-    PROFILES_TABLE_NAME,
-    extractFormattedDate,
-} from "~/server/util/server_constants";
+import { PROFILES_TABLE_NAME, extractFormattedDate } from "~/server/util/server_constants"; // prettier-ignore
 
 export default defineEventHandler(async (event) => {
     try {
