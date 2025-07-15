@@ -1,6 +1,17 @@
 import { getAuthSessionFromLocalStorage, extractFormattedDate } from "~/shared/client_helpers"; // prettier-ignore
 import { personalDetailsSchema, locationSchema, preferenceSchema, educationSchema, socialSchema, skillsValidator, workExperienceValidator, languageValidator } from "../views/formValidation"; // prettier-ignore
 
+export const getProfiles = async (supabaseProjectUrl) => {
+    const session = await getAuthSessionFromLocalStorage(supabaseProjectUrl);
+    const result = await $fetch("/api/profiles/readAll", {
+        headers: {
+            Authorization: `Bearer ${session.access_token}`,
+        },
+    });
+
+    return await formatData(result.data);
+};
+
 const formatData = async (profileList) => {
     const rowPromises = profileList.map(async (x) => {
         const createdAt = x.createdAt;
@@ -52,15 +63,4 @@ const formatData = async (profileList) => {
     });
 
     return await Promise.all(rowPromises);
-};
-
-export const getProfiles = async (supabaseProjectUrl) => {
-    const session = await getAuthSessionFromLocalStorage(supabaseProjectUrl);
-    const result = await $fetch("/api/profiles/readAll", {
-        headers: {
-            Authorization: `Bearer ${session.access_token}`,
-        },
-    });
-
-    return await formatData(result.data);
 };
