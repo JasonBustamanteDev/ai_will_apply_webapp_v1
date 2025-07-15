@@ -1,5 +1,5 @@
 import { object, string, number, boolean, array } from "yup";
-import { emptyOrMinLengthStringAccepted, verifyMinStringLength, cleanPhoneNumber, isValidYearMonth } from "~/shared/client_helpers"; // prettier-ignore
+import { emptyOrMinLengthStringAccepted, verifyMinStringLength, cleanPhoneNumber, isValidYearMonth, isValidNumericString } from "~/shared/client_helpers"; // prettier-ignore
 import { genders, ethnicGroups, educationLevels } from "~/ui/profiles/views/personalDetails/personalDetailsForm.js"; // prettier-ignore
 import { countriesList } from "./location/countries";
 import { usaDict, canadaDict } from "./location/provinces";
@@ -324,3 +324,49 @@ export const socialSchema = object({
             }
         ),
 });
+
+// tech_debt: ensure this fn validates similarly to this other fn (CTRL F a1c)
+export const skillsValidator = (skillsList) => {
+    let isValid = true;
+    for (const obj of skillsList) {
+        if (!verifyMinStringLength(obj.name, 1)) {
+            isValid = false;
+            break;
+        }
+    }
+
+    return isValid;
+};
+
+// tech_debt: ensure this fn validates similarly to this other fn (CTRL F a1b)
+export const languageValidator = (languageList) => {
+    let isValid = true;
+    for (const obj of languageList) {
+        if (
+            !verifyMinStringLength(obj.language, 1) ||
+            !verifyMinStringLength(obj.proficiency, 1)
+        ) {
+            isValid = false;
+            break;
+        }
+    }
+    return isValid;
+};
+
+// tech_debt: ensure this fn validates similarly to this other fn (CTRL F a1a)
+export const workExperienceValidator = (experienceList) => {
+    let isValid = true;
+    for (const obj of experienceList) {
+        const jobTitleError = !verifyMinStringLength(obj.jobTitle, 1);
+        const companyError = !verifyMinStringLength(obj.company, 1);
+
+        const yearsValue = obj.years;
+        const yearsError  = !yearsValue || !isValidNumericString(yearsValue) || Number(yearsValue) <= 0; // prettier-ignore
+
+        if (jobTitleError || companyError || yearsError) {
+            isValid = false;
+            break;
+        }
+    }
+    return isValid;
+};

@@ -25,6 +25,7 @@ const workExperienceList = ref([
 ]);
 
 const areAllRowsValid = () => {
+    // tech_debt: ensure this fn validates similarly to this other fn (CTRL F a1a)
     // Check if each field is filled - render error if it isn't and clear errors if it is
     for (const obj of workExperienceList.value) {
         obj.jobTitleError = !verifyMinStringLength(obj.jobTitle, 1);

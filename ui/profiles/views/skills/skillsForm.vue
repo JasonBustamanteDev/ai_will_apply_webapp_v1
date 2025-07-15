@@ -23,6 +23,7 @@ const removeSkill = (index) => {
 };
 
 const onSubmit = async () => {
+    // tech_debt: ensure this fn validates similarly to this other fn (CTRL F a1c)
     for (const obj of skills.value) {
         const skillName = obj.name;
         obj.nameError = !verifyMinStringLength(skillName, 1);

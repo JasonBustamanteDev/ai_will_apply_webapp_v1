@@ -1,5 +1,5 @@
 import { getAuthSessionFromLocalStorage, extractFormattedDate } from "~/shared/client_helpers"; // prettier-ignore
-import { personalDetailsSchema, locationSchema, preferenceSchema, educationSchema, socialSchema } from "../views/formValidation"; // prettier-ignore
+import { personalDetailsSchema, locationSchema, preferenceSchema, educationSchema, socialSchema, skillsValidator, workExperienceValidator, languageValidator } from "../views/formValidation"; // prettier-ignore
 
 const formatData = async (profileList) => {
     const rowPromises = profileList.map(async (x) => {
@@ -27,6 +27,10 @@ const formatData = async (profileList) => {
             .then(() => true)
             .catch(() => false);
 
+        const languagesValidation = languageValidator(x.languages);
+        const skillsValidation = languageValidator(x.skills);
+        const workExperienceValidation = languageValidator(x.workExperience);
+
         return {
             profileName: x.profileName,
             lastUpdated: extractFormattedDate(updatedAt || createdAt),
@@ -37,10 +41,10 @@ const formatData = async (profileList) => {
                 location: { data: x.location, isComplete: locationValidation },
                 preferences: { data: x.preferences, isComplete: preferenceValidation },
 
-                languages: { data: x.languages },
-                skills: { data: x.skills },
-                workExperience: { data: x.workExperience },
-                
+                languages: { data: x.languages, isComplete: languagesValidation },
+                skills: { data: x.skills, isComplete: skillsValidation },
+                workExperience: { data: x.workExperience, isComplete: workExperienceValidation },
+
                 education: { data: x.education, isComplete: educationValidation },
                 mediaLinks: { data: x.mediaLinks, isComplete: mediaValidation },
             },

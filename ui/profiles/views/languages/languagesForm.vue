@@ -49,6 +49,7 @@ const removeLanguage = (index) => {
 };
 
 const onSubmit = () => {
+    // tech_debt: ensure this fn validates similarly to this other fn (CTRL F a1b)
     // Check if each field is filled - render error if it isn't and clear errors if it is
     for (const obj of languages.value) {
         const item_lang = obj.language;
