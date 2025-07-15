@@ -54,10 +54,20 @@ const formatData = async (profileList) => {
         ];
         const completedCount = formCompletionBooleans.filter(Boolean).length;
 
+        // We consider a profile ready if required forms are filled in and valid
+        const isReady =
+            personalDetailsValidation &&
+            locationValidation &&
+            preferenceValidation &&
+            languagesValidation &&
+            skillsValidation &&
+            workExperienceValidation;
+
         return {
             profileName: x.profileName,
             lastUpdated: extractFormattedDate(updatedAt || createdAt),
             completedFormFraction: `${completedCount}/${formCompletionBooleans.length}`,
+            isReady,
 
             // prettier-ignore
             forms: {
