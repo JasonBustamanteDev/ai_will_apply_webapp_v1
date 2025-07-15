@@ -42,9 +42,22 @@ const formatData = async (profileList) => {
         const skillsValidation = languageValidator(x.skills);
         const workExperienceValidation = languageValidator(x.workExperience);
 
+        const formCompletionBooleans = [
+            personalDetailsValidation,
+            locationValidation,
+            preferenceValidation,
+            educationValidation,
+            mediaValidation,
+            languagesValidation,
+            skillsValidation,
+            workExperienceValidation,
+        ];
+        const completedCount = formCompletionBooleans.filter(Boolean).length;
+
         return {
             profileName: x.profileName,
             lastUpdated: extractFormattedDate(updatedAt || createdAt),
+            completedFormFraction: `${completedCount}/${formCompletionBooleans.length}`,
 
             // prettier-ignore
             forms: {
