@@ -10,7 +10,7 @@ const MESSAGES = {
     VALID_OPTION: "Please select a valid option",
 };
 
-const profileSchema = object({
+const detailSchema = object({
     firstName: string()
         .required(MESSAGES.REQUIRED)
         .test("min-length-no-whitespace", "No empty names", (value) => verifyMinStringLength(value, 1)), // prettier-ignore
@@ -85,7 +85,7 @@ const formState = reactive({
 
 const onSubmit = async () => {
     try {
-        let user = await profileSchema.validate(formState);
+        let user = await detailSchema.validate(formState);
         // TODO: send request to backend
         console.log(user);
     } catch (err) {
@@ -96,7 +96,7 @@ const onSubmit = async () => {
 
 <template>
     <UForm
-        :schema="profileSchema"
+        :schema="detailSchema"
         :state="formState"
         class="space-y-4 uform-element pt-4"
         @submit="onSubmit"
