@@ -16,7 +16,6 @@ onMounted(async () => {
 
 const createNewProfile = () => {};
 const editProfile = () => {};
-const deleteProfile = () => {};
 </script>
 
 <template>
@@ -48,7 +47,6 @@ const deleteProfile = () => {};
                 :isReady="entry.isReady"
                 :completionFraction="entry.completedFormFraction"
                 @editCallback="editProfile"
-                @deleteCallback="deleteProfile"
             />
         </section>
     </SharedPageContainerWithNavbar>

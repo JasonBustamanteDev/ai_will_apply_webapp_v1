@@ -5,6 +5,8 @@ const props = defineProps({
     completionFraction: { type: String },
     isReady: { type: Boolean },
 });
+
+const isModalOpen = ref(false)
 </script>
 
 <template>
@@ -35,13 +37,38 @@ const props = defineProps({
                 <UButton
                     color="neutral"
                     variant="outline"
-                    @click="$emit('deleteCallback')"
+                    @click="() => isModalOpen = true"
+                    
                     class="cursor-pointer"
                     >Delete</UButton
                 >
             </section>
         </div>
     </div>
+
+    <UModal
+        v-model:open="isModalOpen"
+        :title="`Are you sure you want to delete ${profileName}?`"
+        description=""
+        :ui="{ footer: 'justify-end' }"
+    >
+        <!-- <UButton label="Open" color="neutral" variant="subtle" /> -->
+
+        <template #body>
+            <p>This action is not reversible</p>
+        </template>
+
+        <template #footer="{ close }">
+            <UButton
+                label="Cancel"
+                color="neutral"
+                variant="outline"
+                @click="close"
+            />
+            <UButton label="Delete" color="neutral" />
+        </template>
+    </UModal>
+    <p>{{ isModalOpen }}</p>
 </template>
 
 <style lang="scss">
