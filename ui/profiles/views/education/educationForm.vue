@@ -1,59 +1,6 @@
 <script setup>
-import { object, string, boolean } from "yup";
-import { emptyOrMinLengthStringAccepted, isValidYearMonth } from "~/shared/client_helpers";
-import { booleanOptions, radioStyleObject } from "~/ui/profiles/shared/constants.js"; //  prettier-ignore
-
-// TODO: Submit better contain a changed value
-const MESSAGES = {
-    REQUIRED: "This field is required",
-    ONLY_EMPTY: "Answer cannot be empty spaces",
-};
-
-const educationSchema = object({
-    institutionName: string()
-        .required(MESSAGES.REQUIRED)
-        .test("institutionName", MESSAGES.ONLY_EMPTY, (value) =>
-            emptyOrMinLengthStringAccepted(value, 1)
-        ),
-    fieldOfStudy: string()
-        .required(MESSAGES.REQUIRED)
-        .test("fieldOfStudy", MESSAGES.ONLY_EMPTY, (value) =>
-            emptyOrMinLengthStringAccepted(value, 1)
-        ),
-    institutionCity: string()
-        .required(MESSAGES.REQUIRED)
-        .test("institutionCity", MESSAGES.ONLY_EMPTY, (value) =>
-            emptyOrMinLengthStringAccepted(value, 1)
-        ),
-    institutionProvince: string()
-        .required(MESSAGES.REQUIRED)
-        .test("institutionProvince", MESSAGES.ONLY_EMPTY, (value) =>
-            emptyOrMinLengthStringAccepted(value, 1)
-        ),
-    gpa: string("Invalid number")
-        .nullable()
-        .notRequired()
-        .test("gpa", "Type a decimal between 1 to 5", (value) => {
-            if (value === undefined || value === "") return true;
-            try {
-                const num = Number(value);
-                return value >= 1 && value <= 5;
-            } catch {
-                return false;
-            }
-        }),
-    startDate: string()
-        .required(MESSAGES.REQUIRED)
-        .test("start-date", "YYYY-MM format required", (value) => {
-            return isValidYearMonth(value);
-        }),
-    endDate: string()
-        .required(MESSAGES.REQUIRED)
-        .test("start-date", "YYYY-MM format required", (value) => {
-            return isValidYearMonth(value);
-        }),
-    currentlyAttending: boolean().required(MESSAGES.REQUIRED),
-});
+import { educationSchema } from "../formValidation";
+import { booleanPlusEmptyOptions, booleanOptions, radioStyleObject } from "~/ui/profiles/shared/constants.js"; // prettier-ignore
 
 const formState = reactive({
     // These keys must match the name attributes on UFormField elements
@@ -68,6 +15,7 @@ const formState = reactive({
 });
 
 const onSubmit = async () => {
+    // TODO: Submit better contain a changed value
     try {
         let user = await educationSchema.validate(formState);
         // TODO: send request to backend. Make sure t

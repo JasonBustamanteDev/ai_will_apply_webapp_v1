@@ -12,7 +12,6 @@ const formatData = async (profileList) => {
             .then(() => true)
             .catch(() => false);
 
-        // const locationValidation = 
 
         return {
             profileName: x.profileName,

@@ -1,24 +1,6 @@
 <script setup>
-import { object, string, number, boolean, array } from "yup";
+import { preferenceSchema } from "../formValidation";
 import { booleanOptions, radioStyleObject } from "~/ui/profiles/shared/constants.js"; // this is used in template
-
-const MESSAGES = {
-    REQUIRED: "This field is required",
-};
-
-const preferenceSchema = object({
-    currentAnnualSalary: number().required(MESSAGES.REQUIRED),
-    expectedAnnualSalary: number().required(MESSAGES.REQUIRED),
-    noticePeriod: number().required(MESSAGES.REQUIRED),
-    willingToRelocate: boolean().required(MESSAGES.REQUIRED),
-    driversLicense: boolean().required(MESSAGES.REQUIRED),
-    reliableTransportation: boolean().required(MESSAGES.REQUIRED),
-    veteranStatus: boolean().required(MESSAGES.REQUIRED),
-    companyBlacklist: array()
-        .of(string().required())
-        .min(0)
-        .required(MESSAGES.REQUIRED),
-});
 
 const formState = reactive({
     // These keys must match the name attributes on UFormField elements
