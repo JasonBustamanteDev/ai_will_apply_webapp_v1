@@ -1,58 +1,6 @@
 <script setup>
-import { object, string } from "yup";
 import { countriesList } from "./countries";
-import { usaDict, canadaDict } from "./provinces";
-import { emptyOrMinLengthStringAccepted, verifyMinStringLength } from "~/shared/client_helpers";
-
-const MESSAGES = {
-    REQUIRED: "This field is required",
-};
-
-const locationSchema = object({
-    country: string()
-        .required(MESSAGES.REQUIRED)
-        .oneOf(
-            countriesList.map((g) => g.value),
-            "Select a valid country"
-        ),
-    address: string()
-        .nullable()
-        .notRequired()
-        .test(
-            "min-length-no-whitespace",
-            "No addresses comprised of empty spaces",
-            (value) => {
-                return emptyOrMinLengthStringAccepted(value, 1);
-            }
-        ),
-    city: string()
-        .required(MESSAGES.REQUIRED)
-        .test("min-length-no-whitespace", "No empty addresses", (value) => verifyMinStringLength(value, 1)), // prettier-ignore
-    postalCode: string()
-        .required(MESSAGES.REQUIRED)
-        .test("min-length-no-whitespace", "No empty postal codes", (value) => verifyMinStringLength(value, 1)), // prettier-ignore
-    provinceState: string()
-        .required(MESSAGES.REQUIRED)
-        .test(
-            "valid-province-or-state",
-            "Type the full name of your province/state or the abbreviation (Ex. 'Ontario' or 'ON')",
-            function (value) {
-                // Verify that the value is in the list of valid provinces/states
-                const lowercaseValue = value.toLowerCase();
-                const country = this.parent.country;
-
-                if (country === "CA") return lowercaseValue in canadaDict;
-                else if (country === "US") return lowercaseValue in usaDict;
-                else return verifyMinStringLength(lowercaseValue, 1);
-            }
-        ),
-    citizenship: string()
-        .required(MESSAGES.REQUIRED)
-        .oneOf(
-            countriesList.map((g) => g.value),
-            "Select a valid country"
-        ),
-});
+import { locationSchema } from "../formValidation";
 
 const formState = reactive({
     // These keys must match the name attributes on UFormField elements
