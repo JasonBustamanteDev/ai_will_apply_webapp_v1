@@ -59,12 +59,7 @@ const detailSchema = object({
             educationLevels.map((g) => g.value),
             MESSAGES.VALID_OPTION
         ),
-    securityClearance: string()
-        .nullable()
-        .oneOf(
-            booleanPlusEmptyOptions.map((g) => g.value),
-            MESSAGES.VALID_OPTION
-        ),
+    securityClearance: boolean().nullable(),
     disability: boolean().nullable(),
 });
 
@@ -190,6 +185,7 @@ const onSubmit = async () => {
             >
         </div>
     </UForm>
+    <p>{{ formState }}</p>
 </template>
 
 <style lang="scss" scoped>
