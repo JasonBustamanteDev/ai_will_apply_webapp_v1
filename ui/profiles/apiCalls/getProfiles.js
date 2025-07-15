@@ -1,25 +1,27 @@
 import { getAuthSessionFromLocalStorage, extractFormattedDate } from "~/shared/client_helpers"; // prettier-ignore
+import { personalDetailsSchema } from "../views/formValidation"; // prettier-ignore
 
-const formatData = (profileList) => {
-    const validationObject = {
-        personalDetails: null,
-        location: null,
-        preferences: null,
-        languages: null,
-        skills: null,
-        workExperience: null,
-        education: null,
-        mediaLinks: null,
-    };
+const formatData = async (profileList) => {
 
-    return profileList.map((x) => {
+    const rowPromises = profileList.map(async (x) => {
         const createdAt = x.createdAt;
         const updatedAt = x.updatedAt;
+
+        const personalDetailsValidation = await personalDetailsSchema
+            .validate(x.personalDetails)
+            .then(() => true)
+            .catch(() => false);
+
+        // const locationValidation = 
+
         return {
             profileName: x.profileName,
             lastUpdated: extractFormattedDate(updatedAt || createdAt),
             forms: {
-                personalDetails: { data: x.personalDetails },
+                personalDetails: {
+                    data: x.personalDetails,
+                    isComplete: personalDetailsValidation,
+                },
                 location: { data: x.location },
                 preferences: { data: x.preferences },
                 languages: { data: x.languages },
@@ -30,6 +32,8 @@ const formatData = (profileList) => {
             },
         };
     });
+
+    return await Promise.all(rowPromises);
 };
 
 export const getProfiles = async (supabaseProjectUrl) => {
@@ -40,5 +44,5 @@ export const getProfiles = async (supabaseProjectUrl) => {
         },
     });
 
-    return formatData(result.data);
+    return await formatData(result.data);
 };
