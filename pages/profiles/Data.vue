@@ -1,13 +1,13 @@
 <script setup>
-import PersonalDetailsForm from "~/ui/profiles/personalDetails/personalDetailsForm.vue";
+import PersonalDetailsForm from "~/ui/profiles/views/personalDetails/personalDetailsForm.vue";
 import LocationForm from "~/ui/profiles/views/location/locationForm.vue";
-import EducationForm from "~/ui/profiles/education/educationForm.vue";
+import EducationForm from "~/ui/profiles/views/education/educationForm.vue";
 import CollapseComponent from "~/ui/profiles/shared/collapse.vue";
-import LanguagesForm from "~/ui/profiles/languages/languagesForm.vue";
-import SkillsForm from "~/ui/profiles/skills/skillsForm.vue";
-import SocialsForm from "~/ui/profiles/socials/socialsForm.vue";
-import PreferenceForm from "~/ui/profiles/preferences/preferenceForm.vue";
-import WorkExperienceForm from "~/ui/profiles/workExperience/workExperienceForm.vue";
+import LanguagesForm from "~/ui/profiles/views/languages/languagesForm.vue";
+import SkillsForm from "~/ui/profiles/views/skills/skillsForm.vue";
+import SocialsForm from "~/ui/profiles/views/socials/socialsForm.vue";
+import PreferenceForm from "~/ui/profiles/views/preferences/preferenceForm.vue";
+import WorkExperienceForm from "~/ui/profiles/views/workExperience/workExperienceForm.vue";
 
 definePageMeta({
     middleware: ["redirect-if-no-auth-session-client"],

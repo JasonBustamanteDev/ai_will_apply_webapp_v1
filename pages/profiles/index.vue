@@ -12,7 +12,8 @@ onMounted(async () => {
     const profileData = await getProfiles(
         env_config.public.SUPABASE_PROJECT_URL
     );
-    profileList.value = profileData;
+    console.log(profileData)
+    // profileList.value = profileData;
     //! TODO: error handle profileData
 });
 
@@ -46,6 +47,7 @@ const deleteProfile = () => {};
                 :key="index"
                 :profileName="entry.profileName"
                 :lastModifiedDate="entry.lastUpdated"
+                
                 :isReady="false"
                 :completionFraction="'2/9'"
                 @editCallback="editProfile"

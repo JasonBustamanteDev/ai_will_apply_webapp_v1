@@ -21,7 +21,7 @@ export default defineEventHandler(async (event) => {
             };
         }
 
-        return { detail: "success", data: formatReadProfilesData(data) };
+        return { detail: "success", data };
     } catch (err) {
         const error_code = err?.statusCode || 500;
         const error_message = err?.statusMessage || err?.message || "Something went wrong"; // prettier-ignore
@@ -29,24 +29,3 @@ export default defineEventHandler(async (event) => {
         return { detail: error_message, data: null };
     }
 });
-
-const formatReadProfilesData = (profileList) => {
-    return profileList.map((x) => {
-        const createdAt = x.createdAt;
-        const updatedAt = x.updatedAt;
-        return {
-            profileName: x.profileName,
-            lastUpdated: extractFormattedDate(updatedAt || createdAt),
-            formData: {
-                personalDetails: x.personalDetails,
-                location: x.location,
-                preferences: x.preferences,
-                languages: x.languages,
-                skills: x.skills,
-                workExperience: x.workExperience,
-                education: x.education,
-                mediaLinks: x.mediaLinks,
-            },
-        };
-    });
-};

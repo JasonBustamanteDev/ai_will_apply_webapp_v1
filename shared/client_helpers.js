@@ -43,3 +43,4 @@ export const isValidNumericString = (str) => {
     return !Number.isNaN(Number(str)) && str.trim() !== "";
 };
 
+export const extractFormattedDate = (isoDateString) => isoDateString.slice(0, 10)

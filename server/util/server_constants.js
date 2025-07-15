@@ -5,5 +5,4 @@ export const DEFAULT_SUCCESS_RETURN = { detail: "success" };
 
 export const getCurrentUTCTimestamp = () => new Date().toISOString();
 
-export const extractFormattedDate = (isoDateString) => isoDateString.slice(0, 10)
 

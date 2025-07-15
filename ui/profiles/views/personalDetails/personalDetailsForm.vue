@@ -1,7 +1,7 @@
 <script setup>
 import { object, string, number, boolean } from "yup";
 import { verifyMinStringLength, cleanPhoneNumber } from "~/shared/client_helpers"; // prettier-ignore
-import { genders, ethnicGroups, educationLevels } from "~/ui/profiles/personalDetails/personalDetailsForm.js"; // prettier-ignore
+import { genders, ethnicGroups, educationLevels } from "~/ui/profiles/views/personalDetails/personalDetailsForm.js"; // prettier-ignore
 import { booleanPlusEmptyOptions } from "~/ui/profiles/shared/constants.js";
 
 const MESSAGES = {

@@ -4,7 +4,7 @@ import { verifyMinStringLength, isValidNumericString } from "~/shared/client_hel
 import { booleanOptions, radioStyleObject } from "~/ui/profiles/shared/constants.js";
 import InputLabelSlot from "~/ui/profiles/shared/inputLabelSlot.vue";
 import AddRowButton from "@/ui/profiles/shared/addRowButton.vue";
-import RemoveRowButton from "../shared/removeRowButton.vue";
+import RemoveRowButton from "~/ui/profiles/shared/removeRowButton.vue";
 
 const currentlyThereOptions = [
     { label: "I still work here", value: true },
