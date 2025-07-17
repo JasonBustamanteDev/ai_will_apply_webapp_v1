@@ -14,73 +14,59 @@ export const getProfiles = async (supabaseProjectUrl) => {
 
 const formatData = async (profileList) => {
     const rowPromises = profileList.map(async (x) => {
-        const createdAt = x.createdAt;
-        const updatedAt = x.updatedAt;
+        // Determine if the data saved for each form is valid or not (according to yup schema)
+        const personalDetailsIsValid = await personalDetailsSchema.validate(x.personalDetails).then(() => true).catch(() => false); // prettier-ignore
+        const locationIsValid = await locationSchema.validate(x.location).then(() => true).catch(() => false); // prettier-ignore
+        const preferenceIsValid = await preferenceSchema.validate(x.preferences).then(() => true).catch(() => false); // prettier-ignore
+        const educationIsValid = await educationSchema.validate(x.education).then(() => true).catch(() => false); // prettier-ignore
+        const mediaIsValid = await socialSchema.validate(x.mediaLinks).then(() => true).catch(() => false); // prettier-ignore
 
-        const personalDetailsValidation = await personalDetailsSchema
-            .validate(x.personalDetails)
-            .then(() => true)
-            .catch(() => false);
-        const locationValidation = await locationSchema
-            .validate(x.location)
-            .then(() => true)
-            .catch(() => false);
-        const preferenceValidation = await preferenceSchema
-            .validate(x.preferences)
-            .then(() => true)
-            .catch(() => false);
-        const educationValidation = await educationSchema
-            .validate(x.education)
-            .then(() => true)
-            .catch(() => false);
-        const mediaValidation = await socialSchema
-            .validate(x.mediaLinks)
-            .then(() => true)
-            .catch(() => false);
+        // Check the custom validation for the unspecified-length list forms
+        const languagesIsValid = languageValidator(x.languages);
+        const skillsIsValid = skillsValidator(x.skills);
+        const workExperienceIsValid = workExperienceValidator(x.workExperience);
 
-        const languagesValidation = languageValidator(x.languages);
-        const skillsValidation = languageValidator(x.skills);
-        const workExperienceValidation = languageValidator(x.workExperience);
-
+        // Count how many forms are complete out of all of them
         const formCompletionBooleans = [
-            personalDetailsValidation,
-            locationValidation,
-            preferenceValidation,
-            educationValidation,
-            mediaValidation,
-            languagesValidation,
-            skillsValidation,
-            workExperienceValidation,
+            personalDetailsIsValid,
+            locationIsValid,
+            preferenceIsValid,
+            educationIsValid,
+            mediaIsValid,
+            languagesIsValid,
+            skillsIsValid,
+            workExperienceIsValid,
         ];
         const completedCount = formCompletionBooleans.filter(Boolean).length;
 
-        // We consider a profile ready if required forms are filled in and valid
-        const isReady =
-            personalDetailsValidation &&
-            locationValidation &&
-            preferenceValidation &&
-            languagesValidation &&
-            skillsValidation &&
-            workExperienceValidation;
+        // We consider a profile ready if all the required forms are filled in and valid
+        // The optional forms do not belong on the following list
+        const areMandatoryFormsComplete =
+            personalDetailsIsValid &&
+            locationIsValid &&
+            preferenceIsValid &&
+            languagesIsValid &&
+            skillsIsValid &&
+            workExperienceIsValid;
 
         return {
             profileName: x.profileName,
-            lastUpdated: extractFormattedDate(updatedAt || createdAt),
+            lastUpdated: extractFormattedDate(x.updatedAt || x.createdAt),
             completedFormFraction: `${completedCount}/${formCompletionBooleans.length}`,
-            isReady,
+            isReady: areMandatoryFormsComplete,
 
             // prettier-ignore
             forms: {
-                personalDetails: { data: x.personalDetails, isComplete: personalDetailsValidation },
-                location: { data: x.location, isComplete: locationValidation },
-                preferences: { data: x.preferences, isComplete: preferenceValidation },
+                personalDetails: { data: x.personalDetails, isComplete: personalDetailsIsValid },
+                location: { data: x.location, isComplete: locationIsValid },
+                preferences: { data: x.preferences, isComplete: preferenceIsValid },
 
-                languages: { data: x.languages, isComplete: languagesValidation },
-                skills: { data: x.skills, isComplete: skillsValidation },
-                workExperience: { data: x.workExperience, isComplete: workExperienceValidation },
+                languages: { data: x.languages, isComplete: languagesIsValid },
+                skills: { data: x.skills, isComplete: skillsIsValid },
+                workExperience: { data: x.workExperience, isComplete: workExperienceIsValid },
 
-                education: { data: x.education, isComplete: educationValidation },
-                mediaLinks: { data: x.mediaLinks, isComplete: mediaValidation },
+                education: { data: x.education, isComplete: educationIsValid },
+                mediaLinks: { data: x.mediaLinks, isComplete: mediaIsValid },
             },
         };
     });

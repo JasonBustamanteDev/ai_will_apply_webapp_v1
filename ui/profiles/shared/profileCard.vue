@@ -52,10 +52,9 @@ const isModalOpen = ref(false)
         description=""
         :ui="{ footer: 'justify-end' }"
     >
-        <!-- <UButton label="Open" color="neutral" variant="subtle" /> -->
-
         <template #body>
             <p>This action is not reversible</p>
+            <p>Consider reviewing your answers first</p>
         </template>
 
         <template #footer="{ close }">
@@ -65,10 +64,9 @@ const isModalOpen = ref(false)
                 variant="outline"
                 @click="close"
             />
-            <UButton label="Delete" color="neutral" />
+            <UButton label="Finish Deleting" color="neutral" />
         </template>
     </UModal>
-    <p>{{ isModalOpen }}</p>
 </template>
 
 <style lang="scss">
