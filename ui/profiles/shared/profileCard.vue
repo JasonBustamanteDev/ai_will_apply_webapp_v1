@@ -66,7 +66,7 @@ const isModalOpen = ref(false);
             <UButton
                 label="Finish Deleting"
                 color="neutral"
-                @click="$emit('deleteProfile')"
+                @click="$emit('deleteProfile', props.profileName)"
             />
         </template>
     </UModal>

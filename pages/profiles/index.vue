@@ -44,10 +44,10 @@ const editProfile = async () => {
     }
 };
 
-const deleteProfile = async () => {
+const deleteProfile = async (profileName) => {
     try {
         //
-        console.log(990)
+        console.log(990, profileName)
     } catch (err) {
         showErrorToast(
             `${err.message || "Request to delete profile failed."}`,
@@ -85,6 +85,7 @@ const deleteProfile = async () => {
                 :isReady="entry.isReady"
                 :completionFraction="entry.completedFormFraction"
                 @editCallback="editProfile"
+                @deleteProfile="deleteProfile"
             />
         </section>
         <ErrorToast description="Generic problem" />
