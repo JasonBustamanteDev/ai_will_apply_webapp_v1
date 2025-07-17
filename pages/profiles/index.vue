@@ -38,8 +38,20 @@ const editProfile = async () => {
         //
     } catch (err) {
         showErrorToast(
-            `${err.message || "Request to update a profile failed."}`,
+            `${err.message || "Request to update profile failed."}`,
             "ERROR: EDIT PROFILE"
+        );
+    }
+};
+
+const deleteProfile = async () => {
+    try {
+        //
+        console.log(990)
+    } catch (err) {
+        showErrorToast(
+            `${err.message || "Request to delete profile failed."}`,
+            "ERROR: DELETE PROFILE"
         );
     }
 };

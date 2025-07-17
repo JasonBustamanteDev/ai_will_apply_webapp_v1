@@ -52,8 +52,8 @@ const formatData = async (profileList) => {
         return {
             profileName: x.profileName,
             lastUpdated: extractFormattedDate(x.updatedAt || x.createdAt),
-            completedFormFraction: `${completedCount}/${formCompletionBooleans.length}`,
             isReady: areMandatoryFormsComplete,
+            completedFormFraction: `${completedCount}/${formCompletionBooleans.length}`,
 
             // prettier-ignore
             forms: {

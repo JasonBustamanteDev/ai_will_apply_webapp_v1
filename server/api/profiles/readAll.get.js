@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
         const { accessToken } = checkIfUserIsAuthenticated(event);
         const supabaseClient = getSupabaseClient(event, accessToken);
 
-        // RLS policy applies a WHERE clause automatically (filters by auth uid)
+        // RLS policy applies a WHERE clause automatically: where id = auth_id
         const { data, error } = await supabaseClient
             .from(PROFILES_TABLE_NAME)
             .select("*")

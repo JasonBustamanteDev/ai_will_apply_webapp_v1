@@ -6,7 +6,7 @@ const props = defineProps({
     isReady: { type: Boolean },
 });
 
-const isModalOpen = ref(false)
+const isModalOpen = ref(false);
 </script>
 
 <template>
@@ -37,8 +37,7 @@ const isModalOpen = ref(false)
                 <UButton
                     color="neutral"
                     variant="outline"
-                    @click="() => isModalOpen = true"
-                    
+                    @click="() => (isModalOpen = true)"
                     class="cursor-pointer"
                     >Delete</UButton
                 >
@@ -64,7 +63,11 @@ const isModalOpen = ref(false)
                 variant="outline"
                 @click="close"
             />
-            <UButton label="Finish Deleting" color="neutral" />
+            <UButton
+                label="Finish Deleting"
+                color="neutral"
+                @click="$emit('deleteProfile')"
+            />
         </template>
     </UModal>
 </template>
