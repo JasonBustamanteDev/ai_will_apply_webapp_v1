@@ -11,13 +11,15 @@ const profileList = ref([]);
 
 onMounted(async () => {
     try {
-        throw {}
         const profileData = await getProfiles(
             env_config.public.SUPABASE_PROJECT_URL
         );
         profileList.value = profileData;
     } catch (err) {
-        showErrorToast("something went wrong", "ERROR FETCHING PROFILES");
+        showErrorToast(
+            `${err.message || "Request to get profiles failed."}`,
+            "ERROR: FETCHING PROFILES"
+        );
     }
 });
 
@@ -25,14 +27,20 @@ const createNewProfile = async () => {
     try {
         //
     } catch (err) {
-        showErrorToast("something went wrong");
+        showErrorToast(
+            `${err.message || "Request to create a profile failed."}`,
+            "ERROR: INITIALIZING PROFILE"
+        );
     }
 };
 const editProfile = async () => {
     try {
         //
     } catch (err) {
-        showErrorToast("something went wrong");
+        showErrorToast(
+            `${err.message || "Request to update a profile failed."}`,
+            "ERROR: EDIT PROFILE"
+        );
     }
 };
 </script>
