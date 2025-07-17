@@ -1,14 +1,17 @@
 export const useCustomToast = defineStore("toast_notifications", () => {
     const toast = useToast();
 
-    function showToast(title, description) {
+    function showErrorToast(description, title = "ERROR") {
         toast.add({
-            title,
-            description,
+            title: title,
+            description: `${description}. Please reload the page and try again.`,
+            icon: "memory:alpha-x-fill",
+            duration: 10000, // 10 seconds
+            color: 'error'
         });
     }
 
     return {
-        showToast,
+        showErrorToast,
     };
 });

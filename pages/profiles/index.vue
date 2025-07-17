@@ -2,20 +2,39 @@
 import AddProfileSvg from "~/ui/svgs/addProfile.vue";
 import ProfileCard from "~/ui/profiles/shared/profileCard.vue";
 import { getProfiles } from "~/ui/profiles/apiCalls/getProfiles.js";
+import { useCustomToast } from "~/pinia_stores/toast";
 
 const env_config = useRuntimeConfig();
+const { showErrorToast } = useCustomToast();
+
 const profileList = ref([]);
 
 onMounted(async () => {
-    const profileData = await getProfiles(
-        env_config.public.SUPABASE_PROJECT_URL
-    );
-    profileList.value = profileData;
-    //! TODO: error handle profileData
+    try {
+        throw {}
+        const profileData = await getProfiles(
+            env_config.public.SUPABASE_PROJECT_URL
+        );
+        profileList.value = profileData;
+    } catch (err) {
+        showErrorToast("something went wrong", "ERROR FETCHING PROFILES");
+    }
 });
 
-const createNewProfile = () => {};
-const editProfile = () => {};
+const createNewProfile = async () => {
+    try {
+        //
+    } catch (err) {
+        showErrorToast("something went wrong");
+    }
+};
+const editProfile = async () => {
+    try {
+        //
+    } catch (err) {
+        showErrorToast("something went wrong");
+    }
+};
 </script>
 
 <template>
@@ -43,12 +62,12 @@ const editProfile = () => {};
                 :key="index"
                 :profileName="entry.profileName"
                 :lastModifiedDate="entry.lastUpdated"
-                
                 :isReady="entry.isReady"
                 :completionFraction="entry.completedFormFraction"
                 @editCallback="editProfile"
             />
         </section>
+        <ErrorToast description="Generic problem" />
     </SharedPageContainerWithNavbar>
 </template>
 
