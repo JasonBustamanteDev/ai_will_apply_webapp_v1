@@ -73,7 +73,7 @@ const initializeButtonHandler = async () => {
                 @click="close"
             />
             <UButton
-                label="Rename"
+                label="Create Profile"
                 color="neutral"
                 class="cursor-pointer"
                 @click="initializeButtonHandler"
