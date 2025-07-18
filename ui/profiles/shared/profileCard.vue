@@ -33,24 +33,41 @@ const deleteButtonHandler = () => {
                     {{ "Ready for use ✅" }}
                 </p>
             </section>
-            <section class="flex gap-4">
+            <section class="flex gap-2">
                 <UButton
                     color="neutral"
                     @click="$emit('editCallback')"
                     class="cursor-pointer"
                     >Edit</UButton
                 >
+
+                <!-- Hook up the following 2 -->
+                <UButton
+                    color="neutral"
+                    @click="$emit('editCallback')"
+                    class="cursor-pointer"
+                    >Rename</UButton
+                >
+                <UButton
+                    color="neutral"
+                    @click="$emit('editCallback')"
+                    class="cursor-pointer"
+                    >Copy</UButton
+                >
+
                 <UButton
                     color="neutral"
                     variant="outline"
                     @click="() => (isModalOpen = true)"
-                    class="cursor-pointer"
+                    class="cursor-pointer !bg-[#ca2525] text-white"
                     >Delete</UButton
                 >
+                
             </section>
         </div>
     </div>
 
+    <!-- DELETE PROFILE MODAL -->
     <UModal
         v-model:open="isModalOpen"
         :title="`Are you sure you want to delete ${profileName}?`"
@@ -67,11 +84,13 @@ const deleteButtonHandler = () => {
                 label="Cancel"
                 color="neutral"
                 variant="outline"
+                class="cursor-pointer"
                 @click="close"
             />
             <UButton
-                label="Finish Deleting"
-                color="neutral"
+                label="Delete"
+                color="error"
+                class="cursor-pointer !bg-[#ca2525]"
                 @click="deleteButtonHandler"
             />
         </template>

@@ -26,7 +26,7 @@ onMounted(async () => {
     await fetchProfiles();
 });
 
-const createNewProfile = async () => {
+const createNewProfileHandler = async () => {
     try {
         //! HOOK UP
     } catch (err) {
@@ -36,7 +36,7 @@ const createNewProfile = async () => {
         );
     }
 };
-const editProfile = async () => {
+const editProfileHandler = async () => {
     try {
         //! HOOK UP
     } catch (err) {
@@ -48,6 +48,18 @@ const editProfile = async () => {
 };
 
 const deleteProfileHandler = async (profileName) => {
+    try {
+        await deleteProfile(supabaseProjectURL, profileName);
+        await fetchProfiles(); // refetch
+    } catch (err) {
+        showErrorToast(
+            err.message || "Request to delete profile failed.",
+            "ERROR: DELETE PROFILE"
+        );
+    }
+};
+
+const renameProfileHandler = async (profileName) => {
     try {
         await deleteProfile(supabaseProjectURL, profileName);
         await fetchProfiles(); // refetch
