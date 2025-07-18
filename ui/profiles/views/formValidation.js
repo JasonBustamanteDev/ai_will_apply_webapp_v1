@@ -3,6 +3,7 @@ import { emptyOrMinLengthStringAccepted, verifyMinStringLength, cleanPhoneNumber
 import { genders, ethnicGroups, educationLevels } from "~/ui/profiles/views/personalDetails/personalDetailsForm.js"; // prettier-ignore
 import { countriesList } from "./location/countries";
 import { usaDict, canadaDict } from "./location/provinces";
+import { isValidProfileName } from "../shared/constants";
 
 const MESSAGES = {
     REQUIRED: "This field is required",
@@ -10,6 +11,12 @@ const MESSAGES = {
     VALID_OPTION: "Please select a valid option",
     ONLY_EMPTY: "Answer cannot be empty spaces",
 };
+
+export const profileNameSchema = object({
+    profileName: string()
+        .required(MESSAGES.REQUIRED)
+        .test("min-length-no-whitespace", "Invalid profile name", (value) => isValidProfileName(value)), // prettier-ignore
+});
 
 export const personalDetailsSchema = object({
     firstName: string()

@@ -6,12 +6,16 @@ export const renameProfile = async (
     newProfileName
 ) => {
     const session = await getAuthSessionFromLocalStorage(supabaseProjectUrl);
+    const oldName = encodeURI(oldProfileName);
+    const newName = encodeURI(newProfileName);
+
+    if (oldName === newName) return;
 
     await $fetch(`/api/profiles/rename`, {
         method: "PATCH",
         body: {
-            oldProfileName: encodeURI(oldProfileName),
-            newProfileName: encodeURI(newProfileName),
+            oldProfileName: oldName,
+            newProfileName: newName,
         },
         headers: {
             Authorization: `Bearer ${session.access_token}`,

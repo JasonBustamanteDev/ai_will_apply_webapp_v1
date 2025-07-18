@@ -1,17 +1,38 @@
 <script setup>
+import { profileNameSchema } from "../views/formValidation";
+
 const props = defineProps({
     profileName: { type: String },
     lastModifiedDate: { type: String },
     completionFraction: { type: String },
     isReady: { type: Boolean },
 });
-const emit = defineEmits(["deleteProfile"]);
+const emit = defineEmits(["deleteProfile", "renameProfile"]);
 
-const isModalOpen = ref(false);
-
+// Delete profile logic
+const isDeleteProfileModalOpen = ref(false);
 const deleteButtonHandler = () => {
-    isModalOpen.value = false;
+    isDeleteProfileModalOpen.value = false;
     emit("deleteProfile", props.profileName);
+};
+
+// Rename profile logic
+const isRenameProfileModalOpen = ref(false);
+const formState = reactive({
+    profileName: "", // key must match the name attributes on UFormField elements
+});
+const renameButtonHandler = async () => {
+    try {
+        // Validate the profileName
+        if (!formState.profileName) return;
+        await profileNameSchema.validate(formState);
+
+        // Close window and emit event which sends a request to the backend
+        isRenameProfileModalOpen.value = false;
+        emit("renameProfile", props.profileName, formState.profileName);
+    } catch (err) {
+        console.error(err);
+    }
 };
 </script>
 
@@ -40,14 +61,6 @@ const deleteButtonHandler = () => {
                     class="cursor-pointer"
                     >Edit</UButton
                 >
-
-                <!-- Hook up the following 2 -->
-                <UButton
-                    color="neutral"
-                    @click="$emit('editCallback')"
-                    class="cursor-pointer"
-                    >Rename</UButton
-                >
                 <UButton
                     color="neutral"
                     @click="$emit('editCallback')"
@@ -57,19 +70,25 @@ const deleteButtonHandler = () => {
 
                 <UButton
                     color="neutral"
+                    @click="() => (isRenameProfileModalOpen = true)"
+                    class="cursor-pointer"
+                    >Rename</UButton
+                >
+
+                <UButton
+                    color="neutral"
                     variant="outline"
-                    @click="() => (isModalOpen = true)"
+                    @click="() => (isDeleteProfileModalOpen = true)"
                     class="cursor-pointer !bg-[#ca2525] text-white"
                     >Delete</UButton
                 >
-                
             </section>
         </div>
     </div>
 
     <!-- DELETE PROFILE MODAL -->
     <UModal
-        v-model:open="isModalOpen"
+        v-model:open="isDeleteProfileModalOpen"
         :title="`Are you sure you want to delete ${profileName}?`"
         description=""
         :ui="{ footer: 'justify-end' }"
@@ -92,6 +111,45 @@ const deleteButtonHandler = () => {
                 color="error"
                 class="cursor-pointer !bg-[#ca2525]"
                 @click="deleteButtonHandler"
+            />
+        </template>
+    </UModal>
+
+    <!-- RENAME PROFILE MODAL -->
+    <UModal
+        v-model:open="isRenameProfileModalOpen"
+        :title="`Rename Profile`"
+        description=""
+        :ui="{ footer: 'justify-end' }"
+    >
+        <template #body>
+            <p>Enter new name here</p>
+            <p>Use numbers, letters, and spaces only</p>
+            <UForm
+                :schema="profileNameSchema"
+                :state="formState"
+                class="space-y-4 uform-element pt-4 h-[70px]"
+                @submit="renameButtonHandler"
+            >
+                <UFormField label="" name="profileName" class="mb-0">
+                    <UInput v-model="formState.profileName" class="w-full" />
+                </UFormField>
+            </UForm>
+        </template>
+
+        <template #footer="{ close }">
+            <UButton
+                label="Cancel"
+                color="neutral"
+                variant="outline"
+                class="cursor-pointer"
+                @click="close"
+            />
+            <UButton
+                label="Rename"
+                color="info"
+                class="cursor-pointer"
+                @click="renameButtonHandler"
             />
         </template>
     </UModal>

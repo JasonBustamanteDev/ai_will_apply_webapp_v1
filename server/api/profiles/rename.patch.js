@@ -16,7 +16,7 @@ export default defineEventHandler(async (event) => {
 
         const updateObject = {
             profileName: newProfileName,
-            updated_at: getCurrentUTCTimestamp(),
+            updatedAt: getCurrentUTCTimestamp(),
         };
 
         const { error } = await supabaseClient

@@ -3,6 +3,7 @@ import AddProfileSvg from "~/ui/svgs/addProfile.vue";
 import ProfileCard from "~/ui/profiles/shared/profileCard.vue";
 import { getProfiles } from "~/ui/profiles/apiCalls/getProfiles.js";
 import { deleteProfile } from "~/ui/profiles/apiCalls/deleteProfile";
+import { renameProfile } from "~/ui/profiles/apiCalls/renameProfile";
 import { useCustomToast } from "~/pinia_stores/toast";
 
 const env_config = useRuntimeConfig();
@@ -59,14 +60,16 @@ const deleteProfileHandler = async (profileName) => {
     }
 };
 
-const renameProfileHandler = async (profileName) => {
+const renameProfileHandler = async (oldProfileName, newProfileName) => {
+    console.log([oldProfileName, newProfileName]);
     try {
-        await deleteProfile(supabaseProjectURL, profileName);
+        await renameProfile(supabaseProjectURL, oldProfileName, newProfileName);
         await fetchProfiles(); // refetch
     } catch (err) {
+        console.error(err);
         showErrorToast(
-            err.message || "Request to delete profile failed.",
-            "ERROR: DELETE PROFILE"
+            err.message || "Request to rename profile failed.",
+            "ERROR: RENAME PROFILE"
         );
     }
 };
@@ -101,6 +104,7 @@ const renameProfileHandler = async (profileName) => {
                 :completionFraction="entry.completedFormFraction"
                 @editCallback="editProfile"
                 @deleteProfile="deleteProfileHandler"
+                @renameProfile="renameProfileHandler"
             />
         </section>
         <ErrorToast description="Generic problem" />
