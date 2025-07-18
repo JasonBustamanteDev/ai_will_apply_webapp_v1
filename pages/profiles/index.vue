@@ -2,55 +2,58 @@
 import AddProfileSvg from "~/ui/svgs/addProfile.vue";
 import ProfileCard from "~/ui/profiles/shared/profileCard.vue";
 import { getProfiles } from "~/ui/profiles/apiCalls/getProfiles.js";
+import { deleteProfile } from "~/ui/profiles/apiCalls/deleteProfile";
 import { useCustomToast } from "~/pinia_stores/toast";
 
 const env_config = useRuntimeConfig();
-const { showErrorToast } = useCustomToast();
+const supabaseProjectURL = env_config.public.SUPABASE_PROJECT_URL;
 
 const profileList = ref([]);
+const { showErrorToast } = useCustomToast();
 
-onMounted(async () => {
+const fetchProfiles = async () => {
     try {
-        const profileData = await getProfiles(
-            env_config.public.SUPABASE_PROJECT_URL
-        );
-        profileList.value = profileData;
+        profileList.value = await getProfiles(supabaseProjectURL);
     } catch (err) {
         showErrorToast(
-            `${err.message || "Request to get profiles failed."}`,
+            err.message || "Request to get profiles failed.",
             "ERROR: FETCHING PROFILES"
         );
     }
+};
+
+onMounted(async () => {
+    await fetchProfiles();
 });
 
 const createNewProfile = async () => {
     try {
-        //
+        //! HOOK UP
     } catch (err) {
         showErrorToast(
-            `${err.message || "Request to create a profile failed."}`,
+            err.message || "Request to create a profile failed.",
             "ERROR: INITIALIZING PROFILE"
         );
     }
 };
 const editProfile = async () => {
     try {
-        //
+        //! HOOK UP
     } catch (err) {
         showErrorToast(
-            `${err.message || "Request to update profile failed."}`,
+            err.message || "Request to update profile failed.",
             "ERROR: EDIT PROFILE"
         );
     }
 };
 
-const deleteProfile = async (profileName) => {
+const deleteProfileHandler = async (profileName) => {
     try {
-        //
-        console.log(990, profileName)
+        await deleteProfile(supabaseProjectURL, profileName);
+        await fetchProfiles(); // refetch
     } catch (err) {
         showErrorToast(
-            `${err.message || "Request to delete profile failed."}`,
+            err.message || "Request to delete profile failed.",
             "ERROR: DELETE PROFILE"
         );
     }
@@ -85,7 +88,7 @@ const deleteProfile = async (profileName) => {
                 :isReady="entry.isReady"
                 :completionFraction="entry.completedFormFraction"
                 @editCallback="editProfile"
-                @deleteProfile="deleteProfile"
+                @deleteProfile="deleteProfileHandler"
             />
         </section>
         <ErrorToast description="Generic problem" />

@@ -5,8 +5,14 @@ const props = defineProps({
     completionFraction: { type: String },
     isReady: { type: Boolean },
 });
+const emit = defineEmits(["deleteProfile"]);
 
 const isModalOpen = ref(false);
+
+const deleteButtonHandler = () => {
+    isModalOpen.value = false;
+    emit("deleteProfile", props.profileName);
+};
 </script>
 
 <template>
@@ -66,7 +72,7 @@ const isModalOpen = ref(false);
             <UButton
                 label="Finish Deleting"
                 color="neutral"
-                @click="$emit('deleteProfile', props.profileName)"
+                @click="deleteButtonHandler"
             />
         </template>
     </UModal>
