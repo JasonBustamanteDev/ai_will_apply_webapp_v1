@@ -147,7 +147,7 @@ const renameButtonHandler = async () => {
             />
             <UButton
                 label="Rename"
-                color="info"
+                color="neutral"
                 class="cursor-pointer"
                 @click="renameButtonHandler"
             />
