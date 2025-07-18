@@ -5,6 +5,8 @@ import { MAX_PROFILES, PROFILES_TABLE_NAME, DEFAULT_SUCCESS_RETURN } from "~/ser
 export default defineEventHandler(async (event) => {
     try {
         const body = await readBody(event);
+        const newProfileName = decodeURI(body.newProfileName);
+
         const { accessToken } = checkIfUserIsAuthenticated(event);
         const supabaseClient = getSupabaseClient(event, accessToken);
         const { auth_id } = await getSupabaseUserDetails(
@@ -36,7 +38,7 @@ export default defineEventHandler(async (event) => {
         // Insert the new profile
         const { error: insertError } = await supabaseClient
             .from(PROFILES_TABLE_NAME)
-            .insert({ id: auth_id, profileName: body.profileName });
+            .insert({ id: auth_id, profileName: newProfileName });
 
         // An error will occur if a duplicate profile name is used already since it violates the table's UK constraint
         if (insertError) {

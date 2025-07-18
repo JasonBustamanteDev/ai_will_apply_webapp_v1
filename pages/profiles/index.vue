@@ -1,10 +1,11 @@
 <script setup>
-import AddProfileSvg from "~/ui/svgs/addProfile.vue";
 import ProfileCard from "~/ui/profiles/shared/profileCard.vue";
+import NewProfileCard from "~/ui/profiles/shared/newProfileCard.vue";
+import { useCustomToast } from "~/pinia_stores/toast";
 import { getProfiles } from "~/ui/profiles/apiCalls/getProfiles.js";
 import { deleteProfile } from "~/ui/profiles/apiCalls/deleteProfile";
 import { renameProfile } from "~/ui/profiles/apiCalls/renameProfile";
-import { useCustomToast } from "~/pinia_stores/toast";
+import { initializeProfile } from "~/ui/profiles/apiCalls/initializeProfile";
 
 const env_config = useRuntimeConfig();
 const supabaseProjectURL = env_config.public.SUPABASE_PROJECT_URL;
@@ -27,9 +28,10 @@ onMounted(async () => {
     await fetchProfiles();
 });
 
-const createNewProfileHandler = async () => {
+const initializeProfileHandler = async (newProfileName) => {
     try {
-        //! HOOK UP
+        await initializeProfile(supabaseProjectURL, newProfileName);
+        await fetchProfiles(); // refetch
     } catch (err) {
         showErrorToast(
             err.message || "Request to create a profile failed.",
@@ -78,21 +80,7 @@ const renameProfileHandler = async (oldProfileName, newProfileName) => {
     <!-- DaisyUI components used for the cards -->
     <SharedPageContainerWithNavbar>
         <section class="card-container">
-            <div
-                @click="createNewProfile"
-                class="cursor-pointer card bg-base-100 w-full shadow-sm"
-            >
-                <div class="create-new-card text-center">
-                    <div class="w-[40px] mx-auto mb-3">
-                        <AddProfileSvg />
-                    </div>
-                    <h2 class="card-title text-lg">Create New Profile</h2>
-                    <p class="text-sm">
-                        Enter your information then use the profile when
-                        applying for jobs
-                    </p>
-                </div>
-            </div>
+            <NewProfileCard @initializeProfile="initializeProfileHandler" />
 
             <ProfileCard
                 v-for="(entry, index) in profileList"
