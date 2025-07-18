@@ -123,7 +123,7 @@ const renameButtonHandler = async () => {
         :ui="{ footer: 'justify-end' }"
     >
         <template #body>
-            <p>Enter new name here</p>
+            <p>Enter new name here (max 28 chars)</p>
             <p>Use numbers, letters, and spaces only</p>
             <UForm
                 :schema="profileNameSchema"

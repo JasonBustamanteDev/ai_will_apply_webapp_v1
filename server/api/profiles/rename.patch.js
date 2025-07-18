@@ -4,8 +4,10 @@ import { PROFILES_TABLE_NAME, getCurrentUTCTimestamp, DEFAULT_SUCCESS_RETURN } f
 
 export default defineEventHandler(async (event) => {
     try {
-        const { newProfileName, oldProfileName } = await readBody(event);
-        if (newProfileName === oldProfileName) return { detail: "success" };
+        const body = await readBody(event);
+        const oldProfileName = decodeURI(body.oldProfileName);
+        const newProfileName = decodeURI(body.newProfileName);
+        if (newProfileName === oldProfileName) return { detail: "empty success" };
 
         const { accessToken } = checkIfUserIsAuthenticated(event);
         const supabaseClient = getSupabaseClient(event, accessToken);

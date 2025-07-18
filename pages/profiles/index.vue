@@ -61,7 +61,6 @@ const deleteProfileHandler = async (profileName) => {
 };
 
 const renameProfileHandler = async (oldProfileName, newProfileName) => {
-    console.log([oldProfileName, newProfileName]);
     try {
         await renameProfile(supabaseProjectURL, oldProfileName, newProfileName);
         await fetchProfiles(); // refetch

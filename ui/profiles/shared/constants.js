@@ -31,6 +31,7 @@ export const isValidProfileName = (str) => {
     return (
         str &&
         str.length > 0 &&
+        str.length < 29 &&
         str.trim().length > 0 &&
         /^[a-zA-Z0-9\s]+$/.test(str)
     );
