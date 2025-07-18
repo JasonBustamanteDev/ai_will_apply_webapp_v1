@@ -1,5 +1,5 @@
 <script setup>
-import { profileNameSchema } from "../views/formValidation";
+import { profileNameSchema } from "../../views/formValidation";
 
 const props = defineProps({
     profileName: { type: String },

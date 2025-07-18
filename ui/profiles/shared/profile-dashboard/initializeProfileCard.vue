@@ -1,6 +1,6 @@
 <script setup>
 import AddProfileSvg from "~/ui/svgs/addProfile.vue";
-import { profileNameSchema } from "../views/formValidation";
+import { profileNameSchema } from "../../views/formValidation";
 
 const emit = defineEmits(["initializeProfile"]);
 const isInitializeProfileModalOpen = ref(false);

@@ -1,6 +1,6 @@
 <script setup>
-import ProfileCard from "~/ui/profiles/shared/profileCard.vue";
-import NewProfileCard from "~/ui/profiles/shared/newProfileCard.vue";
+import ProfileListItemCard from "~/ui/profiles/shared/profile-dashboard/profileListItemCard.vue";
+import InitializeProfileCard from "~/ui/profiles/shared/profile-dashboard/initializeProfileCard.vue";
 import { useCustomToast } from "~/pinia_stores/toast";
 import { getProfiles } from "~/ui/profiles/apiCalls/getProfiles.js";
 import { deleteProfile } from "~/ui/profiles/apiCalls/deleteProfile";
@@ -80,9 +80,11 @@ const renameProfileHandler = async (oldProfileName, newProfileName) => {
     <!-- DaisyUI components used for the cards -->
     <SharedPageContainerWithNavbar>
         <section class="card-container">
-            <NewProfileCard @initializeProfile="initializeProfileHandler" />
+            <InitializeProfileCard
+                @initializeProfile="initializeProfileHandler"
+            />
 
-            <ProfileCard
+            <ProfileListItemCard
                 v-for="(entry, index) in profileList"
                 :key="index"
                 :profileName="entry.profileName"
