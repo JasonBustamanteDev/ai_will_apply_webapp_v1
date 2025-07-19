@@ -17,7 +17,6 @@ const onSubmit = async () => {
         let user = await socialSchema.validate(formState);
         // TODO: send request to backend
 
-        // Consider making all starting values an empty string since we need to detect changes
         console.log(user);
     } catch (err) {
         console.error(err);
