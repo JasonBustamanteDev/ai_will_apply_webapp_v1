@@ -114,7 +114,6 @@ const copyProfileHandler = async (newProfileName, existingData = null) => {
                 @copyProfile="copyProfileHandler"
             />
         </section>
-        <p>{{ profileList }}</p>
         <ErrorToast description="Generic problem" />
     </SharedPageContainerWithNavbar>
 </template>
