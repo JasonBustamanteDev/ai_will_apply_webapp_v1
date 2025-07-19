@@ -21,7 +21,8 @@ const fetchProfiles = async () => {
             "ERROR: FETCHING PROFILES",
             err?.data?.detail ||
                 err?.message ||
-                "Request to get profiles failed."
+                "Request to get profiles failed.",
+            true
         );
     }
 };
@@ -32,15 +33,15 @@ onMounted(async () => {
 
 const initializeProfileHandler = async (newProfileName) => {
     try {
-        const a = await initializeProfile(supabaseProjectURL, newProfileName);
-        console.log(a);
+        await initializeProfile(supabaseProjectURL, newProfileName);
         await fetchProfiles(); // refetch
     } catch (err) {
         showErrorToast(
             "ERROR: INITIALIZING PROFILE",
             err?.data?.detail ||
                 err?.message ||
-                "Request to create a profile failed."
+                `Request to create a profile failed. ${ERROR_MESSAGES.RELOAD}`,
+            false
         );
     }
 };
@@ -52,7 +53,8 @@ const editProfileHandler = async () => {
             showErrorToast(
                 err?.data?.detail ||
                     err?.message ||
-                    "Request to update profile failed."
+                    "Request to update profile failed.",
+                true
             );
     }
 };
@@ -66,7 +68,8 @@ const deleteProfileHandler = async (profileName) => {
             "ERROR: DELETE PROFILE",
             err?.data?.detail ||
                 err?.message ||
-                "Request to delete profile failed."
+                "Request to delete profile failed.",
+            true
         );
     }
 };
@@ -81,7 +84,8 @@ const renameProfileHandler = async (oldProfileName, newProfileName) => {
             "ERROR: RENAME PROFILE",
             err?.data?.detail ||
                 err?.message ||
-                "Request to rename profile failed."
+                "Request to rename profile failed.",
+            true
         );
     }
 };
@@ -99,7 +103,8 @@ const copyProfileHandler = async (newProfileName, existingData = null) => {
             "ERROR: COPY PROFILE",
             err?.data?.detail ||
                 err?.message ||
-                "Request to create a copy failed."
+                `Request to create a copy failed. ${ERROR_MESSAGES.RELOAD}`,
+            false
         );
     }
 };

@@ -24,7 +24,7 @@ export default defineEventHandler(async (event) => {
         if (profileCountError) {
             setResponseStatus(event, 500);
             return {
-                detail: `Error occurred when counting how many profiles the user has: ${profileCountError?.message || ""}`, // prettier-ignore
+                detail: `Error occurred when counting how many profiles the user has: ${profileCountError?.message || ""}.`, // prettier-ignore
             };
         }
 
@@ -32,7 +32,7 @@ export default defineEventHandler(async (event) => {
         if (profileCount >= MAX_PROFILES) {
             setResponseStatus(event, 422);
             return {
-                detail: `The max number of profiles have been used (${MAX_PROFILES}). Delete a profile before creating a new one`,
+                detail: `The max number of profiles have been used (${MAX_PROFILES}). Delete a profile before creating a new one.`,
             };
         }
 
@@ -51,14 +51,14 @@ export default defineEventHandler(async (event) => {
         if (insertError) {
             setResponseStatus(event, 500);
             return {
-                detail: `Error occurred when initializing new profile: ${insertError?.message || ""}`, // prettier-ignore
+                detail: `Profile name is already in use.`,
             };
         }
 
         return DEFAULT_SUCCESS_RETURN;
     } catch (err) {
         const error_code = err?.statusCode || 500;
-        const error_message = err?.statusMessage || err?.message || "Something went wrong"; // prettier-ignore
+        const error_message = err?.statusMessage || err?.message || "Something went wrong."; // prettier-ignore
         setResponseStatus(event, error_code);
         return { detail: error_message };
     }

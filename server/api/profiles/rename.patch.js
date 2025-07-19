@@ -29,16 +29,16 @@ export default defineEventHandler(async (event) => {
 
         if (error) {
             setResponseStatus(event, 500);
-            const msg = error.code == 23505 ? "Profile name already in use" : (error?.message || ""); // prettier-ignore
+            const msg = error.code == 23505 ? "Profile name already in use." : (error?.message || ""); // prettier-ignore
             return {
-                detail: `Error occurred when renaming profile: ${msg}`,
+                detail: `Error occurred when renaming profile: ${msg}.`,
             };
         }
 
         return DEFAULT_SUCCESS_RETURN;
     } catch (err) {
         const error_code = err?.statusCode || 500;
-        const error_message = err?.statusMessage || err?.message || "Something went wrong"; // prettier-ignore
+        const error_message = err?.statusMessage || err?.message || "Something went wrong."; // prettier-ignore
         setResponseStatus(event, error_code);
         return { detail: error_message };
     }

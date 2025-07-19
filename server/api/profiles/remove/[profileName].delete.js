@@ -17,14 +17,14 @@ export default defineEventHandler(async (event) => {
         if (error) {
             setResponseStatus(event, 500);
             return {
-                detail: "Error occurred when deleting profile data",
+                detail: "Error occurred when deleting profile data.",
             };
         }
 
         return { detail: "success", profileName };
     } catch (err) {
         const error_code = err?.statusCode || 500;
-        const error_message = err?.statusMessage || err?.message || "Something went wrong"; // prettier-ignore
+        const error_message = err?.statusMessage || err?.message || "Something went wrong."; // prettier-ignore
         setResponseStatus(event, error_code);
         return { detail: error_message };
     }
