@@ -76,7 +76,6 @@ const renameProfileHandler = async (oldProfileName, newProfileName) => {
 };
 
 const copyProfileHandler = async (newProfileName, existingData = null) => {
-    console.log(newProfileName, existingData);
     try {
         await initializeProfile(
             supabaseProjectURL,
