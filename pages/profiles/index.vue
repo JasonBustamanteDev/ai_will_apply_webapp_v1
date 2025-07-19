@@ -18,7 +18,9 @@ const fetchProfiles = async () => {
         profileList.value = await getProfiles(supabaseProjectURL);
     } catch (err) {
         showErrorToast(
-            err.message || "Request to get profiles failed.",
+            err?.data?.detail ||
+                err?.message ||
+                "Request to get profiles failed.",
             "ERROR: FETCHING PROFILES"
         );
     }

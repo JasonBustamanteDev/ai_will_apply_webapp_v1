@@ -4,7 +4,7 @@ import { useCustomToast } from "@/pinia_stores/toast";
 export const useSupabaseAuthStore = defineStore(
     "pinia_auth_composition",
     () => {
-        const { showToast } = useCustomToast();
+        const { showErrorToast } = useCustomToast();
         const env = useRuntimeConfig();
         const supabaseClient = ref(
             createClient(
@@ -48,13 +48,13 @@ export const useSupabaseAuthStore = defineStore(
                     });
                 if (error) {
                     throwErrorObject(
-                        "Google Sign In Error",
+                        "GOOGLE ERROR: SIGN IN",
                         "Something went wrong while signing in with Google. Please reload and try again"
                     );
                 }
             } catch (err) {
-                showToast(
-                    "Google Sign In Error",
+                showErrorToast(
+                    "GOOGLE ERROR: SIGN IN",
                     err?.message || ERROR_MESSAGES.GENERIC
                 );
             }
@@ -65,14 +65,14 @@ export const useSupabaseAuthStore = defineStore(
                 const { error } = await supabaseClient.value.auth.signOut();
                 if (error) {
                     throwErrorObject(
-                        "Google Sign Out Error",
+                        "GOOGLE ERROR: SIGN OUT",
                         "Something went wrong while signing out with Google. Please reload and try again"
                     );
                 }
             } catch (err) {
-                showToast(
-                    "Google Sign Out Error",
-                    err?.message || ERROR_MESSAGES.GENERIC
+                showErrorToast(
+                    "GOOGLE ERROR: SIGN OUT",
+                    err?.message || ERROR_MESSAGES.GENERIC,
                 );
             }
         };
@@ -83,15 +83,15 @@ export const useSupabaseAuthStore = defineStore(
                 const { data, error } = await supabaseClient.value.auth.getSession(); // prettier-ignore
                 if (error) {
                     throwErrorObject(
-                        "Google Session Fetch Error",
+                        "GOOGLE ERROR: SESSION FETCH",
                         "Something went wrong while retreiving session with Google. Please reload and try again"
                     );
                 }
                 currentSession.value = data.session;
             } catch (err) {
-                showToast(
-                    "Google Session Fetch Error",
-                    err?.message || ERROR_MESSAGES.GENERIC
+                showErrorToast(
+                    "GOOGLE ERROR: SESSION FETCH",
+                    err?.message || ERROR_MESSAGES.GENERIC,
                 );
             }
         };
@@ -103,16 +103,16 @@ export const useSupabaseAuthStore = defineStore(
 
                 if (error) {
                     throwErrorObject(
-                        "Google Refresh Session Error",
+                        "GOOGLE ERROR: REFRESH",
                         "Something went wrong while refreshing session with Google. Please reload and try again"
                     );
                 }
 
                 currentSession.value = session;
             } catch (err) {
-                showToast(
-                    "Google Refresh Session Error",
-                    err?.message || ERROR_MESSAGES.GENERIC
+                showErrorToast(
+                    "GOOGLE ERROR: REFRESH",
+                    err?.message || ERROR_MESSAGES.GENERIC,
                 );
             }
         };
@@ -133,4 +133,3 @@ export const useSupabaseAuthStore = defineStore(
         };
     }
 );
-
