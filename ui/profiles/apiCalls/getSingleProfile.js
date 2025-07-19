@@ -1,4 +1,5 @@
-import { getAuthSessionFromLocalStorage } from "~/shared/client_helpers"; // prettier-ignore
+import { getAuthSessionFromLocalStorage } from "~/shared/client_helpers";
+import { calculateProfileKpi } from "../shared/profileKpi";
 
 export const getSingleProfile = async (
     supabaseProjectUrl,
@@ -14,23 +15,5 @@ export const getSingleProfile = async (
         }
     );
 
-    return await formatSingleProfileData(result.data);
-};
-
-const formatSingleProfileData = async (x) => {
-    return {
-        profileName: x.profileName,
-        createdAt: x.createdAt,
-        updatedAt: x.updatedAt,
-        form: {
-            personalDetails: { data: x.personalDetails },
-            location: { data: x.location },
-            preferences: { data: x.preferences },
-            languages: { data: x.languages },
-            skills: { data: x.skills },
-            workExperience: { data: x.workExperience },
-            education: { data: x.education },
-            mediaLinks: { data: x.mediaLinks },
-        },
-    };
+    return await calculateProfileKpi(result.data);
 };

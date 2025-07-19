@@ -57,6 +57,7 @@ onMounted(async () => {
     <SharedPageContainerWithNavbar>
         <section v-if="profileDataObject" class="multiple-forms-container">
             <div>
+                <!-- <p>{{ profileDataObject }}</p> -->
                 <p>
                     Complete all required forms below to unlock the job search
                     feature
@@ -71,60 +72,71 @@ onMounted(async () => {
                 </p>
             </div>
 
-            <CollapseComponent title="Personal Details" :isComplete="true">
+            <CollapseComponent
+                title="Personal Details"
+                :isComplete="profileDataObject.forms.personalDetails.isComplete"
+            >
                 <PersonalDetailsForm
-                    :data="profileDataObject.form.personalDetails.data"
+                    :data="profileDataObject.forms.personalDetails.data"
                 />
             </CollapseComponent>
 
-            <CollapseComponent title="Location" :isComplete="true">
-                <LocationForm :data="profileDataObject.form.location.data" />
+            <CollapseComponent
+                title="Location"
+                :isComplete="profileDataObject.forms.location.isComplete"
+            >
+                <LocationForm :data="profileDataObject.forms.location.data" />
             </CollapseComponent>
 
             <CollapseComponent
                 title="Preferences"
-                :isComplete="true"
+                :isComplete="profileDataObject.forms.preferences.isComplete"
                 :isOptional="false"
             >
-                <PreferenceForm :data="profileDataObject.form.preferences.data" />
+                <PreferenceForm
+                    :data="profileDataObject.forms.preferences.data"
+                />
             </CollapseComponent>
 
-            <CollapseComponent title="Languages" :isComplete="false">
-                <LanguagesForm :data="profileDataObject.form.languages.data" />
+            <CollapseComponent
+                title="Languages"
+                :isComplete="profileDataObject.forms.languages.isComplete"
+            >
+                <LanguagesForm :data="profileDataObject.forms.languages.data" />
             </CollapseComponent>
 
             <CollapseComponent
                 title="Skills"
-                :isComplete="false"
                 :isOptional="false"
+                :isComplete="profileDataObject.forms.skills.isComplete"
             >
-                <SkillsForm :data="profileDataObject.form.skills.data" />
+                <SkillsForm :data="profileDataObject.forms.skills.data" />
             </CollapseComponent>
 
             <CollapseComponent
                 title="Work Experience"
-                :isComplete="false"
                 :isOptional="true"
+                :isComplete="profileDataObject.forms.workExperience.isComplete"
             >
                 <WorkExperienceForm
-                    :data="profileDataObject.form.workExperience.data"
+                    :data="profileDataObject.forms.workExperience.data"
                 />
             </CollapseComponent>
 
             <CollapseComponent
                 title="University or College"
-                :isComplete="false"
                 :isOptional="true"
+                :isComplete="profileDataObject.forms.education.isComplete"
             >
-                <EducationForm :data="profileDataObject.form.education.data" />
+                <EducationForm :data="profileDataObject.forms.education.data" />
             </CollapseComponent>
 
             <CollapseComponent
                 title="Portfolio + Social Media Links"
-                :isComplete="false"
                 :isOptional="true"
+                :isComplete="profileDataObject.forms.mediaLinks.isComplete"
             >
-                <SocialsForm :data="profileDataObject.form.mediaLinks.data" />
+                <SocialsForm :data="profileDataObject.forms.mediaLinks.data" />
             </CollapseComponent>
         </section>
         <p v-else>Profile name {{ decodedDynamicProfileName }} not found.</p>
