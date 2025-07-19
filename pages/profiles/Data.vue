@@ -21,10 +21,7 @@ const env_config = useRuntimeConfig();
 const supabaseProjectURL = env_config.public.SUPABASE_PROJECT_URL;
 
 const profileDataObject = ref(null);
-const encodedDynamicProfileName = ref(""); // is encoded
-const decodedDynamicProfileName = computed(() =>
-    decodeURI(encodedDynamicProfileName.value)
-);
+const encodedDynamicProfileName = ref("");
 
 const fetchSingleProfile = async () => {
     try {
@@ -164,7 +161,7 @@ onMounted(async () => {
                 />
             </CollapseComponent>
         </section>
-        <p v-else>Profile name {{ decodedDynamicProfileName }} not found.</p>
+        <p v-else>Profile name {{ encodedDynamicProfileName }} not found.</p>
     </SharedPageContainerWithNavbar>
 </template>
 

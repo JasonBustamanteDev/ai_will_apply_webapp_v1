@@ -8,6 +8,14 @@ const props = defineProps({
         type: Object,
         required: false,
     },
+    formName: {
+        type: String,
+        required: true,
+    },
+    encodedProfileName: {
+        type: String,
+        required: true,
+    },
 });
 
 const formState = reactive(
