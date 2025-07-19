@@ -17,7 +17,7 @@ const fetchProfiles = async () => {
     try {
         profileList.value = await getProfiles(supabaseProjectURL);
     } catch (err) {
-        console.error(err)
+        console.error(err);
         showErrorToast(
             "ERROR: FETCHING PROFILES",
             err?.data?.detail ||
@@ -47,17 +47,18 @@ const initializeProfileHandler = async (newProfileName) => {
     }
 };
 const editProfileHandler = async () => {
-    try {
-        //! HOOK UP
-    } catch (err) {
-        "ERROR: EDIT PROFILE",
-            showErrorToast(
-                err?.data?.detail ||
-                    err?.message ||
-                    "Request to update profile failed.",
-                true
-            );
-    }
+    await navigateTo({ path: PAGE_URLS.PROFILE_DATA });
+    // try {
+    //     //! HOOK UP
+    // } catch (err) {
+    //     "ERROR: EDIT PROFILE",
+    //         showErrorToast(
+    //             err?.data?.detail ||
+    //                 err?.message ||
+    //                 "Request to update profile failed.",
+    //             true
+    //         );
+    // }
 };
 
 const deleteProfileHandler = async (profileName) => {
@@ -127,7 +128,7 @@ const copyProfileHandler = async (newProfileName, existingData = null) => {
                 :isReady="entry.isReady"
                 :completionFraction="entry.completedFormFraction"
                 :rowData="entry.forms"
-                @editCallback="editProfile"
+                @editCallback="editProfileHandler"
                 @deleteProfile="deleteProfileHandler"
                 @renameProfile="renameProfileHandler"
                 @copyProfile="copyProfileHandler"

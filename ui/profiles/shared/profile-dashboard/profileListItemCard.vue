@@ -8,7 +8,7 @@ const props = defineProps({
     isReady: { type: Boolean },
     rowData: { type: Object, required: true },
 });
-const emit = defineEmits(["deleteProfile", "renameProfile", "copyProfile"]);
+const emit = defineEmits(["deleteProfile", "renameProfile", "copyProfile", "editCallback"]);
 
 // Delete profile logic
 const isDeleteProfileModalOpen = ref(false);

@@ -3,7 +3,7 @@ import { personalDetailsSchema, locationSchema, preferenceSchema, educationSchem
 
 export const getProfiles = async (supabaseProjectUrl) => {
     const session = await getAuthSessionFromLocalStorage(supabaseProjectUrl);
-    const result = await $fetch("/api/profiles/readAll", {
+    const result = await $fetch("/api/profiles/read/all", {
         headers: {
             Authorization: `Bearer ${session.access_token}`,
         },
