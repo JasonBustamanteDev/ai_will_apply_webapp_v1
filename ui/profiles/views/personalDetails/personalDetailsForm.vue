@@ -2,6 +2,7 @@
 import { genders, ethnicGroups, educationLevels } from "~/ui/profiles/views/personalDetails/personalDetailsForm.js"; // prettier-ignore
 import { booleanPlusEmptyOptions } from "~/ui/profiles/shared/constants.js";
 import { personalDetailsSchema } from "../formValidation.js";
+import { updateProfile } from "~/ui/profiles/apiCalls/updateProfile.js";
 
 const props = defineProps({
     data: {

@@ -1,6 +1,7 @@
 <script setup>
 import { verifyMinStringLength, isValidNumericString } from "~/shared/client_helpers"; // prettier-ignore
 import { booleanOptions, radioStyleObject } from "~/ui/profiles/shared/constants.js"; // prettier-ignore
+import { updateProfile } from "~/ui/profiles/apiCalls/updateProfile.js";
 import InputLabelSlot from "~/ui/profiles/shared/inputLabelSlot.vue";
 import AddRowButton from "@/ui/profiles/shared/addRowButton.vue";
 import RemoveRowButton from "~/ui/profiles/shared/removeRowButton.vue";

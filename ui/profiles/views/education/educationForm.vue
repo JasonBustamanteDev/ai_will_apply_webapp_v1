@@ -1,6 +1,7 @@
 <script setup>
 import { educationSchema } from "../formValidation";
 import { booleanPlusEmptyOptions, booleanOptions, radioStyleObject } from "~/ui/profiles/shared/constants.js"; // prettier-ignore
+import { updateProfile } from "~/ui/profiles/apiCalls/updateProfile.js";
 
 const props = defineProps({
     data: {

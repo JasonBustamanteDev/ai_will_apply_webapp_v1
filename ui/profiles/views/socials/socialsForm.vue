@@ -1,5 +1,6 @@
 <script setup>
 import { socialSchema } from "../formValidation";
+import { updateProfile } from "~/ui/profiles/apiCalls/updateProfile.js";
 
 const props = defineProps({
     data: {

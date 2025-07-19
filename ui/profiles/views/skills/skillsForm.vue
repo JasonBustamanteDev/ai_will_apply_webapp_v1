@@ -2,6 +2,7 @@
 import AddRowButton from "@/ui/profiles/shared/addRowButton.vue";
 import { verifyMinStringLength } from "~/shared/client_helpers";
 import { some } from "lodash";
+import { updateProfile } from "~/ui/profiles/apiCalls/updateProfile.js";
 
 const props = defineProps({
     data: {

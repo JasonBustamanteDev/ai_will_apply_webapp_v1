@@ -1,6 +1,7 @@
 <script setup>
 import { countriesList } from "./countries";
 import { locationSchema } from "../formValidation";
+import { updateProfile } from "~/ui/profiles/apiCalls/updateProfile.js";
 
 const props = defineProps({
     data: {
