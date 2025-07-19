@@ -14,5 +14,16 @@ export const throwErrorObject = function (name, message, code = 500) {
 
 export const ERROR_MESSAGES = {
     GENERIC: "Something went wrong. Please reload the page and try again.",
-    RELOAD: "Please reload the page and try again."
+    RELOAD: "Please reload the page and try again.",
+};
+
+export const PROFILE_FORMS = {
+    PERSONAL_DETAILS: "personalDetails",
+    LOCATION: "location",
+    PREFERENCES: "preferences",
+    LANGUAGES: "languages",
+    SKILLS: "skills",
+    WORK_EXPERIENCE: "workExperience",
+    EDUCATION: "education",
+    MEDIA_LINKS: "mediaLinks",
 };

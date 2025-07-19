@@ -77,6 +77,8 @@ onMounted(async () => {
             >
                 <PersonalDetailsForm
                     :data="profileDataObject.forms.personalDetails.data"
+                    :encodedProfileName="encodedDynamicProfileName"
+                    :formName="PROFILE_FORMS.PERSONAL_DETAILS"
                 />
             </CollapseComponent>
 
@@ -84,7 +86,11 @@ onMounted(async () => {
                 title="Location"
                 :isComplete="profileDataObject.forms.location.isComplete"
             >
-                <LocationForm :data="profileDataObject.forms.location.data" />
+                <LocationForm
+                    :data="profileDataObject.forms.location.data"
+                    :encodedProfileName="encodedDynamicProfileName"
+                    :formName="PROFILE_FORMS.LOCATION"
+                />
             </CollapseComponent>
 
             <CollapseComponent
@@ -94,6 +100,8 @@ onMounted(async () => {
             >
                 <PreferenceForm
                     :data="profileDataObject.forms.preferences.data"
+                    :encodedProfileName="encodedDynamicProfileName"
+                    :formName="PROFILE_FORMS.PREFERENCES"
                 />
             </CollapseComponent>
 
@@ -101,7 +109,11 @@ onMounted(async () => {
                 title="Languages"
                 :isComplete="profileDataObject.forms.languages.isComplete"
             >
-                <LanguagesForm :data="profileDataObject.forms.languages.data" />
+                <LanguagesForm
+                    :data="profileDataObject.forms.languages.data"
+                    :encodedProfileName="encodedDynamicProfileName"
+                    :formName="PROFILE_FORMS.LANGUAGES"
+                />
             </CollapseComponent>
 
             <CollapseComponent
@@ -109,7 +121,11 @@ onMounted(async () => {
                 :isOptional="false"
                 :isComplete="profileDataObject.forms.skills.isComplete"
             >
-                <SkillsForm :data="profileDataObject.forms.skills.data" />
+                <SkillsForm
+                    :data="profileDataObject.forms.skills.data"
+                    :encodedProfileName="encodedDynamicProfileName"
+                    :formName="PROFILE_FORMS.SKILLS"
+                />
             </CollapseComponent>
 
             <CollapseComponent
@@ -119,6 +135,8 @@ onMounted(async () => {
             >
                 <WorkExperienceForm
                     :data="profileDataObject.forms.workExperience.data"
+                    :encodedProfileName="encodedDynamicProfileName"
+                    :formName="PROFILE_FORMS.WORK_EXPERIENCE"
                 />
             </CollapseComponent>
 
@@ -127,7 +145,11 @@ onMounted(async () => {
                 :isOptional="true"
                 :isComplete="profileDataObject.forms.education.isComplete"
             >
-                <EducationForm :data="profileDataObject.forms.education.data" />
+                <EducationForm
+                    :data="profileDataObject.forms.education.data"
+                    :encodedProfileName="encodedDynamicProfileName"
+                    :formName="PROFILE_FORMS.EDUCATION"
+                />
             </CollapseComponent>
 
             <CollapseComponent
@@ -135,7 +157,11 @@ onMounted(async () => {
                 :isOptional="true"
                 :isComplete="profileDataObject.forms.mediaLinks.isComplete"
             >
-                <SocialsForm :data="profileDataObject.forms.mediaLinks.data" />
+                <SocialsForm
+                    :data="profileDataObject.forms.mediaLinks.data"
+                    :encodedProfileName="encodedDynamicProfileName"
+                    :formName="PROFILE_FORMS.MEDIA_LINKS"
+                />
             </CollapseComponent>
         </section>
         <p v-else>Profile name {{ decodedDynamicProfileName }} not found.</p>
