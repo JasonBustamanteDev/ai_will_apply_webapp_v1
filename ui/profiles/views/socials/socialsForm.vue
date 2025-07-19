@@ -1,16 +1,15 @@
 <script setup>
-import { socialSchema } from '../formValidation';
-
+import { socialSchema } from "../formValidation";
 
 const formState = reactive({
     // These keys must match the name attributes on UFormField elements
-    portfolioUrl: "",
-    linkedin: "",
-    github: "",
-    twitter: "",
-    instagram: "",
-    tiktok: "",
-    youtube: "",
+    portfolioUrl: undefined,
+    linkedin: undefined,
+    github: undefined,
+    twitter: undefined,
+    instagram: undefined,
+    tiktok: undefined,
+    youtube: undefined,
 });
 
 const onSubmit = async () => {

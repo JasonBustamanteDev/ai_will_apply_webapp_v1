@@ -54,7 +54,7 @@ const formatData = async (profileList) => {
             isReady: areMandatoryFormsComplete,
             completedFormFraction: `${completedCount}/${formCompletionBooleans.length}`,
 
-            // prettier-ignore
+            // prettier-ignore (FORM NAMES)
             forms: {
                 personalDetails: { data: x.personalDetails, isComplete: personalDetailsIsValid },
                 location: { data: x.location, isComplete: locationIsValid },
