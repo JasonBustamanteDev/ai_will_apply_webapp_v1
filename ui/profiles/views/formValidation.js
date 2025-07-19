@@ -1,5 +1,5 @@
 import { object, string, number, boolean, array, mixed } from "yup";
-import { emptyOrMinLengthStringAccepted, verifyMinStringLength, cleanPhoneNumber, isValidYearMonth, isValidNumericString } from "~/shared/client_helpers"; // prettier-ignore
+import { emptyOrMinLengthStringAccepted, verifyMinStringLength, cleanPhoneNumber, isValidYearMonth } from "~/shared/client_helpers"; // prettier-ignore
 import { genders, ethnicGroups, educationLevels } from "~/ui/profiles/views/personalDetails/personalDetailsForm.js"; // prettier-ignore
 import { countriesList } from "./location/countries";
 import { usaDict, canadaDict } from "./location/provinces";
@@ -378,7 +378,9 @@ export const workExperienceValidator = (experienceList) => {
         const yearsValue = obj.years;
         const jobTitleError = !verifyMinStringLength(obj.jobTitle, 1);
         const companyError = !verifyMinStringLength(obj.company, 1);
-        const yearsError  = !yearsValue || !isValidNumericString(yearsValue) || Number(yearsValue) <= 0; // prettier-ignore
+        const yearsError =
+            !yearsValue ||
+            Number(yearsValue) <= 0;
 
         if (jobTitleError || companyError || yearsError) {
             return false;

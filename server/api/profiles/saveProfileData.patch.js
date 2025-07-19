@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
             accessToken
         );
 
-        const uploadObject = { updated_at: getCurrentUTCTimestamp() };
+        const uploadObject = { updatedAt: getCurrentUTCTimestamp() };
         for (const formName in body.formData) {
             uploadObject[formName] = body.formData[formName];
         }
