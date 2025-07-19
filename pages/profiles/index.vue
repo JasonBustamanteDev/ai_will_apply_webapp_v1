@@ -74,6 +74,23 @@ const renameProfileHandler = async (oldProfileName, newProfileName) => {
         );
     }
 };
+
+const copyProfileHandler = async (newProfileName, existingData = null) => {
+    console.log(newProfileName, existingData);
+    try {
+        await initializeProfile(
+            supabaseProjectURL,
+            newProfileName,
+            existingData
+        );
+        await fetchProfiles(); // refetch
+    } catch (err) {
+        showErrorToast(
+            err.message || "Request to create a copy failed.",
+            "ERROR: COPY PROFILE"
+        );
+    }
+};
 </script>
 
 <template>
@@ -91,11 +108,14 @@ const renameProfileHandler = async (oldProfileName, newProfileName) => {
                 :lastModifiedDate="entry.lastUpdated"
                 :isReady="entry.isReady"
                 :completionFraction="entry.completedFormFraction"
+                :rowData="entry.forms"
                 @editCallback="editProfile"
                 @deleteProfile="deleteProfileHandler"
                 @renameProfile="renameProfileHandler"
+                @copyProfile="copyProfileHandler"
             />
         </section>
+        <p>{{ profileList }}</p>
         <ErrorToast description="Generic problem" />
     </SharedPageContainerWithNavbar>
 </template>

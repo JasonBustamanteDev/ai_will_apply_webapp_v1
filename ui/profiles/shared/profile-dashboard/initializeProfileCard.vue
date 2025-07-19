@@ -18,6 +18,8 @@ const initializeButtonHandler = async () => {
         // Close window and emit event which sends a request to the backend
         isInitializeProfileModalOpen.value = false;
         emit("initializeProfile", formState.profileName);
+
+        formState.profileName = "";
     } catch (err) {
         console.error(err);
     }

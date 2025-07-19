@@ -6,8 +6,9 @@ const props = defineProps({
     lastModifiedDate: { type: String },
     completionFraction: { type: String },
     isReady: { type: Boolean },
+    rowData: { type: Object, required: true },
 });
-const emit = defineEmits(["deleteProfile", "renameProfile"]);
+const emit = defineEmits(["deleteProfile", "renameProfile", "copyProfile"]);
 
 // Delete profile logic
 const isDeleteProfileModalOpen = ref(false);
@@ -18,18 +19,37 @@ const deleteButtonHandler = () => {
 
 // Rename profile logic
 const isRenameProfileModalOpen = ref(false);
-const formState = reactive({
+const renameFormState = reactive({
     profileName: "", // key must match the name attributes on UFormField elements
 });
 const renameButtonHandler = async () => {
     try {
         // Validate the profileName
-        if (!formState.profileName) return;
-        await profileNameSchema.validate(formState);
+        if (!renameFormState.profileName) return;
+        await profileNameSchema.validate(renameFormState);
 
         // Close window and emit event which sends a request to the backend
         isRenameProfileModalOpen.value = false;
-        emit("renameProfile", props.profileName, formState.profileName);
+        emit("renameProfile", props.profileName, renameFormState.profileName);
+    } catch (err) {
+        console.error(err);
+    }
+};
+
+// Copy profile logic
+const isCopyProfileModalOpen = ref(false);
+const copyFormState = reactive({
+    profileName: "", // key must match the name attributes on UFormField elements
+});
+const copyButtonHandler = async () => {
+    try {
+        // Validate the profileName
+        if (!copyFormState.profileName) return;
+        await profileNameSchema.validate(copyFormState);
+
+        // Close window and emit event which sends a request to the backend
+        isCopyProfileModalOpen.value = false;
+        emit("copyProfile", copyFormState.profileName, props.rowData);
     } catch (err) {
         console.error(err);
     }
@@ -63,7 +83,7 @@ const renameButtonHandler = async () => {
                 >
                 <UButton
                     color="neutral"
-                    @click="$emit('editCallback')"
+                    @click="() => (isCopyProfileModalOpen = true)"
                     class="cursor-pointer"
                     >Copy</UButton
                 >
@@ -127,12 +147,15 @@ const renameButtonHandler = async () => {
             <p>Use numbers, letters, and spaces only</p>
             <UForm
                 :schema="profileNameSchema"
-                :state="formState"
+                :state="renameFormState"
                 class="space-y-4 uform-element pt-4 h-[70px]"
                 @submit="renameButtonHandler"
             >
                 <UFormField label="" name="profileName" class="mb-0">
-                    <UInput v-model="formState.profileName" class="w-full" />
+                    <UInput
+                        v-model="renameFormState.profileName"
+                        class="w-full"
+                    />
                 </UFormField>
             </UForm>
         </template>
@@ -150,6 +173,48 @@ const renameButtonHandler = async () => {
                 color="neutral"
                 class="cursor-pointer"
                 @click="renameButtonHandler"
+            />
+        </template>
+    </UModal>
+
+    <!-- COPY PROFILE MODAL -->
+    <UModal
+        v-model:open="isCopyProfileModalOpen"
+        title="Copy Profile"
+        description=""
+        :ui="{ footer: 'justify-end' }"
+    >
+        <template #body>
+            <p>Enter new name here (max 28 chars)</p>
+            <p>Use numbers, letters, and spaces only</p>
+            <UForm
+                :schema="profileNameSchema"
+                :state="copyFormState"
+                class="space-y-4 uform-element pt-4 h-[70px]"
+                @submit="copyButtonHandler"
+            >
+                <UFormField label="" name="profileName" class="mb-0">
+                    <UInput
+                        v-model="copyFormState.profileName"
+                        class="w-full"
+                    />
+                </UFormField>
+            </UForm>
+        </template>
+
+        <template #footer="{ close }">
+            <UButton
+                label="Cancel"
+                color="neutral"
+                variant="outline"
+                class="cursor-pointer"
+                @click="close"
+            />
+            <UButton
+                label="Copy Profile"
+                color="neutral"
+                class="cursor-pointer"
+                @click="copyButtonHandler"
             />
         </template>
     </UModal>

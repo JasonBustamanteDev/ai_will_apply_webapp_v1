@@ -6,6 +6,7 @@ export default defineEventHandler(async (event) => {
     try {
         const body = await readBody(event);
         const newProfileName = decodeURI(body.newProfileName);
+        const existingData = body.existingData;
 
         const { accessToken } = checkIfUserIsAuthenticated(event);
         const supabaseClient = getSupabaseClient(event, accessToken);
@@ -36,9 +37,15 @@ export default defineEventHandler(async (event) => {
         }
 
         // Insert the new profile
+        //! If existing data was provided in the request body, include it in the payload into the Supabase method
+        const payload = { id: auth_id, profileName: newProfileName };
+        if (existingData) {
+            console.log("backend existingData", existingData)
+        }
+
         const { error: insertError } = await supabaseClient
             .from(PROFILES_TABLE_NAME)
-            .insert({ id: auth_id, profileName: newProfileName });
+            .insert(payload);
 
         // An error will occur if a duplicate profile name is used already since it violates the table's UK constraint
         if (insertError) {
