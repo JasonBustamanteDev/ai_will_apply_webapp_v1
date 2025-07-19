@@ -30,11 +30,14 @@ onMounted(async () => {
 
 const initializeProfileHandler = async (newProfileName) => {
     try {
-        await initializeProfile(supabaseProjectURL, newProfileName);
+        const a = await initializeProfile(supabaseProjectURL, newProfileName);
+        console.log(a);
         await fetchProfiles(); // refetch
     } catch (err) {
         showErrorToast(
-            err.message || "Request to create a profile failed.",
+            err?.data?.detail ||
+                err?.message ||
+                "Request to create a profile failed.",
             "ERROR: INITIALIZING PROFILE"
         );
     }
@@ -44,7 +47,9 @@ const editProfileHandler = async () => {
         //! HOOK UP
     } catch (err) {
         showErrorToast(
-            err.message || "Request to update profile failed.",
+            err?.data?.detail ||
+                err?.message ||
+                "Request to update profile failed.",
             "ERROR: EDIT PROFILE"
         );
     }
@@ -56,7 +61,9 @@ const deleteProfileHandler = async (profileName) => {
         await fetchProfiles(); // refetch
     } catch (err) {
         showErrorToast(
-            err.message || "Request to delete profile failed.",
+            err?.data?.detail ||
+                err?.message ||
+                "Request to delete profile failed.",
             "ERROR: DELETE PROFILE"
         );
     }
@@ -69,7 +76,9 @@ const renameProfileHandler = async (oldProfileName, newProfileName) => {
     } catch (err) {
         console.error(err);
         showErrorToast(
-            err.message || "Request to rename profile failed.",
+            err?.data?.detail ||
+                err?.message ||
+                "Request to rename profile failed.",
             "ERROR: RENAME PROFILE"
         );
     }
@@ -85,7 +94,9 @@ const copyProfileHandler = async (newProfileName, existingData = null) => {
         await fetchProfiles(); // refetch
     } catch (err) {
         showErrorToast(
-            err.message || "Request to create a copy failed.",
+            err?.data?.detail ||
+                err?.message ||
+                "Request to create a copy failed.",
             "ERROR: COPY PROFILE"
         );
     }
