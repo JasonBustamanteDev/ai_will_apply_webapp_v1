@@ -1,28 +1,37 @@
 <script setup>
 import { verifyMinStringLength, isValidNumericString } from "~/shared/client_helpers"; // prettier-ignore
-import { booleanOptions, radioStyleObject } from "~/ui/profiles/shared/constants.js";
+import { booleanOptions, radioStyleObject } from "~/ui/profiles/shared/constants.js"; // prettier-ignore
 import InputLabelSlot from "~/ui/profiles/shared/inputLabelSlot.vue";
 import AddRowButton from "@/ui/profiles/shared/addRowButton.vue";
 import RemoveRowButton from "~/ui/profiles/shared/removeRowButton.vue";
+
+const props = defineProps({
+    data: {
+        type: Object,
+        required: false,
+    },
+});
 
 const currentlyThereOptions = [
     { label: "I still work here", value: true },
     { label: "I no longer work here", value: false },
 ];
 
-const workExperienceList = ref([
-    {
-        jobTitle: "",
-        company: "",
-        years: null,
-        currentlyThere: false,
+const workExperienceList = ref(
+    props.data || [
+        {
+            jobTitle: "",
+            company: "",
+            years: null,
+            currentlyThere: false,
 
-        jobTitleError: false,
-        companyError: false,
-        yearsError: false,
-        currentlyThereError: false,
-    },
-]);
+            jobTitleError: false,
+            companyError: false,
+            yearsError: false,
+            currentlyThereError: false,
+        },
+    ]
+);
 
 const areAllRowsValid = () => {
     // tech_debt: ensure this fn validates similarly to this other fn (CTRL F a1a)
@@ -67,9 +76,9 @@ const onSubmit = () => {
     const rowsAreValid = areAllRowsValid();
     if (!rowsAreValid) return;
 
-    const formattedData = workExperienceList.value.map((obj)=>{
-        return { ...obj, years: Number(obj.years)}
-    })
+    const formattedData = workExperienceList.value.map((obj) => {
+        return { ...obj, years: Number(obj.years) };
+    });
     console.log("Submit form", formattedData);
 };
 </script>

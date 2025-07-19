@@ -1,18 +1,27 @@
 <script setup>
 import { preferenceSchema } from "../formValidation";
-import { booleanOptions, radioStyleObject } from "~/ui/profiles/shared/constants.js"; // this is used in template
+import { booleanOptions, radioStyleObject } from "~/ui/profiles/shared/constants.js"; // prettier-ignore
 
-const formState = reactive({
-    // These keys must match the name attributes on UFormField elements
-    currentAnnualSalary: 40000,
-    expectedAnnualSalary: 60000,
-    noticePeriod: 14,
-    willingToRelocate: true,
-    driversLicense: true,
-    reliableTransportation: true,
-    veteranStatus: false,
-    companyBlacklist: ["Some terrible company"],
+const props = defineProps({
+    data: {
+        type: Object,
+        required: false,
+    },
 });
+
+const formState = reactive(
+    props.data || {
+        // These keys must match the name attributes on UFormField elements
+        currentAnnualSalary: 40000,
+        expectedAnnualSalary: 60000,
+        noticePeriod: 14,
+        willingToRelocate: true,
+        driversLicense: true,
+        reliableTransportation: true,
+        veteranStatus: false,
+        companyBlacklist: ["Some terrible company"],
+    }
+);
 
 const onSubmit = async () => {
     try {

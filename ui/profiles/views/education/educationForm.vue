@@ -2,17 +2,26 @@
 import { educationSchema } from "../formValidation";
 import { booleanPlusEmptyOptions, booleanOptions, radioStyleObject } from "~/ui/profiles/shared/constants.js"; // prettier-ignore
 
-const formState = reactive({
-    // These keys must match the name attributes on UFormField elements
-    institutionName: undefined,
-    fieldOfStudy: undefined,
-    institutionCity: undefined,
-    institutionProvince: undefined,
-    gpa: undefined,
-    startDate: undefined,
-    endDate: undefined,
-    currentlyAttending: undefined,
+const props = defineProps({
+    data: {
+        type: Object,
+        required: false,
+    },
 });
+
+const formState = reactive(
+    props.data || {
+        // These keys must match the name attributes on UFormField elements
+        institutionName: undefined,
+        fieldOfStudy: undefined,
+        institutionCity: undefined,
+        institutionProvince: undefined,
+        gpa: undefined,
+        startDate: undefined,
+        endDate: undefined,
+        currentlyAttending: undefined,
+    }
+);
 
 const onSubmit = async () => {
     // TODO: Submit better contain a changed value

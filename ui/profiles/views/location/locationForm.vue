@@ -2,15 +2,24 @@
 import { countriesList } from "./countries";
 import { locationSchema } from "../formValidation";
 
-const formState = reactive({
-    // These keys must match the name attributes on UFormField elements
-    country: undefined,
-    address: undefined,
-    city: undefined,
-    postalCode: undefined,
-    provinceState: undefined,
-    citizenship: undefined,
+const props = defineProps({
+    data: {
+        type: Object,
+        required: false,
+    },
 });
+
+const formState = reactive(
+    props.data || {
+        // These keys must match the name attributes on UFormField elements
+        country: undefined,
+        address: undefined,
+        city: undefined,
+        postalCode: undefined,
+        provinceState: undefined,
+        citizenship: undefined,
+    }
+);
 
 // Clear the province field each time the country changes
 watch(

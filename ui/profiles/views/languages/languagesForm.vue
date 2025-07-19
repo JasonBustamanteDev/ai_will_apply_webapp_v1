@@ -3,14 +3,23 @@ import AddRowButton from "@/ui/profiles/shared/addRowButton.vue";
 import { verifyMinStringLength } from "~/shared/client_helpers";
 import { some } from "lodash";
 
-const languages = ref([
-    {
-        language: "English",
-        proficiency: "native",
-        langError: false,
-        proficiencyError: false,
+const props = defineProps({
+    data: {
+        type: Object,
+        required: false,
     },
-]);
+});
+
+const languages = ref(
+    props.data || [
+        {
+            language: "English",
+            proficiency: "native",
+            langError: false,
+            proficiencyError: false,
+        },
+    ]
+);
 
 const proficiencyOptions = [
     {

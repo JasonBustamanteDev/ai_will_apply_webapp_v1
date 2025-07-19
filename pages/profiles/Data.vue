@@ -57,7 +57,6 @@ onMounted(async () => {
     <SharedPageContainerWithNavbar>
         <section v-if="profileDataObject" class="multiple-forms-container">
             <div>
-                <!-- <p>{{ profileDataObject }}</p> -->
                 <p>
                     Complete all required forms below to unlock the job search
                     feature

@@ -3,13 +3,22 @@ import AddRowButton from "@/ui/profiles/shared/addRowButton.vue";
 import { verifyMinStringLength } from "~/shared/client_helpers";
 import { some } from "lodash";
 
+const props = defineProps({
+    data: {
+        type: Object,
+        required: false,
+    },
+});
+
 const MIN_YEARS = 1;
 const MAX_YEARS = 100;
 
 const defaultYearsOfExperience = ref(2);
-const skills = ref([
-    { name: "", years: defaultYearsOfExperience.value, nameError: false },
-]);
+const skills = ref(
+    props.data || [
+        { name: "", years: defaultYearsOfExperience.value, nameError: false },
+    ]
+);
 
 const addSkill = () => {
     skills.value.push({

@@ -3,20 +3,29 @@ import { genders, ethnicGroups, educationLevels } from "~/ui/profiles/views/pers
 import { booleanPlusEmptyOptions } from "~/ui/profiles/shared/constants.js";
 import { personalDetailsSchema } from "../formValidation.js";
 
-const formState = reactive({
-    // These keys must match the name attributes on UFormField elements
-    firstName: undefined,
-    lastName: undefined,
-    age: 18,
-    yearsOfExperience: 2,
-    email: undefined,
-    gender: undefined,
-    phoneNumber: undefined,
-    ethnicity: undefined,
-    securityClearance: undefined,
-    disability: undefined,
-    educationLevel: undefined,
+const props = defineProps({
+    data: {
+        type: Object,
+        required: false,
+    },
 });
+
+const formState = reactive(
+    props.data || {
+        // These keys must match the name attributes on UFormField elements
+        firstName: undefined,
+        lastName: undefined,
+        age: 18,
+        yearsOfExperience: 2,
+        email: undefined,
+        gender: undefined,
+        phoneNumber: undefined,
+        ethnicity: undefined,
+        securityClearance: undefined,
+        disability: undefined,
+        educationLevel: undefined,
+    }
+);
 
 const onSubmit = async () => {
     try {
