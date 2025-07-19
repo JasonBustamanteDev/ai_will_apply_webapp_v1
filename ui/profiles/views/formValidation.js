@@ -30,8 +30,8 @@ export const personalDetailsSchema = object({
         .transform((value, originalValue) => Number(originalValue))
         .typeError("Enter a valid number")
         .required(MESSAGES.REQUIRED)
-        .test("yearsExpValidation", "Must be above 0", function (value) {
-            if (value <= 0) return false;
+        .test("yearsExpValidation", "Must be at least 0", function (value) {
+            if (value < 0) return false;
             return true;
         }),
     email: string().email("Invalid email").required(MESSAGES.REQUIRED),
