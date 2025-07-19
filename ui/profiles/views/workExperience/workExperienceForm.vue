@@ -20,6 +20,9 @@ const props = defineProps({
     },
 });
 
+const env_config = useRuntimeConfig();
+const supabaseProjectURL = env_config.public.SUPABASE_PROJECT_URL;
+
 const currentlyThereOptions = [
     { label: "I still work here", value: true },
     { label: "I no longer work here", value: false },

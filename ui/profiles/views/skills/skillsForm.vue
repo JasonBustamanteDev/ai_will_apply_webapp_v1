@@ -18,6 +18,9 @@ const props = defineProps({
     },
 });
 
+const env_config = useRuntimeConfig();
+const supabaseProjectURL = env_config.public.SUPABASE_PROJECT_URL;
+
 const MIN_YEARS = 1;
 const MAX_YEARS = 100;
 

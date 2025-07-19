@@ -17,6 +17,9 @@ const props = defineProps({
     },
 });
 
+const env_config = useRuntimeConfig();
+const supabaseProjectURL = env_config.public.SUPABASE_PROJECT_URL;
+
 const formState = reactive(
     props.data || {
         // These keys must match the name attributes on UFormField elements
