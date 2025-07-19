@@ -83,18 +83,16 @@ const copyButtonHandler = async () => {
                 >
                 <UButton
                     color="neutral"
-                    @click="() => (isCopyProfileModalOpen = true)"
-                    class="cursor-pointer"
-                    >Copy</UButton
-                >
-
-                <UButton
-                    color="neutral"
                     @click="() => (isRenameProfileModalOpen = true)"
                     class="cursor-pointer"
                     >Rename</UButton
                 >
-
+                <UButton
+                    color="neutral"
+                    @click="() => (isCopyProfileModalOpen = true)"
+                    class="cursor-pointer"
+                    >Copy</UButton
+                >
                 <UButton
                     color="neutral"
                     variant="outline"

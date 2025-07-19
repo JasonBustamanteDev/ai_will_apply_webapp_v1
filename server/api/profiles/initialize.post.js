@@ -37,10 +37,10 @@ export default defineEventHandler(async (event) => {
         }
 
         // Insert the new profile
-        //! If existing data was provided in the request body, include it in the payload
-        const payload = { id: auth_id, profileName: newProfileName };
+        // If existing data was provided in the request body, include it in the payload
+        let payload = { id: auth_id, profileName: newProfileName };
         if (existingData) {
-            console.log("backend existingData", existingData)
+            payload = { ...payload, ...existingData };
         }
 
         const { error: insertError } = await supabaseClient
