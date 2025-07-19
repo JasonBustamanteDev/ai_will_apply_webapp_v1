@@ -1,4 +1,4 @@
-import { object, string, number, boolean, array } from "yup";
+import { object, string, number, boolean, array, mixed } from "yup";
 import { emptyOrMinLengthStringAccepted, verifyMinStringLength, cleanPhoneNumber, isValidYearMonth, isValidNumericString } from "~/shared/client_helpers"; // prettier-ignore
 import { genders, ethnicGroups, educationLevels } from "~/ui/profiles/views/personalDetails/personalDetailsForm.js"; // prettier-ignore
 import { countriesList } from "./location/countries";
@@ -153,17 +153,25 @@ export const educationSchema = object({
         .test("institutionProvince", MESSAGES.ONLY_EMPTY, (value) =>
             emptyOrMinLengthStringAccepted(value, 1)
         ),
-    gpa: string("Invalid number")
+    gpa: mixed()
         .nullable()
         .notRequired()
-        .test("gpa", "Type a decimal between 1 to 5", (value) => {
-            if (value === undefined || value === "") return true;
-            try {
-                const num = Number(value);
-                return value >= 1 && value <= 5;
-            } catch {
-                return false;
+        .transform((value) => {
+            // Handle null, undefined, or empty string cases
+            if (value === null || value === undefined || value === "") {
+                return undefined;
             }
+            // Convert string to number
+            const num = Number(value);
+            return isNaN(num) ? value : num;
+        })
+        .test("is-number", "Enter a valid decimal", (value) => {
+            if (value === undefined || value === null) return true;
+            return typeof value === "number";
+        })
+        .test("gpa", "Type a decimal between 1 to 5", (value) => {
+            if (value === undefined || value === null) return true;
+            return typeof value === "number" && value >= 1 && value <= 5;
         }),
     startDate: string()
         .required(MESSAGES.REQUIRED)
