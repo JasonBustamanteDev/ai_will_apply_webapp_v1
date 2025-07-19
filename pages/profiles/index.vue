@@ -18,10 +18,10 @@ const fetchProfiles = async () => {
         profileList.value = await getProfiles(supabaseProjectURL);
     } catch (err) {
         showErrorToast(
+            "ERROR: FETCHING PROFILES",
             err?.data?.detail ||
                 err?.message ||
-                "Request to get profiles failed.",
-            "ERROR: FETCHING PROFILES"
+                "Request to get profiles failed."
         );
     }
 };
@@ -37,10 +37,10 @@ const initializeProfileHandler = async (newProfileName) => {
         await fetchProfiles(); // refetch
     } catch (err) {
         showErrorToast(
+            "ERROR: INITIALIZING PROFILE",
             err?.data?.detail ||
                 err?.message ||
-                "Request to create a profile failed.",
-            "ERROR: INITIALIZING PROFILE"
+                "Request to create a profile failed."
         );
     }
 };
@@ -48,12 +48,12 @@ const editProfileHandler = async () => {
     try {
         //! HOOK UP
     } catch (err) {
-        showErrorToast(
-            err?.data?.detail ||
-                err?.message ||
-                "Request to update profile failed.",
-            "ERROR: EDIT PROFILE"
-        );
+        "ERROR: EDIT PROFILE",
+            showErrorToast(
+                err?.data?.detail ||
+                    err?.message ||
+                    "Request to update profile failed."
+            );
     }
 };
 
@@ -63,10 +63,10 @@ const deleteProfileHandler = async (profileName) => {
         await fetchProfiles(); // refetch
     } catch (err) {
         showErrorToast(
+            "ERROR: DELETE PROFILE",
             err?.data?.detail ||
                 err?.message ||
-                "Request to delete profile failed.",
-            "ERROR: DELETE PROFILE"
+                "Request to delete profile failed."
         );
     }
 };
@@ -78,10 +78,10 @@ const renameProfileHandler = async (oldProfileName, newProfileName) => {
     } catch (err) {
         console.error(err);
         showErrorToast(
+            "ERROR: RENAME PROFILE",
             err?.data?.detail ||
                 err?.message ||
-                "Request to rename profile failed.",
-            "ERROR: RENAME PROFILE"
+                "Request to rename profile failed."
         );
     }
 };
@@ -96,10 +96,10 @@ const copyProfileHandler = async (newProfileName, existingData = null) => {
         await fetchProfiles(); // refetch
     } catch (err) {
         showErrorToast(
+            "ERROR: COPY PROFILE",
             err?.data?.detail ||
                 err?.message ||
-                "Request to create a copy failed.",
-            "ERROR: COPY PROFILE"
+                "Request to create a copy failed."
         );
     }
 };
