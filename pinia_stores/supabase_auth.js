@@ -49,7 +49,7 @@ export const useSupabaseAuthStore = defineStore(
                 if (error) {
                     throwErrorObject(
                         "GOOGLE ERROR: SIGN IN",
-                        "Something went wrong while signing in with Google. Please reload and try again"
+                        `Something went wrong while signing in with Google. ${ERROR_MESSAGES.RELOAD}`
                     );
                 }
             } catch (err) {
@@ -66,13 +66,13 @@ export const useSupabaseAuthStore = defineStore(
                 if (error) {
                     throwErrorObject(
                         "GOOGLE ERROR: SIGN OUT",
-                        "Something went wrong while signing out with Google. Please reload and try again"
+                        `Something went wrong while signing out with Google. ${ERROR_MESSAGES.RELOAD}`
                     );
                 }
             } catch (err) {
                 showErrorToast(
                     "GOOGLE ERROR: SIGN OUT",
-                    err?.message || ERROR_MESSAGES.GENERIC,
+                    err?.message || ERROR_MESSAGES.GENERIC
                 );
             }
         };
@@ -84,14 +84,14 @@ export const useSupabaseAuthStore = defineStore(
                 if (error) {
                     throwErrorObject(
                         "GOOGLE ERROR: SESSION FETCH",
-                        "Something went wrong while retreiving session with Google. Please reload and try again"
+                        `Something went wrong while retrieving session with Google. ${ERROR_MESSAGES.RELOAD}`
                     );
                 }
                 currentSession.value = data.session;
             } catch (err) {
                 showErrorToast(
                     "GOOGLE ERROR: SESSION FETCH",
-                    err?.message || ERROR_MESSAGES.GENERIC,
+                    err?.message || ERROR_MESSAGES.GENERIC
                 );
             }
         };
@@ -104,7 +104,7 @@ export const useSupabaseAuthStore = defineStore(
                 if (error) {
                     throwErrorObject(
                         "GOOGLE ERROR: REFRESH",
-                        "Something went wrong while refreshing session with Google. Please reload and try again"
+                        `Something went wrong while refreshing session with Google. ${ERROR_MESSAGES.RELOAD}`
                     );
                 }
 
@@ -112,7 +112,7 @@ export const useSupabaseAuthStore = defineStore(
             } catch (err) {
                 showErrorToast(
                     "GOOGLE ERROR: REFRESH",
-                    err?.message || ERROR_MESSAGES.GENERIC,
+                    err?.message || ERROR_MESSAGES.GENERIC
                 );
             }
         };

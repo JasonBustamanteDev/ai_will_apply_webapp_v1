@@ -12,5 +12,6 @@ export const throwErrorObject = function (name, message, code = 500) {
 };
 
 export const ERROR_MESSAGES = {
-    GENERIC: "Something went wrong. Please reload the page and try again",
+    GENERIC: "Something went wrong. Please reload the page and try again.",
+    RELOAD: "Please reload the page and try again."
 };
