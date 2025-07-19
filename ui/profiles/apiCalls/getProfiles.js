@@ -46,8 +46,7 @@ const formatData = async (profileList) => {
             locationIsValid &&
             preferenceIsValid &&
             languagesIsValid &&
-            skillsIsValid &&
-            workExperienceIsValid;
+            skillsIsValid
 
         return {
             profileName: x.profileName,

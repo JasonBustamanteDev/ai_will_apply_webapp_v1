@@ -67,7 +67,7 @@ definePageMeta({
             <CollapseComponent
                 title="Work Experience"
                 :isComplete="false"
-                :isOptional="false"
+                :isOptional="true"
             >
                 <WorkExperienceForm />
             </CollapseComponent>
