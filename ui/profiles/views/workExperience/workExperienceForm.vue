@@ -66,7 +66,11 @@ const removeExperienceRow = (index) => {
 const onSubmit = () => {
     const rowsAreValid = areAllRowsValid();
     if (!rowsAreValid) return;
-    console.log("Submit form", workExperienceList.value);
+
+    const formattedData = workExperienceList.value.map((obj)=>{
+        return { ...obj, years: Number(obj.years)}
+    })
+    console.log("Submit form", formattedData);
 };
 </script>
 
