@@ -46,19 +46,10 @@ const initializeProfileHandler = async (newProfileName) => {
         );
     }
 };
-const editProfileHandler = async () => {
-    await navigateTo({ path: PAGE_URLS.PROFILE_DATA });
-    // try {
-    //     //! HOOK UP
-    // } catch (err) {
-    //     "ERROR: EDIT PROFILE",
-    //         showErrorToast(
-    //             err?.data?.detail ||
-    //                 err?.message ||
-    //                 "Request to update profile failed.",
-    //             true
-    //         );
-    // }
+const editProfileHandler = async (profileName) => {
+    await navigateTo({ path: PAGE_URLS.PROFILE_DATA, query: {
+        profileName: encodeURI(profileName)
+    } });
 };
 
 const deleteProfileHandler = async (profileName) => {

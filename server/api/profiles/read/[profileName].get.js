@@ -21,7 +21,7 @@ export default defineEventHandler(async (event) => {
             };
         }
 
-        return { detail: "success", data };
+        return { detail: "success", data: data[0] };
     } catch (err) {
         const error_code = err?.statusCode || 500;
         const error_message = err?.statusMessage || err?.message || "Something went wrong."; // prettier-ignore

@@ -77,7 +77,7 @@ const copyButtonHandler = async () => {
             <section class="flex gap-2">
                 <UButton
                     color="neutral"
-                    @click="$emit('editCallback')"
+                    @click="$emit('editCallback', props.profileName)"
                     class="cursor-pointer"
                     >Edit</UButton
                 >

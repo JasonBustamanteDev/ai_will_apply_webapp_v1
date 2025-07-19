@@ -8,9 +8,44 @@ import SkillsForm from "~/ui/profiles/views/skills/skillsForm.vue";
 import SocialsForm from "~/ui/profiles/views/socials/socialsForm.vue";
 import PreferenceForm from "~/ui/profiles/views/preferences/preferenceForm.vue";
 import WorkExperienceForm from "~/ui/profiles/views/workExperience/workExperienceForm.vue";
+import { useCustomToast } from "~/pinia_stores/toast";
+import { getSingleProfile } from "~/ui/profiles/apiCalls/getSingleProfile";
 
 definePageMeta({
     middleware: ["redirect-if-no-auth-session-client"],
+});
+
+const route = useRoute();
+const { showErrorToast } = useCustomToast();
+const env_config = useRuntimeConfig();
+const supabaseProjectURL = env_config.public.SUPABASE_PROJECT_URL;
+
+const profileDataObject = ref(null);
+const encodedDynamicProfileName = ref(""); // is encoded
+const decodedDynamicProfileName = computed(() =>
+    decodeURI(encodedDynamicProfileName.value)
+);
+
+const fetchSingleProfile = async () => {
+    try {
+        profileDataObject.value = await getSingleProfile(
+            supabaseProjectURL,
+            encodedDynamicProfileName.value
+        );
+    } catch (err) {
+        "ERROR: FETCH SINGLE PROFILE",
+            showErrorToast(
+                err?.data?.detail ||
+                    err?.message ||
+                    "Request to fetch one profile failed.",
+                true
+            );
+    }
+};
+
+onMounted(async () => {
+    encodedDynamicProfileName.value = route.query?.profileName || "";
+    await fetchSingleProfile();
 });
 
 // TODO: Dynamically show complete or is not complete based on whether the form is submitted or not
@@ -20,7 +55,7 @@ definePageMeta({
 
 <template>
     <SharedPageContainerWithNavbar>
-        <section class="multiple-forms-container">
+        <section v-if="profileDataObject" class="multiple-forms-container">
             <div>
                 <p>
                     Complete all required forms below to unlock the job search
@@ -37,11 +72,13 @@ definePageMeta({
             </div>
 
             <CollapseComponent title="Personal Details" :isComplete="true">
-                <PersonalDetailsForm />
+                <PersonalDetailsForm
+                    :data="profileDataObject.form.personalDetails.data"
+                />
             </CollapseComponent>
 
             <CollapseComponent title="Location" :isComplete="true">
-                <LocationForm />
+                <LocationForm :data="profileDataObject.form.location.data" />
             </CollapseComponent>
 
             <CollapseComponent
@@ -49,11 +86,11 @@ definePageMeta({
                 :isComplete="true"
                 :isOptional="false"
             >
-                <PreferenceForm />
+                <PreferenceForm :data="profileDataObject.form.preferences.data" />
             </CollapseComponent>
 
             <CollapseComponent title="Languages" :isComplete="false">
-                <LanguagesForm />
+                <LanguagesForm :data="profileDataObject.form.languages.data" />
             </CollapseComponent>
 
             <CollapseComponent
@@ -61,7 +98,7 @@ definePageMeta({
                 :isComplete="false"
                 :isOptional="false"
             >
-                <SkillsForm />
+                <SkillsForm :data="profileDataObject.form.skills.data" />
             </CollapseComponent>
 
             <CollapseComponent
@@ -69,7 +106,9 @@ definePageMeta({
                 :isComplete="false"
                 :isOptional="true"
             >
-                <WorkExperienceForm />
+                <WorkExperienceForm
+                    :data="profileDataObject.form.workExperience.data"
+                />
             </CollapseComponent>
 
             <CollapseComponent
@@ -77,7 +116,7 @@ definePageMeta({
                 :isComplete="false"
                 :isOptional="true"
             >
-                <EducationForm />
+                <EducationForm :data="profileDataObject.form.education.data" />
             </CollapseComponent>
 
             <CollapseComponent
@@ -85,9 +124,10 @@ definePageMeta({
                 :isComplete="false"
                 :isOptional="true"
             >
-                <SocialsForm />
+                <SocialsForm :data="profileDataObject.form.mediaLinks.data" />
             </CollapseComponent>
         </section>
+        <p v-else>Profile name {{ decodedDynamicProfileName }} not found.</p>
     </SharedPageContainerWithNavbar>
 </template>
 
