@@ -27,6 +27,9 @@ export const personalDetailsSchema = object({
         .test("min-length-no-whitespace", "No empty names", (value) => verifyMinStringLength(value, 1)), // prettier-ignore
     age: number().required(MESSAGES.REQUIRED),
     yearsOfExperience: number()
+        .transform((value, originalValue) => {
+            return Number(originalValue);
+        })
         .typeError("Enter a valid number")
         .required(MESSAGES.REQUIRED)
         .test("yearsExpValidation", "Must be above 0", function (value) {
