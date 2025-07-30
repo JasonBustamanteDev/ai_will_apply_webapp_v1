@@ -171,7 +171,7 @@ const onSubmit = async () => {
         <div class="uform-submit-button-container">
             <UButton
                 type="submit"
-                class="w-full justify-center"
+                class="w-full justify-center cursor-pointer"
                 @click="onSubmit"
                 color="secondary"
                 >Submit</UButton

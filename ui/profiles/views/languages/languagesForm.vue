@@ -130,7 +130,7 @@ const onSubmit = () => {
         <div class="uform-submit-button-container mt-7">
             <UButton
                 type="submit"
-                class="w-full justify-center"
+                class="w-full justify-center cursor-pointer"
                 @click="onSubmit"
                 color="secondary"
                 >Submit</UButton
