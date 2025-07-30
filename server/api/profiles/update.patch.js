@@ -5,6 +5,7 @@ import { PROFILES_TABLE_NAME, getCurrentUTCTimestamp, DEFAULT_SUCCESS_RETURN } f
 export default defineEventHandler(async (event) => {
     try {
         const body = await readBody(event);
+        // console.log(body)
         const { accessToken } = checkIfUserIsAuthenticated(event);
         const supabaseClient = getSupabaseClient(event, accessToken);
         const { auth_id } = await getSupabaseUserDetails(
@@ -16,12 +17,13 @@ export default defineEventHandler(async (event) => {
         for (const formName in body.formData) {
             uploadObject[formName] = body.formData[formName];
         }
+        console.log(999, uploadObject);
 
         const { error } = await supabaseClient
             .from(PROFILES_TABLE_NAME)
             .update(uploadObject)
             .eq("id", auth_id)
-            .eq("profileName", body.profileName);
+            .eq("profileName", decodeURI(body.profileName));
 
         if (error) {
             setResponseStatus(event, 500);

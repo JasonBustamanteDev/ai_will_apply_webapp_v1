@@ -19,6 +19,8 @@ const props = defineProps({
     },
 });
 
+const emit = defineEmits(["fetchProfileData"]);
+
 const env_config = useRuntimeConfig();
 const supabaseProjectURL = env_config.public.SUPABASE_PROJECT_URL;
 
@@ -41,9 +43,11 @@ const formState = reactive(
 
 const onSubmit = async () => {
     try {
-        let user = await personalDetailsSchema.validate(formState);
-        // TODO: send request to backend
-        console.log(user);
+        await personalDetailsSchema.validate(formState);
+        await updateProfile(supabaseProjectURL, props.encodedProfileName, {
+            [props.formName]: formState,
+        });
+        emit("fetchProfileData")
     } catch (err) {
         console.error(err);
     }

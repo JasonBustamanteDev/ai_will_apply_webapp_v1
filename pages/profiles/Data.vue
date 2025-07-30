@@ -76,6 +76,7 @@ onMounted(async () => {
                     :data="profileDataObject.forms.personalDetails.data"
                     :encodedProfileName="encodedDynamicProfileName"
                     :formName="PROFILE_FORMS.PERSONAL_DETAILS"
+                    @fetchProfileData="fetchSingleProfile"
                 />
             </CollapseComponent>
 
@@ -87,6 +88,7 @@ onMounted(async () => {
                     :data="profileDataObject.forms.location.data"
                     :encodedProfileName="encodedDynamicProfileName"
                     :formName="PROFILE_FORMS.LOCATION"
+                    @fetchProfileData="fetchSingleProfile"
                 />
             </CollapseComponent>
 
@@ -99,6 +101,7 @@ onMounted(async () => {
                     :data="profileDataObject.forms.preferences.data"
                     :encodedProfileName="encodedDynamicProfileName"
                     :formName="PROFILE_FORMS.PREFERENCES"
+                    @fetchProfileData="fetchSingleProfile"
                 />
             </CollapseComponent>
 
@@ -110,6 +113,7 @@ onMounted(async () => {
                     :data="profileDataObject.forms.languages.data"
                     :encodedProfileName="encodedDynamicProfileName"
                     :formName="PROFILE_FORMS.LANGUAGES"
+                    @fetchProfileData="fetchSingleProfile"
                 />
             </CollapseComponent>
 
@@ -122,6 +126,7 @@ onMounted(async () => {
                     :data="profileDataObject.forms.skills.data"
                     :encodedProfileName="encodedDynamicProfileName"
                     :formName="PROFILE_FORMS.SKILLS"
+                    @fetchProfileData="fetchSingleProfile"
                 />
             </CollapseComponent>
 
@@ -134,6 +139,7 @@ onMounted(async () => {
                     :data="profileDataObject.forms.workExperience.data"
                     :encodedProfileName="encodedDynamicProfileName"
                     :formName="PROFILE_FORMS.WORK_EXPERIENCE"
+                    @fetchProfileData="fetchSingleProfile"
                 />
             </CollapseComponent>
 
@@ -146,6 +152,7 @@ onMounted(async () => {
                     :data="profileDataObject.forms.education.data"
                     :encodedProfileName="encodedDynamicProfileName"
                     :formName="PROFILE_FORMS.EDUCATION"
+                    @fetchProfileData="fetchSingleProfile"
                 />
             </CollapseComponent>
 
@@ -158,6 +165,7 @@ onMounted(async () => {
                     :data="profileDataObject.forms.mediaLinks.data"
                     :encodedProfileName="encodedDynamicProfileName"
                     :formName="PROFILE_FORMS.MEDIA_LINKS"
+                    @fetchProfileData="fetchSingleProfile"
                 />
             </CollapseComponent>
         </section>
