@@ -3,6 +3,7 @@ import { genders, ethnicGroups, educationLevels } from "~/ui/profiles/views/pers
 import { booleanPlusEmptyOptions } from "~/ui/profiles/shared/constants.js";
 import { personalDetailsSchema } from "../formValidation.js";
 import { updateProfile } from "~/ui/profiles/apiCalls/updateProfile.js";
+import { useCustomToast } from "~/pinia_stores/toast";
 
 const props = defineProps({
     data: {
@@ -20,6 +21,7 @@ const props = defineProps({
 });
 
 const emit = defineEmits(["fetchProfileData"]);
+const { showSuccessToast } = useCustomToast();
 
 const env_config = useRuntimeConfig();
 const supabaseProjectURL = env_config.public.SUPABASE_PROJECT_URL;
@@ -48,6 +50,7 @@ const onSubmit = async () => {
             [props.formName]: formState,
         });
         emit("fetchProfileData")
+        showSuccessToast("Form Submitted", "Fill out the remaining forms or start job hunting")
     } catch (err) {
         console.error(err);
     }

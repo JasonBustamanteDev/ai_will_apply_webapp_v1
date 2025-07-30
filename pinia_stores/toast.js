@@ -10,9 +10,20 @@ export const useCustomToast = defineStore("toast_notifications", () => {
             duration: 10000, // 10 seconds
             color: "error",
         });
+
+    }
+    function showSuccessToast(title, description) {
+        toast.add({
+            title,
+            description,
+            icon: "material-symbols:check-circle-rounded",
+            duration: 5000, // 5 seconds
+            color: "success",
+        });
     }
 
     return {
         showErrorToast,
+        showSuccessToast
     };
 });
