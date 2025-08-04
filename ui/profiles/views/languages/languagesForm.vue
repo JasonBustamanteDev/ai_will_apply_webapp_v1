@@ -23,16 +23,14 @@ const { showSuccessToast, showErrorToast } = useCustomToast();
 const env_config = useRuntimeConfig();
 const supabaseProjectURL = env_config.public.SUPABASE_PROJECT_URL;
 
-const languages = ref(
-    props.data || [
-        {
-            language: "",
-            proficiency: "native",
-            langError: false,
-            proficiencyError: false,
-        },
-    ]
-);
+const generateEmptyRow = () => ({
+    language: "", //  we don't provide a default value because it makes the incomplete chip look strange if 1 valid language is there
+    proficiency: "native",
+    langError: false,
+    proficiencyError: false,
+});
+
+const languages = ref(props.data || [generateEmptyRow()]);
 
 const proficiencyOptions = [
     {
@@ -58,12 +56,7 @@ const proficiencyOptions = [
 ];
 
 const addLanguage = () => {
-    languages.value.push({
-        language: "",
-        proficiency: "native",
-        langError: false,
-        proficiencyError: false,
-    });
+    languages.value.push(generateEmptyRow());
 };
 
 const removeLanguage = (index) => {
