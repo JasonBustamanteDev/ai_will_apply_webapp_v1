@@ -21,7 +21,7 @@ const props = defineProps({
 });
 
 const emit = defineEmits(["fetchProfileData"]);
-const { showSuccessToast } = useCustomToast();
+const { showSuccessToast, showErrorToast } = useCustomToast();
 
 const env_config = useRuntimeConfig();
 const supabaseProjectURL = env_config.public.SUPABASE_PROJECT_URL;
@@ -53,7 +53,7 @@ const onSubmit = async () => {
             [props.formName]: formState,
         });
 
-        // Refetch page data
+        // Refetch page data and render success toast
         emit("fetchProfileData");
         showSuccessToast(
             "Form Submitted",
@@ -64,6 +64,13 @@ const onSubmit = async () => {
         document.getElementById(COLLAPSE_NAMES.PERSONAL_DETAILS).checked = false; // prettier-ignore
     } catch (err) {
         console.error(err);
+        showErrorToast(
+            "ERROR: UPDATE PERSONAL DETAILS",
+            err?.data?.detail ||
+                err?.message ||
+                "Request to update personal details failed.",
+            true
+        );
     }
 };
 </script>

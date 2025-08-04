@@ -2,6 +2,7 @@
 import { countriesList } from "./countries";
 import { locationSchema } from "../formValidation";
 import { updateProfile } from "~/ui/profiles/apiCalls/updateProfile.js";
+import { useCustomToast } from "~/pinia_stores/toast";
 
 const props = defineProps({
     data: {
@@ -17,6 +18,9 @@ const props = defineProps({
         required: true,
     },
 });
+
+const emit = defineEmits(["fetchProfileData"]);
+const { showSuccessToast, showErrorToast } = useCustomToast();
 
 const env_config = useRuntimeConfig();
 const supabaseProjectURL = env_config.public.SUPABASE_PROJECT_URL;
@@ -44,14 +48,32 @@ watch(
 
 const onSubmit = async () => {
     try {
-        let user = await locationSchema.validate(formState);
-        // TODO: send request to backend
-        console.log(user);
+        // Validate schema
+        await locationSchema.validate(formState);
+
+        // Send backend request to update profile
+        await updateProfile(supabaseProjectURL, props.encodedProfileName, {
+            [props.formName]: formState,
+        });
+
+        // Refetch page data and render success toast
+        emit("fetchProfileData");
+        showSuccessToast(
+            "Form Submitted",
+            "Fill out the remaining forms or start job hunting"
+        );
 
         // Close the collapse component
         document.getElementById(COLLAPSE_NAMES.LOCATION).checked = false;
     } catch (err) {
         console.error(err);
+        showErrorToast(
+            "ERROR: UPDATE LOCATION",
+            err?.data?.detail ||
+                err?.message ||
+                "Request to update location failed.",
+            true
+        );
     }
 };
 </script>
