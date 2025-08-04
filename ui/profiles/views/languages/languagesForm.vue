@@ -83,10 +83,10 @@ const onSubmit = async () => {
         }
 
         // Do not submit if any errors are present
-        const hasErrors = languages.value.some(
+        const hasValidationErrors = languages.value.some(
             (langObj) => langObj["langError"] || langObj["proficiencyError"]
         );
-        if (hasErrors) return;
+        if (hasValidationErrors) return;
         isValidationError = false;
 
         // Send backend request to update profile
