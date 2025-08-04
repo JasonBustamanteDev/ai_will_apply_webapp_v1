@@ -38,17 +38,34 @@ const formState = reactive(
 );
 
 const onSubmit = async () => {
-    // TODO: Submit better contain a changed value
+    let isValidationError = true;
     try {
-        let user = await educationSchema.validate(formState);
-        // TODO: send request to backend. Make sure t
-        console.log(user);
-        
-        // Close the collapse component
+        // Validate schema
+        await educationSchema.validate(formState);
+        isValidationError = false;
+
+        // Send backend request to update profile
+        await updateProfile(supabaseProjectURL, props.encodedProfileName, {
+            [props.formName]: formState,
+        });
+
+        // Close collapse component and render success toast
         document.getElementById(COLLAPSE_NAMES.EDUCATION).checked = false;
+        showSuccessToast(
+            "Form Submitted",
+            "Fill out the remaining forms or start job hunting"
+        );
     } catch (err) {
         console.error(err);
-        console.log(educationSchema);
+        if (!isValidationError) {
+            showErrorToast(
+                "ERROR: UPDATE EDUCATION",
+                err?.data?.detail ||
+                    err?.message ||
+                    "Request to update education failed.",
+                true
+            );
+        }
     }
 };
 </script>
