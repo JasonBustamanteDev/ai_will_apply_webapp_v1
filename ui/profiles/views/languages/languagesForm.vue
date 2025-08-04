@@ -83,11 +83,12 @@ const onSubmit = async () => {
         isValidationError = false;
 
         // Send backend request to update profile
+        const formattedData = languages.value.map((obj) => ({
+            language: obj["language"],
+            proficiency: obj["proficiency"],
+        }));
         await updateProfile(supabaseProjectURL, props.encodedProfileName, {
-            [props.formName]: languages.value.map((obj) => ({
-                language: obj["language"],
-                proficiency: obj["proficiency"],
-            })),
+            [props.formName]: formattedData
         });
 
         // Close collapse component and render success toast
@@ -96,7 +97,10 @@ const onSubmit = async () => {
             "Form Submitted",
             "Fill out the remaining forms or start job hunting"
         );
+
+        // Update props data to avoid refetching data
         props.rawFormData.isComplete = true; // set chip to true
+        props.rawFormData.data = formattedData;
     } catch (err) {
         console.error(err);
         if (!isValidationError) {

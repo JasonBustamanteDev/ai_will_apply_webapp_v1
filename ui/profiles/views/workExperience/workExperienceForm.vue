@@ -95,13 +95,14 @@ const onSubmit = async () => {
         isValidationError = false;
 
         // Send backend request to update profile
+        const formattedData = workExperienceList.value.map((obj) => ({
+            jobTitle: obj["jobTitle"],
+            company: obj["company"],
+            years: Number(obj["years"]),
+            currentlyThere: obj["currentlyThere"],
+        }));
         await updateProfile(supabaseProjectURL, props.encodedProfileName, {
-            [props.formName]: workExperienceList.value.map((obj) => ({
-                jobTitle: obj["jobTitle"],
-                company: obj["company"],
-                years: Number(obj["years"]),
-                currentlyThere: obj["currentlyThere"],
-            })),
+            [props.formName]: formattedData,
         });
 
         // Close collapse component and render success toast
@@ -110,7 +111,10 @@ const onSubmit = async () => {
             "Form Submitted",
             "Fill out the remaining forms or start job hunting"
         );
+
+        // Update props data to avoid refetching data
         props.rawFormData.isComplete = true; // set chip to true
+        props.rawFormData.data = formattedData;
     } catch (err) {
         console.error(err);
         if (!isValidationError) {
