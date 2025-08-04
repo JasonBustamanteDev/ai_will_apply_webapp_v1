@@ -375,12 +375,20 @@ export const workExperienceValidator = (experienceList) => {
     if (!experienceList) return false;
 
     for (const obj of experienceList) {
-        const yearsValue = obj.years;
         const jobTitleError = !verifyMinStringLength(obj.jobTitle, 1);
         const companyError = !verifyMinStringLength(obj.company, 1);
-        const yearsError =
-            !yearsValue ||
-            Number(yearsValue) <= 0;
+
+        const yearsValue = obj.years;
+        let yearsError = false;
+
+        // Numeric string is saved to DB as a number, and will appear as one on the frontend when the data is loaded
+        if (typeof yearsValue === "number") {
+            yearsError = yearsValue <= 0;
+        }
+        // If user types a number in the input field, it will still be a string at first
+        if (typeof yearsValue === "string") {
+            yearsError  = !yearsValue || !isValidNumericString(yearsValue) || Number(yearsValue) <= 0; // prettier-ignore
+        }
 
         if (jobTitleError || companyError || yearsError) {
             return false;

@@ -55,7 +55,15 @@ const areAllRowsValid = () => {
         obj.companyError = !verifyMinStringLength(obj.company, 1);
 
         const yearsValue = obj.years;
-        obj.yearsError  = !yearsValue || !isValidNumericString(yearsValue) || Number(yearsValue) <= 0; // prettier-ignore
+
+        // Numeric string is saved to DB as a number, and will appear as one on the frontend when the data is loaded
+        if (typeof yearsValue === "number") {
+            obj.yearsError = yearsValue <= 0;
+        }
+        // If user types a number in the input field, it will still be a string at first
+        if (typeof yearsValue === "string") {
+            obj.yearsError  = !yearsValue || !isValidNumericString(yearsValue) || Number(yearsValue) <= 0; // prettier-ignore
+        }
     }
 
     const errorExists = workExperienceList.value.some(
@@ -87,16 +95,23 @@ const removeExperienceRow = (index) => {
 };
 
 const onSubmit = () => {
-    const rowsAreValid = areAllRowsValid();
-    if (!rowsAreValid) return;
+    let isValidationError = true;
+    try {
+        // Do not proceed if validation errors are present
+        const rowsAreValid = areAllRowsValid();
+        if (!rowsAreValid) return;
+        isValidationError = false;
 
-    const formattedData = workExperienceList.value.map((obj) => {
-        return { ...obj, years: Number(obj.years) };
-    });
-    console.log("Submit form", formattedData);
+        const formattedData = workExperienceList.value.map((obj) => {
+            return { ...obj, years: Number(obj.years) };
+        });
+        console.log("Submit form", formattedData);
 
-    // Close the collapse component
-    document.getElementById(COLLAPSE_NAMES.WORK_EXPERIENCE).checked = false; // prettier-ignore
+        // Close the collapse component
+        document.getElementById(COLLAPSE_NAMES.WORK_EXPERIENCE).checked = false; // prettier-ignore
+    } catch (err) {
+        console.error(err);
+    }
 };
 </script>
 
