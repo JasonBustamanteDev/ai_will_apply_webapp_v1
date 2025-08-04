@@ -41,6 +41,9 @@ const onSubmit = async () => {
         let user = await educationSchema.validate(formState);
         // TODO: send request to backend. Make sure t
         console.log(user);
+        
+        // Close the collapse component
+        document.getElementById(COLLAPSE_NAMES.EDUCATION).checked = false;
     } catch (err) {
         console.error(err);
         console.log(educationSchema);

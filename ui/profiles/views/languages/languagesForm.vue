@@ -80,6 +80,10 @@ const onSubmit = () => {
     }
 
     if (some(languages.value, "error")) return;
+
+    // Close the collapse component
+    document.getElementById(COLLAPSE_NAMES.LANGUAGES).checked = false; // prettier-ignore
+    
     console.log("Submit form", languages.value);
 };
 </script>

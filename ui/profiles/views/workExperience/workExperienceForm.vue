@@ -92,6 +92,9 @@ const onSubmit = () => {
         return { ...obj, years: Number(obj.years) };
     });
     console.log("Submit form", formattedData);
+
+    // Close the collapse component
+    document.getElementById(COLLAPSE_NAMES.WORK_EXPERIENCE).checked = false; // prettier-ignore
 };
 </script>
 

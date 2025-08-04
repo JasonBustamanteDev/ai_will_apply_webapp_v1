@@ -39,6 +39,9 @@ const onSubmit = async () => {
         // TODO: send request to backend
 
         console.log(user);
+
+        // Close the collapse component
+        document.getElementById(COLLAPSE_NAMES.MEDIA_LINKS).checked = false; // prettier-ignore
     } catch (err) {
         console.error(err);
         console.log(socialSchema);

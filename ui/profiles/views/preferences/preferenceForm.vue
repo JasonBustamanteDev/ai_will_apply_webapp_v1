@@ -40,6 +40,9 @@ const onSubmit = async () => {
         let user = await preferenceSchema.validate(formState);
         // TODO: send request to backend
         console.log(user);
+
+        // Close the collapse component
+        document.getElementById(COLLAPSE_NAMES.PREFERENCES).checked = false; // prettier-ignore
     } catch (err) {
         console.error(err);
     }

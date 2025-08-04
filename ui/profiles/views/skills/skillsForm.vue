@@ -53,6 +53,9 @@ const onSubmit = async () => {
     if (some(skills.value, "nameError")) return;
 
     console.log("Submit form", skills.value);
+
+    // Close the collapse component
+    document.getElementById(COLLAPSE_NAMES.SKILLS).checked = false;
 };
 </script>
 

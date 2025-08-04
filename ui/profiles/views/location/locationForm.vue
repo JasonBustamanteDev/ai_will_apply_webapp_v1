@@ -47,6 +47,9 @@ const onSubmit = async () => {
         let user = await locationSchema.validate(formState);
         // TODO: send request to backend
         console.log(user);
+
+        // Close the collapse component
+        document.getElementById(COLLAPSE_NAMES.LOCATION).checked = false;
     } catch (err) {
         console.error(err);
     }
