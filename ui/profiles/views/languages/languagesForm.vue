@@ -3,7 +3,6 @@ import AddRowButton from "@/ui/profiles/shared/addRowButton.vue";
 import { verifyMinStringLength } from "~/shared/client_helpers";
 import { updateProfile } from "~/ui/profiles/apiCalls/updateProfile.js";
 import { useCustomToast } from "~/pinia_stores/toast";
-import { some } from "lodash";
 
 const props = defineProps({
     data: {
@@ -71,22 +70,53 @@ const removeLanguage = (index) => {
     languages.value.splice(index, 1);
 };
 
-const onSubmit = () => {
-    // tech_debt: ensure this fn validates similarly to this other fn (CTRL F a1b)
-    // Check if each field is filled - render error if it isn't and clear errors if it is
-    for (const obj of languages.value) {
-        const item_lang = obj.language;
-        const item_proficiency = obj.proficiency;
-        obj.langError = !verifyMinStringLength(item_lang, 1);
-        obj.proficiencyError = !verifyMinStringLength(item_proficiency, 1);
+const onSubmit = async () => {
+    let isValidationError = true;
+    try {
+        // tech_debt: ensure this fn validates similarly to this other fn (CTRL F a1b)
+        // Check if each field is filled - render error if it isn't and clear errors if it is
+        for (const obj of languages.value) {
+            const item_lang = obj.language;
+            const item_proficiency = obj.proficiency;
+            obj.langError = !verifyMinStringLength(item_lang, 1);
+            obj.proficiencyError = !verifyMinStringLength(item_proficiency, 1);
+        }
+
+        // Do not submit if any errors are present
+        const hasErrors = languages.value.some(
+            (langObj) => langObj["langError"] || langObj["proficiencyError"]
+        );
+        if (hasErrors) return;
+        isValidationError = false;
+
+        // Send backend request to update profile
+        await updateProfile(supabaseProjectURL, props.encodedProfileName, {
+            [props.formName]: languages.value.map((obj) => ({
+                language: obj["language"],
+                proficiency: obj["proficiency"],
+            })),
+        });
+
+        // Refetch page data and render success toast
+        showSuccessToast(
+            "Form Submitted",
+            "Fill out the remaining forms or start job hunting"
+        );
+
+        // Close the collapse component
+        document.getElementById(COLLAPSE_NAMES.LANGUAGES).checked = false; // prettier-ignore
+    } catch (err) {
+        console.error(err);
+        if (!isValidationError) {
+            showErrorToast(
+                "ERROR: UPDATE LANGUAGES",
+                err?.data?.detail ||
+                    err?.message ||
+                    "Request to update languages failed.",
+                true
+            );
+        }
     }
-
-    if (some(languages.value, "error")) return;
-
-    // Close the collapse component
-    document.getElementById(COLLAPSE_NAMES.LANGUAGES).checked = false; // prettier-ignore
-    
-    console.log("Submit form", languages.value);
 };
 </script>
 
