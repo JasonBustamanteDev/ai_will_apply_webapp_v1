@@ -55,7 +55,7 @@ const areAllRowsValid = () => {
         obj.companyError = !verifyMinStringLength(obj.company, 1);
 
         const yearsValue = obj.years;
-        console.log(yearsValue);
+
         // Numeric string is saved to DB as a number, and will appear as one on the frontend when the data is loaded
         if (typeof yearsValue === "number") {
             obj.yearsError = yearsValue <= 0;
