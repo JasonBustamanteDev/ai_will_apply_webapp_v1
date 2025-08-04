@@ -42,9 +42,11 @@ const formState = reactive(
 );
 
 const onSubmit = async () => {
+    let isValidationError = true;
     try {
         // Validate schema
         await personalDetailsSchema.validate(formState);
+        isValidationError = false;
 
         // Send backend request to update profile
         await updateProfile(supabaseProjectURL, props.encodedProfileName, {
@@ -61,13 +63,15 @@ const onSubmit = async () => {
         document.getElementById(COLLAPSE_NAMES.PERSONAL_DETAILS).checked = false; // prettier-ignore
     } catch (err) {
         console.error(err);
-        showErrorToast(
-            "ERROR: UPDATE PERSONAL DETAILS",
-            err?.data?.detail ||
-                err?.message ||
-                "Request to update personal details failed.",
-            true
-        );
+        if (!isValidationError) {
+            showErrorToast(
+                "ERROR: UPDATE PERSONAL DETAILS",
+                err?.data?.detail ||
+                    err?.message ||
+                    "Request to update personal details failed.",
+                true
+            );
+        }
     }
 };
 </script>

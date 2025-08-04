@@ -45,9 +45,11 @@ watch(
 );
 
 const onSubmit = async () => {
+    let isValidationError = true;
     try {
         // Validate schema
         await locationSchema.validate(formState);
+        isValidationError = false;
 
         // Send backend request to update profile
         await updateProfile(supabaseProjectURL, props.encodedProfileName, {
@@ -64,13 +66,15 @@ const onSubmit = async () => {
         document.getElementById(COLLAPSE_NAMES.LOCATION).checked = false;
     } catch (err) {
         console.error(err);
-        showErrorToast(
-            "ERROR: UPDATE LOCATION",
-            err?.data?.detail ||
-                err?.message ||
-                "Request to update location failed.",
-            true
-        );
+        if (!isValidationError) {
+            showErrorToast(
+                "ERROR: UPDATE LOCATION",
+                err?.data?.detail ||
+                    err?.message ||
+                    "Request to update location failed.",
+                true
+            );
+        }
     }
 };
 </script>
