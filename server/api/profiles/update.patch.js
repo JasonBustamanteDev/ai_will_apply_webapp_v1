@@ -29,7 +29,6 @@ export default defineEventHandler(async (event) => {
                 detail: `Error occurred when saving profile data: ${
                     error?.message || ""
                 }`,
-                data: null,
             };
         }
 

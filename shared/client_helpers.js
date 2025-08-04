@@ -44,3 +44,4 @@ export const isValidNumericString = (str) => {
 };
 
 export const extractFormattedDate = (isoDateString) => isoDateString.slice(0, 10)
+

@@ -70,7 +70,7 @@ onMounted(async () => {
 
             <CollapseComponent
                 title="Personal Details"
-                checkboxId="personalDetailsCollapse"
+                :checkboxId="COLLAPSE_NAMES.PERSONAL_DETAILS"
                 :isComplete="profileDataObject.forms.personalDetails.isComplete"
             >
                 <PersonalDetailsForm
@@ -83,6 +83,7 @@ onMounted(async () => {
 
             <CollapseComponent
                 title="Location"
+                :checkboxId="COLLAPSE_NAMES.LOCATION"
                 :isComplete="profileDataObject.forms.location.isComplete"
             >
                 <LocationForm
@@ -95,6 +96,7 @@ onMounted(async () => {
 
             <CollapseComponent
                 title="Preferences"
+                :checkboxId="COLLAPSE_NAMES.PREFERENCES"
                 :isComplete="profileDataObject.forms.preferences.isComplete"
                 :isOptional="false"
             >
@@ -108,6 +110,7 @@ onMounted(async () => {
 
             <CollapseComponent
                 title="Languages"
+                :checkboxId="COLLAPSE_NAMES.LANGUAGES"
                 :isComplete="profileDataObject.forms.languages.isComplete"
             >
                 <LanguagesForm
@@ -120,6 +123,7 @@ onMounted(async () => {
 
             <CollapseComponent
                 title="Skills"
+                :checkboxId="COLLAPSE_NAMES.SKILLS"
                 :isOptional="false"
                 :isComplete="profileDataObject.forms.skills.isComplete"
             >
@@ -133,6 +137,7 @@ onMounted(async () => {
 
             <CollapseComponent
                 title="Work Experience"
+                :checkboxId="COLLAPSE_NAMES.WORK_EXPERIENCE"
                 :isOptional="true"
                 :isComplete="profileDataObject.forms.workExperience.isComplete"
             >
@@ -146,6 +151,7 @@ onMounted(async () => {
 
             <CollapseComponent
                 title="University or College"
+                :checkboxId="COLLAPSE_NAMES.EDUCATION"
                 :isOptional="true"
                 :isComplete="profileDataObject.forms.education.isComplete"
             >
@@ -159,6 +165,7 @@ onMounted(async () => {
 
             <CollapseComponent
                 title="Portfolio + Social Media Links"
+                :checkboxId="COLLAPSE_NAMES.MEDIA_LINKS"
                 :isOptional="true"
                 :isComplete="profileDataObject.forms.mediaLinks.isComplete"
             >

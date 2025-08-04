@@ -61,7 +61,7 @@ const onSubmit = async () => {
         );
 
         // Close the collapse component
-        document.getElementById("personalDetailsCollapse").checked = false;
+        document.getElementById(COLLAPSE_NAMES.PERSONAL_DETAILS).checked = false; // prettier-ignore
     } catch (err) {
         console.error(err);
     }

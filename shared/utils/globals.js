@@ -27,3 +27,14 @@ export const PROFILE_FORMS = {
     EDUCATION: "education",
     MEDIA_LINKS: "mediaLinks",
 };
+
+export const COLLAPSE_NAMES = {
+    PERSONAL_DETAILS: "personalDetailsCollapse",
+    LOCATION: "locationCollapse",
+    PREFERENCES: "preferencesCollapse",
+    LANGUAGES: "languagesCollapse",
+    SKILLS: "skillsCollapse",
+    WORK_EXPERIENCE: "workExperienceCollapse",
+    EDUCATION: "educationCollapse",
+    MEDIA_LINKS: "mediaLinksCollapse",
+};
