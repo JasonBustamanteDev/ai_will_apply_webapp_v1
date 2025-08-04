@@ -112,14 +112,12 @@ const onSubmit = async () => {
             })),
         });
 
-        // Refetch page data and render success toast
+        // Close collapse component and render success toast
+        document.getElementById(COLLAPSE_NAMES.WORK_EXPERIENCE).checked = false; // prettier-ignore
         showSuccessToast(
             "Form Submitted",
             "Fill out the remaining forms or start job hunting"
         );
-
-        // Close the collapse component
-        document.getElementById(COLLAPSE_NAMES.WORK_EXPERIENCE).checked = false; // prettier-ignore
     } catch (err) {
         console.error(err);
         if (!isValidationError) {
