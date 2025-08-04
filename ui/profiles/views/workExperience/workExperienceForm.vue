@@ -101,17 +101,15 @@ const onSubmit = async () => {
         const rowsAreValid = areAllRowsValid();
         if (!rowsAreValid) return;
         isValidationError = false;
-        
-        const formattedData = workExperienceList.value.map((obj) => ({
-            jobTitle: obj["jobTitle"],
-            company: obj["company"],
-            years: Number(obj["years"]),
-            currentlyThere: obj["currentlyThere"],
-        }));
 
         // Send backend request to update profile
         await updateProfile(supabaseProjectURL, props.encodedProfileName, {
-            [props.formName]: formattedData,
+            [props.formName]: workExperienceList.value.map((obj) => ({
+                jobTitle: obj["jobTitle"],
+                company: obj["company"],
+                years: Number(obj["years"]),
+                currentlyThere: obj["currentlyThere"],
+            })),
         });
 
         // Refetch page data and render success toast
