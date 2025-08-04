@@ -1,7 +1,6 @@
 <script setup>
 import AddRowButton from "@/ui/profiles/shared/addRowButton.vue";
 import { verifyMinStringLength } from "~/shared/client_helpers";
-import { some } from "lodash";
 import { updateProfile } from "~/ui/profiles/apiCalls/updateProfile.js";
 import { useCustomToast } from "~/pinia_stores/toast";
 
@@ -46,18 +45,49 @@ const removeSkill = (index) => {
 };
 
 const onSubmit = async () => {
-    // tech_debt: ensure this fn validates similarly to this other fn (CTRL F a1c)
-    for (const obj of skills.value) {
-        const skillName = obj.name;
-        obj.nameError = !verifyMinStringLength(skillName, 1);
+    let isValidationError = true;
+    try {
+        // tech_debt: ensure this fn validates similarly to this other fn (CTRL F a1c)
+        for (const obj of skills.value) {
+            const skillName = obj.name;
+            obj.nameError = !verifyMinStringLength(skillName, 1);
+        }
+
+        // Do not submit if any errors are present
+        const hasValidationErrors = skills.value.some(
+            (skillObj) => skillObj["nameError"]
+        );
+        if (hasValidationErrors) return;
+        isValidationError = false;
+
+        // Send backend request to update profile
+        await updateProfile(supabaseProjectURL, props.encodedProfileName, {
+            [props.formName]: skills.value.map((obj) => ({
+                name: obj["name"],
+                years: obj["years"],
+            })),
+        });
+
+        // Refetch page data and render success toast
+        showSuccessToast(
+            "Form Submitted",
+            "Fill out the remaining forms or start job hunting"
+        );
+
+        // Close the collapse component
+        document.getElementById(COLLAPSE_NAMES.SKILLS).checked = false;
+    } catch (err) {
+        console.error(err);
+        if (!isValidationError) {
+            showErrorToast(
+                "ERROR: UPDATE SKILLS",
+                err?.data?.detail ||
+                    err?.message ||
+                    "Request to update skills failed.",
+                true
+            );
+        }
     }
-
-    if (some(skills.value, "nameError")) return;
-
-    console.log("Submit form", skills.value);
-
-    // Close the collapse component
-    document.getElementById(COLLAPSE_NAMES.SKILLS).checked = false;
 };
 </script>
 
