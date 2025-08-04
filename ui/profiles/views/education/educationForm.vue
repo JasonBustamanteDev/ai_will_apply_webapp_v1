@@ -55,7 +55,10 @@ const onSubmit = async () => {
             "Form Submitted",
             "Fill out the remaining forms or start job hunting"
         );
-        props.rawFormData.isComplete = true; // set chip to true
+
+        // Update props data to avoid refetching data
+        props.rawFormData.isComplete = true;
+        props.rawFormData.data = formState;
     } catch (err) {
         console.error(err);
         if (!isValidationError) {
