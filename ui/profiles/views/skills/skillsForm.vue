@@ -3,6 +3,7 @@ import AddRowButton from "@/ui/profiles/shared/addRowButton.vue";
 import { verifyMinStringLength } from "~/shared/client_helpers";
 import { some } from "lodash";
 import { updateProfile } from "~/ui/profiles/apiCalls/updateProfile.js";
+import { useCustomToast } from "~/pinia_stores/toast";
 
 const props = defineProps({
     data: {
@@ -19,6 +20,7 @@ const props = defineProps({
     },
 });
 
+const { showSuccessToast, showErrorToast } = useCustomToast();
 const env_config = useRuntimeConfig();
 const supabaseProjectURL = env_config.public.SUPABASE_PROJECT_URL;
 

@@ -5,6 +5,7 @@ import { updateProfile } from "~/ui/profiles/apiCalls/updateProfile.js";
 import InputLabelSlot from "~/ui/profiles/shared/inputLabelSlot.vue";
 import AddRowButton from "@/ui/profiles/shared/addRowButton.vue";
 import RemoveRowButton from "~/ui/profiles/shared/removeRowButton.vue";
+import { useCustomToast } from "~/pinia_stores/toast";
 
 const props = defineProps({
     data: {
@@ -21,6 +22,7 @@ const props = defineProps({
     },
 });
 
+const { showSuccessToast, showErrorToast } = useCustomToast();
 const env_config = useRuntimeConfig();
 const supabaseProjectURL = env_config.public.SUPABASE_PROJECT_URL;
 
