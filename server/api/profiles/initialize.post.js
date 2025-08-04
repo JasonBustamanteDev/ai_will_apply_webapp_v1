@@ -1,6 +1,6 @@
 import { getSupabaseClient, getSupabaseUserDetails } from "~/server/util/getSupabaseClient"; // prettier-ignore
 import { checkIfUserIsAuthenticated } from "~/server/manual_middleware/checkIfUserIsAuthenticated";
-import { detailObj, MAX_PROFILES, PROFILES_TABLE_NAME, DEFAULT_SUCCESS_RETURN } from "~/server/util/server_constants"; // prettier-ignore
+import { detailObject, MAX_PROFILES, PROFILES_TABLE_NAME, DEFAULT_SUCCESS_RETURN } from "~/server/util/server_constants"; // prettier-ignore
 
 export default defineEventHandler(async (event) => {
     try {
@@ -23,7 +23,7 @@ export default defineEventHandler(async (event) => {
 
         if (profileCountError) {
             setResponseStatus(event, 500);
-            return detailObj(
+            return detailObject(
                 `Error occurred when counting how many profiles the user has: ${
                     profileCountError?.message || ""
                 }.`
@@ -33,7 +33,7 @@ export default defineEventHandler(async (event) => {
         // If the user has the maximum amount, reject the request
         if (profileCount >= MAX_PROFILES) {
             setResponseStatus(event, 422);
-            return detailObj(
+            return detailObject(
                 `The max number of profiles have been used (${MAX_PROFILES}). Delete a profile before creating a new one.`
             );
         }
@@ -52,7 +52,7 @@ export default defineEventHandler(async (event) => {
         // An error will occur if a duplicate profile name is used already since it violates the table's UK constraint
         if (insertError) {
             setResponseStatus(event, 500);
-            return detailObj("Profile name is already in use.");
+            return detailObject("Profile name is already in use.");
         }
 
         return DEFAULT_SUCCESS_RETURN;
@@ -60,6 +60,6 @@ export default defineEventHandler(async (event) => {
         const error_code = err?.statusCode || 500;
         const error_message = err?.statusMessage || err?.message || "Something went wrong."; // prettier-ignore
         setResponseStatus(event, error_code);
-        return detailObj(error_message);
+        return detailObject(error_message);
     }
 });

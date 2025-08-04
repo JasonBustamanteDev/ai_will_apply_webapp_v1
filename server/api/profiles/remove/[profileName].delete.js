@@ -1,6 +1,6 @@
 import { getSupabaseClient } from "~/server/util/getSupabaseClient";
 import { checkIfUserIsAuthenticated } from "~/server/manual_middleware/checkIfUserIsAuthenticated";
-import { detailObj, PROFILES_TABLE_NAME } from "~/server/util/server_constants"; // prettier-ignore
+import { detailObject, PROFILES_TABLE_NAME } from "~/server/util/server_constants"; // prettier-ignore
 
 export default defineEventHandler(async (event) => {
     try {
@@ -16,9 +16,7 @@ export default defineEventHandler(async (event) => {
 
         if (error) {
             setResponseStatus(event, 500);
-            return {
-                detail: "Error occurred when deleting profile data.",
-            };
+            return detailObject("Error occurred when deleting profile data.");
         }
 
         return { detail: "success", profileName };
@@ -26,6 +24,6 @@ export default defineEventHandler(async (event) => {
         const error_code = err?.statusCode || 500;
         const error_message = err?.statusMessage || err?.message || "Something went wrong."; // prettier-ignore
         setResponseStatus(event, error_code);
-        return { detail: error_message };
+        return detailObject(error_message);
     }
 });
