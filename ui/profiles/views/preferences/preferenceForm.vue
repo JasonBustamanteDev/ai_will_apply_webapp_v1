@@ -39,14 +39,31 @@ const formState = reactive(
 
 const onSubmit = async () => {
     try {
-        let user = await preferenceSchema.validate(formState);
-        // TODO: send request to backend
-        console.log(user);
+        // Validate schema
+        await preferenceSchema.validate(formState);
+
+        // Send backend request to update profile
+        await updateProfile(supabaseProjectURL, props.encodedProfileName, {
+            [props.formName]: formState,
+        });
+
+        // Refetch page data and render success toast
+        showSuccessToast(
+            "Form Submitted",
+            "Fill out the remaining forms or start job hunting"
+        );
 
         // Close the collapse component
         document.getElementById(COLLAPSE_NAMES.PREFERENCES).checked = false; // prettier-ignore
     } catch (err) {
         console.error(err);
+        showErrorToast(
+            "ERROR: UPDATE PREFERENCE FORM",
+            err?.data?.detail ||
+                err?.message ||
+                "Request to update preferences failed.",
+            true
+        );
     }
 };
 </script>
