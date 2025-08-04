@@ -25,20 +25,18 @@ const supabaseProjectURL = env_config.public.SUPABASE_PROJECT_URL;
 
 const MIN_YEARS = 1;
 const MAX_YEARS = 100;
-
 const defaultYearsOfExperience = ref(2);
-const skills = ref(
-    props.data || [
-        { name: "", years: defaultYearsOfExperience.value, nameError: false },
-    ]
-);
+
+const generateEmptyRow = () => ({
+    name: "",
+    years: defaultYearsOfExperience.value,
+    nameError: false,
+});
+
+const skills = ref(props.data || [generateEmptyRow()]);
 
 const addSkill = () => {
-    skills.value.push({
-        name: "",
-        years: defaultYearsOfExperience.value,
-        nameError: false,
-    });
+    skills.value.push(generateEmptyRow());
 };
 const removeSkill = (index) => {
     skills.value.splice(index, 1);
