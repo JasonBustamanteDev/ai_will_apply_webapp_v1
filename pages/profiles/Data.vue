@@ -70,6 +70,7 @@ onMounted(async () => {
 
             <CollapseComponent
                 title="Personal Details"
+                checkboxId="personalDetailsCollapse"
                 :isComplete="profileDataObject.forms.personalDetails.isComplete"
             >
                 <PersonalDetailsForm

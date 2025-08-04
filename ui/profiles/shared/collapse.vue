@@ -3,6 +3,7 @@ const props = defineProps({
     isComplete: { type: Boolean },
     isOptional: { type: Boolean, default: false },
     title: { type: String },
+    checkboxId: { type: String },
 });
 
 // STRANGE BEHAVIOR:
@@ -14,7 +15,7 @@ const props = defineProps({
 
 <template>
     <div class="collapse collapse-arrow bg-base-100 border-base-300 border">
-        <input type="checkbox" name="collapse-component" />
+        <input :id="props.checkboxId" type="checkbox" name="collapse-component" />
         <div class="collapse-title font-semibold">
             <span class="mr-8">{{ props.title }}</span>
             <UBadge v-if="props.isComplete" label="complete" />

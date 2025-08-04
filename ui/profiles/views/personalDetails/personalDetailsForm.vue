@@ -45,12 +45,23 @@ const formState = reactive(
 
 const onSubmit = async () => {
     try {
+        // Validate schema
         await personalDetailsSchema.validate(formState);
+
+        // Send backend request to update profile
         await updateProfile(supabaseProjectURL, props.encodedProfileName, {
             [props.formName]: formState,
         });
-        emit("fetchProfileData")
-        showSuccessToast("Form Submitted", "Fill out the remaining forms or start job hunting")
+
+        // Refetch page data
+        emit("fetchProfileData");
+        showSuccessToast(
+            "Form Submitted",
+            "Fill out the remaining forms or start job hunting"
+        );
+
+        // Close the collapse component
+        document.getElementById("personalDetailsCollapse").checked = false;
     } catch (err) {
         console.error(err);
     }
