@@ -57,7 +57,7 @@ const initializeButtonHandler = async () => {
             <UForm
                 :schema="profileNameSchema"
                 :state="formState"
-                class="space-y-4 uform-element pt-4 h-[70px]"
+                class="space-y-4 uform-element pt-4 h-[70px] w-full"
                 @submit="initializeButtonHandler"
             >
                 <UFormField label="" name="profileName" class="mb-0">
