@@ -5,7 +5,7 @@ import { updateProfile } from "~/ui/profiles/apiCalls/updateProfile.js";
 import { useCustomToast } from "~/pinia_stores/toast";
 
 const props = defineProps({
-    data: {
+    rawFormData: {
         type: Object,
         required: false,
     },
@@ -24,7 +24,7 @@ const env_config = useRuntimeConfig();
 const supabaseProjectURL = env_config.public.SUPABASE_PROJECT_URL;
 
 const formState = reactive(
-    props.data || {
+    props.rawFormData.data || {
         // These keys must match the name attributes on UFormField elements
         institutionName: undefined,
         fieldOfStudy: undefined,
@@ -55,6 +55,7 @@ const onSubmit = async () => {
             "Form Submitted",
             "Fill out the remaining forms or start job hunting"
         );
+        props.rawFormData.isComplete = true; // set chip to true
     } catch (err) {
         console.error(err);
         if (!isValidationError) {

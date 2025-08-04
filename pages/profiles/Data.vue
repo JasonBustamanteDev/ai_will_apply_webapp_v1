@@ -75,7 +75,7 @@ onMounted(async () => {
                 :isOptional="false"
             >
                 <PersonalDetailsForm
-                    :data="profileDataObject.forms.personalDetails.data"
+                    :rawFormData="profileDataObject.forms.personalDetails"
                     :encodedProfileName="encodedDynamicProfileName"
                     :formName="PROFILE_FORMS.PERSONAL_DETAILS"
                 />
@@ -88,7 +88,7 @@ onMounted(async () => {
                 :isOptional="false"
             >
                 <LocationForm
-                    :data="profileDataObject.forms.location.data"
+                    :rawFormData="profileDataObject.forms.location"
                     :encodedProfileName="encodedDynamicProfileName"
                     :formName="PROFILE_FORMS.LOCATION"
                 />
@@ -101,7 +101,7 @@ onMounted(async () => {
                 :isOptional="false"
             >
                 <PreferenceForm
-                    :data="profileDataObject.forms.preferences.data"
+                    :rawFormData="profileDataObject.forms.preferences"
                     :encodedProfileName="encodedDynamicProfileName"
                     :formName="PROFILE_FORMS.PREFERENCES"
                 />
@@ -114,7 +114,7 @@ onMounted(async () => {
                 :isOptional="false"
             >
                 <LanguagesForm
-                    :data="profileDataObject.forms.languages.data"
+                    :rawFormData="profileDataObject.forms.languages"
                     :encodedProfileName="encodedDynamicProfileName"
                     :formName="PROFILE_FORMS.LANGUAGES"
                 />
@@ -127,7 +127,7 @@ onMounted(async () => {
                 :isOptional="false"
             >
                 <SkillsForm
-                    :data="profileDataObject.forms.skills.data"
+                    :rawFormData="profileDataObject.forms.skills"
                     :encodedProfileName="encodedDynamicProfileName"
                     :formName="PROFILE_FORMS.SKILLS"
                 />
@@ -140,7 +140,7 @@ onMounted(async () => {
                 :isOptional="true"
             >
                 <WorkExperienceForm
-                    :data="profileDataObject.forms.workExperience.data"
+                    :rawFormData="profileDataObject.forms.workExperience"
                     :encodedProfileName="encodedDynamicProfileName"
                     :formName="PROFILE_FORMS.WORK_EXPERIENCE"
                 />
@@ -153,7 +153,7 @@ onMounted(async () => {
                 :isOptional="true"
             >
                 <EducationForm
-                    :data="profileDataObject.forms.education.data"
+                    :rawFormData="profileDataObject.forms.education"
                     :encodedProfileName="encodedDynamicProfileName"
                     :formName="PROFILE_FORMS.EDUCATION"
                 />
@@ -166,7 +166,7 @@ onMounted(async () => {
                 :isOptional="true"
             >
                 <SocialsForm
-                    :data="profileDataObject.forms.mediaLinks.data"
+                    :rawFormData="profileDataObject.forms.mediaLinks"
                     :encodedProfileName="encodedDynamicProfileName"
                     :formName="PROFILE_FORMS.MEDIA_LINKS"
                 />

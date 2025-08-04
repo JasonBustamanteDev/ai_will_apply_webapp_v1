@@ -8,7 +8,7 @@ import RemoveRowButton from "~/ui/profiles/shared/removeRowButton.vue";
 import { useCustomToast } from "~/pinia_stores/toast";
 
 const props = defineProps({
-    data: {
+    rawFormData: {
         type: Object,
         required: false,
     },
@@ -42,8 +42,9 @@ const generateEmptyRow = () => ({
     currentlyThereError: false,
 });
 
+const rawData = props.rawFormData.data;
 const workExperienceList = ref(
-    props.data && props.data.length ? props.data : [generateEmptyRow()]
+    rawData && rawData.length ? rawData : [generateEmptyRow()]
 );
 
 const areAllRowsValid = () => {
@@ -109,6 +110,7 @@ const onSubmit = async () => {
             "Form Submitted",
             "Fill out the remaining forms or start job hunting"
         );
+        props.rawFormData.isComplete = true; // set chip to true
     } catch (err) {
         console.error(err);
         if (!isValidationError) {
