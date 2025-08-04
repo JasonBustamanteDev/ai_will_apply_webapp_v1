@@ -152,7 +152,7 @@ const copyButtonHandler = async () => {
                 <UFormField label="" name="profileName" class="mb-0">
                     <UInput
                         v-model="renameFormState.profileName"
-                        class="w-full"
+                        class="w-[464px]"
                     />
                 </UFormField>
             </UForm>
@@ -194,7 +194,7 @@ const copyButtonHandler = async () => {
                 <UFormField label="" name="profileName" class="mb-0">
                     <UInput
                         v-model="copyFormState.profileName"
-                        class="w-full"
+                        class="w-[464px]"
                     />
                 </UFormField>
             </UForm>

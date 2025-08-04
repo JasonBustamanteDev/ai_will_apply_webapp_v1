@@ -61,7 +61,7 @@ const initializeButtonHandler = async () => {
                 @submit="initializeButtonHandler"
             >
                 <UFormField label="" name="profileName" class="mb-0">
-                    <UInput v-model="formState.profileName" class="w-full" />
+                    <UInput v-model="formState.profileName" class="w-[464px]" />
                 </UFormField>
             </UForm>
         </template>
