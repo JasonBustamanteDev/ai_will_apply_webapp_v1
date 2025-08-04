@@ -94,23 +94,45 @@ const removeExperienceRow = (index) => {
     workExperienceList.value.pop();
 };
 
-const onSubmit = () => {
+const onSubmit = async () => {
     let isValidationError = true;
     try {
-        // Do not proceed if validation errors are present
+        // Validate schema then format the data if it's valid
         const rowsAreValid = areAllRowsValid();
         if (!rowsAreValid) return;
         isValidationError = false;
+        
+        const formattedData = workExperienceList.value.map((obj) => ({
+            jobTitle: obj["jobTitle"],
+            company: obj["company"],
+            years: Number(obj["years"]),
+            currentlyThere: obj["currentlyThere"],
+        }));
 
-        const formattedData = workExperienceList.value.map((obj) => {
-            return { ...obj, years: Number(obj.years) };
+        // Send backend request to update profile
+        await updateProfile(supabaseProjectURL, props.encodedProfileName, {
+            [props.formName]: formattedData,
         });
-        console.log("Submit form", formattedData);
+
+        // Refetch page data and render success toast
+        showSuccessToast(
+            "Form Submitted",
+            "Fill out the remaining forms or start job hunting"
+        );
 
         // Close the collapse component
         document.getElementById(COLLAPSE_NAMES.WORK_EXPERIENCE).checked = false; // prettier-ignore
     } catch (err) {
         console.error(err);
+        if (!isValidationError) {
+            showErrorToast(
+                "ERROR: UPDATE WORK EXPERIENCE",
+                err?.data?.detail ||
+                    err?.message ||
+                    "Request to update work experience failed.",
+                true
+            );
+        }
     }
 };
 </script>
