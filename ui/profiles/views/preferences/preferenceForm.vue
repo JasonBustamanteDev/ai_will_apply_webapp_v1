@@ -38,9 +38,11 @@ const formState = reactive(
 );
 
 const onSubmit = async () => {
+    let isValidationError = true;
     try {
         // Validate schema
         await preferenceSchema.validate(formState);
+        isValidationError = false;
 
         // Send backend request to update profile
         await updateProfile(supabaseProjectURL, props.encodedProfileName, {
@@ -57,13 +59,15 @@ const onSubmit = async () => {
         document.getElementById(COLLAPSE_NAMES.PREFERENCES).checked = false; // prettier-ignore
     } catch (err) {
         console.error(err);
-        showErrorToast(
-            "ERROR: UPDATE PREFERENCE FORM",
-            err?.data?.detail ||
-                err?.message ||
-                "Request to update preferences failed.",
-            true
-        );
+        if (!isValidationError) {
+            showErrorToast(
+                "ERROR: UPDATE PREFERENCE FORM",
+                err?.data?.detail ||
+                    err?.message ||
+                    "Request to update preferences failed.",
+                true
+            );
+        }
     }
 };
 </script>
