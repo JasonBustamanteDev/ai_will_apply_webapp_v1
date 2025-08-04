@@ -30,21 +30,20 @@ const currentlyThereOptions = [
     { label: "I still work here", value: true },
     { label: "I no longer work here", value: false },
 ];
+const generateEmptyRow = () => ({
+    jobTitle: "",
+    company: "",
+    years: "", // must be empty string (or else error detection overlooks value)
+    currentlyThere: false,
+
+    jobTitleError: false,
+    companyError: false,
+    yearsError: false,
+    currentlyThereError: false,
+});
 
 const workExperienceList = ref(
-    props.data || [
-        {
-            jobTitle: "",
-            company: "",
-            years: null,
-            currentlyThere: false,
-
-            jobTitleError: false,
-            companyError: false,
-            yearsError: false,
-            currentlyThereError: false,
-        },
-    ]
+    props.data && props.data.length ? props.data : [generateEmptyRow()]
 );
 
 const areAllRowsValid = () => {
@@ -55,7 +54,7 @@ const areAllRowsValid = () => {
         obj.companyError = !verifyMinStringLength(obj.company, 1);
 
         const yearsValue = obj.years;
-
+        console.log(yearsValue);
         // Numeric string is saved to DB as a number, and will appear as one on the frontend when the data is loaded
         if (typeof yearsValue === "number") {
             obj.yearsError = yearsValue <= 0;
@@ -77,17 +76,7 @@ const addExperienceRow = () => {
     const rowsAreValid = areAllRowsValid();
     if (!rowsAreValid) return;
 
-    workExperienceList.value.push({
-        jobTitle: "",
-        company: "",
-        years: null,
-        currentlyThere: false,
-
-        jobTitleError: false,
-        companyError: false,
-        yearsError: false,
-        currentlyThereError: false,
-    });
+    workExperienceList.value.push(generateEmptyRow());
 };
 
 const removeExperienceRow = (index) => {
