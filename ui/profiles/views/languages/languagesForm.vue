@@ -26,7 +26,7 @@ const supabaseProjectURL = env_config.public.SUPABASE_PROJECT_URL;
 const languages = ref(
     props.data || [
         {
-            language: "English",
+            language: "",
             proficiency: "native",
             langError: false,
             proficiencyError: false,
@@ -121,11 +121,8 @@ const onSubmit = async () => {
 <template>
     <div class="flex flex-col gap-3">
         <section>
-            <p>
-                Enter the full language name. Ex: 'English' (not 'ENG' or other
-                abbreviations)
-            </p>
-            <p>Minimum 1 language required</p>
+            <p>Enter the full language name</p>
+            <p>Example: 'English' (not 'ENG' or other abbreviations)</p>
         </section>
         <div
             v-for="(lang, index) in languages"
