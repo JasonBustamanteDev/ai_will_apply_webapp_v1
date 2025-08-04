@@ -16,13 +16,16 @@ export const calculateProfileKpi = async (x) => {
 
     // Count how many forms are complete out of all of them
     const formCompletionBooleans = [
+        // Mandatory forms below
         personalDetailsIsValid,
         locationIsValid,
         preferenceIsValid,
-        educationIsValid,
-        mediaIsValid,
         languagesIsValid,
         skillsIsValid,
+
+        // Optional forms below
+        educationIsValid,
+        mediaIsValid,
         workExperienceIsValid,
     ];
     const completedCount = formCompletionBooleans.filter(Boolean).length;
