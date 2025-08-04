@@ -165,7 +165,6 @@ const onSubmit = async () => {
                 type="submit"
                 class="w-full justify-center cursor-pointer"
                 color="secondary"
-                @click="onSubmit"
                 >Submit</UButton
             >
         </div>
