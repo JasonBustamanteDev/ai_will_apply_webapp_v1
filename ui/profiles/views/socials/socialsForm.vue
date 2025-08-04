@@ -36,17 +36,34 @@ const formState = reactive(
 );
 
 const onSubmit = async () => {
+    let isValidationError = true;
     try {
-        let user = await socialSchema.validate(formState);
-        // TODO: send request to backend
+        // Validate schema
+        await socialSchema.validate(formState);
+        isValidationError = false;
 
-        console.log(user);
+        // Send backend request to update profile
+        await updateProfile(supabaseProjectURL, props.encodedProfileName, {
+            [props.formName]: formState,
+        });
 
-        // Close the collapse component
+        // Close collapse component and render success toast
         document.getElementById(COLLAPSE_NAMES.MEDIA_LINKS).checked = false; // prettier-ignore
+        showSuccessToast(
+            "Form Submitted",
+            "Fill out the remaining forms or start job hunting"
+        );
     } catch (err) {
         console.error(err);
-        console.log(socialSchema);
+        if (!isValidationError) {
+            showErrorToast(
+                "ERROR: UPDATE SOCIAL MEDIA LINKS",
+                err?.data?.detail ||
+                    err?.message ||
+                    "Request to update social media links failed.",
+                true
+            );
+        }
     }
 };
 </script>
