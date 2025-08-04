@@ -30,13 +30,13 @@ const fetchSingleProfile = async () => {
             encodedDynamicProfileName.value
         );
     } catch (err) {
-        "ERROR: FETCH SINGLE PROFILE",
-            showErrorToast(
-                err?.data?.detail ||
-                    err?.message ||
-                    "Request to fetch one profile failed.",
-                true
-            );
+        showErrorToast(
+            "ERROR: FETCH SINGLE PROFILE",
+            err?.data?.detail ||
+                err?.message ||
+                "Request to fetch one profile failed.",
+            true
+        );
     }
 };
 
