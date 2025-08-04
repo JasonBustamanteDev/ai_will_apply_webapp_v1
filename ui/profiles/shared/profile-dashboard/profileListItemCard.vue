@@ -146,7 +146,7 @@ const copyButtonHandler = async () => {
             <UForm
                 :schema="profileNameSchema"
                 :state="renameFormState"
-                class="space-y-4 uform-element pt-4 h-[70px]"
+                class="space-y-4 uform-element pt-4 h-[70px] w-full"
                 @submit="renameButtonHandler"
             >
                 <UFormField label="" name="profileName" class="mb-0">
@@ -188,7 +188,7 @@ const copyButtonHandler = async () => {
             <UForm
                 :schema="profileNameSchema"
                 :state="copyFormState"
-                class="space-y-4 uform-element pt-4 h-[70px]"
+                class="space-y-4 uform-element pt-4 h-[70px] w-full"
                 @submit="copyButtonHandler"
             >
                 <UFormField label="" name="profileName" class="mb-0">
