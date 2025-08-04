@@ -19,9 +19,7 @@ const props = defineProps({
     },
 });
 
-const emit = defineEmits(["fetchProfileData"]);
 const { showSuccessToast, showErrorToast } = useCustomToast();
-
 const env_config = useRuntimeConfig();
 const supabaseProjectURL = env_config.public.SUPABASE_PROJECT_URL;
 
@@ -57,7 +55,6 @@ const onSubmit = async () => {
         });
 
         // Refetch page data and render success toast
-        emit("fetchProfileData");
         showSuccessToast(
             "Form Submitted",
             "Fill out the remaining forms or start job hunting"
