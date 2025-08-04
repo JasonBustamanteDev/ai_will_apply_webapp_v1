@@ -343,7 +343,7 @@ export const socialSchema = object({
 
 // tech_debt: ensure this fn validates similarly to this other fn (CTRL F a1c)
 export const skillsValidator = (skillsList) => {
-    if (!skillsList) return false;
+    if (!skillsList || !skillsList.length) return false;
 
     for (const obj of skillsList) {
         if (!verifyMinStringLength(obj.name, 1)) {
@@ -356,7 +356,7 @@ export const skillsValidator = (skillsList) => {
 
 // tech_debt: ensure this fn validates similarly to this other fn (CTRL F a1b)
 export const languageValidator = (languageList) => {
-    if (!languageList) return false;
+    if (!languageList || !languageList.length) return false;
 
     for (const obj of languageList) {
         if (
