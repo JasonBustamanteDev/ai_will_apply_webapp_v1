@@ -80,7 +80,9 @@ const addExperienceRow = () => {
 };
 
 const removeExperienceRow = (index) => {
-    workExperienceList.value.pop();
+    if (workExperienceList.value.length > 1) {
+        workExperienceList.value.pop();
+    }
 };
 
 const onSubmit = async () => {
@@ -181,7 +183,7 @@ const onSubmit = async () => {
             >Add Experience</AddRowButton
         >
         <RemoveRowButton
-            :isDisabled="workExperienceList.length === 0"
+            :isDisabled="workExperienceList.length < 2"
             @removeRow="removeExperienceRow"
             >Remove Last Experience in List</RemoveRowButton
         >
