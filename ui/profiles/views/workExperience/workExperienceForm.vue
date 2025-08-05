@@ -79,7 +79,9 @@ const addExperienceRow = () => {
 };
 
 const removeExperienceRow = (index) => {
-    workExperienceList.value.pop();
+    if (workExperienceList.value.length) {
+        workExperienceList.value.pop();
+    }
 };
 
 const clearExperience = () => {
@@ -189,25 +191,38 @@ const onSubmit = async () => {
         </div>
     </section>
 
-    <section class="flex gap-4 mb-6">
-        <AddRowButton :isDisabled="false" @addRow="addExperienceRow"
-            >Add Experience</AddRowButton
+    <section class="flex gap-4 mb-8">
+        <UButton
+            icon="i-heroicons-plus"
+            variant="outline"
+            color="neutral"
+            :disabled="false"
+            @click="addExperienceRow"
+            class="w-auto px-4"
         >
-        <RemoveRowButton
-            :isDisabled="workExperienceList.length === 0"
-            @removeRow="removeExperienceRow"
-            >Remove Last Experience in List</RemoveRowButton
+            Add
+        </UButton>
+        <UButton
+            icon="i-heroicons-minus"
+            variant="outline"
+            color="neutral"
+            @click="removeExperienceRow"
+            class="w-auto px-4"
         >
+            Remove last
+        </UButton>
+        <UButton
+            icon="akar-icons:cross"
+            variant="outline"
+            color="neutral"
+            @click="clearExperience"
+            class="w-auto px-4"
+        >
+            I have no work experience
+        </UButton>
     </section>
 
     <div class="flex gap-4">
-        <UButton
-            type="submit"
-            class="w-full justify-center cursor-pointer"
-            @click="clearExperience"
-            color="neutral"
-            >I have no work experience</UButton
-        >
         <UButton
             type="submit"
             class="w-full justify-center cursor-pointer"
