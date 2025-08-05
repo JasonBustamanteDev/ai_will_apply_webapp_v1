@@ -59,7 +59,6 @@ export const calculateProfileKpi = async (x) => {
                 data: x.preferences,
                 isComplete: preferenceIsValid,
             },
-
             [PROFILE_FORMS.LANGUAGES]: {
                 data: x.languages,
                 isComplete: languagesIsValid,
@@ -72,7 +71,6 @@ export const calculateProfileKpi = async (x) => {
                 data: x.workExperience,
                 isComplete: workExperienceIsValid,
             },
-
             [PROFILE_FORMS.EDUCATION]: {
                 data: x.education,
                 isComplete: educationIsValid,

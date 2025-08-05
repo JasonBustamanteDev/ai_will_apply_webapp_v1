@@ -71,11 +71,17 @@ onMounted(async () => {
             <CollapseComponent
                 title="Personal Details"
                 :checkboxId="COLLAPSE_NAMES.PERSONAL_DETAILS"
-                :isComplete="profileDataObject.forms.personalDetails.isComplete"
+                :isComplete="
+                    profileDataObject.forms[PROFILE_FORMS.PERSONAL_DETAILS]
+                        .isComplete
+                "
                 :isOptional="false"
             >
                 <PersonalDetailsForm
-                    :data="profileDataObject.forms.personalDetails.data"
+                    :data="
+                        profileDataObject.forms[PROFILE_FORMS.PERSONAL_DETAILS]
+                            .data
+                    "
                     :encodedProfileName="encodedDynamicProfileName"
                     :formName="PROFILE_FORMS.PERSONAL_DETAILS"
                 />
@@ -84,11 +90,13 @@ onMounted(async () => {
             <CollapseComponent
                 title="Location"
                 :checkboxId="COLLAPSE_NAMES.LOCATION"
-                :isComplete="profileDataObject.forms.location.isComplete"
+                :isComplete="
+                    profileDataObject.forms[PROFILE_FORMS.LOCATION].isComplete
+                "
                 :isOptional="false"
             >
                 <LocationForm
-                    :data="profileDataObject.forms.location.data"
+                    :data="profileDataObject.forms[PROFILE_FORMS.LOCATION].data"
                     :encodedProfileName="encodedDynamicProfileName"
                     :formName="PROFILE_FORMS.LOCATION"
                 />
@@ -97,11 +105,16 @@ onMounted(async () => {
             <CollapseComponent
                 title="Preferences"
                 :checkboxId="COLLAPSE_NAMES.PREFERENCES"
-                :isComplete="profileDataObject.forms.preferences.isComplete"
+                :isComplete="
+                    profileDataObject.forms[PROFILE_FORMS.PREFERENCES]
+                        .isComplete
+                "
                 :isOptional="false"
             >
                 <PreferenceForm
-                    :data="profileDataObject.forms.preferences.data"
+                    :data="
+                        profileDataObject.forms[PROFILE_FORMS.PREFERENCES].data
+                    "
                     :encodedProfileName="encodedDynamicProfileName"
                     :formName="PROFILE_FORMS.PREFERENCES"
                 />
@@ -110,11 +123,11 @@ onMounted(async () => {
             <CollapseComponent
                 title="Languages"
                 :checkboxId="COLLAPSE_NAMES.LANGUAGES"
-                :isComplete="profileDataObject.forms.languages.isComplete"
+                :isComplete="profileDataObject.forms[PROFILE_FORMS.LANGUAGES].isComplete"
                 :isOptional="false"
             >
                 <LanguagesForm
-                    :data="profileDataObject.forms.languages.data"
+                    :data="profileDataObject.forms[PROFILE_FORMS.LANGUAGES].data"
                     :encodedProfileName="encodedDynamicProfileName"
                     :formName="PROFILE_FORMS.LANGUAGES"
                 />
@@ -123,11 +136,11 @@ onMounted(async () => {
             <CollapseComponent
                 title="Skills"
                 :checkboxId="COLLAPSE_NAMES.SKILLS"
-                :isComplete="profileDataObject.forms.skills.isComplete"
+                :isComplete="profileDataObject.forms[PROFILE_FORMS.SKILLS].isComplete"
                 :isOptional="false"
             >
                 <SkillsForm
-                    :data="profileDataObject.forms.skills.data"
+                    :data="profileDataObject.forms[PROFILE_FORMS.SKILLS].data"
                     :encodedProfileName="encodedDynamicProfileName"
                     :formName="PROFILE_FORMS.SKILLS"
                 />
@@ -136,11 +149,11 @@ onMounted(async () => {
             <CollapseComponent
                 title="Work Experience"
                 :checkboxId="COLLAPSE_NAMES.WORK_EXPERIENCE"
-                :isComplete="profileDataObject.forms.workExperience.isComplete"
+                :isComplete="profileDataObject.forms[PROFILE_FORMS.WORK_EXPERIENCE].isComplete"
                 :isOptional="true"
             >
                 <WorkExperienceForm
-                    :data="profileDataObject.forms.workExperience.data"
+                    :data="profileDataObject.forms[PROFILE_FORMS.WORK_EXPERIENCE].data"
                     :encodedProfileName="encodedDynamicProfileName"
                     :formName="PROFILE_FORMS.WORK_EXPERIENCE"
                 />
@@ -149,11 +162,11 @@ onMounted(async () => {
             <CollapseComponent
                 title="University or College"
                 :checkboxId="COLLAPSE_NAMES.EDUCATION"
-                :isComplete="profileDataObject.forms.education.isComplete"
+                :isComplete="profileDataObject.forms[PROFILE_FORMS.EDUCATION].isComplete"
                 :isOptional="true"
             >
                 <EducationForm
-                    :data="profileDataObject.forms.education.data"
+                    :data="profileDataObject.forms[PROFILE_FORMS.EDUCATION].data"
                     :encodedProfileName="encodedDynamicProfileName"
                     :formName="PROFILE_FORMS.EDUCATION"
                 />
@@ -162,11 +175,11 @@ onMounted(async () => {
             <CollapseComponent
                 title="Portfolio + Social Media Links"
                 :checkboxId="COLLAPSE_NAMES.MEDIA_LINKS"
-                :isComplete="profileDataObject.forms.mediaLinks.isComplete"
+                :isComplete="profileDataObject.forms[PROFILE_FORMS.MEDIA_LINKS].isComplete"
                 :isOptional="true"
             >
                 <SocialsForm
-                    :data="profileDataObject.forms.mediaLinks.data"
+                    :data="profileDataObject.forms[PROFILE_FORMS.MEDIA_LINKS].data"
                     :encodedProfileName="encodedDynamicProfileName"
                     :formName="PROFILE_FORMS.MEDIA_LINKS"
                 />
