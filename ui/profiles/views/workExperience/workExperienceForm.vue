@@ -192,7 +192,11 @@ const onSubmit = async () => {
         <RemoveRowButton
             :isDisabled="workExperienceList.length === 0"
             @removeRow="removeExperienceRow"
-            >Remove Last Experience in List</RemoveRowButton
+            >{{
+                workExperienceList.length < 2
+                    ? "I have no job experience"
+                    : "Remove Last Experience in List"
+            }}</RemoveRowButton
         >
     </section>
 
