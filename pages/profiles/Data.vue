@@ -75,7 +75,7 @@ onMounted(async () => {
                     profileDataObject.forms[PROFILE_FORMS.PERSONAL_DETAILS]
                         .isComplete
                 "
-                :isOptional="false"
+                :isOptional="!PROFILE_REQUIREMENTS.PERSONAL_DETAILS"
             >
                 <PersonalDetailsForm
                     :rawFormData="
@@ -92,7 +92,7 @@ onMounted(async () => {
                 :isComplete="
                     profileDataObject.forms[PROFILE_FORMS.LOCATION].isComplete
                 "
-                :isOptional="false"
+                :isOptional="!PROFILE_REQUIREMENTS.LOCATION"
             >
                 <LocationForm
                     :rawFormData="
@@ -110,7 +110,7 @@ onMounted(async () => {
                     profileDataObject.forms[PROFILE_FORMS.PREFERENCES]
                         .isComplete
                 "
-                :isOptional="false"
+                :isOptional="!PROFILE_REQUIREMENTS.PREFERENCES"
             >
                 <PreferenceForm
                     :rawFormData="
@@ -127,7 +127,7 @@ onMounted(async () => {
                 :isComplete="
                     profileDataObject.forms[PROFILE_FORMS.LANGUAGES].isComplete
                 "
-                :isOptional="false"
+                :isOptional="!PROFILE_REQUIREMENTS.LANGUAGES"
             >
                 <LanguagesForm
                     :rawFormData="
@@ -145,7 +145,7 @@ onMounted(async () => {
                     profileDataObject.forms[PROFILE_FORMS.WORK_EXPERIENCE]
                         .isComplete
                 "
-                :isOptional="false"
+                :isOptional="!PROFILE_REQUIREMENTS.WORK_EXPERIENCE"
             >
                 <WorkExperienceForm
                     :rawFormData="
@@ -157,27 +157,12 @@ onMounted(async () => {
             </CollapseComponent>
 
             <CollapseComponent
-                title="Skills"
-                :checkboxId="COLLAPSE_NAMES.SKILLS"
-                :isComplete="
-                    profileDataObject.forms[PROFILE_FORMS.SKILLS].isComplete
-                "
-                :isOptional="false"
-            >
-                <SkillsForm
-                    :rawFormData="profileDataObject.forms[PROFILE_FORMS.SKILLS]"
-                    :encodedProfileName="encodedDynamicProfileName"
-                    :formName="PROFILE_FORMS.SKILLS"
-                />
-            </CollapseComponent>
-
-            <CollapseComponent
                 title="University or College"
                 :checkboxId="COLLAPSE_NAMES.EDUCATION"
                 :isComplete="
                     profileDataObject.forms[PROFILE_FORMS.EDUCATION].isComplete
                 "
-                :isOptional="true"
+                :isOptional="!PROFILE_REQUIREMENTS.EDUCATION"
             >
                 <EducationForm
                     :rawFormData="
@@ -195,7 +180,7 @@ onMounted(async () => {
                     profileDataObject.forms[PROFILE_FORMS.MEDIA_LINKS]
                         .isComplete
                 "
-                :isOptional="true"
+                :isOptional="!PROFILE_REQUIREMENTS.MEDIA_LINKS"
             >
                 <SocialsForm
                     :rawFormData="
@@ -203,6 +188,21 @@ onMounted(async () => {
                     "
                     :encodedProfileName="encodedDynamicProfileName"
                     :formName="PROFILE_FORMS.MEDIA_LINKS"
+                />
+            </CollapseComponent>
+
+            <CollapseComponent
+                title="Skills"
+                :checkboxId="COLLAPSE_NAMES.SKILLS"
+                :isComplete="
+                    profileDataObject.forms[PROFILE_FORMS.SKILLS].isComplete
+                "
+                :isOptional="!PROFILE_REQUIREMENTS.SKILLS"
+            >
+                <SkillsForm
+                    :rawFormData="profileDataObject.forms[PROFILE_FORMS.SKILLS]"
+                    :encodedProfileName="encodedDynamicProfileName"
+                    :formName="PROFILE_FORMS.SKILLS"
                 />
             </CollapseComponent>
         </section>

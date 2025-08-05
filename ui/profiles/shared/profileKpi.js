@@ -21,11 +21,11 @@ export const calculateProfileKpi = async (x) => {
         locationIsValid,
         preferenceIsValid,
         languagesIsValid,
-        skillsIsValid,
         workExperienceIsValid,
+        educationIsValid,
 
         // Optional forms below
-        educationIsValid,
+        skillsIsValid,
         mediaIsValid,
     ];
     const completedCount = formCompletionBooleans.filter(Boolean).length;
@@ -37,8 +37,8 @@ export const calculateProfileKpi = async (x) => {
         locationIsValid &&
         preferenceIsValid &&
         languagesIsValid &&
-        skillsIsValid &&
-        workExperienceIsValid;
+        workExperienceIsValid &&
+        educationIsValid; // tech_debt: 1ab89 (edit this expression if some forms change between optional and mandatory)
 
     return {
         profileName: x.profileName,

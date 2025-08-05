@@ -38,3 +38,19 @@ export const COLLAPSE_NAMES = {
     EDUCATION: "educationCollapse",
     MEDIA_LINKS: "mediaLinksCollapse",
 };
+
+// Explains if certain forms are mandatory or not
+// tech_debt: Any updates to this object means you must edit your kpi calculations. CTRL F tech_debt: 1ab89
+export const PROFILE_REQUIREMENTS = {
+    // Mandatory forms below
+    PERSONAL_DETAILS: true,
+    LOCATION: true,
+    PREFERENCES: true,
+    LANGUAGES: true,
+    WORK_EXPERIENCE: true,
+    EDUCATION: true,
+
+    // Optional forms below
+    SKILLS: false,
+    MEDIA_LINKS: false,
+};
