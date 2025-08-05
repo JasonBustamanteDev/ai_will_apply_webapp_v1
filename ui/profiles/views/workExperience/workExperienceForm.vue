@@ -82,6 +82,10 @@ const removeExperienceRow = (index) => {
     workExperienceList.value.pop();
 };
 
+const clearExperience = () => {
+    workExperienceList.value = [];
+};
+
 const onSubmit = async () => {
     let isValidationError = true;
     try {
@@ -146,7 +150,7 @@ const onSubmit = async () => {
         <div
             v-for="(row, index) in workExperienceList"
             :key="index"
-            class="uform-element"
+            class="experience-list-container"
         >
             <UInput
                 v-model="row.jobTitle"
@@ -192,15 +196,18 @@ const onSubmit = async () => {
         <RemoveRowButton
             :isDisabled="workExperienceList.length === 0"
             @removeRow="removeExperienceRow"
-            >{{
-                workExperienceList.length < 2
-                    ? "I have no job experience"
-                    : "Remove Last Experience in List"
-            }}</RemoveRowButton
+            >Remove Last Experience in List</RemoveRowButton
         >
     </section>
 
-    <div class="uform-submit-button-container">
+    <div class="flex gap-4">
+        <UButton
+            type="submit"
+            class="w-full justify-center cursor-pointer"
+            @click="clearExperience"
+            color="neutral"
+            >I have no work experience</UButton
+        >
         <UButton
             type="submit"
             class="w-full justify-center cursor-pointer"
@@ -212,17 +219,11 @@ const onSubmit = async () => {
 </template>
 
 <style lang="scss">
-.uform-element {
+.experience-list-container {
     display: grid;
     grid-template-columns: 0.8fr 1fr 0.5fr 1.5fr;
-    // grid-template-rows: repeat(2, 80px) auto auto;
     gap: 2rem 1rem;
     width: 100%;
-}
-
-.uform-submit-button-container {
-    grid-column-start: 1;
-    grid-column-end: 5;
 }
 
 .multiple-forms-container {
