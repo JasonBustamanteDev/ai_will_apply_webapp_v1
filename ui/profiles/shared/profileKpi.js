@@ -47,22 +47,40 @@ export const calculateProfileKpi = async (x) => {
 
         // prettier-ignore (FORM NAMES)
         forms: {
-            personalDetails: {
+            [PROFILE_FORMS.PERSONAL_DETAILS]: {
                 data: x.personalDetails,
                 isComplete: personalDetailsIsValid,
             },
-            location: { data: x.location, isComplete: locationIsValid },
-            preferences: { data: x.preferences, isComplete: preferenceIsValid },
+            [PROFILE_FORMS.LOCATION]: {
+                data: x.location,
+                isComplete: locationIsValid,
+            },
+            [PROFILE_FORMS.PREFERENCES]: {
+                data: x.preferences,
+                isComplete: preferenceIsValid,
+            },
 
-            languages: { data: x.languages, isComplete: languagesIsValid },
-            skills: { data: x.skills, isComplete: skillsIsValid },
-            workExperience: {
+            [PROFILE_FORMS.LANGUAGES]: {
+                data: x.languages,
+                isComplete: languagesIsValid,
+            },
+            [PROFILE_FORMS.SKILLS]: {
+                data: x.skills,
+                isComplete: skillsIsValid,
+            },
+            [PROFILE_FORMS.WORK_EXPERIENCE]: {
                 data: x.workExperience,
                 isComplete: workExperienceIsValid,
             },
 
-            education: { data: x.education, isComplete: educationIsValid },
-            mediaLinks: { data: x.mediaLinks, isComplete: mediaIsValid },
+            [PROFILE_FORMS.EDUCATION]: {
+                data: x.education,
+                isComplete: educationIsValid,
+            },
+            [PROFILE_FORMS.MEDIA_LINKS]: {
+                data: x.mediaLinks,
+                isComplete: mediaIsValid,
+            },
         },
     };
 };

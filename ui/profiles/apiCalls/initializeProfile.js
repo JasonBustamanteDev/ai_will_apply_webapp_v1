@@ -24,13 +24,13 @@ const formatExistingData = (data) => {
     if (!data) return;
 
     return {
-        personalDetails: data.personalDetails.data,
-        location: data.location.data,
-        preferences: data.preferences.data,
-        languages: data.languages.data,
-        skills: data.skills.data,
-        workExperience: data.workExperience.data,
-        education: data.education.data,
-        mediaLinks: data.mediaLinks.data,
+        [PROFILE_FORMS.PERSONAL_DETAILS]: data.personalDetails.data,
+        [PROFILE_FORMS.LOCATION]: data.location.data,
+        [PROFILE_FORMS.PREFERENCES]: data.preferences.data,
+        [PROFILE_FORMS.LANGUAGES]: data.languages.data,
+        [PROFILE_FORMS.SKILLS]: data.skills.data,
+        [PROFILE_FORMS.WORK_EXPERIENCE]: data.workExperience.data,
+        [PROFILE_FORMS.EDUCATION]: data.education.data,
+        [PROFILE_FORMS.MEDIA_LINKS]: data.mediaLinks.data,
     };
 };
