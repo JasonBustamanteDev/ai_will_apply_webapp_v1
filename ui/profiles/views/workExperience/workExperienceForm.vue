@@ -43,9 +43,7 @@ const generateEmptyRow = () => ({
 });
 
 const rawData = props.rawFormData.data;
-const workExperienceList = ref(
-    rawData && rawData.length ? rawData : [generateEmptyRow()]
-);
+const workExperienceList = ref(rawData && rawData.length ? rawData : []);
 
 const areAllRowsValid = () => {
     // tech_debt: ensure this fn validates similarly to this other fn (CTRL F a1a)
@@ -81,9 +79,7 @@ const addExperienceRow = () => {
 };
 
 const removeExperienceRow = (index) => {
-    if (workExperienceList.value.length > 1) {
-        workExperienceList.value.pop();
-    }
+    workExperienceList.value.pop();
 };
 
 const onSubmit = async () => {
@@ -142,6 +138,11 @@ const onSubmit = async () => {
         </p>
     </section>
     <section class="multiple-forms-container mb-6">
+        <kbd
+            v-if="!workExperienceList || !workExperienceList.length"
+            class="kbd kbd-lg h-[35px]"
+            >I have no work experience</kbd
+        >
         <div
             v-for="(row, index) in workExperienceList"
             :key="index"
@@ -189,7 +190,7 @@ const onSubmit = async () => {
             >Add Experience</AddRowButton
         >
         <RemoveRowButton
-            :isDisabled="workExperienceList.length < 2"
+            :isDisabled="workExperienceList.length === 0"
             @removeRow="removeExperienceRow"
             >Remove Last Experience in List</RemoveRowButton
         >
