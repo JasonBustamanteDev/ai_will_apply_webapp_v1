@@ -139,6 +139,24 @@ onMounted(async () => {
             </CollapseComponent>
 
             <CollapseComponent
+                title="Work Experience"
+                :checkboxId="COLLAPSE_NAMES.WORK_EXPERIENCE"
+                :isComplete="
+                    profileDataObject.forms[PROFILE_FORMS.WORK_EXPERIENCE]
+                        .isComplete
+                "
+                :isOptional="false"
+            >
+                <WorkExperienceForm
+                    :rawFormData="
+                        profileDataObject.forms[PROFILE_FORMS.WORK_EXPERIENCE]
+                    "
+                    :encodedProfileName="encodedDynamicProfileName"
+                    :formName="PROFILE_FORMS.WORK_EXPERIENCE"
+                />
+            </CollapseComponent>
+
+            <CollapseComponent
                 title="Skills"
                 :checkboxId="COLLAPSE_NAMES.SKILLS"
                 :isComplete="
@@ -150,24 +168,6 @@ onMounted(async () => {
                     :rawFormData="profileDataObject.forms[PROFILE_FORMS.SKILLS]"
                     :encodedProfileName="encodedDynamicProfileName"
                     :formName="PROFILE_FORMS.SKILLS"
-                />
-            </CollapseComponent>
-
-            <CollapseComponent
-                title="Work Experience"
-                :checkboxId="COLLAPSE_NAMES.WORK_EXPERIENCE"
-                :isComplete="
-                    profileDataObject.forms[PROFILE_FORMS.WORK_EXPERIENCE]
-                        .isComplete
-                "
-                :isOptional="true"
-            >
-                <WorkExperienceForm
-                    :rawFormData="
-                        profileDataObject.forms[PROFILE_FORMS.WORK_EXPERIENCE]
-                    "
-                    :encodedProfileName="encodedDynamicProfileName"
-                    :formName="PROFILE_FORMS.WORK_EXPERIENCE"
                 />
             </CollapseComponent>
 

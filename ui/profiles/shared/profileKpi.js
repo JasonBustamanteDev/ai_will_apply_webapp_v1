@@ -22,11 +22,11 @@ export const calculateProfileKpi = async (x) => {
         preferenceIsValid,
         languagesIsValid,
         skillsIsValid,
+        workExperienceIsValid,
 
         // Optional forms below
         educationIsValid,
         mediaIsValid,
-        workExperienceIsValid,
     ];
     const completedCount = formCompletionBooleans.filter(Boolean).length;
 
@@ -37,7 +37,8 @@ export const calculateProfileKpi = async (x) => {
         locationIsValid &&
         preferenceIsValid &&
         languagesIsValid &&
-        skillsIsValid;
+        skillsIsValid &&
+        workExperienceIsValid;
 
     return {
         profileName: x.profileName,
