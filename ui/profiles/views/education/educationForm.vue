@@ -53,7 +53,10 @@ const onSubmit = async () => {
 
         // Send backend request to update profile
         await updateProfile(supabaseProjectURL, props.encodedProfileName, {
-            [props.formName]: formState,
+            [props.formName]:
+                formState.haveHigherEducation === false
+                    ? { haveHigherEducation: false } // only save 1 property if user never went to college
+                    : formState,
         });
 
         // Close collapse component and render success toast
@@ -82,13 +85,6 @@ const onSubmit = async () => {
 </script>
 
 <template>
-    <!--  prettier-ignore -->
-    <USwitch
-        v-model="formState.haveHigherEducation"
-        :label="formState.haveHigherEducation ? `I've attended college or university` : `I have NOT attended college or university`"
-        size="lg"
-        class="my-4"
-    />
     <UForm
         @submit="onSubmit"
         :schema="educationSchema"
@@ -96,6 +92,13 @@ const onSubmit = async () => {
         :class="`space-y-4 uform-element pt-4`"
         color="secondary"
     >
+        <!--  prettier-ignore -->
+        <USwitch
+            v-model="formState.haveHigherEducation"
+            :label="formState.haveHigherEducation ? `I've attended college or university` : `I have NOT attended college or university`"
+            size="lg"
+            class="mt-3 mb-6 col-span-full"
+        />
         <UFormField
             label="Institution Name **"
             name="institutionName"
@@ -128,14 +131,22 @@ const onSubmit = async () => {
                 placeholder="Example: 'Ontario' or 'ON'"
             />
         </UFormField>
-        <UFormField label="Start Date **" name="startDate" :class="`mb-0 ${conditionalDisableStyles}`">
+        <UFormField
+            label="Start Date **"
+            name="startDate"
+            :class="`mb-0 ${conditionalDisableStyles}`"
+        >
             <UInput
                 v-model="formState.startDate"
                 class="w-full"
                 placeholder="YYYY-MM"
             />
         </UFormField>
-        <UFormField label="End Date **" name="endDate" :class="`mb-0 ${conditionalDisableStyles}`">
+        <UFormField
+            label="End Date **"
+            name="endDate"
+            :class="`mb-0 ${conditionalDisableStyles}`"
+        >
             <UInput
                 v-model="formState.endDate"
                 class="w-full"
@@ -158,7 +169,11 @@ const onSubmit = async () => {
             />
         </UFormField>
 
-        <UFormField label="GPA" name="gpa" :class="`mb-0 ${conditionalDisableStyles}`">
+        <UFormField
+            label="GPA"
+            name="gpa"
+            :class="`mb-0 ${conditionalDisableStyles}`"
+        >
             <UInput
                 v-model="formState.gpa"
                 class="w-full"
@@ -169,7 +184,6 @@ const onSubmit = async () => {
         <div class="uform-submit-button-container">
             <UButton
                 type="submit"
-                @click="onSubmit"
                 class="w-full justify-center cursor-pointer"
                 color="secondary"
                 >Submit</UButton
@@ -182,7 +196,7 @@ const onSubmit = async () => {
 .uform-element {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: 95px 95px auto;
+    grid-template-rows: auto 95px 95px auto;
     gap: 0.5rem 1rem;
 }
 
