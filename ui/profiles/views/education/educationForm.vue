@@ -23,19 +23,20 @@ const { showSuccessToast, showErrorToast } = useCustomToast();
 const env_config = useRuntimeConfig();
 const supabaseProjectURL = env_config.public.SUPABASE_PROJECT_URL;
 
-const generateEmptyFormState = () => ({
-    // These keys must match the name attributes on UFormField elements
-    haveHigherEducation: false,
-    institutionName: undefined,
-    fieldOfStudy: undefined,
-    institutionCity: undefined,
-    institutionProvince: undefined,
-    gpa: undefined,
-    startDate: undefined,
-    endDate: undefined,
-    currentlyAttending: undefined,
-});
-const formState = reactive(props.rawFormData.data || generateEmptyFormState());
+const formState = reactive(
+    props.rawFormData.data || {
+        // These keys must match the name attributes on UFormField elements
+        haveHigherEducation: true,
+        institutionName: undefined,
+        fieldOfStudy: undefined,
+        institutionCity: undefined,
+        institutionProvince: undefined,
+        gpa: undefined,
+        startDate: undefined,
+        endDate: undefined,
+        currentlyAttending: undefined,
+    }
+);
 
 const onSubmit = async () => {
     let isValidationError = true;
@@ -75,21 +76,24 @@ const onSubmit = async () => {
 </script>
 
 <template>
+    <!--  prettier-ignore -->
+    <USwitch
+        v-model="formState.haveHigherEducation"
+        :label="formState.haveHigherEducation ? `I've attended college or university` : `I have NOT attended college or university`"
+        size="lg"
+        class="my-4"
+    />
     <UForm
+        @submit="onSubmit"
         :schema="educationSchema"
         :state="formState"
-        class="space-y-4 uform-element pt-4"
+        :class="`space-y-4 uform-element pt-4 ${
+            formState.haveHigherEducation === false
+                ? 'opacity-50 pointer-events-none'
+                : ''
+        }`"
         color="secondary"
-        @submit="onSubmit"
     >
-        <!--  prettier-ignore -->
-        <USwitch
-            v-model="formState.haveHigherEducation"
-            :label="formState.haveHigherEducation ? `I've attended college or university` : `I have NOT attended college or university`"
-            size="lg"
-            :defaultValue="true"
-            class="col-span-full"
-        />
         <UFormField
             label="Institution Name **"
             name="institutionName"
@@ -159,6 +163,7 @@ const onSubmit = async () => {
         <div class="uform-submit-button-container">
             <UButton
                 type="submit"
+                @click="onSubmit"
                 class="w-full justify-center cursor-pointer"
                 color="secondary"
                 >Submit</UButton
@@ -171,7 +176,7 @@ const onSubmit = async () => {
 .uform-element {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: auto 95px 95px auto;
+    grid-template-rows: 95px 95px auto;
     gap: 0.5rem 1rem;
 }
 
