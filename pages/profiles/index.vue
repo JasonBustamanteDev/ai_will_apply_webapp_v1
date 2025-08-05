@@ -7,6 +7,10 @@ import { deleteProfile } from "~/ui/profiles/apiCalls/deleteProfile";
 import { renameProfile } from "~/ui/profiles/apiCalls/renameProfile";
 import { initializeProfile } from "~/ui/profiles/apiCalls/initializeProfile";
 
+definePageMeta({
+    middleware: ["redirect-if-no-auth-session-client"],
+});
+
 const env_config = useRuntimeConfig();
 const supabaseProjectURL = env_config.public.SUPABASE_PROJECT_URL;
 
