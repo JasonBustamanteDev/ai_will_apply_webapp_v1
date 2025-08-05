@@ -133,26 +133,47 @@ export const preferenceSchema = object({
 });
 
 export const educationSchema = object({
-    institutionName: string()
-        .required(MESSAGES.REQUIRED)
-        .test("institutionName", MESSAGES.ONLY_EMPTY, (value) =>
-            emptyOrMinLengthStringAccepted(value, 1)
-        ),
-    fieldOfStudy: string()
-        .required(MESSAGES.REQUIRED)
-        .test("fieldOfStudy", MESSAGES.ONLY_EMPTY, (value) =>
-            emptyOrMinLengthStringAccepted(value, 1)
-        ),
-    institutionCity: string()
-        .required(MESSAGES.REQUIRED)
-        .test("institutionCity", MESSAGES.ONLY_EMPTY, (value) =>
-            emptyOrMinLengthStringAccepted(value, 1)
-        ),
-    institutionProvince: string()
-        .required(MESSAGES.REQUIRED)
-        .test("institutionProvince", MESSAGES.ONLY_EMPTY, (value) =>
-            emptyOrMinLengthStringAccepted(value, 1)
-        ),
+    haveHigherEducation: boolean().required(MESSAGES.REQUIRED),
+    institutionName: string().when("haveHigherEducation", {
+        is: true,
+        then: (schema) =>
+            schema
+                .required(MESSAGES.REQUIRED)
+                .test("institutionName", MESSAGES.ONLY_EMPTY, (value) =>
+                    emptyOrMinLengthStringAccepted(value, 1)
+                ),
+        otherwise: (schema) => schema.notRequired(),
+    }),
+    fieldOfStudy: string().when("haveHigherEducation", {
+        is: true,
+        then: (schema) =>
+            schema
+                .required(MESSAGES.REQUIRED)
+                .test("fieldOfStudy", MESSAGES.ONLY_EMPTY, (value) =>
+                    emptyOrMinLengthStringAccepted(value, 1)
+                ),
+        otherwise: (schema) => schema.notRequired(),
+    }),
+    institutionCity: string().when("haveHigherEducation", {
+        is: true,
+        then: (schema) =>
+            schema
+                .required(MESSAGES.REQUIRED)
+                .test("institutionCity", MESSAGES.ONLY_EMPTY, (value) =>
+                    emptyOrMinLengthStringAccepted(value, 1)
+                ),
+        otherwise: (schema) => schema.notRequired(),
+    }),
+    institutionProvince: string().when("haveHigherEducation", {
+        is: true,
+        then: (schema) =>
+            schema
+                .required(MESSAGES.REQUIRED)
+                .test("institutionProvince", MESSAGES.ONLY_EMPTY, (value) =>
+                    emptyOrMinLengthStringAccepted(value, 1)
+                ),
+        otherwise: (schema) => schema.notRequired(),
+    }),
     gpa: mixed()
         .nullable()
         .notRequired()
@@ -173,17 +194,31 @@ export const educationSchema = object({
             if (value === undefined || value === null) return true;
             return typeof value === "number" && value >= 1 && value <= 5;
         }),
-    startDate: string()
-        .required(MESSAGES.REQUIRED)
-        .test("start-date", "YYYY-MM format required", (value) => {
-            return isValidYearMonth(value);
-        }),
-    endDate: string()
-        .required(MESSAGES.REQUIRED)
-        .test("start-date", "YYYY-MM format required", (value) => {
-            return isValidYearMonth(value);
-        }),
-    currentlyAttending: boolean().required(MESSAGES.REQUIRED),
+    startDate: string().when("haveHigherEducation", {
+        is: true,
+        then: (schema) =>
+            schema
+                .required(MESSAGES.REQUIRED)
+                .test("start-date", "YYYY-MM format required", (value) => {
+                    return isValidYearMonth(value);
+                }),
+        otherwise: (schema) => schema.notRequired(),
+    }),
+    endDate: string().when("haveHigherEducation", {
+        is: true,
+        then: (schema) =>
+            schema
+                .required(MESSAGES.REQUIRED)
+                .test("start-date", "YYYY-MM format required", (value) => {
+                    return isValidYearMonth(value);
+                }),
+        otherwise: (schema) => schema.notRequired(),
+    }),
+    currentlyAttending: boolean().when("haveHigherEducation", {
+        is: true,
+        then: (schema) => schema.required(MESSAGES.REQUIRED),
+        otherwise: (schema) => schema.notRequired(),
+    }),
 });
 
 export const socialSchema = object({
