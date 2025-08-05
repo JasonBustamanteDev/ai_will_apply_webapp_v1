@@ -38,6 +38,12 @@ const formState = reactive(
     }
 );
 
+const conditionalDisableStyles = computed(() => {
+    return formState.haveHigherEducation === false
+        ? "opacity-50 pointer-events-none"
+        : "";
+});
+
 const onSubmit = async () => {
     let isValidationError = true;
     try {
@@ -87,34 +93,34 @@ const onSubmit = async () => {
         @submit="onSubmit"
         :schema="educationSchema"
         :state="formState"
-        :class="`space-y-4 uform-element pt-4 ${
-            formState.haveHigherEducation === false
-                ? 'opacity-50 pointer-events-none'
-                : ''
-        }`"
+        :class="`space-y-4 uform-element pt-4`"
         color="secondary"
     >
         <UFormField
             label="Institution Name **"
             name="institutionName"
-            class="mb-0"
+            :class="`mb-0 ${conditionalDisableStyles}`"
         >
             <UInput v-model="formState.institutionName" class="w-full" />
         </UFormField>
-        <UFormField label="Field of Study **" name="fieldOfStudy" class="mb-0">
+        <UFormField
+            label="Field of Study **"
+            name="fieldOfStudy"
+            :class="`mb-0 ${conditionalDisableStyles}`"
+        >
             <UInput v-model="formState.fieldOfStudy" class="w-full" />
         </UFormField>
         <UFormField
             label="Institution City **"
             name="institutionCity"
-            class="mb-0"
+            :class="`mb-0 ${conditionalDisableStyles}`"
         >
             <UInput v-model="formState.institutionCity" class="w-full" />
         </UFormField>
         <UFormField
             label="Institution Province or State **"
             name="institutionProvince"
-            class="mb-0"
+            :class="`mb-0 ${conditionalDisableStyles}`"
         >
             <UInput
                 v-model="formState.institutionProvince"
@@ -122,14 +128,14 @@ const onSubmit = async () => {
                 placeholder="Example: 'Ontario' or 'ON'"
             />
         </UFormField>
-        <UFormField label="Start Date **" name="startDate" class="mb-0">
+        <UFormField label="Start Date **" name="startDate" :class="`mb-0 ${conditionalDisableStyles}`">
             <UInput
                 v-model="formState.startDate"
                 class="w-full"
                 placeholder="YYYY-MM"
             />
         </UFormField>
-        <UFormField label="End Date **" name="endDate" class="mb-0">
+        <UFormField label="End Date **" name="endDate" :class="`mb-0 ${conditionalDisableStyles}`">
             <UInput
                 v-model="formState.endDate"
                 class="w-full"
@@ -139,7 +145,7 @@ const onSubmit = async () => {
         <UFormField
             label="Currently Attending **"
             name="currentlyAttending"
-            class="mb-0"
+            :class="`mb-0 ${conditionalDisableStyles}`"
         >
             <URadioGroup
                 v-model="formState.currentlyAttending"
@@ -152,7 +158,7 @@ const onSubmit = async () => {
             />
         </UFormField>
 
-        <UFormField label="GPA" name="gpa" class="mb-0">
+        <UFormField label="GPA" name="gpa" :class="`mb-0 ${conditionalDisableStyles}`">
             <UInput
                 v-model="formState.gpa"
                 class="w-full"
