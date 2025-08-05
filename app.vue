@@ -72,9 +72,9 @@ onMounted(async () => {
     );
 }
 
-.content-shift-guard {
-    overflow-x: hidden;
-    padding-left: calc(100vw - 100%); // prevents content shifting due to y scrollbar
+html {
+    // Prevent vertical scrollbar from shifting content horizontally
+    scrollbar-gutter: stable;
 }
 </style>
 
