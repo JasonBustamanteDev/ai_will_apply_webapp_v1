@@ -78,9 +78,8 @@ onMounted(async () => {
                 :isOptional="false"
             >
                 <PersonalDetailsForm
-                    :data="
+                    :rawFormData="
                         profileDataObject.forms[PROFILE_FORMS.PERSONAL_DETAILS]
-                            .data
                     "
                     :encodedProfileName="encodedDynamicProfileName"
                     :formName="PROFILE_FORMS.PERSONAL_DETAILS"
@@ -96,7 +95,9 @@ onMounted(async () => {
                 :isOptional="false"
             >
                 <LocationForm
-                    :data="profileDataObject.forms[PROFILE_FORMS.LOCATION].data"
+                    :rawFormData="
+                        profileDataObject.forms[PROFILE_FORMS.LOCATION]
+                    "
                     :encodedProfileName="encodedDynamicProfileName"
                     :formName="PROFILE_FORMS.LOCATION"
                 />
@@ -112,8 +113,8 @@ onMounted(async () => {
                 :isOptional="false"
             >
                 <PreferenceForm
-                    :data="
-                        profileDataObject.forms[PROFILE_FORMS.PREFERENCES].data
+                    :rawFormData="
+                        profileDataObject.forms[PROFILE_FORMS.PREFERENCES]
                     "
                     :encodedProfileName="encodedDynamicProfileName"
                     :formName="PROFILE_FORMS.PREFERENCES"
@@ -123,11 +124,15 @@ onMounted(async () => {
             <CollapseComponent
                 title="Languages"
                 :checkboxId="COLLAPSE_NAMES.LANGUAGES"
-                :isComplete="profileDataObject.forms[PROFILE_FORMS.LANGUAGES].isComplete"
+                :isComplete="
+                    profileDataObject.forms[PROFILE_FORMS.LANGUAGES].isComplete
+                "
                 :isOptional="false"
             >
                 <LanguagesForm
-                    :data="profileDataObject.forms[PROFILE_FORMS.LANGUAGES].data"
+                    :rawFormData="
+                        profileDataObject.forms[PROFILE_FORMS.LANGUAGES]
+                    "
                     :encodedProfileName="encodedDynamicProfileName"
                     :formName="PROFILE_FORMS.LANGUAGES"
                 />
@@ -136,11 +141,13 @@ onMounted(async () => {
             <CollapseComponent
                 title="Skills"
                 :checkboxId="COLLAPSE_NAMES.SKILLS"
-                :isComplete="profileDataObject.forms[PROFILE_FORMS.SKILLS].isComplete"
+                :isComplete="
+                    profileDataObject.forms[PROFILE_FORMS.SKILLS].isComplete
+                "
                 :isOptional="false"
             >
                 <SkillsForm
-                    :data="profileDataObject.forms[PROFILE_FORMS.SKILLS].data"
+                    :rawFormData="profileDataObject.forms[PROFILE_FORMS.SKILLS]"
                     :encodedProfileName="encodedDynamicProfileName"
                     :formName="PROFILE_FORMS.SKILLS"
                 />
@@ -149,11 +156,16 @@ onMounted(async () => {
             <CollapseComponent
                 title="Work Experience"
                 :checkboxId="COLLAPSE_NAMES.WORK_EXPERIENCE"
-                :isComplete="profileDataObject.forms[PROFILE_FORMS.WORK_EXPERIENCE].isComplete"
+                :isComplete="
+                    profileDataObject.forms[PROFILE_FORMS.WORK_EXPERIENCE]
+                        .isComplete
+                "
                 :isOptional="true"
             >
                 <WorkExperienceForm
-                    :data="profileDataObject.forms[PROFILE_FORMS.WORK_EXPERIENCE].data"
+                    :rawFormData="
+                        profileDataObject.forms[PROFILE_FORMS.WORK_EXPERIENCE]
+                    "
                     :encodedProfileName="encodedDynamicProfileName"
                     :formName="PROFILE_FORMS.WORK_EXPERIENCE"
                 />
@@ -162,11 +174,15 @@ onMounted(async () => {
             <CollapseComponent
                 title="University or College"
                 :checkboxId="COLLAPSE_NAMES.EDUCATION"
-                :isComplete="profileDataObject.forms[PROFILE_FORMS.EDUCATION].isComplete"
+                :isComplete="
+                    profileDataObject.forms[PROFILE_FORMS.EDUCATION].isComplete
+                "
                 :isOptional="true"
             >
                 <EducationForm
-                    :data="profileDataObject.forms[PROFILE_FORMS.EDUCATION].data"
+                    :rawFormData="
+                        profileDataObject.forms[PROFILE_FORMS.EDUCATION]
+                    "
                     :encodedProfileName="encodedDynamicProfileName"
                     :formName="PROFILE_FORMS.EDUCATION"
                 />
@@ -175,11 +191,16 @@ onMounted(async () => {
             <CollapseComponent
                 title="Portfolio + Social Media Links"
                 :checkboxId="COLLAPSE_NAMES.MEDIA_LINKS"
-                :isComplete="profileDataObject.forms[PROFILE_FORMS.MEDIA_LINKS].isComplete"
+                :isComplete="
+                    profileDataObject.forms[PROFILE_FORMS.MEDIA_LINKS]
+                        .isComplete
+                "
                 :isOptional="true"
             >
                 <SocialsForm
-                    :data="profileDataObject.forms[PROFILE_FORMS.MEDIA_LINKS].data"
+                    :rawFormData="
+                        profileDataObject.forms[PROFILE_FORMS.MEDIA_LINKS]
+                    "
                     :encodedProfileName="encodedDynamicProfileName"
                     :formName="PROFILE_FORMS.MEDIA_LINKS"
                 />
