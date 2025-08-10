@@ -72,9 +72,15 @@ onMounted(async () => {
     );
 }
 
+// Prevent horizontal content shifting when NuxtUi dropdown is clicked
 html {
-    // Prevent vertical scrollbar from shifting content horizontally
     scrollbar-gutter: stable;
+    background-color: main.$light-theme-bg;
+}
+
+body {
+    padding-right: calc(100vw - 100%); 
+    background-color: main.$light-theme-bg;
 }
 </style>
 
