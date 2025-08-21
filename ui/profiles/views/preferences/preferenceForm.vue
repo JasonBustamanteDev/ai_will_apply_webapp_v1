@@ -33,6 +33,7 @@ const formState = reactive(
         driversLicense: true,
         reliableTransportation: true,
         veteranStatus: false,
+        interviewAvailability: "Monday to Friday between 9AM and 5PM",
         companyBlacklist: ["Some terrible company"],
     }
 );
@@ -185,9 +186,20 @@ const onSubmit = async () => {
             />
         </UFormField>
         <UFormField
+            label="When you are available for interviews **"
+            name="interviewAvailability"
+            class="mb-0 col-span-2"
+        >
+            <UInput
+                v-model="formState.interviewAvailability"
+                class="w-full"
+                placeholder=""
+            />
+        </UFormField>
+        <UFormField
             label="Avoid applying to these companies:"
             name="companyBlacklist"
-            class="mb-0 col-span-4"
+            class="mb-0 col-span-2"
         >
             <UInputTags
                 v-model="formState.companyBlacklist"

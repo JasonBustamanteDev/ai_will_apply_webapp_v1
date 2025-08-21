@@ -130,6 +130,15 @@ export const preferenceSchema = object({
         .of(string().required())
         .min(0)
         .required(MESSAGES.REQUIRED),
+    interviewAvailability: string()
+        .required(MESSAGES.REQUIRED)
+        .test(
+            "interview-availability-empty",
+            "Enter times when you are available for interview",
+            function (value) {
+                return verifyMinStringLength(value, 1);
+            }
+        ),
 });
 
 export const educationSchema = object({

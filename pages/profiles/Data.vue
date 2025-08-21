@@ -44,10 +44,6 @@ onMounted(async () => {
     encodedDynamicProfileName.value = route.query?.profileName || "";
     await fetchSingleProfile();
 });
-
-// TODO: Dynamically show complete or is not complete based on whether the form is submitted or not
-// TODO: Make it so all required forms are submitted (optional ones don't have to be)
-// TODO: Have a copy paste feature for profiles.
 </script>
 
 <template>
