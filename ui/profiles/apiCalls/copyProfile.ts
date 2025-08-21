@@ -1,8 +1,8 @@
 import { getAuthSessionFromLocalStorage } from "~/shared/client_helpers"; // prettier-ignore
 
 export const copyProfile = async (
-    supabaseProjectUrl,
-    newProfileName,
+    supabaseProjectUrl: string,
+    newProfileName: string,
     existingData = null
 ) => {
     const session = await getAuthSessionFromLocalStorage(supabaseProjectUrl);
