@@ -1,20 +1,27 @@
 import jwt from "jsonwebtoken";
+import type { EventHandlerRequest, H3Event } from "h3";
 
-export const checkIfUserIsAuthenticated = (event) => {
+export const checkIfUserIsAuthenticated = (
+    event: H3Event<EventHandlerRequest>
+) => {
     try {
         // Extract bearer token from headers
-        let accessToken = getHeader(event, "authorization");
+        let accessToken = getHeader(event, "authorization") || "no_access_token"; // prettier-ignore
         if (accessToken && accessToken.startsWith("Bearer ")) {
             accessToken = accessToken.slice(7);
         }
 
         // Verify JWT
         const env_config = useRuntimeConfig();
-        const decoded = jwt.verify(accessToken, env_config.SUPABASE_JWT_SECRET);
+        const decoded = jwt.verify(
+            accessToken,
+            env_config.SUPABASE_JWT_SECRET
+        ) as jwt.JwtPayload;
 
         const currentUnix = Math.floor(Date.now() / 1000);
         const isAuthenticated = decoded.aud === "authenticated";
-        const isNotExpired = decoded.exp > currentUnix;
+        const isNotExpired =
+            decoded.exp === undefined || decoded.exp > currentUnix;
         const issuerMatchesSupabaseProject =
             decoded.iss === `${env_config.public.SUPABASE_PROJECT_URL}/auth/v1`;
 
@@ -31,7 +38,7 @@ export const checkIfUserIsAuthenticated = (event) => {
         }
 
         return { accessToken };
-    } catch (err) {
+    } catch (err: any) {
         // If an error occurs while inspecting the JWT, raise an error for your middleware
         throw createError({
             statusCode: 400,
