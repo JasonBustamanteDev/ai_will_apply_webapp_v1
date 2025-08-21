@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { useSupabaseAuthStore } from "~/pinia_stores/supabase_auth";
 import { useCustomToast } from "~/pinia_stores/toast";
 // Everything you wrap around NuxtPage or place beside Nuxtpage will apply to each page you make
@@ -79,7 +79,7 @@ html {
 }
 
 body {
-    padding-right: calc(100vw - 100%); 
+    padding-right: calc(100vw - 100%);
     background-color: main.$light-theme-bg;
 }
 </style>
