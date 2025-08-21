@@ -1,4 +1,4 @@
-<script setup >
+<script setup>
 import ProfileListItemCard from "~/ui/profiles/shared/profile-dashboard/profileListItemCard.vue";
 import InitializeProfileCard from "~/ui/profiles/shared/profile-dashboard/initializeProfileCard.vue";
 import { useCustomToast } from "~/pinia_stores/toast";
@@ -38,7 +38,7 @@ onMounted(async () => {
 
 const initializeProfileHandler = async (newProfileName) => {
     try {
-        await initializeProfile(supabaseProjectURL, newProfileName);
+        await initializeProfile(supabaseProjectURL, newProfileName); //! init_instance1
         await fetchProfiles(); // refetch
     } catch (err) {
         showErrorToast(
@@ -51,9 +51,12 @@ const initializeProfileHandler = async (newProfileName) => {
     }
 };
 const editProfileHandler = async (profileName) => {
-    await navigateTo({ path: PAGE_URLS.PROFILE_DATA, query: {
-        profileName: encodeURI(profileName)
-    } });
+    await navigateTo({
+        path: PAGE_URLS.PROFILE_DATA,
+        query: {
+            profileName: encodeURI(profileName),
+        },
+    });
 };
 
 const deleteProfileHandler = async (profileName) => {
@@ -92,7 +95,7 @@ const copyProfileHandler = async (newProfileName, existingData = null) => {
         await initializeProfile(
             supabaseProjectURL,
             newProfileName,
-            existingData
+            existingData //! init_instance2
         );
         await fetchProfiles(); // refetch
     } catch (err) {

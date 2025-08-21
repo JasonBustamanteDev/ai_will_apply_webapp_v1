@@ -1,9 +1,9 @@
 import { getAuthSessionFromLocalStorage } from "~/shared/client_helpers"; // prettier-ignore
 
 export const renameProfile = async (
-    supabaseProjectUrl,
-    oldProfileName,
-    newProfileName
+    supabaseProjectUrl: string,
+    oldProfileName: string,
+    newProfileName: string
 ) => {
     const session = await getAuthSessionFromLocalStorage(supabaseProjectUrl);
     const oldName = encodeURI(oldProfileName);

@@ -1,9 +1,9 @@
 import { getAuthSessionFromLocalStorage } from "~/shared/client_helpers"; // prettier-ignore
 
 export const updateProfile = async (
-    supabaseProjectUrl,
-    encodedProfileName,
-    updateData
+    supabaseProjectUrl: string,
+    encodedProfileName: string,
+    updateData: any
 ) => {
     const session = await getAuthSessionFromLocalStorage(supabaseProjectUrl);
 
@@ -11,7 +11,7 @@ export const updateProfile = async (
         method: "PATCH",
         body: {
             profileName: encodedProfileName,
-            formData: updateData
+            formData: updateData,
         },
         headers: {
             Authorization: `Bearer ${session.access_token}`,
