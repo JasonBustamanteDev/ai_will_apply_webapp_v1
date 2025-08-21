@@ -13,6 +13,5 @@ definePageMeta({
                 filters
             </p>
         </div>
-        
     </div>
 </template>

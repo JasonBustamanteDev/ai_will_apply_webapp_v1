@@ -1,4 +1,4 @@
-<script setup>
+<script setup >
 import ProfileListItemCard from "~/ui/profiles/shared/profile-dashboard/profileListItemCard.vue";
 import InitializeProfileCard from "~/ui/profiles/shared/profile-dashboard/initializeProfileCard.vue";
 import { useCustomToast } from "~/pinia_stores/toast";
