@@ -1,6 +1,8 @@
 import { inRange } from "lodash";
 
-export const getAuthSessionFromLocalStorage = function (supabase_project_url) {
+export const getAuthSessionFromLocalStorage = function (
+    supabase_project_url: string
+) {
     const trimmed_project_url = supabase_project_url
         .replace(/^https:\/\//, "")
         .replace(/\.supabase\.co$/, "");
@@ -11,18 +13,21 @@ export const getAuthSessionFromLocalStorage = function (supabase_project_url) {
     return sessionString ? JSON.parse(sessionString) : null;
 };
 
-export const verifyMinStringLength = (value, requiredLength) =>
+export const verifyMinStringLength = (value: string, requiredLength: number) =>
     value && value.replace(/\s/g, "").length >= requiredLength;
 
-export const cleanPhoneNumber = (str) => str.replace(/[\s\-]/g, "");
+export const cleanPhoneNumber = (str: string) => str.replace(/[\s\-]/g, "");
 
-export const emptyOrMinLengthStringAccepted = function (value, strLength = 1) {
+export const emptyOrMinLengthStringAccepted = function (
+    value: string,
+    strLength = 1
+) {
     // Accepts empty strings, but if a string is provided we demand a min length with space chars excluded
     if (!value || value === "") return true;
     return verifyMinStringLength(value, strLength);
 };
 
-export const isValidYearMonth = function (dateString) {
+export const isValidYearMonth = function (dateString: string) {
     // Check exact format with regex
     const yearMonthRegex = /^\d{4}-\d{2}$/;
     if (!yearMonthRegex.test(dateString)) {
@@ -30,7 +35,7 @@ export const isValidYearMonth = function (dateString) {
     }
 
     // Parse year and month
-    const [year, month] = dateString.split("-").map(Number);
+    const [year = 0, month = 0] = dateString.split("-").map(Number);
 
     // Validate ranges
     const isValidYear = inRange(year, 1920, 2100); // reasonable year range
@@ -39,9 +44,9 @@ export const isValidYearMonth = function (dateString) {
     return isValidYear && isValidMonth;
 };
 
-export const isValidNumericString = (str) => {
+export const isValidNumericString = (str: string) => {
     return !Number.isNaN(Number(str)) && str.trim() !== "";
 };
 
-export const extractFormattedDate = (isoDateString) => isoDateString.slice(0, 10)
-
+export const extractFormattedDate = (isoDateString: string) =>
+    isoDateString.slice(0, 10);

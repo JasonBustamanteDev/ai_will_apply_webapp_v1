@@ -34,6 +34,7 @@
     "@testing-library/jest-dom": "^6.6.4",
     "@testing-library/user-event": "^14.6.1",
     "@testing-library/vue": "^8.1.0",
+    "@types/lodash": "^4.17.20",
     "@vitejs/plugin-vue": "^5.2.4",
     "daisyui": "^5.0.43",
     "sass-embedded": "^1.89.1",
