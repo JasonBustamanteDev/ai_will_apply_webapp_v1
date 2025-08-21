@@ -30,6 +30,12 @@ export default defineNuxtConfig({
         "@pinia/nuxt",
     ],
 
+    // TS
+    typescript: {
+        typeCheck: true,
+        strict: true,
+    },
+
     runtimeConfig: {
         // Private keys (server-side only)
         SUPABASE_DB_PASSWORD: process.env.SUPABASE_DB_PASSWORD,
