@@ -26,7 +26,7 @@ export const booleanPlusEmptyOptions = [
 
 export const radioStyleObject = { item: "mr-3" };
 
-export const isValidProfileName = (str) => {
+export const isValidProfileName = (str: string) => {
     // String must be 1 char long, consist of alphanumeric chars, and not be entirely spaces
     return (
         str &&
