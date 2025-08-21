@@ -21,7 +21,7 @@ export default defineEventHandler(async (event) => {
                 .from(PROFILES_TABLE_NAME)
                 .select("*", { count: "exact" });
 
-        if (profileCountError) {
+        if (profileCountError || profileCount === null) {
             setResponseStatus(event, 500);
             return detailObject(
                 `Error occurred when counting how many profiles the user has: ${
@@ -56,7 +56,7 @@ export default defineEventHandler(async (event) => {
         }
 
         return DEFAULT_SUCCESS_RETURN;
-    } catch (err) {
+    } catch (err: any) {
         const error_code = err?.statusCode || 500;
         const error_message = err?.statusMessage || err?.message || "Something went wrong."; // prettier-ignore
         setResponseStatus(event, error_code);

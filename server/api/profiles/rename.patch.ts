@@ -5,6 +5,12 @@ import { detailObject, PROFILES_TABLE_NAME, getCurrentUTCTimestamp, DEFAULT_SUCC
 export default defineEventHandler(async (event) => {
     try {
         const body = await readBody(event);
+        const oldProfileName = decodeURI(body.oldProfileName);
+        const newProfileName = decodeURI(body.newProfileName);
+        if (newProfileName === oldProfileName) {
+            return detailObject("empty success");
+        }
+
         const { accessToken } = checkIfUserIsAuthenticated(event);
         const supabaseClient = getSupabaseClient(event, accessToken);
         const { auth_id } = await getSupabaseUserDetails(
@@ -12,31 +18,33 @@ export default defineEventHandler(async (event) => {
             accessToken
         );
 
-        const uploadObject = { updatedAt: getCurrentUTCTimestamp() };
-        for (const formName in body.formData) {
-            uploadObject[formName] = body.formData[formName];
-        }
+        const updateObject = {
+            profileName: newProfileName,
+            updatedAt: getCurrentUTCTimestamp(),
+        };
 
         const { error } = await supabaseClient
             .from(PROFILES_TABLE_NAME)
-            .update(uploadObject)
+            .update(updateObject)
             .eq("id", auth_id)
-            .eq("profileName", decodeURI(body.profileName));
+            .eq("profileName", oldProfileName);
 
         if (error) {
             setResponseStatus(event, 500);
+            const msg =
+                error.code == "23505"
+                    ? "Profile name already in use."
+                    : error?.message || "";
             return detailObject(
-                `Error occurred when saving profile data: ${
-                    error?.message || ""
-                }`
+                `Error occurred when renaming profile: ${msg}.`
             );
         }
 
         return DEFAULT_SUCCESS_RETURN;
-    } catch (err) {
+    } catch (err: any) {
         const error_code = err?.statusCode || 500;
-        const error_message = err?.statusMessage || err?.message || "Something went wrong"; // prettier-ignore
+        const error_message = err?.statusMessage || err?.message || "Something went wrong."; // prettier-ignore
         setResponseStatus(event, error_code);
-        return detailObject(error_message)
+        return detailObject(error_message);
     }
 });
