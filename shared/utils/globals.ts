@@ -8,7 +8,11 @@ export const PAGE_URLS = {
     GUIDE: "/guide",
 };
 
-export const throwErrorObject = function (name, message, code = 500) {
+export const throwErrorObject = function (
+    name: string,
+    message: string,
+    code = 500
+) {
     throw { name, message, code };
 };
 
