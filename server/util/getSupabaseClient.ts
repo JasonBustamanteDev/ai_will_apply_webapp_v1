@@ -1,6 +1,11 @@
 import { createClient } from "@supabase/supabase-js";
+import type { SupabaseClient } from "@supabase/supabase-js";
+import type { EventHandlerRequest, H3Event } from "h3";
 
-export const getSupabaseClient = (event, accessToken) => {
+export const getSupabaseClient = (
+    event: H3Event<EventHandlerRequest>,
+    accessToken: string
+) => {
     const env_config = useRuntimeConfig(event);
 
     return createClient(
@@ -16,8 +21,14 @@ export const getSupabaseClient = (event, accessToken) => {
     );
 };
 
-export const getSupabaseUserDetails = async (supabaseClient, accessToken) => {
-    const { data: { user }, error } = await supabaseClient.auth.getUser(accessToken); // prettier-ignore
+export const getSupabaseUserDetails = async (
+    supabaseClient: SupabaseClient,
+    accessToken: string
+) => {
+    const {
+        data: { user },
+        error,
+    } = await supabaseClient.auth.getUser(accessToken);
 
     if (error) {
         throw {
@@ -25,7 +36,13 @@ export const getSupabaseUserDetails = async (supabaseClient, accessToken) => {
             statusMessage: "Something went wrong when fetching user auth data",
         };
     }
-    
+    if (user === null) {
+        throw {
+            statusCode: 500,
+            statusMessage: "User not found by Supabase Client",
+        };
+    }
+
     return {
         auth_id: user.id,
         email: user.email,

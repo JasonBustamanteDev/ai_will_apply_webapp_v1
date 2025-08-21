@@ -6,7 +6,8 @@ export const checkIfUserIsAuthenticated = (
 ) => {
     try {
         // Extract bearer token from headers
-        let accessToken = getHeader(event, "authorization") || "no_access_token"; // prettier-ignore
+        let accessToken =
+            getHeader(event, "authorization") || "no_access_token";
         if (accessToken && accessToken.startsWith("Bearer ")) {
             accessToken = accessToken.slice(7);
         }
