@@ -5,4 +5,4 @@ export const DEFAULT_SUCCESS_RETURN = { detail: "success" };
 
 export const getCurrentUTCTimestamp = () => new Date().toISOString();
 
-export const detailObject = (msg: string) => ({ detail: msg });
+export const detailObject = (msg: string) => ({ detail: msg, data: null });
