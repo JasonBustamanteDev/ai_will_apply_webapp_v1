@@ -1,6 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { EventHandlerRequest, H3Event } from "h3";
+import type { Database } from "~/types/supabase";
 
 export const getSupabaseClient = (
     event: H3Event<EventHandlerRequest>,
@@ -8,7 +9,7 @@ export const getSupabaseClient = (
 ) => {
     const env_config = useRuntimeConfig(event);
 
-    return createClient(
+    return createClient<Database>(
         env_config.public.SUPABASE_PROJECT_URL,
         env_config.public.SUPABASE_PUBLIC_ANON_API_KEY,
         {
