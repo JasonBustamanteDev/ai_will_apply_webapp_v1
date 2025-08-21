@@ -1,7 +1,11 @@
 export const useCustomToast = defineStore("toast_notifications", () => {
     const toast = useToast();
 
-    function showErrorToast(title, description, reloadText = false) {
+    function showErrorToast(
+        title: string,
+        description: string,
+        reloadText = false
+    ) {
         toast.add({
             title,
             description:
@@ -10,9 +14,8 @@ export const useCustomToast = defineStore("toast_notifications", () => {
             duration: 10000, // 10 seconds
             color: "error",
         });
-
     }
-    function showSuccessToast(title, description) {
+    function showSuccessToast(title: string, description: string) {
         toast.add({
             title,
             description,
@@ -24,6 +27,6 @@ export const useCustomToast = defineStore("toast_notifications", () => {
 
     return {
         showErrorToast,
-        showSuccessToast
+        showSuccessToast,
     };
 });

@@ -1,6 +1,6 @@
 <script setup>
 import { useSupabaseAuthStore } from "~/pinia_stores/supabase_auth";
-import { useCustomToast } from "@/pinia_stores/toast";
+import { useCustomToast } from "~/pinia_stores/toast";
 // Everything you wrap around NuxtPage or place beside Nuxtpage will apply to each page you make
 // This allows you to add global content
 
