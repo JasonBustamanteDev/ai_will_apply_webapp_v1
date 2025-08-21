@@ -1,7 +1,7 @@
 import { getAuthSessionFromLocalStorage } from "~/shared/client_helpers";
 import { calculateProfileKpi } from "../shared/profileKpi";
 
-export const getProfiles = async (supabaseProjectUrl) => {
+export const getProfiles = async (supabaseProjectUrl: string) => {
     const session = await getAuthSessionFromLocalStorage(supabaseProjectUrl);
     const result = await $fetch("/api/profiles/read/all", {
         headers: {
@@ -9,10 +9,11 @@ export const getProfiles = async (supabaseProjectUrl) => {
         },
     });
 
-    return await formatData(result.data);
+    const resultData = result.data as JobSearchProfilesRow[];
+    return await formatData(resultData);
 };
 
-const formatData = async (profileList) => {
+const formatData = async (profileList: JobSearchProfilesRow[]) => {
     const rowPromises = profileList.map(calculateProfileKpi);
     return await Promise.all(rowPromises);
 };

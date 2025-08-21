@@ -1,7 +1,7 @@
 import { extractFormattedDate } from "~/shared/client_helpers";
 import { personalDetailsSchema, locationSchema, preferenceSchema, educationSchema, socialSchema, skillsValidator, workExperienceValidator, languageValidator } from "../views/formValidation"; // prettier-ignore
 
-export const calculateProfileKpi = async (x) => {
+export const calculateProfileKpi = async (x: JobSearchProfilesRow) => {
     // Determine if the data saved for each form is valid or not (according to yup schema)
     const personalDetailsIsValid = await personalDetailsSchema.validate(x.personalDetails).then(() => true).catch(() => false); // prettier-ignore
     const locationIsValid = await locationSchema.validate(x.location).then(() => true).catch(() => false); // prettier-ignore

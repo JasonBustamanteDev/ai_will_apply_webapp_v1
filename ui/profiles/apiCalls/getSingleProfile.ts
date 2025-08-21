@@ -2,8 +2,8 @@ import { getAuthSessionFromLocalStorage } from "~/shared/client_helpers";
 import { calculateProfileKpi } from "../shared/profileKpi";
 
 export const getSingleProfile = async (
-    supabaseProjectUrl,
-    encodedDynamicProfileName
+    supabaseProjectUrl: string,
+    encodedDynamicProfileName: string
 ) => {
     const session = await getAuthSessionFromLocalStorage(supabaseProjectUrl);
     const result = await $fetch(
