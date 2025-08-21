@@ -1,5 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 import { useCustomToast } from "@/pinia_stores/toast";
+import { type Session } from "@supabase/supabase-js";
 
 export const useSupabaseAuthStore = defineStore(
     "pinia_auth_composition",
@@ -13,7 +14,7 @@ export const useSupabaseAuthStore = defineStore(
             )
         );
 
-        const currentSession = ref(null);
+        const currentSession: Ref<Session | null> = ref(null);
         const sessionExists = computed(() => !!currentSession.value);
 
         // The following callback function fires each time an auth event goes off
@@ -52,7 +53,7 @@ export const useSupabaseAuthStore = defineStore(
                         `Something went wrong while signing in with Google. ${ERROR_MESSAGES.RELOAD}`
                     );
                 }
-            } catch (err) {
+            } catch (err: any) {
                 showErrorToast(
                     "GOOGLE ERROR: SIGN IN",
                     err?.message || ERROR_MESSAGES.GENERIC
@@ -69,7 +70,7 @@ export const useSupabaseAuthStore = defineStore(
                         `Something went wrong while signing out with Google. ${ERROR_MESSAGES.RELOAD}`
                     );
                 }
-            } catch (err) {
+            } catch (err: any) {
                 showErrorToast(
                     "GOOGLE ERROR: SIGN OUT",
                     err?.message || ERROR_MESSAGES.GENERIC
@@ -88,7 +89,7 @@ export const useSupabaseAuthStore = defineStore(
                     );
                 }
                 currentSession.value = data.session;
-            } catch (err) {
+            } catch (err: any) {
                 showErrorToast(
                     "GOOGLE ERROR: SESSION FETCH",
                     err?.message || ERROR_MESSAGES.GENERIC
@@ -109,7 +110,7 @@ export const useSupabaseAuthStore = defineStore(
                 }
 
                 currentSession.value = session;
-            } catch (err) {
+            } catch (err: any) {
                 showErrorToast(
                     "GOOGLE ERROR: REFRESH",
                     err?.message || ERROR_MESSAGES.GENERIC
