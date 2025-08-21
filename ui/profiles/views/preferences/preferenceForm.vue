@@ -186,7 +186,7 @@ const onSubmit = async () => {
             />
         </UFormField>
         <UFormField
-            label="When you are available for interviews **"
+            label="When are you available for interviews? **"
             name="interviewAvailability"
             class="mb-0 col-span-2"
         >
