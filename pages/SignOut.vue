@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { useSupabaseAuthStore } from "~/pinia_stores/supabase_auth";
 
 definePageMeta({

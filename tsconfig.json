@@ -1,4 +1,14 @@
 {
-  // https://nuxt.com/docs/guide/concepts/typescript
-  "extends": "./.nuxt/tsconfig.json"
+    // https://nuxt.com/docs/guide/concepts/typescript
+    "extends": "./.nuxt/tsconfig.json",
+    "compilerOptions": {
+        "baseUrl": ".",
+        // Specify Nuxt path aliases
+        "paths": {
+            "~/*": ["./*"],
+            "@/*": ["./*"]
+        }
+    },
+    // Do not type check dependencies (the errors there are out of your control)
+    "exclude": ["node_modules"]
 }

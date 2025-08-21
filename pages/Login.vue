@@ -1,5 +1,5 @@
-<script setup>
-import { useSupabaseAuthStore } from "~/pinia_stores/supabase_auth";
+<script setup lang="ts">
+import { useSupabaseAuthStore } from "@/pinia_stores/supabase_auth";
 import GoogleSvg from "~/ui/svgs/google.vue";
 
 definePageMeta({
