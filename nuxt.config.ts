@@ -32,7 +32,10 @@ export default defineNuxtConfig({
 
     // TS
     typescript: {
-        typeCheck: true,
+        // Turns typechecks on/off when we deploy locally or build
+        // We set it to false since vue-tsc has an issue where it type checks node_modules (even if we exclude it in tsconfig.json)
+        typeCheck: false,
+        
         strict: true,
     },
 
