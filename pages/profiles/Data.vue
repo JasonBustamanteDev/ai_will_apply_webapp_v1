@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import PersonalDetailsForm from "~/ui/profiles/views/personalDetails/personalDetailsForm.vue";
 import LocationForm from "~/ui/profiles/views/location/locationForm.vue";
 import EducationForm from "~/ui/profiles/views/education/educationForm.vue";
@@ -29,7 +29,7 @@ const fetchSingleProfile = async () => {
             supabaseProjectURL,
             encodedDynamicProfileName.value
         );
-    } catch (err) {
+    } catch (err:any) {
         showErrorToast(
             "ERROR: FETCH SINGLE PROFILE",
             err?.data?.detail ||

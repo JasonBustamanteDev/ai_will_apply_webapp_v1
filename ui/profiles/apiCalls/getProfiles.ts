@@ -17,3 +17,5 @@ const formatData = async (profileList: JobSearchProfilesRow[]) => {
     const rowPromises = profileList.map(calculateProfileKpi);
     return await Promise.all(rowPromises);
 };
+
+export type ProfileListType = Awaited<ReturnType<typeof getProfiles>>;

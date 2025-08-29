@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import ProfileListItemCard from "~/ui/profiles/shared/profile-dashboard/profileListItemCard.vue";
 import InitializeProfileCard from "~/ui/profiles/shared/profile-dashboard/initializeProfileCard.vue";
 import { useCustomToast } from "~/pinia_stores/toast";
@@ -6,6 +6,7 @@ import { getProfiles } from "~/ui/profiles/apiCalls/getProfiles.js";
 import { deleteProfile } from "~/ui/profiles/apiCalls/deleteProfile";
 import { renameProfile } from "~/ui/profiles/apiCalls/renameProfile";
 import { initializeProfile } from "~/ui/profiles/apiCalls/initializeProfile";
+import type { ProfileListType } from "~/ui/profiles/apiCalls/getProfiles.js";
 
 definePageMeta({
     middleware: ["redirect-if-no-auth-session-client"],
@@ -14,13 +15,13 @@ definePageMeta({
 const env_config = useRuntimeConfig();
 const supabaseProjectURL = env_config.public.SUPABASE_PROJECT_URL;
 
-const profileList = ref([]);
+const profileList: Ref<ProfileListType> = ref([]);
 const { showErrorToast } = useCustomToast();
 
 const fetchProfiles = async () => {
     try {
         profileList.value = await getProfiles(supabaseProjectURL);
-    } catch (err) {
+    } catch (err: any) {
         console.error(err);
         showErrorToast(
             "ERROR: FETCHING PROFILES",
@@ -36,11 +37,11 @@ onMounted(async () => {
     await fetchProfiles();
 });
 
-const initializeProfileHandler = async (newProfileName) => {
+const initializeProfileHandler = async (newProfileName: string) => {
     try {
         await initializeProfile(supabaseProjectURL, newProfileName); //! init_instance1
         await fetchProfiles(); // refetch
-    } catch (err) {
+    } catch (err: any) {
         showErrorToast(
             "ERROR: INITIALIZING PROFILE",
             err?.data?.detail ||
@@ -50,7 +51,7 @@ const initializeProfileHandler = async (newProfileName) => {
         );
     }
 };
-const editProfileHandler = async (profileName) => {
+const editProfileHandler = async (profileName: string) => {
     await navigateTo({
         path: PAGE_URLS.PROFILE_DATA,
         query: {
@@ -59,11 +60,11 @@ const editProfileHandler = async (profileName) => {
     });
 };
 
-const deleteProfileHandler = async (profileName) => {
+const deleteProfileHandler = async (profileName: string) => {
     try {
         await deleteProfile(supabaseProjectURL, profileName);
         await fetchProfiles(); // refetch
-    } catch (err) {
+    } catch (err: any) {
         showErrorToast(
             "ERROR: DELETE PROFILE",
             err?.data?.detail ||
@@ -74,11 +75,14 @@ const deleteProfileHandler = async (profileName) => {
     }
 };
 
-const renameProfileHandler = async (oldProfileName, newProfileName) => {
+const renameProfileHandler = async (
+    oldProfileName: string,
+    newProfileName: string
+) => {
     try {
         await renameProfile(supabaseProjectURL, oldProfileName, newProfileName);
         await fetchProfiles(); // refetch
-    } catch (err) {
+    } catch (err: any) {
         console.error(err);
         showErrorToast(
             "ERROR: RENAME PROFILE",
@@ -90,7 +94,10 @@ const renameProfileHandler = async (oldProfileName, newProfileName) => {
     }
 };
 
-const copyProfileHandler = async (newProfileName, existingData = null) => {
+const copyProfileHandler = async (
+    newProfileName: string,
+    existingData = null
+) => {
     try {
         await initializeProfile(
             supabaseProjectURL,
@@ -98,7 +105,7 @@ const copyProfileHandler = async (newProfileName, existingData = null) => {
             existingData //! init_instance2
         );
         await fetchProfiles(); // refetch
-    } catch (err) {
+    } catch (err: any) {
         showErrorToast(
             "ERROR: COPY PROFILE",
             err?.data?.detail ||
