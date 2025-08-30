@@ -87,7 +87,7 @@ export const locationSchema = object({
             "min-length-no-whitespace",
             "No addresses comprised of empty spaces",
             (value) => {
-                return emptyOrMinLengthStringAccepted(value, 1);
+                if (value) return emptyOrMinLengthStringAccepted(value, 1); //! test manually
             }
         ),
     city: string()
