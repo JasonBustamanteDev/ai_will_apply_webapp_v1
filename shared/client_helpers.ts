@@ -13,8 +13,13 @@ export const getAuthSessionFromLocalStorage = function (
     return sessionString ? JSON.parse(sessionString) : null;
 };
 
-export const verifyMinStringLength = (value: string, requiredLength: number) =>
-    value && value.replace(/\s/g, "").length >= requiredLength;
+export const verifyMinStringLength = (
+    value: string,
+    requiredLength: number
+) => {
+    if (!value) return false;
+    return value.replace(/\s/g, "").length >= requiredLength;
+};
 
 export const cleanPhoneNumber = (str: string) => str.replace(/[\s\-]/g, "");
 

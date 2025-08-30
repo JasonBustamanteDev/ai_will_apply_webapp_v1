@@ -28,8 +28,8 @@ export const radioStyleObject = { item: "mr-3" };
 
 export const isValidProfileName = (str: string) => {
     // String must be 1 char long, consist of alphanumeric chars, and not be entirely spaces
+    if (!str) return false;
     return (
-        str &&
         str.length > 0 &&
         str.length < 29 &&
         str.trim().length > 0 &&

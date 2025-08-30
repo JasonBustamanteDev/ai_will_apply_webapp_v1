@@ -4,6 +4,7 @@ import { genders, ethnicGroups, educationLevels } from "~/ui/profiles/views/pers
 import { countriesList } from "./location/countries";
 import { usaDict, canadaDict } from "./location/provinces";
 import { isValidProfileName } from "../shared/constants";
+import { isValidNumericString } from "~/shared/client_helpers";
 
 const MESSAGES = {
     REQUIRED: "This field is required",
