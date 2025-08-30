@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { profileNameSchema } from "../../views/formValidation";
 
 const props = defineProps({
@@ -8,7 +8,12 @@ const props = defineProps({
     isReady: { type: Boolean },
     rowData: { type: Object, required: true },
 });
-const emit = defineEmits(["deleteProfile", "renameProfile", "copyProfile", "editCallback"]);
+const emit = defineEmits([
+    "deleteProfile",
+    "renameProfile",
+    "copyProfile",
+    "editCallback",
+]);
 
 // Delete profile logic
 const isDeleteProfileModalOpen = ref(false);
@@ -83,20 +88,32 @@ const copyButtonHandler = async () => {
                 >
                 <UButton
                     color="neutral"
-                    @click="() => (isRenameProfileModalOpen = true)"
+                    @click="
+                        () => {
+                            isRenameProfileModalOpen = true;
+                        }
+                    "
                     class="cursor-pointer"
                     >Rename</UButton
                 >
                 <UButton
                     color="neutral"
-                    @click="() => (isCopyProfileModalOpen = true)"
+                    @click="
+                        () => {
+                            isCopyProfileModalOpen = true;
+                        }
+                    "
                     class="cursor-pointer"
                     >Copy</UButton
                 >
                 <UButton
                     color="neutral"
                     variant="outline"
-                    @click="() => (isDeleteProfileModalOpen = true)"
+                    @click="
+                        () => {
+                            isDeleteProfileModalOpen = true;
+                        }
+                    "
                     class="cursor-pointer !bg-[#ca2525] text-white"
                     >Delete</UButton
                 >
