@@ -12,6 +12,7 @@ import { useCustomToast } from "~/pinia_stores/toast";
 import { getSingleProfile } from "~/ui/profiles/apiCalls/getSingleProfile";
 import type { SingleProfileType } from "~/ui/profiles/apiCalls/getSingleProfile";
 import type { LanguagesFormRawData } from "~/types/forms/languages";
+import type { WorkExperienceRaw } from "~/types/forms/workExperience";
 
 definePageMeta({
     middleware: ["redirect-if-no-auth-session-client"],
@@ -47,11 +48,19 @@ onMounted(async () => {
     await fetchSingleProfile();
 });
 
+const blankData = { data: null, isComplete: false };
+
 const languagesRawData = (
     profileDataObject.value
         ? profileDataObject.value.forms[PROFILE_FORMS.LANGUAGES]
-        : { data: null, isComplete: false }
+        : blankData
 ) as LanguagesFormRawData;
+
+const workExperienceRawData = (
+    profileDataObject.value
+        ? profileDataObject.value.forms[PROFILE_FORMS.WORK_EXPERIENCE]
+        : blankData
+) as WorkExperienceRaw;
 </script>
 
 <template>
@@ -152,9 +161,7 @@ const languagesRawData = (
                 :isOptional="!PROFILE_REQUIREMENTS.WORK_EXPERIENCE"
             >
                 <WorkExperienceForm
-                    :rawFormData="
-                        profileDataObject.forms[PROFILE_FORMS.WORK_EXPERIENCE]
-                    "
+                    :rawFormData="workExperienceRawData"
                     :encodedProfileName="encodedDynamicProfileName"
                     :formName="PROFILE_FORMS.WORK_EXPERIENCE"
                 />

@@ -6,21 +6,13 @@ import InputLabelSlot from "~/ui/profiles/shared/inputLabelSlot.vue";
 import AddRowButton from "@/ui/profiles/shared/addRowButton.vue";
 import RemoveRowButton from "~/ui/profiles/shared/removeRowButton.vue";
 import { useCustomToast } from "~/pinia_stores/toast";
+import type { WorkExperienceRaw } from "~/types/forms/workExperience";
 
-const props = defineProps({
-    rawFormData: {
-        type: Object,
-        required: false,
-    },
-    formName: {
-        type: String,
-        required: true,
-    },
-    encodedProfileName: {
-        type: String,
-        required: true,
-    },
-});
+const props = defineProps<{
+    rawFormData?: WorkExperienceRaw;
+    formName: string;
+    encodedProfileName: string;
+}>();
 
 const { showSuccessToast, showErrorToast } = useCustomToast();
 const env_config = useRuntimeConfig();
@@ -42,7 +34,7 @@ const generateEmptyRow = () => ({
     currentlyThereError: false,
 });
 
-const rawData = props.rawFormData.data;
+const rawData = props.rawFormData?.data || null;
 const workExperienceList = ref(rawData && rawData.length ? rawData : []);
 
 const areAllRowsValid = () => {
@@ -78,7 +70,7 @@ const addExperienceRow = () => {
     workExperienceList.value.push(generateEmptyRow());
 };
 
-const removeExperienceRow = (index) => {
+const removeExperienceRow = () => {
     if (workExperienceList.value.length) {
         workExperienceList.value.pop();
     }
@@ -116,8 +108,10 @@ const onSubmit = async () => {
         );
 
         // Update props data to avoid refetching data
-        props.rawFormData.isComplete = true; // set chip to true
-        props.rawFormData.data = formattedData;
+        if (props.rawFormData) {
+            props.rawFormData.isComplete = true; // set chip to true
+            props.rawFormData.data = formattedData;
+        }
     } catch (err: any) {
         console.error(err);
         if (!isValidationError) {
@@ -180,6 +174,7 @@ const onSubmit = async () => {
                 ><InputLabelSlot labelText="Years **"
             /></UInput>
 
+            <!-- @ts-ignore @ts-nocheck-->
             <URadioGroup
                 v-model="row.currentlyThere"
                 orientation="horizontal"
