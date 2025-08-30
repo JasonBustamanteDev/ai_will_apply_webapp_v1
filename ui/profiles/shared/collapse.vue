@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 const props = defineProps({
     isComplete: { type: Boolean },
     isOptional: { type: Boolean, default: false },
