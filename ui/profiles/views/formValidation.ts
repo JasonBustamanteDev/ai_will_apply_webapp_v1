@@ -5,6 +5,7 @@ import { countriesList } from "./location/countries";
 import { usaDict, canadaDict } from "./location/provinces";
 import { isValidProfileName } from "../shared/constants";
 import { isValidNumericString } from "~/shared/client_helpers";
+import type { NullableLanguageList } from "~/types/forms/languages";
 
 const MESSAGES = {
     REQUIRED: "This field is required",
@@ -12,6 +13,9 @@ const MESSAGES = {
     VALID_OPTION: "Please select a valid option",
     ONLY_EMPTY: "Answer cannot be empty spaces",
 };
+
+
+
 
 export const profileNameSchema = object({
     profileName: string()
@@ -400,7 +404,7 @@ export const skillsValidator = (skillsList) => {
 };
 
 // tech_debt: ensure this fn validates similarly to this other fn (CTRL F a1b)
-export const languageValidator = (languageList) => {
+export const languageValidator = (languageList: NullableLanguageList) => {
     if (!languageList || !languageList.length) return false;
 
     for (const obj of languageList) {

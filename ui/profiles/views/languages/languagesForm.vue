@@ -3,21 +3,13 @@ import AddRowButton from "@/ui/profiles/shared/addRowButton.vue";
 import { verifyMinStringLength } from "~/shared/client_helpers";
 import { updateProfile } from "~/ui/profiles/apiCalls/updateProfile.js";
 import { useCustomToast } from "~/pinia_stores/toast";
+import type { LanguagesFormRawData } from "~/types/forms/languages";
 
-const props = defineProps({
-    rawFormData: {
-        type: Object,
-        required: false,
-    },
-    formName: {
-        type: String,
-        required: true,
-    },
-    encodedProfileName: {
-        type: String,
-        required: true,
-    },
-});
+const props = defineProps<{
+    rawFormData?: LanguagesFormRawData;
+    formName: string;
+    encodedProfileName: string;
+}>();
 
 const { showSuccessToast, showErrorToast } = useCustomToast();
 const env_config = useRuntimeConfig();
@@ -30,7 +22,7 @@ const generateEmptyRow = () => ({
     proficiencyError: false,
 });
 
-const languages = ref(props.rawFormData.data || [generateEmptyRow()]);
+const languages = ref(props.rawFormData?.data || [generateEmptyRow()]);
 
 const proficiencyOptions = [
     {
@@ -92,15 +84,18 @@ const onSubmit = async () => {
         });
 
         // Close collapse component and render success toast
-        document.getElementById(COLLAPSE_NAMES.LANGUAGES).checked = false; // prettier-ignore
+        // @ts-ignore
+        document.getElementById(COLLAPSE_NAMES.LANGUAGES).checked = false;
         showSuccessToast(
             "Form Submitted",
             "Fill out the remaining forms or start job hunting"
         );
 
         // Update props data to avoid refetching data
-        props.rawFormData.isComplete = true; // set chip to true
-        props.rawFormData.data = formattedData;
+        if (props.rawFormData) {
+            props.rawFormData.isComplete = true; // set chip to true
+            props.rawFormData.data = formattedData;
+        }
     } catch (err: any) {
         console.error(err);
         if (!isValidationError) {
@@ -132,14 +127,14 @@ const onSubmit = async () => {
                 placeholder="Enter language"
                 class="w-64"
                 :highlight="lang.langError"
-                :color="lang.langError ? 'error' : ''"
+                :color="lang.langError ? 'error' : 'neutral'"
             />
             <USelect
                 v-model="lang.proficiency"
                 :items="proficiencyOptions"
                 class="w-36"
                 :highlight="lang.proficiencyError"
-                :color="lang.proficiencyError ? 'error' : ''"
+                :color="lang.proficiencyError ? 'error' : 'neutral'"
             />
             <UButton
                 icon="i-heroicons-trash"
