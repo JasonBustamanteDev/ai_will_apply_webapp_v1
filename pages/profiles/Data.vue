@@ -21,7 +21,7 @@ const { showErrorToast } = useCustomToast();
 const env_config = useRuntimeConfig();
 const supabaseProjectURL = env_config.public.SUPABASE_PROJECT_URL;
 
-const profileDataObject = ref(null);
+const profileDataObject: Ref<SingleProfileType | null> = ref(null);
 const encodedDynamicProfileName = ref("");
 
 const fetchSingleProfile = async () => {
@@ -30,7 +30,7 @@ const fetchSingleProfile = async () => {
             supabaseProjectURL,
             encodedDynamicProfileName.value
         );
-    } catch (err:any) {
+    } catch (err: any) {
         showErrorToast(
             "ERROR: FETCH SINGLE PROFILE",
             err?.data?.detail ||
@@ -42,7 +42,7 @@ const fetchSingleProfile = async () => {
 };
 
 onMounted(async () => {
-    encodedDynamicProfileName.value = route.query?.profileName || "";
+    encodedDynamicProfileName.value = String(route.query?.profileName) || "";
     await fetchSingleProfile();
 });
 </script>
@@ -64,7 +64,6 @@ onMounted(async () => {
                     form
                 </p>
             </div>
-
 
             <p>{{ profileDataObject.forms }}</p>
             <CollapseComponent
