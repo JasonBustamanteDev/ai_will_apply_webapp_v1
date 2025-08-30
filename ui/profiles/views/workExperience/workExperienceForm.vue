@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { verifyMinStringLength, isValidNumericString } from "~/shared/client_helpers"; // prettier-ignore
 import { booleanOptions, radioStyleObject } from "~/ui/profiles/shared/constants.js"; // prettier-ignore
 import { updateProfile } from "~/ui/profiles/apiCalls/updateProfile.js";
@@ -108,6 +108,7 @@ const onSubmit = async () => {
         });
 
         // Close collapse component and render success toast
+        // @ts-ignore
         document.getElementById(COLLAPSE_NAMES.WORK_EXPERIENCE).checked = false; // prettier-ignore
         showSuccessToast(
             "Form Submitted",
@@ -117,7 +118,7 @@ const onSubmit = async () => {
         // Update props data to avoid refetching data
         props.rawFormData.isComplete = true; // set chip to true
         props.rawFormData.data = formattedData;
-    } catch (err) {
+    } catch (err: any) {
         console.error(err);
         if (!isValidationError) {
             showErrorToast(
@@ -158,7 +159,7 @@ const onSubmit = async () => {
                 v-model="row.jobTitle"
                 placeholder=""
                 :highlight="row.jobTitleError"
-                :color="row.jobTitleError ? 'error' : ''"
+                :color="row.jobTitleError ? 'error' : 'neutral'"
             >
                 <InputLabelSlot labelText="Job Title **" />
             </UInput>
@@ -166,7 +167,7 @@ const onSubmit = async () => {
                 v-model="row.company"
                 placeholder=""
                 :highlight="row.companyError"
-                :color="row.companyError ? 'error' : ''"
+                :color="row.companyError ? 'error' : 'neutral'"
             >
                 <InputLabelSlot labelText="Company **" />
             </UInput>
@@ -175,7 +176,7 @@ const onSubmit = async () => {
                 class="w-full"
                 placeholder="number"
                 :highlight="row.yearsError"
-                :color="row.yearsError ? 'error' : ''"
+                :color="row.yearsError ? 'error' : 'neutral'"
                 ><InputLabelSlot labelText="Years **"
             /></UInput>
 
