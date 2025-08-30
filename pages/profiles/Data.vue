@@ -65,13 +65,12 @@ onMounted(async () => {
                 </p>
             </div>
 
-            <p>{{ profileDataObject.forms }}</p>
             <CollapseComponent
                 title="Personal Details"
                 :checkboxId="COLLAPSE_NAMES.PERSONAL_DETAILS"
                 :isComplete="
                     profileDataObject.forms[PROFILE_FORMS.PERSONAL_DETAILS]
-                        .isComplete
+                        ?.isComplete || false
                 "
                 :isOptional="!PROFILE_REQUIREMENTS.PERSONAL_DETAILS"
             >
@@ -88,7 +87,8 @@ onMounted(async () => {
                 title="Location"
                 :checkboxId="COLLAPSE_NAMES.LOCATION"
                 :isComplete="
-                    profileDataObject.forms[PROFILE_FORMS.LOCATION].isComplete
+                    profileDataObject.forms[PROFILE_FORMS.LOCATION]
+                        ?.isComplete || false
                 "
                 :isOptional="!PROFILE_REQUIREMENTS.LOCATION"
             >
@@ -106,7 +106,7 @@ onMounted(async () => {
                 :checkboxId="COLLAPSE_NAMES.PREFERENCES"
                 :isComplete="
                     profileDataObject.forms[PROFILE_FORMS.PREFERENCES]
-                        .isComplete
+                        ?.isComplete || false
                 "
                 :isOptional="!PROFILE_REQUIREMENTS.PREFERENCES"
             >
@@ -123,7 +123,8 @@ onMounted(async () => {
                 title="Languages"
                 :checkboxId="COLLAPSE_NAMES.LANGUAGES"
                 :isComplete="
-                    profileDataObject.forms[PROFILE_FORMS.LANGUAGES].isComplete
+                    profileDataObject.forms[PROFILE_FORMS.LANGUAGES]
+                        ?.isComplete || false
                 "
                 :isOptional="!PROFILE_REQUIREMENTS.LANGUAGES"
             >
@@ -141,7 +142,7 @@ onMounted(async () => {
                 :checkboxId="COLLAPSE_NAMES.WORK_EXPERIENCE"
                 :isComplete="
                     profileDataObject.forms[PROFILE_FORMS.WORK_EXPERIENCE]
-                        .isComplete
+                        ?.isComplete || false
                 "
                 :isOptional="!PROFILE_REQUIREMENTS.WORK_EXPERIENCE"
             >
@@ -158,7 +159,8 @@ onMounted(async () => {
                 title="University or College"
                 :checkboxId="COLLAPSE_NAMES.EDUCATION"
                 :isComplete="
-                    profileDataObject.forms[PROFILE_FORMS.EDUCATION].isComplete
+                    profileDataObject.forms[PROFILE_FORMS.EDUCATION]
+                        ?.isComplete || false
                 "
                 :isOptional="!PROFILE_REQUIREMENTS.EDUCATION"
             >
@@ -176,7 +178,7 @@ onMounted(async () => {
                 :checkboxId="COLLAPSE_NAMES.MEDIA_LINKS"
                 :isComplete="
                     profileDataObject.forms[PROFILE_FORMS.MEDIA_LINKS]
-                        .isComplete
+                        ?.isComplete || false
                 "
                 :isOptional="!PROFILE_REQUIREMENTS.MEDIA_LINKS"
             >
@@ -193,7 +195,8 @@ onMounted(async () => {
                 title="Skills"
                 :checkboxId="COLLAPSE_NAMES.SKILLS"
                 :isComplete="
-                    profileDataObject.forms[PROFILE_FORMS.SKILLS].isComplete
+                    profileDataObject.forms[PROFILE_FORMS.SKILLS]?.isComplete ||
+                    false
                 "
                 :isOptional="!PROFILE_REQUIREMENTS.SKILLS"
             >
