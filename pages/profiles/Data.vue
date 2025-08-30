@@ -10,6 +10,7 @@ import PreferenceForm from "~/ui/profiles/views/preferences/preferenceForm.vue";
 import WorkExperienceForm from "~/ui/profiles/views/workExperience/workExperienceForm.vue";
 import { useCustomToast } from "~/pinia_stores/toast";
 import { getSingleProfile } from "~/ui/profiles/apiCalls/getSingleProfile";
+import type { SingleProfileType } from "~/ui/profiles/apiCalls/getSingleProfile";
 
 definePageMeta({
     middleware: ["redirect-if-no-auth-session-client"],
@@ -64,6 +65,8 @@ onMounted(async () => {
                 </p>
             </div>
 
+
+            <p>{{ profileDataObject.forms }}</p>
             <CollapseComponent
                 title="Personal Details"
                 :checkboxId="COLLAPSE_NAMES.PERSONAL_DETAILS"
