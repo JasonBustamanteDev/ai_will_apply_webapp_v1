@@ -39,7 +39,7 @@ onMounted(async () => {
 
 const initializeProfileHandler = async (newProfileName: string) => {
     try {
-        await initializeProfile(supabaseProjectURL, newProfileName); //! init_instance1
+        await initializeProfile(supabaseProjectURL, newProfileName);
         await fetchProfiles(); // refetch
     } catch (err: any) {
         showErrorToast(
@@ -102,7 +102,7 @@ const copyProfileHandler = async (
         await initializeProfile(
             supabaseProjectURL,
             newProfileName,
-            existingData //! init_instance2
+            existingData
         );
         await fetchProfiles(); // refetch
     } catch (err: any) {

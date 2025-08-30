@@ -14,9 +14,6 @@ const MESSAGES = {
     ONLY_EMPTY: "Answer cannot be empty spaces",
 };
 
-
-
-
 export const profileNameSchema = object({
     profileName: string()
         .required(MESSAGES.REQUIRED)
@@ -91,7 +88,8 @@ export const locationSchema = object({
             "min-length-no-whitespace",
             "No addresses comprised of empty spaces",
             (value) => {
-                if (value) return emptyOrMinLengthStringAccepted(value, 1); //! test manually
+                if (value) return emptyOrMinLengthStringAccepted(value, 1);
+                return true;
             }
         ),
     city: string()
