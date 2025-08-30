@@ -1,9 +1,9 @@
 import { getAuthSessionFromLocalStorage } from "~/shared/client_helpers"; // prettier-ignore
 
 export const initializeProfile = async (
-    supabaseProjectUrl,
-    newProfileName,
-    existingData = null
+    supabaseProjectUrl: string,
+    newProfileName: string,
+    existingData: RecordOrNull = null
 ) => {
     const session = await getAuthSessionFromLocalStorage(supabaseProjectUrl);
     const newName = encodeURI(newProfileName);
@@ -20,7 +20,7 @@ export const initializeProfile = async (
     });
 };
 
-const formatExistingData = (data) => {
+const formatExistingData = (data: RecordOrNull) => {
     if (!data) return;
 
     return {

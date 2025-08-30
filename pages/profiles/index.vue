@@ -5,8 +5,8 @@ import { useCustomToast } from "~/pinia_stores/toast";
 import { getProfiles } from "~/ui/profiles/apiCalls/getProfiles.js";
 import { deleteProfile } from "~/ui/profiles/apiCalls/deleteProfile";
 import { renameProfile } from "~/ui/profiles/apiCalls/renameProfile";
-import { initializeProfile } from "~/ui/profiles/apiCalls/initializeProfile";
-import type { ProfileListType } from "~/ui/profiles/apiCalls/getProfiles.js";
+import { initializeProfile } from "@/ui/profiles/apiCalls/initializeProfile";
+import type { ProfileListType } from "~/ui/profiles/apiCalls/getProfiles";
 
 definePageMeta({
     middleware: ["redirect-if-no-auth-session-client"],
@@ -96,7 +96,7 @@ const renameProfileHandler = async (
 
 const copyProfileHandler = async (
     newProfileName: string,
-    existingData = null
+    existingData: RecordOrNull = null
 ) => {
     try {
         await initializeProfile(

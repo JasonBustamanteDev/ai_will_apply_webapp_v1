@@ -1,0 +1,1 @@
+export type RecordOrNull = Record<string, any> | null
