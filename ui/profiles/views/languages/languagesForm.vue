@@ -59,7 +59,7 @@ const addLanguage = () => {
     languages.value.push(generateEmptyRow());
 };
 
-const removeLanguage = (index) => {
+const removeLanguage = (index: number) => {
     languages.value.splice(index, 1);
 };
 
@@ -88,7 +88,7 @@ const onSubmit = async () => {
             proficiency: obj["proficiency"],
         }));
         await updateProfile(supabaseProjectURL, props.encodedProfileName, {
-            [props.formName]: formattedData
+            [props.formName]: formattedData,
         });
 
         // Close collapse component and render success toast
@@ -143,7 +143,7 @@ const onSubmit = async () => {
             />
             <UButton
                 icon="i-heroicons-trash"
-                color="red"
+                color="neutral"
                 variant="ghost"
                 @click="removeLanguage(index)"
                 :disabled="languages.length === 1"
