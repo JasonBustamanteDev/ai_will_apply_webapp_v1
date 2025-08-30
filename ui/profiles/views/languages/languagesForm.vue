@@ -101,7 +101,7 @@ const onSubmit = async () => {
         // Update props data to avoid refetching data
         props.rawFormData.isComplete = true; // set chip to true
         props.rawFormData.data = formattedData;
-    } catch (err) {
+    } catch (err: any) {
         console.error(err);
         if (!isValidationError) {
             showErrorToast(
