@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import AddProfileSvg from "~/ui/svgs/addProfile.vue";
 import { profileNameSchema } from "../../views/formValidation";
 
