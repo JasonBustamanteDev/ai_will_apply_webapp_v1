@@ -15,5 +15,7 @@ export const getSingleProfile = async (
         }
     );
 
-    return await calculateProfileKpi(result.data);
+    return await calculateProfileKpi(result.data as JobSearchProfilesRow);
 };
+
+export type SingleProfileType = Awaited<ReturnType<typeof getSingleProfile>>;
