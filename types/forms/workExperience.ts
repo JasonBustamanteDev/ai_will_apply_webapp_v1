@@ -2,7 +2,7 @@ export type JobExperienceObject = {
     jobTitle: string;
     company: string;
     years: number | string;
-    currentlyThere: boolean;
+    currentlyThere: "yes" | "no";
 
     jobTitleError?: boolean;
     companyError?: boolean;

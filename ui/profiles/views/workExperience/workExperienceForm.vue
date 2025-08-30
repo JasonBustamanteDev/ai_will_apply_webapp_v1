@@ -6,7 +6,7 @@ import InputLabelSlot from "~/ui/profiles/shared/inputLabelSlot.vue";
 import AddRowButton from "@/ui/profiles/shared/addRowButton.vue";
 import RemoveRowButton from "~/ui/profiles/shared/removeRowButton.vue";
 import { useCustomToast } from "~/pinia_stores/toast";
-import type { WorkExperienceRaw } from "~/types/forms/workExperience";
+import type { WorkExperienceRaw, JobExperienceObject } from "~/types/forms/workExperience"; // prettier-ignore
 
 const props = defineProps<{
     rawFormData?: WorkExperienceRaw;
@@ -19,20 +19,21 @@ const env_config = useRuntimeConfig();
 const supabaseProjectURL = env_config.public.SUPABASE_PROJECT_URL;
 
 const currentlyThereOptions = [
-    { label: "I still work here", value: true },
-    { label: "I no longer work here", value: false },
+    { label: "I still work here", value: "yes" },
+    { label: "I no longer work here", value: "no" },
 ];
-const generateEmptyRow = () => ({
-    jobTitle: "",
-    company: "",
-    years: "", // must be empty string (or else error detection overlooks value)
-    currentlyThere: false,
+const generateEmptyRow = () =>
+    ({
+        jobTitle: "",
+        company: "",
+        years: "", // must be empty string (or else error detection overlooks value)
+        currentlyThere: "no",
 
-    jobTitleError: false,
-    companyError: false,
-    yearsError: false,
-    currentlyThereError: false,
-});
+        jobTitleError: false,
+        companyError: false,
+        yearsError: false,
+        currentlyThereError: false,
+    } as JobExperienceObject);
 
 const rawData = props.rawFormData?.data || null;
 const workExperienceList = ref(rawData && rawData.length ? rawData : []);
@@ -174,7 +175,6 @@ const onSubmit = async () => {
                 ><InputLabelSlot labelText="Years **"
             /></UInput>
 
-            <!-- @ts-ignore @ts-nocheck-->
             <URadioGroup
                 v-model="row.currentlyThere"
                 orientation="horizontal"
