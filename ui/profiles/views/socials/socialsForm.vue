@@ -1,22 +1,14 @@
-<script setup>
+<script setup lang="ts">
 import { socialSchema } from "../formValidation";
 import { updateProfile } from "~/ui/profiles/apiCalls/updateProfile.js";
 import { useCustomToast } from "~/pinia_stores/toast";
+import type { SocialsRaw } from "~/types/forms/socials";
 
-const props = defineProps({
-    rawFormData: {
-        type: Object,
-        required: false,
-    },
-    formName: {
-        type: String,
-        required: true,
-    },
-    encodedProfileName: {
-        type: String,
-        required: true,
-    },
-});
+const props = defineProps<{
+    rawFormData: SocialsRaw;
+    formName: string;
+    encodedProfileName: string;
+}>();
 
 const { showSuccessToast, showErrorToast } = useCustomToast();
 const env_config = useRuntimeConfig();
@@ -48,6 +40,7 @@ const onSubmit = async () => {
         });
 
         // Close collapse component and render success toast
+        // @ts-ignore
         document.getElementById(COLLAPSE_NAMES.MEDIA_LINKS).checked = false; // prettier-ignore
         showSuccessToast(
             "Form Submitted",
@@ -57,7 +50,7 @@ const onSubmit = async () => {
         // Update props data to avoid refetching data
         props.rawFormData.isComplete = true;
         props.rawFormData.data = formState;
-    } catch (err) {
+    } catch (err: any) {
         console.error(err);
         if (!isValidationError) {
             showErrorToast(
@@ -73,6 +66,7 @@ const onSubmit = async () => {
 </script>
 
 <template>
+    <p>{{ props.rawFormData }}</p>
     <UForm
         :schema="socialSchema"
         :state="formState"

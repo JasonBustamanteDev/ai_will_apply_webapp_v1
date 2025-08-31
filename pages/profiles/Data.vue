@@ -13,8 +13,9 @@ import { getSingleProfile } from "~/ui/profiles/apiCalls/getSingleProfile";
 import type { SingleProfileType } from "~/ui/profiles/apiCalls/getSingleProfile";
 import type { LanguagesFormRawData } from "~/types/forms/languages";
 import type { WorkExperienceRaw } from "~/types/forms/workExperience";
-import type { SkillsRaw } from "~/types/forms/skills"; // prettier-ignore
+import type { SkillsRaw } from "~/types/forms/skills";
 import type { PersonalDetailsRaw } from "~/types/forms/personalDetails";
+import type { SocialsRaw } from "~/types/forms/socials";
 
 definePageMeta({
     middleware: ["redirect-if-no-auth-session-client"],
@@ -52,6 +53,7 @@ onMounted(async () => {
 
 const blankData = { data: null, isComplete: false };
 
+//! Consider making them computed
 const languagesRawData = (
     profileDataObject.value
         ? profileDataObject.value.forms[PROFILE_FORMS.LANGUAGES]
@@ -75,6 +77,12 @@ const personalDetailsRawData = (
         ? profileDataObject.value.forms[PROFILE_FORMS.PERSONAL_DETAILS]
         : blankData
 ) as PersonalDetailsRaw;
+
+const socialsRawData = (
+    profileDataObject.value
+        ? profileDataObject.value.forms[PROFILE_FORMS.MEDIA_LINKS]
+        : blankData
+) as SocialsRaw;
 </script>
 
 <template>
@@ -191,16 +199,11 @@ const personalDetailsRawData = (
             <CollapseComponent
                 title="Portfolio + Social Media Links"
                 :checkboxId="COLLAPSE_NAMES.MEDIA_LINKS"
-                :isComplete="
-                    profileDataObject.forms[PROFILE_FORMS.MEDIA_LINKS]
-                        ?.isComplete || false
-                "
+                :isComplete="socialsRawData.isComplete"
                 :isOptional="!PROFILE_REQUIREMENTS.MEDIA_LINKS"
             >
                 <SocialsForm
-                    :rawFormData="
-                        profileDataObject.forms[PROFILE_FORMS.MEDIA_LINKS]
-                    "
+                    :rawFormData="socialsRawData"
                     :encodedProfileName="encodedDynamicProfileName"
                     :formName="PROFILE_FORMS.MEDIA_LINKS"
                 />

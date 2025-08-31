@@ -7,6 +7,7 @@ import { isValidProfileName } from "../shared/constants";
 import { isValidNumericString } from "~/shared/client_helpers";
 import type { NullableLanguageList } from "~/types/forms/languages";
 import type { NullableWorkExperienceList } from "~/types/forms/workExperience"; // prettier-ignore
+import type { NullableSkillList } from "~/types/forms/skills"; // prettier-ignore
 
 const MESSAGES = {
     REQUIRED: "This field is required",
@@ -390,7 +391,7 @@ export const socialSchema = object({
 });
 
 // tech_debt: ensure this fn validates similarly to this other fn (CTRL F a1c)
-export const skillsValidator = (skillsList) => {
+export const skillsValidator = (skillsList: NullableSkillList) => {
     if (!skillsList || !skillsList.length) return false;
 
     for (const obj of skillsList) {
