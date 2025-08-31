@@ -35,7 +35,7 @@ const generateEmptyRow = () =>
         currentlyThereError: false,
     } as JobExperienceObject);
 
-const rawData = props.rawFormData?.data || null;
+const rawData = props.rawFormData.data;
 const workExperienceList = ref(rawData && rawData.length ? rawData : []);
 
 const areAllRowsValid = () => {
