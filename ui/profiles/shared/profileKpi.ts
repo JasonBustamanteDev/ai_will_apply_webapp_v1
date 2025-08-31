@@ -1,5 +1,8 @@
 import { extractFormattedDate } from "~/shared/client_helpers";
 import { personalDetailsSchema, locationSchema, preferenceSchema, educationSchema, socialSchema, skillsValidator, workExperienceValidator, languageValidator } from "../views/formValidation"; // prettier-ignore
+import type { NullableWorkExperienceList } from "~/types/forms/workExperience";
+import type { NullableSkillList } from "~/types/forms/skills";
+import type { NullableLanguageList } from "~/types/forms/languages";
 
 export const calculateProfileKpi = async (x: JobSearchProfilesRow) => {
     // Determine if the data saved for each form is valid or not (according to yup schema)
@@ -10,9 +13,13 @@ export const calculateProfileKpi = async (x: JobSearchProfilesRow) => {
     const mediaIsValid = await socialSchema.validate(x.mediaLinks).then(() => true).catch(() => false); // prettier-ignore
 
     // Check the custom validation for the unspecified-length list forms
-    const languagesIsValid = languageValidator(x.languages);
-    const skillsIsValid = skillsValidator(x.skills);
-    const workExperienceIsValid = workExperienceValidator(x.workExperience);
+    const languagesIsValid = languageValidator(
+        x.languages as NullableLanguageList
+    );
+    const skillsIsValid = skillsValidator(x.skills as NullableSkillList);
+    const workExperienceIsValid = workExperienceValidator(
+        x.workExperience as NullableWorkExperienceList
+    );
 
     // Count how many forms are complete out of all of them
     const formCompletionBooleans = [
