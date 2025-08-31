@@ -1,23 +1,15 @@
-<script setup>
+<script setup lang="ts">
 import AddRowButton from "@/ui/profiles/shared/addRowButton.vue";
 import { verifyMinStringLength } from "~/shared/client_helpers";
 import { updateProfile } from "~/ui/profiles/apiCalls/updateProfile.js";
 import { useCustomToast } from "~/pinia_stores/toast";
+import type { SkillsRaw, SkillList } from "~/types/forms/skills"; // prettier-ignore
 
-const props = defineProps({
-    rawFormData: {
-        type: Object,
-        required: false,
-    },
-    formName: {
-        type: String,
-        required: true,
-    },
-    encodedProfileName: {
-        type: String,
-        required: true,
-    },
-});
+const props = defineProps<{
+    rawFormData: SkillsRaw;
+    formName: string;
+    encodedProfileName: string;
+}>();
 
 const { showSuccessToast, showErrorToast } = useCustomToast();
 const env_config = useRuntimeConfig();
@@ -33,12 +25,14 @@ const generateEmptyRow = () => ({
     nameError: false,
 });
 
-const skills = ref(props.rawFormData.data || [generateEmptyRow()]);
+const skills: Ref<SkillList> = ref(
+    props?.rawFormData?.data || [generateEmptyRow()]
+);
 
 const addSkill = () => {
     skills.value.push(generateEmptyRow());
 };
-const removeSkill = (index) => {
+const removeSkill = (index: number) => {
     skills.value.splice(index, 1);
 };
 
@@ -68,6 +62,7 @@ const onSubmit = async () => {
         });
 
         // Close collapse component and render success toast
+        // @ts-ignore
         document.getElementById(COLLAPSE_NAMES.SKILLS).checked = false;
         showSuccessToast(
             "Form Submitted",
@@ -75,9 +70,11 @@ const onSubmit = async () => {
         );
 
         // Update props data to avoid refetching data
-        props.rawFormData.isComplete = true; // set chip to true
-        props.rawFormData.data = formattedData;
-    } catch (err) {
+        if (props.rawFormData) {
+            props.rawFormData.isComplete = true; // set chip to true
+            props.rawFormData.data = formattedData;
+        }
+    } catch (err: any) {
         console.error(err);
         if (!isValidationError) {
             showErrorToast(
@@ -112,7 +109,7 @@ const onSubmit = async () => {
             <UInput
                 v-model="skill.name"
                 :highlight="skill.nameError"
-                :color="skill.nameError ? 'error' : ''"
+                :color="skill.nameError ? 'error' : 'neutral'"
                 placeholder="Type skill"
                 class="w-64"
             />
@@ -125,7 +122,7 @@ const onSubmit = async () => {
             />
             <UButton
                 icon="i-heroicons-trash"
-                color="red"
+                color="neutral"
                 variant="ghost"
                 @click="removeSkill(index)"
                 :disabled="skills.length === 1"

@@ -13,6 +13,7 @@ import { getSingleProfile } from "~/ui/profiles/apiCalls/getSingleProfile";
 import type { SingleProfileType } from "~/ui/profiles/apiCalls/getSingleProfile";
 import type { LanguagesFormRawData } from "~/types/forms/languages";
 import type { WorkExperienceRaw } from "~/types/forms/workExperience";
+import type { SkillsRaw } from "~/types/forms/skills"; // prettier-ignore
 
 definePageMeta({
     middleware: ["redirect-if-no-auth-session-client"],
@@ -61,6 +62,12 @@ const workExperienceRawData = (
         ? profileDataObject.value.forms[PROFILE_FORMS.WORK_EXPERIENCE]
         : blankData
 ) as WorkExperienceRaw;
+
+const skillsRawData = (
+    profileDataObject.value
+        ? profileDataObject.value.forms[PROFILE_FORMS.SKILLS]
+        : blankData
+) as SkillsRaw;
 </script>
 
 <template>
@@ -213,7 +220,7 @@ const workExperienceRawData = (
                 :isOptional="!PROFILE_REQUIREMENTS.SKILLS"
             >
                 <SkillsForm
-                    :rawFormData="profileDataObject.forms[PROFILE_FORMS.SKILLS]"
+                    :rawFormData="skillsRawData"
                     :encodedProfileName="encodedDynamicProfileName"
                     :formName="PROFILE_FORMS.SKILLS"
                 />

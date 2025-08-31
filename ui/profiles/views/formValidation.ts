@@ -6,6 +6,7 @@ import { usaDict, canadaDict } from "./location/provinces";
 import { isValidProfileName } from "../shared/constants";
 import { isValidNumericString } from "~/shared/client_helpers";
 import type { NullableLanguageList } from "~/types/forms/languages";
+import type { NullableWorkExperienceList } from "~/types/forms/workExperience"; // prettier-ignore
 
 const MESSAGES = {
     REQUIRED: "This field is required",
@@ -418,7 +419,9 @@ export const languageValidator = (languageList: NullableLanguageList) => {
 };
 
 // tech_debt: ensure this fn validates similarly to this other fn (CTRL F a1a)
-export const workExperienceValidator = (experienceList) => {
+export const workExperienceValidator = (
+    experienceList: NullableWorkExperienceList
+) => {
     if (!experienceList) return false;
 
     for (const obj of experienceList) {

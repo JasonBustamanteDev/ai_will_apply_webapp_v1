@@ -6,7 +6,7 @@ import { useCustomToast } from "~/pinia_stores/toast";
 import type { LanguagesFormRawData } from "~/types/forms/languages";
 
 const props = defineProps<{
-    rawFormData?: LanguagesFormRawData;
+    rawFormData: LanguagesFormRawData;
     formName: string;
     encodedProfileName: string;
 }>();

@@ -9,7 +9,7 @@ import { useCustomToast } from "~/pinia_stores/toast";
 import type { WorkExperienceRaw, JobExperienceObject } from "~/types/forms/workExperience"; // prettier-ignore
 
 const props = defineProps<{
-    rawFormData?: WorkExperienceRaw;
+    rawFormData: WorkExperienceRaw;
     formName: string;
     encodedProfileName: string;
 }>();
