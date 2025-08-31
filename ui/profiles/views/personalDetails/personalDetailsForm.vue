@@ -4,21 +4,13 @@ import { booleanPlusEmptyOptions } from "~/ui/profiles/shared/constants.js";
 import { personalDetailsSchema } from "../formValidation.js";
 import { updateProfile } from "~/ui/profiles/apiCalls/updateProfile.js";
 import { useCustomToast } from "~/pinia_stores/toast";
+import type { PersonalDetailsRaw } from "~/types/forms/personalDetails";
 
-const props = defineProps({
-    rawFormData: {
-        type: Object,
-        required: false,
-    },
-    formName: {
-        type: String,
-        required: true,
-    },
-    encodedProfileName: {
-        type: String,
-        required: true,
-    },
-});
+const props = defineProps<{
+    rawFormData: PersonalDetailsRaw;
+    formName: string;
+    encodedProfileName: string;
+}>();
 
 const { showSuccessToast, showErrorToast } = useCustomToast();
 const env_config = useRuntimeConfig();
@@ -54,6 +46,7 @@ const onSubmit = async () => {
         });
 
         // Close collapse component and render success toast
+        // @ts-ignore
         document.getElementById(COLLAPSE_NAMES.PERSONAL_DETAILS).checked = false; // prettier-ignore
         showSuccessToast(
             "Form Submitted",
@@ -62,7 +55,7 @@ const onSubmit = async () => {
 
         // Update props data to avoid refetching data
         props.rawFormData.isComplete = true; // set chip to true
-        props.rawFormData.data = formState
+        props.rawFormData.data = formState;
     } catch (err: any) {
         console.error(err);
         if (!isValidationError) {
@@ -85,6 +78,7 @@ const onSubmit = async () => {
         class="space-y-4 uform-element pt-4"
         @submit="onSubmit"
     >
+        
         <UFormField label="First Name **" name="firstName" class="mb-0">
             <UInput v-model="formState.firstName" class="w-full" />
         </UFormField>
