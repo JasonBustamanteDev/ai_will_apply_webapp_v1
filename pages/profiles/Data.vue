@@ -98,10 +98,7 @@ const personalDetailsRawData = (
             <CollapseComponent
                 title="Personal Details"
                 :checkboxId="COLLAPSE_NAMES.PERSONAL_DETAILS"
-                :isComplete="
-                    profileDataObject.forms[PROFILE_FORMS.PERSONAL_DETAILS]
-                        ?.isComplete || false
-                "
+                :isComplete="personalDetailsRawData.isComplete"
                 :isOptional="!PROFILE_REQUIREMENTS.PERSONAL_DETAILS"
             >
                 <PersonalDetailsForm
@@ -150,10 +147,7 @@ const personalDetailsRawData = (
             <CollapseComponent
                 title="Languages"
                 :checkboxId="COLLAPSE_NAMES.LANGUAGES"
-                :isComplete="
-                    profileDataObject.forms[PROFILE_FORMS.LANGUAGES]
-                        ?.isComplete || false
-                "
+                :isComplete="languagesRawData.isComplete"
                 :isOptional="!PROFILE_REQUIREMENTS.LANGUAGES"
             >
                 <LanguagesForm
@@ -166,10 +160,7 @@ const personalDetailsRawData = (
             <CollapseComponent
                 title="Work Experience"
                 :checkboxId="COLLAPSE_NAMES.WORK_EXPERIENCE"
-                :isComplete="
-                    profileDataObject.forms[PROFILE_FORMS.WORK_EXPERIENCE]
-                        ?.isComplete || false
-                "
+                :isComplete="workExperienceRawData.isComplete"
                 :isOptional="!PROFILE_REQUIREMENTS.WORK_EXPERIENCE"
             >
                 <WorkExperienceForm
@@ -218,10 +209,7 @@ const personalDetailsRawData = (
             <CollapseComponent
                 title="Skills"
                 :checkboxId="COLLAPSE_NAMES.SKILLS"
-                :isComplete="
-                    profileDataObject.forms[PROFILE_FORMS.SKILLS]?.isComplete ||
-                    false
-                "
+                :isComplete="skillsRawData.isComplete"
                 :isOptional="!PROFILE_REQUIREMENTS.SKILLS"
             >
                 <SkillsForm
