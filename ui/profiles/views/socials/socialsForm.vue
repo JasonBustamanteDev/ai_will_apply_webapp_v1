@@ -66,7 +66,6 @@ const onSubmit = async () => {
 </script>
 
 <template>
-    <p>{{ props.rawFormData }}</p>
     <UForm
         :schema="socialSchema"
         :state="formState"

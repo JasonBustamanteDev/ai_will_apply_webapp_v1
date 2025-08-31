@@ -53,36 +53,45 @@ onMounted(async () => {
 
 const blankData = { data: null, isComplete: false };
 
-//! Consider making them computed
-const languagesRawData = (
-    profileDataObject.value
-        ? profileDataObject.value.forms[PROFILE_FORMS.LANGUAGES]
-        : blankData
-) as LanguagesFormRawData;
+const languagesRawData = computed(() => {
+    return (
+        profileDataObject.value
+            ? profileDataObject.value.forms[PROFILE_FORMS.LANGUAGES]
+            : blankData
+    ) as LanguagesFormRawData;
+});
 
-const workExperienceRawData = (
-    profileDataObject.value
-        ? profileDataObject.value.forms[PROFILE_FORMS.WORK_EXPERIENCE]
-        : blankData
-) as WorkExperienceRaw;
+const workExperienceRawData = computed(() => {
+    return (
+        profileDataObject.value
+            ? profileDataObject.value.forms[PROFILE_FORMS.WORK_EXPERIENCE]
+            : blankData
+    ) as WorkExperienceRaw;
+});
 
-const skillsRawData = (
-    profileDataObject.value
-        ? profileDataObject.value.forms[PROFILE_FORMS.SKILLS]
-        : blankData
-) as SkillsRaw;
+const skillsRawData = computed(() => {
+    return (
+        profileDataObject.value
+            ? profileDataObject.value.forms[PROFILE_FORMS.SKILLS]
+            : blankData
+    ) as SkillsRaw;
+});
 
-const personalDetailsRawData = (
-    profileDataObject.value
-        ? profileDataObject.value.forms[PROFILE_FORMS.PERSONAL_DETAILS]
-        : blankData
-) as PersonalDetailsRaw;
+const personalDetailsRawData = computed(() => {
+    return (
+        profileDataObject.value
+            ? profileDataObject.value.forms[PROFILE_FORMS.PERSONAL_DETAILS]
+            : blankData
+    ) as PersonalDetailsRaw;
+});
 
-const socialsRawData = (
-    profileDataObject.value
-        ? profileDataObject.value.forms[PROFILE_FORMS.MEDIA_LINKS]
-        : blankData
-) as SocialsRaw;
+const socialsRawData = computed(() => {
+    return (
+        profileDataObject.value
+            ? profileDataObject.value.forms[PROFILE_FORMS.MEDIA_LINKS]
+            : blankData
+    ) as SocialsRaw;
+});
 </script>
 
 <template>
