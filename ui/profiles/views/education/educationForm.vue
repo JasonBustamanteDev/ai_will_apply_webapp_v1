@@ -1,23 +1,15 @@
-<script setup>
+<script setup lang="ts">
 import { educationSchema } from "../formValidation";
-import { booleanPlusEmptyOptions, booleanOptions, radioStyleObject } from "~/ui/profiles/shared/constants.js"; // prettier-ignore
+import { booleanOptions, radioStyleObject } from "~/ui/profiles/shared/constants.js"; // prettier-ignore
 import { updateProfile } from "~/ui/profiles/apiCalls/updateProfile.js";
 import { useCustomToast } from "~/pinia_stores/toast";
+import type { EducationRaw } from "~/types/forms/education";
 
-const props = defineProps({
-    rawFormData: {
-        type: Object,
-        required: false,
-    },
-    formName: {
-        type: String,
-        required: true,
-    },
-    encodedProfileName: {
-        type: String,
-        required: true,
-    },
-});
+const props = defineProps<{
+    rawFormData: EducationRaw;
+    formName: string;
+    encodedProfileName: string;
+}>();
 
 const { showSuccessToast, showErrorToast } = useCustomToast();
 const env_config = useRuntimeConfig();
@@ -60,6 +52,7 @@ const onSubmit = async () => {
         });
 
         // Close collapse component and render success toast
+        // @ts-ignore
         document.getElementById(COLLAPSE_NAMES.EDUCATION).checked = false;
         showSuccessToast(
             "Form Submitted",
@@ -69,7 +62,7 @@ const onSubmit = async () => {
         // Update props data to avoid refetching data
         props.rawFormData.isComplete = true;
         props.rawFormData.data = formState;
-    } catch (err) {
+    } catch (err: any) {
         console.error(err);
         if (!isValidationError) {
             showErrorToast(
@@ -158,11 +151,12 @@ const onSubmit = async () => {
             name="currentlyAttending"
             :class="`mb-0 ${conditionalDisableStyles}`"
         >
+            <!-- Could avoid use of any keyword here, but it'd mean we'd need to stop using booleans in Yup validator (not great) -->
             <URadioGroup
-                v-model="formState.currentlyAttending"
+                v-model="formState.currentlyAttending as any"
                 orientation="horizontal"
                 variant="list"
-                :items="booleanOptions"
+                :items="booleanOptions as any"
                 class="mt-2"
                 size="xl"
                 :ui="radioStyleObject"

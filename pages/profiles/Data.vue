@@ -16,6 +16,7 @@ import type { WorkExperienceRaw } from "~/types/forms/workExperience";
 import type { SkillsRaw } from "~/types/forms/skills";
 import type { PersonalDetailsRaw } from "~/types/forms/personalDetails";
 import type { SocialsRaw } from "~/types/forms/socials";
+import type { EducationRaw } from "~/types/forms/education";
 
 definePageMeta({
     middleware: ["redirect-if-no-auth-session-client"],
@@ -91,6 +92,14 @@ const socialsRawData = computed(() => {
             ? profileDataObject.value.forms[PROFILE_FORMS.MEDIA_LINKS]
             : blankData
     ) as SocialsRaw;
+});
+
+const educationRawData = computed(() => {
+    return (
+        profileDataObject.value
+            ? profileDataObject.value.forms[PROFILE_FORMS.EDUCATION]
+            : blankData
+    ) as EducationRaw;
 });
 </script>
 
@@ -190,16 +199,11 @@ const socialsRawData = computed(() => {
             <CollapseComponent
                 title="University or College"
                 :checkboxId="COLLAPSE_NAMES.EDUCATION"
-                :isComplete="
-                    profileDataObject.forms[PROFILE_FORMS.EDUCATION]
-                        ?.isComplete || false
-                "
+                :isComplete="educationRawData.isComplete"
                 :isOptional="!PROFILE_REQUIREMENTS.EDUCATION"
             >
                 <EducationForm
-                    :rawFormData="
-                        profileDataObject.forms[PROFILE_FORMS.EDUCATION]
-                    "
+                    :rawFormData="educationRawData"
                     :encodedProfileName="encodedDynamicProfileName"
                     :formName="PROFILE_FORMS.EDUCATION"
                 />

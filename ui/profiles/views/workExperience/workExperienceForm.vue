@@ -19,8 +19,8 @@ const env_config = useRuntimeConfig();
 const supabaseProjectURL = env_config.public.SUPABASE_PROJECT_URL;
 
 const currentlyThereOptions = [
-    { label: "I still work here", value: "yes" },
-    { label: "I no longer work here", value: "no" },
+    { label: "I still work here", value: true },
+    { label: "I no longer work here", value: false },
 ];
 const generateEmptyRow = () =>
     ({
@@ -173,11 +173,12 @@ const onSubmit = async () => {
                 ><InputLabelSlot labelText="Years **"
             /></UInput>
 
+            <!-- Could avoid use of any keyword here, but it'd mean we'd need to use "true" and "false" instead of regular booleans (breaks typical conventions) -->
             <URadioGroup
                 v-model="row.currentlyThere"
                 orientation="horizontal"
                 variant="list"
-                :items="currentlyThereOptions"
+                :items="currentlyThereOptions as any"
                 size="lg"
                 :ui="radioStyleObject"
                 class="my-auto"
