@@ -18,6 +18,7 @@ import type { PersonalDetailsRaw } from "~/types/forms/personalDetails";
 import type { SocialsRaw } from "~/types/forms/socials";
 import type { EducationRaw } from "~/types/forms/education";
 import type { LocationRaw } from "~/types/forms/location";
+import type { PreferenceRaw } from "~/types/forms/preferences";
 
 definePageMeta({
     middleware: ["redirect-if-no-auth-session-client"],
@@ -110,6 +111,14 @@ const locationRawData = computed(() => {
             : blankData
     ) as LocationRaw;
 });
+
+const preferenceRawData = computed(() => {
+    return (
+        profileDataObject.value
+            ? profileDataObject.value.forms[PROFILE_FORMS.PREFERENCES]
+            : blankData
+    ) as PreferenceRaw;
+});
 </script>
 
 <template>
@@ -159,16 +168,11 @@ const locationRawData = computed(() => {
             <CollapseComponent
                 title="Preferences"
                 :checkboxId="COLLAPSE_NAMES.PREFERENCES"
-                :isComplete="
-                    profileDataObject.forms[PROFILE_FORMS.PREFERENCES]
-                        ?.isComplete || false
-                "
+                :isComplete="preferenceRawData.isComplete"
                 :isOptional="!PROFILE_REQUIREMENTS.PREFERENCES"
             >
                 <PreferenceForm
-                    :rawFormData="
-                        profileDataObject.forms[PROFILE_FORMS.PREFERENCES]
-                    "
+                    :rawFormData="preferenceRawData"
                     :encodedProfileName="encodedDynamicProfileName"
                     :formName="PROFILE_FORMS.PREFERENCES"
                 />

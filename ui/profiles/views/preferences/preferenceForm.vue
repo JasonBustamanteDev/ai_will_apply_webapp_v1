@@ -1,23 +1,15 @@
-<script setup>
+<script setup lang="ts">
 import { preferenceSchema } from "../formValidation";
 import { booleanOptions, radioStyleObject } from "~/ui/profiles/shared/constants.js"; // prettier-ignore
 import { updateProfile } from "~/ui/profiles/apiCalls/updateProfile.js";
 import { useCustomToast } from "~/pinia_stores/toast";
+import type { PreferenceRaw } from "~/types/forms/preferences";
 
-const props = defineProps({
-    rawFormData: {
-        type: Object,
-        required: false,
-    },
-    formName: {
-        type: String,
-        required: true,
-    },
-    encodedProfileName: {
-        type: String,
-        required: true,
-    },
-});
+const props = defineProps<{
+    rawFormData: PreferenceRaw;
+    formName: string;
+    encodedProfileName: string;
+}>();
 
 const { showSuccessToast, showErrorToast } = useCustomToast();
 const env_config = useRuntimeConfig();
@@ -51,6 +43,7 @@ const onSubmit = async () => {
         });
 
         // Close collapse component and render success toast
+        // @ts-ignore
         document.getElementById(COLLAPSE_NAMES.PREFERENCES).checked = false; // prettier-ignore
         showSuccessToast(
             "Form Submitted",
@@ -60,7 +53,7 @@ const onSubmit = async () => {
         // Update props data to avoid refetching data
         props.rawFormData.isComplete = true;
         props.rawFormData.data = formState;
-    } catch (err) {
+    } catch (err: any) {
         console.error(err);
         if (!isValidationError) {
             showErrorToast(
@@ -131,10 +124,10 @@ const onSubmit = async () => {
             class="mb-0"
         >
             <URadioGroup
-                v-model="formState.willingToRelocate"
+                v-model="formState.willingToRelocate as any"
                 orientation="horizontal"
                 variant="list"
-                :items="booleanOptions"
+                :items="booleanOptions as any"
                 class="mt-2"
                 size="xl"
                 :ui="radioStyleObject"
@@ -146,10 +139,10 @@ const onSubmit = async () => {
             class="mb-0"
         >
             <URadioGroup
-                v-model="formState.driversLicense"
+                v-model="formState.driversLicense as any"
                 orientation="horizontal"
                 variant="list"
-                :items="booleanOptions"
+                :items="booleanOptions as any"
                 class="mt-2"
                 size="xl"
                 :ui="radioStyleObject"
@@ -161,10 +154,10 @@ const onSubmit = async () => {
             class="mb-0"
         >
             <URadioGroup
-                v-model="formState.reliableTransportation"
+                v-model="formState.reliableTransportation as any"
                 orientation="horizontal"
                 variant="list"
-                :items="booleanOptions"
+                :items="booleanOptions as any"
                 class="mt-2"
                 size="xl"
                 :ui="radioStyleObject"
@@ -176,10 +169,10 @@ const onSubmit = async () => {
             class="mb-0"
         >
             <URadioGroup
-                v-model="formState.veteranStatus"
+                v-model="formState.veteranStatus as any"
                 orientation="horizontal"
                 variant="list"
-                :items="booleanOptions"
+                :items="booleanOptions as any"
                 class="mt-2"
                 size="xl"
                 :ui="radioStyleObject"
