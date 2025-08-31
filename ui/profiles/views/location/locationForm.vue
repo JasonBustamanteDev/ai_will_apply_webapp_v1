@@ -1,23 +1,15 @@
-<script setup>
+<script setup lang="ts">
 import { countriesList } from "./countries";
 import { locationSchema } from "../formValidation";
 import { updateProfile } from "~/ui/profiles/apiCalls/updateProfile.js";
 import { useCustomToast } from "~/pinia_stores/toast";
+import type { LocationRaw } from "~/types/forms/location";
 
-const props = defineProps({
-    rawFormData: {
-        type: Object,
-        required: false,
-    },
-    formName: {
-        type: String,
-        required: true,
-    },
-    encodedProfileName: {
-        type: String,
-        required: true,
-    },
-});
+const props = defineProps<{
+    rawFormData: LocationRaw;
+    formName: string;
+    encodedProfileName: string;
+}>();
 
 const { showSuccessToast, showErrorToast } = useCustomToast();
 const env_config = useRuntimeConfig();
@@ -57,6 +49,7 @@ const onSubmit = async () => {
         });
 
         // Close collapse component and render success toast
+        // @ts-ignore
         document.getElementById(COLLAPSE_NAMES.LOCATION).checked = false;
         showSuccessToast(
             "Form Submitted",
@@ -65,8 +58,8 @@ const onSubmit = async () => {
 
         // Update props data to avoid refetching data
         props.rawFormData.isComplete = true;
-        props.rawFormData.data = formState
-    } catch (err) {
+        props.rawFormData.data = formState;
+    } catch (err: any) {
         console.error(err);
         if (!isValidationError) {
             showErrorToast(

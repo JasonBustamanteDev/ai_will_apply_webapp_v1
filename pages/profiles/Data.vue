@@ -17,6 +17,7 @@ import type { SkillsRaw } from "~/types/forms/skills";
 import type { PersonalDetailsRaw } from "~/types/forms/personalDetails";
 import type { SocialsRaw } from "~/types/forms/socials";
 import type { EducationRaw } from "~/types/forms/education";
+import type { LocationRaw } from "~/types/forms/location";
 
 definePageMeta({
     middleware: ["redirect-if-no-auth-session-client"],
@@ -101,6 +102,14 @@ const educationRawData = computed(() => {
             : blankData
     ) as EducationRaw;
 });
+
+const locationRawData = computed(() => {
+    return (
+        profileDataObject.value
+            ? profileDataObject.value.forms[PROFILE_FORMS.LOCATION]
+            : blankData
+    ) as LocationRaw;
+});
 </script>
 
 <template>
@@ -137,16 +146,11 @@ const educationRawData = computed(() => {
             <CollapseComponent
                 title="Location"
                 :checkboxId="COLLAPSE_NAMES.LOCATION"
-                :isComplete="
-                    profileDataObject.forms[PROFILE_FORMS.LOCATION]
-                        ?.isComplete || false
-                "
+                :isComplete="locationRawData.isComplete"
                 :isOptional="!PROFILE_REQUIREMENTS.LOCATION"
             >
                 <LocationForm
-                    :rawFormData="
-                        profileDataObject.forms[PROFILE_FORMS.LOCATION]
-                    "
+                    :rawFormData="locationRawData"
                     :encodedProfileName="encodedDynamicProfileName"
                     :formName="PROFILE_FORMS.LOCATION"
                 />
