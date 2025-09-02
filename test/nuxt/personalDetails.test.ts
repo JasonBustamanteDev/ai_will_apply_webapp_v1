@@ -10,12 +10,6 @@ import userEvent from "@testing-library/user-event";
 // });
 
 describe("Mandatory Fields", () => {
-    it("Should render red error text when non-prefilled mandatory fields are submitted blank", () => {
-        // Press submit button on form
-        // The First Name, Last Name, Email, Phone Number, and Highest Education Level fields should all have red text saying this field is required
-        expect(1).toBe(1);
-    });
-
     it("Should have Age && Years of Experience prefilled", () => {
         // Press submit button on form
         // These two fields should have prefilled values
@@ -25,7 +19,19 @@ describe("Mandatory Fields", () => {
 });
 
 describe("Submit examples", () => {
-    it("Should have a successful submit when you fill in fields correctly", () => {
+    it("Should render red error text when mandatory fields that are not prefilled are submitted blank", () => {
+        // Press submit button on form
+        // The First Name, Last Name, Email, Phone Number, and Highest Education Level
+        // above fields should all have red text saying this field is required
+        expect(1).toBe(1);
+    });
+
+    it("Should have a successful submit when you fill in the mandatory fields correctly", () => {
+        // First Name, Last Name, Email, Phone Number, and Highest Education Level
+        expect(1).toBe(1);
+    });
+
+    it("Should have a successful submit when you fill in all fields correctly", () => {
         expect(1).toBe(1);
     });
 });
