@@ -28,6 +28,7 @@ export default defineNuxtConfig({
         "@nuxt/test-utils",
         "@nuxt/ui",
         "@pinia/nuxt",
+        '@nuxt/test-utils/module'
     ],
 
     // TS
