@@ -27,7 +27,7 @@ const generateEmptyRow = () =>
         jobTitle: "",
         company: "",
         years: "", // must be empty string (or else error detection overlooks value)
-        currentlyThere: "no",
+        currentlyThere: true,
 
         jobTitleError: false,
         companyError: false,
@@ -175,7 +175,7 @@ const onSubmit = async () => {
 
             <!-- Could avoid use of any keyword here, but it'd mean we'd need to use "true" and "false" instead of regular booleans (breaks typical conventions) -->
             <URadioGroup
-                v-model="row.currentlyThere"
+                v-model="row.currentlyThere as any"
                 orientation="horizontal"
                 variant="list"
                 :items="currentlyThereOptions as any"
