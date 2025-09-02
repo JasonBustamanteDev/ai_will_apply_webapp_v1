@@ -1,3 +1,4 @@
+
 import { expect, describe, it, beforeEach, assert } from "vitest"; // prettier-ignore
 import { render } from "@testing-library/vue";
 import userEvent from "@testing-library/user-event";
@@ -42,14 +43,22 @@ const COMPLETED_FORM_PROPS = {
 
 describe("Fresh form with nothing filled in", () => {
     it("Should have Age && Years of Experience prefilled", () => {
-        const wrapper = mount(PersonalDetailsForm, {
+        const formWrapper = mount(PersonalDetailsForm, {
             propsData: EMPTY_FORM_PROPS,
         });
 
-        // Press submit button on form
-        // These two fields should have prefilled values
-        // If they don't we need to add them to the test that renders red text when mandator
-        expect(1).toBe(1);
+        // Find the components that should have default values if form is fresh
+        const age_select_component = formWrapper.find('[data-test="age_field"]')
+        const years_experience_input_component = formWrapper.find('[data-test="years_experience_field"]')
+        
+        // If you want to log the components you found
+        // forceLog(age_select_component.html())
+        // forceLog(years_experience_input_component.html())
+
+        // Assert that these components have default values
+        assert.equal(age_select_component.element.value, 18) 
+        assert.equal(years_experience_input_component.element.value, 2)
+        // @ts-nocheck (put atop page once tests are written)
     });
 });
 
