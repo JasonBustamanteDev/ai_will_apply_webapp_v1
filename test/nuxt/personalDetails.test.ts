@@ -4,6 +4,7 @@ import userEvent from "@testing-library/user-event";
 import { mount } from "@vue/test-utils";
 import PersonalDetailsForm from "~/ui/profiles/views/personalDetails/personalDetailsForm.vue";
 import { PROFILE_FORMS } from "~/shared/utils/globals";
+import { forceLog, logToFile } from "../util";
 
 // Prop data
 const ENCODED_PROFILE_NAME = "test_form_1";
@@ -39,18 +40,12 @@ const COMPLETED_FORM_PROPS = {
     },
 };
 
-// let FormComponent = null;
-
-// beforeEach(async () => {
-//     FormComponent = render(PersonalDetailsForm);
-// });
-
 describe("Fresh form with nothing filled in", () => {
     it("Should have Age && Years of Experience prefilled", () => {
         const wrapper = mount(PersonalDetailsForm, {
             propsData: EMPTY_FORM_PROPS,
         });
-        
+
         // Press submit button on form
         // These two fields should have prefilled values
         // If they don't we need to add them to the test that renders red text when mandator
