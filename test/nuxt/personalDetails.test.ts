@@ -3,6 +3,41 @@ import { render } from "@testing-library/vue";
 import userEvent from "@testing-library/user-event";
 import { mount } from "@vue/test-utils";
 import PersonalDetailsForm from "~/ui/profiles/views/personalDetails/personalDetailsForm.vue";
+import { PROFILE_FORMS } from "~/shared/utils/globals";
+
+// Prop data
+const ENCODED_PROFILE_NAME = "test_form_1";
+const FORM_NAME = PROFILE_FORMS.PERSONAL_DETAILS;
+
+const EMPTY_FORM_PROPS = {
+    formName: FORM_NAME,
+    encodedProfileName: ENCODED_PROFILE_NAME,
+    rawFormData: {
+        data: null,
+        isComplete: false,
+    },
+};
+
+const COMPLETED_FORM_PROPS = {
+    formName: FORM_NAME,
+    encodedProfileName: ENCODED_PROFILE_NAME,
+    rawFormData: {
+        data: {
+            firstName: "Gustavo",
+            lastName: "Markov",
+            age: 51,
+            yearsOfExperience: 10,
+            email: "jmarkov@protonmail.com",
+            gender: "male",
+            phoneNumber: "6478880000",
+            ethnicity: "white",
+            securityClearance: true,
+            disability: false,
+            educationLevel: "bachelors",
+        },
+        isComplete: true,
+    },
+};
 
 // let FormComponent = null;
 
@@ -12,8 +47,10 @@ import PersonalDetailsForm from "~/ui/profiles/views/personalDetails/personalDet
 
 describe("Fresh form with nothing filled in", () => {
     it("Should have Age && Years of Experience prefilled", () => {
-        console.log(333, EMPTY_FORM_DATA);
-        // const wrapper = mount(PersonalDetailsForm)
+        const wrapper = mount(PersonalDetailsForm, {
+            propsData: EMPTY_FORM_PROPS,
+        });
+        
         // Press submit button on form
         // These two fields should have prefilled values
         // If they don't we need to add them to the test that renders red text when mandator
@@ -40,6 +77,3 @@ describe("Filled out form", () => {
         });
     });
 });
-
-const EMPTY_FORM_DATA = {};
-const FILLED_FORM_DATA = {};
