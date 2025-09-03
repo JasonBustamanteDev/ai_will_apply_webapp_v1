@@ -126,8 +126,6 @@ describe("Fresh personalDetails form", () => {
         // Submit the form
         const user = userEvent.setup();
         await user.click(formElements.submitButton);
-
-        // These fields should all have a ring-error attribute
         mandatoryElements.forEach((el) => {
             expect(el.classList.contains("ring-error")).toBe(true);
         });
@@ -136,7 +134,7 @@ describe("Fresh personalDetails form", () => {
     it("Should have a successful submit when you fill in the mandatory fields correctly", async () => {
         const user = userEvent.setup();
 
-        // Fill in mandatory fields then submit
+        // Fill in mandatory fields, submit, then assert there are no error visuals
         await fillInputField(user, formElements.firstName, "Gustavo");
         await fillInputField(user, formElements.lastName, "Markov");
         await fillInputField(user, formElements.age, "54");
@@ -145,20 +143,16 @@ describe("Fresh personalDetails form", () => {
         await fillInputField(user, formElements.yearsExp, "10");
         await selectDropdownOption(user, formElements.highestEducation, 2);
         await user.click(formElements.submitButton);
-
-        // Check that the form submit worked by asserting the lack of error visuals on the form
         mandatoryElements.forEach((el) => {
             expect(el.classList.contains("ring-error")).toBe(false);
         });
 
-        // Fill in optional fields then submit
+        // Fill in optional fields, submit, then assert there are no error visuals
         await selectDropdownOption(user, formElements.gender);
         await selectDropdownOption(user, formElements.ethnicity);
         await selectDropdownOption(user, formElements.securityClearance);
         await selectDropdownOption(user, formElements.disability, 2);
         await user.click(formElements.submitButton);
-
-        // Check that the form submit worked by asserting the lack of error visuals on the form
         optionalElements.forEach((el) => {
             expect(el.classList.contains("ring-error")).toBe(false);
         });

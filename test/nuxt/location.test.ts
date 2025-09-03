@@ -72,8 +72,57 @@ describe("Completed location form", () => {
         // Check that the dropdown elements are filled (getByText throws error if 0 matches are found)
         assertDropdownValue(formElements.country, "United States");
         assertDropdownValue(formElements.citizenship, "United States");
-        forceLogElement(formElements.country)
     });
 });
 
-// describe("Fresh location form", () => {});
+describe("Fresh location form", () => {
+    let form: Element;
+    let formElements: ReturnType<typeof getFormElements>;
+    let mandatoryElements: HTMLElement[];
+    let optionalElements: HTMLElement[];
+    beforeEach(() => {
+        const { container } = render(LocationForm, { props: EMPTY_FORM_PROPS });
+        form = container;
+        formElements = getFormElements();
+
+        mandatoryElements = [
+            formElements.country,
+            formElements.citizenship,
+            formElements.city,
+            formElements.postalCode,
+            formElements.provinceState,
+        ];
+        optionalElements = [formElements.address];
+    });
+
+    it("Should render a red error border when mandatory fields that are not prefilled are submitted blank", async () => {
+        // Submit the form
+        const user = userEvent.setup();
+        await user.click(formElements.submitButton);
+        mandatoryElements.forEach((el) => {
+            expect(el.classList.contains("ring-error")).toBe(true);
+        });
+    });
+
+    it("Should have a successful submit when you fill in the mandatory fields correctly", async () => {
+        const user = userEvent.setup();
+
+        // Fill in mandatory fields, submit, then assert there are no error visuals
+        await selectDropdownOption(user, formElements.country);
+        await selectDropdownOption(user, formElements.citizenship);
+        await fillInputField(user, formElements.city, "Houston");
+        await fillInputField(user, formElements.postalCode, "L1590F");
+        await fillInputField(user, formElements.provinceState, "Texas");
+        await user.click(formElements.submitButton);
+        mandatoryElements.forEach((el) => {
+            expect(el.classList.contains("ring-error")).toBe(false);
+        });
+
+        // Fill optional fields, submit, then assert there are no error visuals
+        await fillInputField(user, formElements.address, "Vegas drive");
+        await user.click(formElements.submitButton);
+        optionalElements.forEach((el) => {
+            expect(el.classList.contains("ring-error")).toBe(false);
+        });
+    });
+});
