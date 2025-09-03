@@ -1,8 +1,7 @@
-
-import { expect, describe, it, beforeEach, assert } from "vitest"; // prettier-ignore
+import { expect, describe, it, beforeEach, assert, afterEach } from "vitest"; // prettier-ignore
 import { render } from "@testing-library/vue";
 import userEvent from "@testing-library/user-event";
-import { mount } from "@vue/test-utils";
+import { mount, VueWrapper } from "@vue/test-utils";
 import PersonalDetailsForm from "~/ui/profiles/views/personalDetails/personalDetailsForm.vue";
 import { PROFILE_FORMS } from "~/shared/utils/globals";
 import { forceLog, logToFile } from "../util";
@@ -42,42 +41,63 @@ const COMPLETED_FORM_PROPS = {
 };
 
 describe("Fresh form with nothing filled in", () => {
-    it("Should have Age && Years of Experience prefilled", () => {
-        const formWrapper = mount(PersonalDetailsForm, {
+    // Render a new instance of an unfilled instance of the form for each test in this describe
+    let formWrapper: VueWrapper<any>;
+    beforeEach(() => {
+        formWrapper = mount(PersonalDetailsForm, {
             propsData: EMPTY_FORM_PROPS,
         });
+    });
 
+    it("Should have Age && Years of Experience prefilled", () => {
         // Find the components that should have default values if form is fresh
-        const age_select_component = formWrapper.find('[data-test="age_field"]')
-        const years_experience_input_component = formWrapper.find('[data-test="years_experience_field"]')
-        
+        const age_select = formWrapper.find('[data-test="age_field"]');
+        const years_experience_input = formWrapper.find(
+            '[data-test="years_experience_field"]'
+        );
+
         // If you want to log the components you found
         // forceLog(age_select_component.html())
         // forceLog(years_experience_input_component.html())
 
         // Assert that these components have default values
-        assert.equal(age_select_component.element.value, 18) 
-        assert.equal(years_experience_input_component.element.value, 2)
+        assert.equal(age_select.element.value, 18);
+        assert.equal(years_experience_input.element.value, 2);
         // @ts-nocheck (put atop page once tests are written)
     });
-});
 
-describe("Filled out form", () => {
-    describe("Submit Examples", () => {
-        it("Should render red error text when mandatory fields that are not prefilled are submitted blank", () => {
-            // Press submit button on form
-            // The First Name, Last Name, Email, Phone Number, and Highest Education Level
-            // above fields should all have red text saying this field is required
-            expect(1).toBe(1);
-        });
+    it("Should render red error text when mandatory fields that are not prefilled are submitted blank", async () => {
+        const user = userEvent.setup();
 
-        it("Should have a successful submit when you fill in the mandatory fields correctly", () => {
-            // First Name, Last Name, Email, Phone Number, and Highest Education Level
-            expect(1).toBe(1);
-        });
+        // Locate then click on submit button on form
+        const submit_button = formWrapper.find('button[type="submit"]');
+        await user.click(submit_button.element);
 
-        it("Should have a successful submit when you fill in all fields correctly", () => {
-            expect(1).toBe(1);
-        });
+        const elements_with_error_visuals = [
+            "first_name_field",
+            "last_name_field",
+            "email_field",
+            "phone_number_field",
+            "highest_education_field",
+        ];
+
+        // The First Name, Last Name, Email, Phone Number, and Highest Education Level
+        // above fields should all have red text saying this field is required
+
+        forceLog(submit_button.html());
+        expect(1).toBe(1);
     });
 });
+
+// describe("Filled out form", () => {
+//     describe("Submit Examples", () => {
+//         it("Should have a successful submit when you fill in the mandatory fields correctly", () => {
+//             // First Name, Last Name, Email, Phone Number, and Highest Education Level
+//             expect(1).toBe(1);
+//         });
+
+//         it("Should have a successful submit when you fill in all fields correctly", () => {
+//             expect(1).toBe(1);
+//         });
+//     });
+// });
