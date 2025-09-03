@@ -88,6 +88,7 @@ const onSubmit = async () => {
                 :items="countriesList"
                 value-key="value"
                 class="w-full"
+                data-testid="country_field"
             />
         </UFormField>
         <UFormField label="Citizenship **" name="citizenship" class="mb-0">
@@ -97,13 +98,22 @@ const onSubmit = async () => {
                 :items="countriesList"
                 value-key="value"
                 class="w-full"
+                data-testid="citizenship_field"
             />
         </UFormField>
         <UFormField label="City **" name="city" class="mb-0">
-            <UInput v-model="formState.city" class="w-full" />
+            <UInput
+                v-model="formState.city"
+                class="w-full"
+                data-testid="city_field"
+            />
         </UFormField>
         <UFormField label="Postal Code **" name="postalCode" class="mb-0">
-            <UInput v-model="formState.postalCode" class="w-full" />
+            <UInput
+                v-model="formState.postalCode"
+                class="w-full"
+                data-testid="postal_code_field"
+            />
         </UFormField>
         <UFormField
             label="Province or State or Region **"
@@ -114,10 +124,15 @@ const onSubmit = async () => {
                 v-model="formState.provinceState"
                 class="w-full"
                 placeholder="Example: 'Ontario' or 'ON'"
+                data-testid="province_field"
             />
         </UFormField>
         <UFormField label="Address" name="address" class="mb-0 col-span-2">
-            <UInput v-model="formState.address" class="w-full" />
+            <UInput
+                v-model="formState.address"
+                class="w-full"
+                data-testid="address_field"
+            />
         </UFormField>
 
         <div class="uform-submit-button-container">
@@ -125,6 +140,7 @@ const onSubmit = async () => {
                 type="submit"
                 class="w-full justify-center cursor-pointer"
                 color="secondary"
+                data-testid="location_submit_button"
                 >Submit</UButton
             >
         </div>

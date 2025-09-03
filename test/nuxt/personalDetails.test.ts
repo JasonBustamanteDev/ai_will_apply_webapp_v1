@@ -61,7 +61,7 @@ afterEach(() => {
     cleanup();
 });
 
-describe("Completed form", () => {
+describe("Completed personalDetails form", () => {
     let form: Element;
     let formElements: ReturnType<typeof getFormElements>;
     beforeEach(() => {
@@ -90,7 +90,7 @@ describe("Completed form", () => {
     });
 });
 
-describe("Fresh form with nothing filled in", () => {
+describe("Fresh personalDetails form", () => {
     let form: Element;
     let formElements: ReturnType<typeof getFormElements>;
     let mandatoryElements: HTMLElement[];
