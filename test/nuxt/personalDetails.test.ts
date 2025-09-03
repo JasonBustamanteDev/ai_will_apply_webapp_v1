@@ -6,7 +6,7 @@ import { PROFILE_FORMS } from "~/shared/utils/globals";
 import { forceLog, forceLogElement, fillInputField, selectDropdownOption, assertDropdownValue, assertInputValue } from "../util"; // prettier-ignore
 
 // Prop data
-const ENCODED_PROFILE_NAME = "test_form_1";
+const ENCODED_PROFILE_NAME = "test";
 const FORM_NAME = PROFILE_FORMS.PERSONAL_DETAILS;
 
 const EMPTY_FORM_PROPS = {
