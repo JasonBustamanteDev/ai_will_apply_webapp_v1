@@ -111,46 +111,60 @@ describe("Fresh form with nothing filled in", () => {
     it("Should render a red error border when mandatory fields that are not prefilled are submitted blank", async () => {
         // Submit the form
         const user = userEvent.setup();
-        await user.click(formElements.submitButton)
+        await user.click(formElements.submitButton);
 
         // These fields should all have a ring-error attribute
-        const elements = [
+        const mandatoryElements = [
             formElements.firstName,
             formElements.lastName,
             formElements.email,
             formElements.phoneNumber,
             formElements.highestEducation,
         ];
-        elements.forEach((el) => {
-            expect(el.classList.contains("ring-error")).toBe(true)
+        mandatoryElements.forEach((el) => {
+            expect(el.classList.contains("ring-error")).toBe(true);
+        });
+    });
+
+    it("Should have a successful submit when you fill in the mandatory fields correctly", async () => {
+        const user = userEvent.setup();
+
+        // Fill in mandatory fields then submit
+        await fillInputField(user, formElements.firstName, "Gustavo");
+        await fillInputField(user, formElements.lastName, "Markov");
+        await fillInputField(user, formElements.age, "54");
+        await fillInputField(user, formElements.email, "jmarkov@protonmail.com"); // prettier-ignore
+        await fillInputField(user, formElements.phoneNumber, "6478880000");
+        await fillInputField(user, formElements.yearsExp, "10");
+        await selectDropdownOption(user, formElements.highestEducation, 2);
+        await user.click(formElements.submitButton);
+
+        const mandatoryElements = [
+            formElements.firstName,
+            formElements.lastName,
+            formElements.email,
+            formElements.phoneNumber,
+            formElements.highestEducation,
+        ];
+        mandatoryElements.forEach((el) => {
+            expect(el.classList.contains("ring-error")).toBe(false);
+        });
+
+        // Fill in optional fields then submit
+        await selectDropdownOption(user, formElements.gender);
+        await selectDropdownOption(user, formElements.ethnicity);
+        await selectDropdownOption(user, formElements.securityClearance);
+        await selectDropdownOption(user, formElements.disability, 2);
+        await user.click(formElements.submitButton);
+
+        const optionalElements = [
+            formElements.gender,
+            formElements.ethnicity,
+            formElements.securityClearance,
+            formElements.disability,
+        ];
+        optionalElements.forEach((el) => {
+            expect(el.classList.contains("ring-error")).toBe(false);
         });
     });
 });
-
-// describe("User Interactions", () => {
-//     it("Should have a successful submit when you fill in the mandatory fields correctly", async () => {
-//         const user = userEvent.setup();
-//         const { container: entireFormComponent } = render(PersonalDetailsForm, {
-//             props: EMPTY_FORM_PROPS,
-//         });
-//         const formElements = getFormElements();
-
-//         // Fill in mandatory fields
-//         await fillInputField(user, formElements.firstName, "Gustavo");
-//         await fillInputField(user, formElements.lastName, "Markov");
-//         await fillInputField(user, formElements.age, "54");
-//         await fillInputField(user, formElements.email, "jmarkov@protonmail.com"); // prettier-ignore
-//         await fillInputField(user, formElements.phoneNumber, "6478880000");
-//         await fillInputField(user, formElements.yearsExp, "10");
-//         await selectDropdownOption(user, formElements.highestEducation, 2);
-//         await user.click(formElements.submitButton);
-
-//         // Fill in optional fields
-//         await selectDropdownOption(user, formElements.gender);
-//         await selectDropdownOption(user, formElements.ethnicity);
-//         await selectDropdownOption(user, formElements.securityClearance);
-//         await selectDropdownOption(user, formElements.disability, 2);
-
-//         await user.click(formElements.submitButton);
-//     });
-// });
