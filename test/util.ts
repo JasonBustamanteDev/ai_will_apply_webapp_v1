@@ -1,3 +1,4 @@
+// @ts-nocheck (put atop page once tests are written)
 import fs from "fs";
 import { render, screen, prettyDOM, getByText } from "@testing-library/vue";
 import { expect, describe, it, beforeEach, assert, afterEach, vi } from "vitest"; // prettier-ignore

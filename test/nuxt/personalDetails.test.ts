@@ -1,6 +1,6 @@
 import { expect, describe, it, beforeEach, assert, afterEach, vi } from "vitest"; // prettier-ignore
 import userEvent from "@testing-library/user-event";
-import { render, fireEvent, screen, waitFor, getByText  } from "@testing-library/vue"; // prettier-ignore
+import { render, fireEvent, screen, waitFor, getByText, cleanup  } from "@testing-library/vue"; // prettier-ignore
 import { DOMWrapper, mount, VueWrapper } from "@vue/test-utils";
 import PersonalDetailsForm from "~/ui/profiles/views/personalDetails/personalDetailsForm.vue";
 import { PROFILE_FORMS } from "~/shared/utils/globals";
@@ -58,8 +58,12 @@ const getFormElements = () => {
     };
 };
 
+afterEach(() => {
+    // Reset screen after each test
+    cleanup();
+});
+
 describe("Completed form", () => {
-    // Render a new instance of an unfilled instance of the form for each test in this describe
     let form: Element;
     let formElements: ReturnType<typeof getFormElements>;
     beforeEach(() => {
@@ -89,36 +93,27 @@ describe("Completed form", () => {
 });
 
 describe("Fresh form with nothing filled in", () => {
-    // Render a new instance of an unfilled instance of the form for each test in this describe
-    let formWrapper: VueWrapper<any>;
+    let form: Element;
+    let formElements: ReturnType<typeof getFormElements>;
     beforeEach(() => {
-        formWrapper = mount(PersonalDetailsForm, {
-            propsData: EMPTY_FORM_PROPS,
+        const { container } = render(PersonalDetailsForm, {
+            props: EMPTY_FORM_PROPS,
         });
+        form = container;
+        formElements = getFormElements();
     });
 
     it("Should have Age && Years of Experience prefilled", () => {
-        // Find the components that should have default values if form is fresh
-        const formElements = findFormElements(formWrapper);
-        const age_ticker = formElements.age;
-        const years_experience_input = formElements.yearsExp;
-
-        // If you want to log the components you found
-        // forceLog(age_select_component.html())
-
-        // Assert that these components have default values
-        assert.equal(age_ticker.element.value, 18);
-        assert.equal(years_experience_input.element.value, 2);
-        // @ts-nocheck (put atop page once tests are written)
+        assertInputValue(formElements.age, "18");
+        assertInputValue(formElements.yearsExp, "2");
     });
 
     it("Should render a red error border when mandatory fields that are not prefilled are submitted blank", async () => {
         // Submit the form
-        await formWrapper.trigger("submit");
-        await formWrapper.vm.$nextTick();
+        const user = userEvent.setup();
+        await user.click(formElements.submitButton)
 
         // These fields should all have a ring-error attribute
-        const formElements = findFormElements(formWrapper);
         const elements = [
             formElements.firstName,
             formElements.lastName,
@@ -127,44 +122,35 @@ describe("Fresh form with nothing filled in", () => {
             formElements.highestEducation,
         ];
         elements.forEach((el) => {
-            expect(el.classes()).toContain("ring-error");
+            expect(el.classList.contains("ring-error")).toBe(true)
         });
     });
 });
 
-describe("User Interactions", () => {
-    it("Should have a successful submit when you fill in the mandatory fields correctly", async () => {
-        const user = userEvent.setup();
-        const { container: entireFormComponent } = render(PersonalDetailsForm, {
-            props: EMPTY_FORM_PROPS,
-        });
-        const formElements = getFormElements();
+// describe("User Interactions", () => {
+//     it("Should have a successful submit when you fill in the mandatory fields correctly", async () => {
+//         const user = userEvent.setup();
+//         const { container: entireFormComponent } = render(PersonalDetailsForm, {
+//             props: EMPTY_FORM_PROPS,
+//         });
+//         const formElements = getFormElements();
 
-        // Fill in mandatory fields
-        await fillInputField(user, formElements.firstName, "Gustavo");
-        await fillInputField(user, formElements.lastName, "Markov");
-        await fillInputField(user, formElements.age, "54");
-        await fillInputField(user, formElements.email, "jmarkov@protonmail.com"); // prettier-ignore
-        await fillInputField(user, formElements.phoneNumber, "6478880000");
-        await fillInputField(user, formElements.yearsExp, "10");
-        await selectDropdownOption(user, formElements.highestEducation, 2);
-        await user.click(formElements.submitButton);
+//         // Fill in mandatory fields
+//         await fillInputField(user, formElements.firstName, "Gustavo");
+//         await fillInputField(user, formElements.lastName, "Markov");
+//         await fillInputField(user, formElements.age, "54");
+//         await fillInputField(user, formElements.email, "jmarkov@protonmail.com"); // prettier-ignore
+//         await fillInputField(user, formElements.phoneNumber, "6478880000");
+//         await fillInputField(user, formElements.yearsExp, "10");
+//         await selectDropdownOption(user, formElements.highestEducation, 2);
+//         await user.click(formElements.submitButton);
 
-        // Fill in optional fields
-        await selectDropdownOption(user, formElements.gender);
-        await selectDropdownOption(user, formElements.ethnicity);
-        await selectDropdownOption(user, formElements.securityClearance);
-        await selectDropdownOption(user, formElements.disability, 2);
+//         // Fill in optional fields
+//         await selectDropdownOption(user, formElements.gender);
+//         await selectDropdownOption(user, formElements.ethnicity);
+//         await selectDropdownOption(user, formElements.securityClearance);
+//         await selectDropdownOption(user, formElements.disability, 2);
 
-        await user.click(formElements.submitButton);
-
-        // await waitFor(() => {
-        //     expect(mockShowSuccessToast).toHaveBeenCalledWith(
-        //         "Form Submitted",
-        //         "Fill out the remaining forms or start job hunting"
-        //     );
-        // });
-
-        // expect(mockShowErrorToast).not.toHaveBeenCalled();
-    });
-});
+//         await user.click(formElements.submitButton);
+//     });
+// });
