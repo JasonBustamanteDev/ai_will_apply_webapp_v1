@@ -4,7 +4,8 @@ import userEvent from "@testing-library/user-event";
 import { mount, VueWrapper } from "@vue/test-utils";
 import PersonalDetailsForm from "~/ui/profiles/views/personalDetails/personalDetailsForm.vue";
 import { PROFILE_FORMS } from "~/shared/utils/globals";
-import { forceLog, logToFile } from "../util";
+import { forceLog, delay } from "../util";
+import { nextTick } from 'vue';
 
 // Prop data
 const ENCODED_PROFILE_NAME = "test_form_1";
@@ -51,7 +52,7 @@ describe("Fresh form with nothing filled in", () => {
 
     it("Should have Age && Years of Experience prefilled", () => {
         // Find the components that should have default values if form is fresh
-        const age_select = formWrapper.find('[data-test="age_field"]');
+        const age_select = formWrapper.find(`[data-test="age_field"]`);
         const years_experience_input = formWrapper.find(
             '[data-test="years_experience_field"]'
         );
@@ -67,25 +68,27 @@ describe("Fresh form with nothing filled in", () => {
     });
 
     it("Should render red error text when mandatory fields that are not prefilled are submitted blank", async () => {
-        const user = userEvent.setup();
+        // const user = userEvent.setup();
 
         // Locate then click on submit button on form
         const submit_button = formWrapper.find('button[type="submit"]');
-        await user.click(submit_button.element);
+        await submit_button.trigger('click');
+        await delay(500)
 
-        const elements_with_error_visuals = [
+        // These fields should all have error visuals
+        const data_attributes = [
             "first_name_field",
             "last_name_field",
             "email_field",
             "phone_number_field",
             "highest_education_field",
         ];
+        data_attributes.forEach((attr) => {
+            const form_field = formWrapper.find(`[data-test="${attr}"]`);
+            forceLog(form_field.html())
+        });
 
-        // The First Name, Last Name, Email, Phone Number, and Highest Education Level
-        // above fields should all have red text saying this field is required
-
-        forceLog(submit_button.html());
-        expect(1).toBe(1);
+        
     });
 });
 

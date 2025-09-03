@@ -7,3 +7,7 @@ export function forceLog(...args: any) {
 export function logToFile(message: string) {
     fs.appendFileSync("debug.log", `${new Date().toISOString()}: ${message}\n`);
 }
+
+export function delay(milliseconds: number) {
+    return new Promise((resolve) => setTimeout(resolve, milliseconds));
+}
