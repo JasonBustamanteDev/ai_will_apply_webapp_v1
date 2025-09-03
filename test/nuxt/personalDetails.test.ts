@@ -1,11 +1,11 @@
 import { expect, describe, it, beforeEach, assert, afterEach } from "vitest"; // prettier-ignore
-import { render } from "@testing-library/vue";
+import { render, fireEvent } from "@testing-library/vue";
 import userEvent from "@testing-library/user-event";
 import { mount, VueWrapper } from "@vue/test-utils";
 import PersonalDetailsForm from "~/ui/profiles/views/personalDetails/personalDetailsForm.vue";
 import { PROFILE_FORMS } from "~/shared/utils/globals";
 import { forceLog, delay } from "../util";
-import { nextTick } from 'vue';
+import { nextTick } from "vue";
 
 // Prop data
 const ENCODED_PROFILE_NAME = "test_form_1";
@@ -68,14 +68,11 @@ describe("Fresh form with nothing filled in", () => {
     });
 
     it("Should render red error text when mandatory fields that are not prefilled are submitted blank", async () => {
-        // const user = userEvent.setup();
+        // Submit the form
+        await formWrapper.trigger("submit");
+        await formWrapper.vm.$nextTick();
 
-        // Locate then click on submit button on form
-        const submit_button = formWrapper.find('button[type="submit"]');
-        await submit_button.trigger('click');
-        await delay(500)
-
-        // These fields should all have error visuals
+        // These fields should all have a ring-error attribute
         const data_attributes = [
             "first_name_field",
             "last_name_field",
@@ -85,10 +82,8 @@ describe("Fresh form with nothing filled in", () => {
         ];
         data_attributes.forEach((attr) => {
             const form_field = formWrapper.find(`[data-test="${attr}"]`);
-            forceLog(form_field.html())
+            expect(form_field.classes()).toContain("ring-error");
         });
-
-        
     });
 });
 
