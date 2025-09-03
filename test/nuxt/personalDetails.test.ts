@@ -52,22 +52,21 @@ describe("Fresh form with nothing filled in", () => {
 
     it("Should have Age && Years of Experience prefilled", () => {
         // Find the components that should have default values if form is fresh
-        const age_select = formWrapper.find(`[data-test="age_field"]`);
+        const age_ticker = formWrapper.find(`[data-test="age_field"]`);
         const years_experience_input = formWrapper.find(
             '[data-test="years_experience_field"]'
         );
 
         // If you want to log the components you found
         // forceLog(age_select_component.html())
-        // forceLog(years_experience_input_component.html())
 
         // Assert that these components have default values
-        assert.equal(age_select.element.value, 18);
+        assert.equal(age_ticker.element.value, 18);
         assert.equal(years_experience_input.element.value, 2);
         // @ts-nocheck (put atop page once tests are written)
     });
 
-    it("Should render red error text when mandatory fields that are not prefilled are submitted blank", async () => {
+    it("Should render a red error border when mandatory fields that are not prefilled are submitted blank", async () => {
         // Submit the form
         await formWrapper.trigger("submit");
         await formWrapper.vm.$nextTick();
@@ -87,15 +86,71 @@ describe("Fresh form with nothing filled in", () => {
     });
 });
 
-// describe("Filled out form", () => {
-//     describe("Submit Examples", () => {
-//         it("Should have a successful submit when you fill in the mandatory fields correctly", () => {
-//             // First Name, Last Name, Email, Phone Number, and Highest Education Level
-//             expect(1).toBe(1);
-//         });
+describe("Completed form", () => {
+    // Render a new instance of an unfilled instance of the form for each test in this describe
+    let formWrapper: VueWrapper<any>;
+    beforeEach(() => {
+        formWrapper = mount(PersonalDetailsForm, {
+            propsData: COMPLETED_FORM_PROPS,
+        });
+    });
 
-//         it("Should have a successful submit when you fill in all fields correctly", () => {
-//             expect(1).toBe(1);
-//         });
-//     });
-// });
+    // prettier-ignore
+    it("Should have all form fields filled in", () => {
+        // Input fields
+        const first_name_input = formWrapper.find(`[data-test="first_name_field"]`);
+        expect(first_name_input.element.value).toBe("Gustavo")
+
+        const last_name_input = formWrapper.find(`[data-test="last_name_field"]`);
+        expect(last_name_input.element.value).toBe("Markov")
+
+        const email_input = formWrapper.find(`[data-test="email_field"]`);
+        expect(email_input.element.value).toBe('jmarkov@protonmail.com')
+
+        const phone_number_input = formWrapper.find(`[data-test="phone_number_field"]`);
+        expect(phone_number_input.element.value).toBe('6478880000')
+
+        const years_exp_input = formWrapper.find(`[data-test="years_experience_field"]`);
+        expect(years_exp_input.element.value).toBe('10')
+
+        // Number tickers
+        const age_ticker = formWrapper.find(`[data-test="age_field"]`);
+        expect(age_ticker.element.value).toBe("51")
+
+        // Select dropdowns
+        const highest_education_select = formWrapper.find(`[data-test="highest_education_field"]`);
+        expect(highest_education_select.text()).toContain("Bachelor's Degree")
+
+        const gender_select = formWrapper.find(`[data-test="gender_field"]`);
+        expect(gender_select.text()).toContain("Male")
+
+        const ethnicity_select = formWrapper.find(`[data-test="ethnicity_field"]`);
+        expect(ethnicity_select.text()).toContain("White")
+
+        const security_clearance_select = formWrapper.find(`[data-test="clearance_field"]`);
+        expect(security_clearance_select.text()).toContain("Yes")
+
+        const disability_select = formWrapper.find(`[data-test="disability_field"]`);
+        expect(disability_select.text()).toContain("No")
+    });
+});
+
+describe("Fresh form after you fill in certain fields", () => {
+    let formWrapper: VueWrapper<any>;
+    beforeEach(() => {
+        // Render an empty form then fill in mandatory fields
+        formWrapper = mount(PersonalDetailsForm, {
+            propsData: EMPTY_FORM_PROPS,
+        });
+    });
+
+
+    it("Should have a successful submit when you fill in the mandatory fields correctly", () => {
+        // First Name, Last Name, Email, Phone Number, and Highest Education Level
+        expect(1).toBe(1);
+    });
+
+    it("Should have a successful submit when you fill in all fields correctly", () => {
+        expect(1).toBe(1);
+    });
+});
