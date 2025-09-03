@@ -82,14 +82,14 @@ const onSubmit = async () => {
             <UInput
                 v-model="formState.firstName"
                 class="w-full"
-                data-test="first_name_field"
+                data-testid="first_name_field"
             />
         </UFormField>
         <UFormField label="Last Name **" name="lastName" class="mb-0">
             <UInput
                 v-model="formState.lastName"
                 class="w-full"
-                data-test="last_name_field"
+                data-testid="last_name_field"
             />
         </UFormField>
         <UFormField label="Age **" name="age" class="mb-0">
@@ -99,21 +99,21 @@ const onSubmit = async () => {
                 :max="120"
                 class="w-full"
                 color="neutral"
-                data-test="age_field"
+                data-testid="age_field"
             />
         </UFormField>
         <UFormField label="Email **" name="email" class="mb-0">
             <UInput
                 v-model="formState.email"
                 class="w-full"
-                data-test="email_field"
+                data-testid="email_field"
             />
         </UFormField>
         <UFormField label="Phone Number **" name="phoneNumber" class="mb-0">
             <UInput
                 v-model="formState.phoneNumber"
                 class="w-full"
-                data-test="phone_number_field"
+                data-testid="phone_number_field"
             />
         </UFormField>
         <UFormField
@@ -125,7 +125,7 @@ const onSubmit = async () => {
                 v-model="formState.yearsOfExperience"
                 class="w-full"
                 placeholder=""
-                data-test="years_experience_field"
+                data-testid="years_experience_field"
             />
         </UFormField>
         <UFormField
@@ -137,14 +137,14 @@ const onSubmit = async () => {
                 v-model="formState.educationLevel"
                 :items="educationLevels"
                 class="w-full"
-                data-test="highest_education_field"
+                data-testid="highest_education_field"
         /></UFormField>
         <UFormField label="Gender" name="gender" class="mb-0">
             <USelect
                 v-model="formState.gender"
                 :items="genders"
                 class="w-full"
-                data-test="gender_field"
+                data-testid="gender_field"
             />
         </UFormField>
         <UFormField label="Ethnicity" name="ethnicity" class="mb-0">
@@ -152,7 +152,7 @@ const onSubmit = async () => {
                 v-model="formState.ethnicity"
                 :items="ethnicGroups"
                 class="w-full"
-                data-test="ethnicity_field"
+                data-testid="ethnicity_field"
             />
         </UFormField>
         <UFormField
@@ -164,7 +164,7 @@ const onSubmit = async () => {
                 v-model="formState.securityClearance"
                 :items="booleanPlusEmptyOptions"
                 class="w-full"
-                data-test="clearance_field"
+                data-testid="clearance_field"
             />
         </UFormField>
         <UFormField
@@ -176,7 +176,7 @@ const onSubmit = async () => {
                 v-model="formState.disability"
                 :items="booleanPlusEmptyOptions"
                 class="w-full"
-                data-test="disability_field"
+                data-testid="disability_field"
             />
         </UFormField>
 
