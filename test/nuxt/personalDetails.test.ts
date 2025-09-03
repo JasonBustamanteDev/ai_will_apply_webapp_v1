@@ -1,11 +1,9 @@
-import { expect, describe, it, beforeEach, assert, afterEach, vi } from "vitest"; // prettier-ignore
+import { expect, describe, it, beforeEach, afterEach } from "vitest"; // prettier-ignore
 import userEvent from "@testing-library/user-event";
-import { render, fireEvent, screen, waitFor, getByText, cleanup  } from "@testing-library/vue"; // prettier-ignore
-import { DOMWrapper, mount, VueWrapper } from "@vue/test-utils";
+import { render, screen, cleanup  } from "@testing-library/vue"; // prettier-ignore
 import PersonalDetailsForm from "~/ui/profiles/views/personalDetails/personalDetailsForm.vue";
 import { PROFILE_FORMS } from "~/shared/utils/globals";
-import { forceLog, delay, fillInputField, forceLogElement, selectDropdownOption, assertDropdownValue, assertInputValue } from "../util"; // prettier-ignore
-import { nextTick } from "vue";
+import { forceLog, forceLogElement, fillInputField, selectDropdownOption, assertDropdownValue, assertInputValue } from "../util"; // prettier-ignore
 
 // Prop data
 const ENCODED_PROFILE_NAME = "test_form_1";
@@ -95,12 +93,28 @@ describe("Completed form", () => {
 describe("Fresh form with nothing filled in", () => {
     let form: Element;
     let formElements: ReturnType<typeof getFormElements>;
+    let mandatoryElements: HTMLElement[];
+    let optionalElements: HTMLElement[];
     beforeEach(() => {
         const { container } = render(PersonalDetailsForm, {
             props: EMPTY_FORM_PROPS,
         });
         form = container;
         formElements = getFormElements();
+
+        mandatoryElements = [
+            formElements.firstName,
+            formElements.lastName,
+            formElements.email,
+            formElements.phoneNumber,
+            formElements.highestEducation,
+        ];
+        optionalElements = [
+            formElements.gender,
+            formElements.ethnicity,
+            formElements.securityClearance,
+            formElements.disability,
+        ];
     });
 
     it("Should have Age && Years of Experience prefilled", () => {
@@ -114,13 +128,6 @@ describe("Fresh form with nothing filled in", () => {
         await user.click(formElements.submitButton);
 
         // These fields should all have a ring-error attribute
-        const mandatoryElements = [
-            formElements.firstName,
-            formElements.lastName,
-            formElements.email,
-            formElements.phoneNumber,
-            formElements.highestEducation,
-        ];
         mandatoryElements.forEach((el) => {
             expect(el.classList.contains("ring-error")).toBe(true);
         });
@@ -139,13 +146,7 @@ describe("Fresh form with nothing filled in", () => {
         await selectDropdownOption(user, formElements.highestEducation, 2);
         await user.click(formElements.submitButton);
 
-        const mandatoryElements = [
-            formElements.firstName,
-            formElements.lastName,
-            formElements.email,
-            formElements.phoneNumber,
-            formElements.highestEducation,
-        ];
+        // Check that the form submit worked by asserting the lack of error visuals on the form
         mandatoryElements.forEach((el) => {
             expect(el.classList.contains("ring-error")).toBe(false);
         });
@@ -157,12 +158,7 @@ describe("Fresh form with nothing filled in", () => {
         await selectDropdownOption(user, formElements.disability, 2);
         await user.click(formElements.submitButton);
 
-        const optionalElements = [
-            formElements.gender,
-            formElements.ethnicity,
-            formElements.securityClearance,
-            formElements.disability,
-        ];
+        // Check that the form submit worked by asserting the lack of error visuals on the form
         optionalElements.forEach((el) => {
             expect(el.classList.contains("ring-error")).toBe(false);
         });
