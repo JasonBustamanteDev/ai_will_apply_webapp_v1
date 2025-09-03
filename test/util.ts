@@ -1,5 +1,6 @@
 import fs from "fs";
-import { render, screen, prettyDOM } from "@testing-library/vue";
+import { render, screen, prettyDOM, getByText } from "@testing-library/vue";
+import { expect, describe, it, beforeEach, assert, afterEach, vi } from "vitest"; // prettier-ignore
 import { writeFileSync } from "fs";
 import { join } from "path";
 import { nextTick } from "vue";
@@ -30,14 +31,28 @@ export async function fillInputField(
 export async function selectDropdownOption(
     user: UserEvent,
     element: HTMLElement,
-    arrowDownCount: number = 1,
+    arrowDownCount: number = 1
 ) {
     await user.click(element);
-    
+
     // Apply the specified number of arrow down keypresses
     for (let i = 0; i < arrowDownCount; i++) {
         await user.keyboard("{ArrowDown}");
     }
-    
+
     await user.keyboard("{Enter}");
+}
+
+export function assertInputValue(
+    element: HTMLElement,
+    value: string | number
+) {
+    expect(element.value).toBe(value);
+}
+
+export function assertDropdownValue(
+    element: HTMLElement,
+    value: string | number
+) {
+    getByText(element, value);
 }
