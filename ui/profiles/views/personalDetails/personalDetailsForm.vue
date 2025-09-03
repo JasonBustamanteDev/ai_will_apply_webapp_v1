@@ -185,6 +185,7 @@ const onSubmit = async () => {
                 type="submit"
                 class="w-full justify-center cursor-pointer"
                 color="secondary"
+                data-testid="personal_details_submit_button"
                 >Submit</UButton
             >
         </div>
