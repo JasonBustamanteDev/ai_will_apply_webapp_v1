@@ -177,5 +177,39 @@ describe("Fresh preferences form", () => {
         });
     });
 
-    // it("Should have a successful submit when you fill in the mandatory fields correctly", async () => {});
+    it("Should have a successful submit when you fill in the mandatory fields correctly", async () => {
+        const user = userEvent.setup();
+        await fillInputField(user, formElements.currentSalary, "75000");
+        await fillInputField(user, formElements.expectedSalary, "100000");
+        await fillInputField(user, formElements.noticePeriod, "14");
+        await fillInputField(user, formElements.interviewAvailability, 'Mon to Fri between 9AM to 6PM'); // prettier-ignore
+
+        // Tick checkboxes
+        const checkboxes = [
+            { field: formElements.relocation, isTrue: false },
+            { field: formElements.license, isTrue: true },
+            { field: formElements.transportation, isTrue: true },
+            { field: formElements.veteranStatus, isTrue: false },
+        ];
+        for (const obj of checkboxes) {
+            const field = obj.field;
+
+            if (obj.isTrue) {
+                const yesButton = field.querySelector('button[value="true"]');
+                await user.click(yesButton as Element);
+            } else {
+                const noButton = field.querySelector('button[value="false"]');
+                await user.click(noButton as Element);
+            }
+        }
+
+        await user.click(formElements.submitButton);
+
+        optionalElements.forEach((el) => {
+            expect(el.classList.contains("ring-error")).toBe(false);
+        });
+        mandatoryElements.forEach((el) => {
+            expect(el.classList.contains("ring-error")).toBe(false);
+        });
+    });
 });
