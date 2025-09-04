@@ -1,6 +1,6 @@
 import { expect, describe, it, beforeEach, afterEach } from "vitest"; // prettier-ignore
 import userEvent from "@testing-library/user-event";
-import { render, screen, cleanup  } from "@testing-library/vue"; // prettier-ignore
+import { render, screen, cleanup, within  } from "@testing-library/vue"; // prettier-ignore
 import PreferenceForm from "~/ui/profiles/views/preferences/preferenceForm.vue";
 import { PROFILE_FORMS } from "~/shared/utils/globals";
 import { forceLog, forceLogElement, fillInputField, selectDropdownOption, assertDropdownValue, assertInputValue } from "../util"; // prettier-ignore
@@ -25,13 +25,13 @@ const COMPLETED_FORM_PROPS = {
         data: {
             currentAnnualSalary: 75000,
             expectedAnnualSalary: 100000,
-            noticePeriod: 15,
+            noticePeriod: 14,
             willingToRelocate: true,
             driversLicense: true,
             reliableTransportation: true,
-            veteranStatus: true,
+            veteranStatus: false,
             companyBlacklist: ["Amazon", "JP Morgan"],
-            interviewAvailability: "Mon to Fri between 9AM to 5PM",
+            interviewAvailability: "Mon to Fri between 9AM to 6PM",
         },
         isComplete: true,
     },
@@ -50,10 +50,86 @@ const getFormElements = () => {
             "interview_availability_field"
         ),
         companyBlacklist: screen.getByTestId("company_blacklist_field"),
-        submitButton: screen.getByTestId("social_media_submit_button"),
+
+        submitButton: screen.getByTestId("preference_submit_button"),
     };
 };
 
 afterEach(() => {
     cleanup(); // Reset screen after each test
 });
+
+describe("Completed preferences form", () => {
+    let form: Element;
+    let formElements: ReturnType<typeof getFormElements>;
+    beforeEach(() => {
+        const { container } = render(PreferenceForm, {
+            props: COMPLETED_FORM_PROPS,
+        });
+        form = container;
+        formElements = getFormElements();
+    });
+
+    it("Should have all form fields filled in", () => {
+        assertInputValue(formElements.currentSalary, "75,000");
+        assertInputValue(formElements.expectedSalary, "100,000");
+        assertInputValue(formElements.noticePeriod, "14");
+        assertInputValue(formElements.interviewAvailability, "Mon to Fri between 9AM to 6PM"); // prettier-ignore
+
+        const blacklistParent = screen.getByTestId("company_blacklist_parent");
+        within(blacklistParent).getByText("JP Morgan");
+        within(blacklistParent).getByText("Amazon");
+
+        const checkboxes = [
+            { field: formElements.relocation, isTrue: true },
+            { field: formElements.license, isTrue: true },
+            { field: formElements.transportation, isTrue: true },
+            { field: formElements.veteranStatus, isTrue: false },
+        ];
+        checkboxes.forEach((obj) => {
+            const field = obj.field;
+            const yesButton = field.querySelector('button[value="true"]');
+            const noButton = field.querySelector('button[value="false"]');
+
+            const expectedYes = obj.isTrue ? "true" : "false";
+            const expectedNo = obj.isTrue ? "false" : "true";
+
+            expect(yesButton?.getAttribute("aria-checked")).toEqual(
+                expectedYes
+            );
+            expect(noButton?.getAttribute("aria-checked")).toEqual(expectedNo);
+        });
+    });
+});
+
+// describe("Fresh preferences form", () => {
+//     let form: Element;
+//     let formElements: ReturnType<typeof getFormElements>;
+//     let mandatoryElements: HTMLElement[];
+//     let optionalElements: HTMLElement[];
+//     beforeEach(() => {
+//         const { container } = render(PreferenceForm, {
+//             props: EMPTY_FORM_PROPS,
+//         });
+//         form = container;
+//         formElements = getFormElements();
+
+//         mandatoryElements = [
+//             formElements.currentSalary,
+//             formElements.expectedSalary,
+//             formElements.noticePeriod,
+//             formElements.relocation,
+//             formElements.license,
+//             formElements.transportation,
+//             formElements.veteranStatus,
+//             formElements.interviewAvailability,
+//         ];
+//         optionalElements = [formElements.companyBlacklist];
+//     });
+
+//     it("Should have the boolean fields prefilled by default", async () => {});
+
+//     it("Should render a red error border when mandatory fields are submitted blank", async () => {});
+
+//     it("Should have a successful submit when you fill in the mandatory fields correctly", async () => {});
+// });

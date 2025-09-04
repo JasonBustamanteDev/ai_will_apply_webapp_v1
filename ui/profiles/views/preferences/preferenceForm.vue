@@ -201,6 +201,7 @@ const onSubmit = async () => {
             label="Avoid applying to these companies:"
             name="companyBlacklist"
             class="mb-0 col-span-2"
+            data-testid="company_blacklist_parent"
         >
             <UInputTags
                 v-model="formState.companyBlacklist"
@@ -215,7 +216,7 @@ const onSubmit = async () => {
                 type="submit"
                 class="w-full justify-center cursor-pointer"
                 color="secondary"
-                data-testid="social_media_submit_button"
+                data-testid="preference_submit_button"
                 >Submit</UButton
             >
         </div>
