@@ -160,12 +160,21 @@ describe("Fresh education form", () => {
         }
     });
 
-    it("Should render a red error border when mandatory fields that are not prefilled are submitted blank", async () => {
-        const user = userEvent.setup();
+    it("Should have the currentlyAttending field prefilled as false", async () => {
+        const checkbox = formElements.currentlyAttending;
+        const yesButton = checkbox.querySelector('button[value="true"]');
+        const noButton = checkbox.querySelector('button[value="false"]');
 
-        await user.click(formElements.submitButton);
-        forceLogElement(formContainer)
+        expect(yesButton?.getAttribute("aria-checked")).toEqual("false");
+        expect(noButton?.getAttribute("aria-checked")).toEqual("true");
     });
+
+    // it("Should render a red error border when mandatory fields that are not prefilled are submitted blank", async () => {
+    //     const user = userEvent.setup();
+
+    //     await user.click(formElements.submitButton);
+    //     forceLogElement(formContainer)
+    // });
 
     // it("Should have a successful submit when you fill in the mandatory fields correctly", async () => {
     //     const user = userEvent.setup();

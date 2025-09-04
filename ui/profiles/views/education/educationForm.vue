@@ -26,7 +26,7 @@ const formState = reactive(
         gpa: undefined,
         startDate: undefined,
         endDate: undefined,
-        currentlyAttending: undefined,
+        currentlyAttending: false,
     }
 );
 
