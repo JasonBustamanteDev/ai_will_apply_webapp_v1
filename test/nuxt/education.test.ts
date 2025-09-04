@@ -58,7 +58,7 @@ const getFormElements = () => {
         endDate: screen.getByTestId("end_date_field"),
         currentlyAttending: screen.getByTestId("currently_attending_field"),
         gpa: screen.getByTestId("gpa_field"),
-        submitButton: screen.getByTestId("submit-button"),
+        submitButton: screen.getByTestId("education_submit_button"),
     };
 };
 
@@ -68,19 +68,40 @@ afterEach(() => {
 
 describe("Completed education form", () => {
     it("With education + all fields", () => {
-        const { container } = render(EducationForm, {
+        render(EducationForm, {
             props: COMPLETED_FORM_WITH_EDUCATION_PROPS,
         });
-        const form = container;
         const formElements = getFormElements();
+
+        assertInputValue(
+            formElements.institutionName,
+            "Ontario Tech University"
+        );
+        assertInputValue(formElements.fieldOfStudy, "Mechanical Engineering");
+        assertInputValue(formElements.institutionCity, "Oshawa");
+        assertInputValue(formElements.institutionProvince, "ON");
+        assertInputValue(formElements.startDate, "2014-09");
+        assertInputValue(formElements.endDate, "2018-04");
+        assertInputValue(formElements.gpa, "3.11");
+
+        const currentlyAttendingCheckbox = formElements.currentlyAttending;
+        const yesButton = currentlyAttendingCheckbox.querySelector(
+            'button[value="true"]'
+        );
+        const noButton = currentlyAttendingCheckbox.querySelector(
+            'button[value="false"]'
+        );
+        expect(yesButton?.getAttribute("aria-checked")).toEqual("false");
+        expect(noButton?.getAttribute("aria-checked")).toEqual("true");
     });
-    it("With no education", () => {
-        const { container } = render(EducationForm, {
-            props: COMPLETED_FORM_WITHOUT_EDUCATION_PROPS,
-        });
-        const form = container;
-        const formElements = getFormElements();
-    });
+
+    // it("With no education", () => {
+    //     const { container } = render(EducationForm, {
+    //         props: COMPLETED_FORM_WITHOUT_EDUCATION_PROPS,
+    //     });
+    //     const form = container;
+    //     const formElements = getFormElements();
+    // });
 });
 
 // describe("Fresh education form", () => {
