@@ -1,7 +1,7 @@
 import { expect, describe, it, beforeEach, afterEach } from "vitest"; // prettier-ignore
 import userEvent from "@testing-library/user-event";
 import { render, screen, cleanup  } from "@testing-library/vue"; // prettier-ignore
-import PreferenceForm from "~/ui/profiles/views/socials/socialsForm.vue";
+import SocialsForm from "~/ui/profiles/views/socials/socialsForm.vue";
 import { PROFILE_FORMS } from "~/shared/utils/globals";
 import { forceLog, forceLogElement, fillInputField, selectDropdownOption, assertDropdownValue, assertInputValue } from "../util"; // prettier-ignore
 
