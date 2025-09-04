@@ -48,7 +48,7 @@ const COMPLETED_FORM_WITH_EDUCATION_PROPS = {
 
 const getFormElements = () => {
     return {
-        haveHigherEducation: screen.getByTestId("have_higher_education_field"), // switch that can disable the form
+        educationSwitch: screen.getByTestId("have_higher_education_field"), // switch that can disable the form
 
         institutionName: screen.getByTestId("institution_name_field"),
         fieldOfStudy: screen.getByTestId("field_of_study_field"),
@@ -73,10 +73,11 @@ describe("Completed education form", () => {
         });
         const formElements = getFormElements();
 
-        assertInputValue(
-            formElements.institutionName,
-            "Ontario Tech University"
-        );
+        expect(
+            formElements.educationSwitch?.getAttribute("aria-checked")
+        ).toEqual("true");
+
+        assertInputValue(formElements.institutionName, "Ontario Tech University"); // prettier-ignore
         assertInputValue(formElements.fieldOfStudy, "Mechanical Engineering");
         assertInputValue(formElements.institutionCity, "Oshawa");
         assertInputValue(formElements.institutionProvince, "ON");
@@ -95,13 +96,39 @@ describe("Completed education form", () => {
         expect(noButton?.getAttribute("aria-checked")).toEqual("true");
     });
 
-    // it("With no education", () => {
-    //     const { container } = render(EducationForm, {
-    //         props: COMPLETED_FORM_WITHOUT_EDUCATION_PROPS,
-    //     });
-    //     const form = container;
-    //     const formElements = getFormElements();
-    // });
+    it("With no education", () => {
+        render(EducationForm, {
+            props: COMPLETED_FORM_WITHOUT_EDUCATION_PROPS,
+        });
+        const formElements = getFormElements();
+
+        expect(
+            formElements.educationSwitch?.getAttribute("aria-checked")
+        ).toEqual("false");
+
+        // Assert the input fields in the form are disabled
+        const disabledInputs = [
+            formElements.institutionName,
+            formElements.fieldOfStudy,
+            formElements.institutionCity,
+            formElements.institutionProvince,
+            formElements.startDate,
+            formElements.endDate,
+            formElements.gpa,
+        ];
+        disabledInputs.forEach((el) => {
+            expect(el.classList.contains("disabled:cursor-not-allowed")).toBe(
+                true
+            );
+        });
+
+        // Assert the radio is disabled
+        const isCurrentlyAttendingDisabled = (
+            formElements.currentlyAttending.parentElement
+                ?.parentElement as Element
+        ).classList.contains("pointer-events-none");
+        expect(isCurrentlyAttendingDisabled).toBe(true);
+    });
 });
 
 // describe("Fresh education form", () => {
