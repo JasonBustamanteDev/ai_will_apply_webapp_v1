@@ -47,8 +47,7 @@ const getFormElements = () => {
 };
 
 afterEach(() => {
-    // Reset screen after each test
-    cleanup();
+    cleanup(); // Reset screen after each test
 });
 
 describe("Completed location form", () => {

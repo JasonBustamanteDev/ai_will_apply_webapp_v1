@@ -91,27 +91,40 @@ const onSubmit = async () => {
             :label="formState.haveHigherEducation ? `I've attended college or university` : `I have NOT attended college or university`"
             size="lg"
             class="mt-3 mb-6 col-span-full"
+            data-testid="have_higher_education_field"
         />
         <UFormField
             label="Institution Name **"
             name="institutionName"
             :class="`mb-0 ${conditionalDisableStyles}`"
         >
-            <UInput v-model="formState.institutionName" class="w-full" />
+            <UInput 
+                v-model="formState.institutionName" 
+                class="w-full" 
+                data-testid="institution_name_field"
+            />
         </UFormField>
         <UFormField
             label="Field of Study **"
             name="fieldOfStudy"
             :class="`mb-0 ${conditionalDisableStyles}`"
         >
-            <UInput v-model="formState.fieldOfStudy" class="w-full" />
+            <UInput 
+                v-model="formState.fieldOfStudy" 
+                class="w-full" 
+                data-testid="field_of_study_field"
+            />
         </UFormField>
         <UFormField
             label="Institution City **"
             name="institutionCity"
             :class="`mb-0 ${conditionalDisableStyles}`"
         >
-            <UInput v-model="formState.institutionCity" class="w-full" />
+            <UInput 
+                v-model="formState.institutionCity" 
+                class="w-full" 
+                data-testid="institution_city_field"
+            />
         </UFormField>
         <UFormField
             label="Institution Province or State **"
@@ -122,6 +135,7 @@ const onSubmit = async () => {
                 v-model="formState.institutionProvince"
                 class="w-full"
                 placeholder="Example: 'Ontario' or 'ON'"
+                data-testid="institution_province_field"
             />
         </UFormField>
         <UFormField
@@ -133,6 +147,7 @@ const onSubmit = async () => {
                 v-model="formState.startDate"
                 class="w-full"
                 placeholder="YYYY-MM"
+                data-testid="start_date_field"
             />
         </UFormField>
         <UFormField
@@ -144,6 +159,7 @@ const onSubmit = async () => {
                 v-model="formState.endDate"
                 class="w-full"
                 placeholder="YYYY-MM"
+                data-testid="end_date_field"
             />
         </UFormField>
         <UFormField
@@ -160,6 +176,7 @@ const onSubmit = async () => {
                 class="mt-2"
                 size="xl"
                 :ui="radioStyleObject"
+                data-testid="currently_attending_field"
             />
         </UFormField>
 
@@ -172,6 +189,7 @@ const onSubmit = async () => {
                 v-model="formState.gpa"
                 class="w-full"
                 placeholder="Decimal between 1 to 4"
+                data-testid="gpa_field"
             />
         </UFormField>
 
@@ -180,6 +198,7 @@ const onSubmit = async () => {
                 type="submit"
                 class="w-full justify-center cursor-pointer"
                 color="secondary"
+                data-testid="education_submit_button"
                 >Submit</UButton
             >
         </div>

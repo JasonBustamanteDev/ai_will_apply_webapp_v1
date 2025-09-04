@@ -46,13 +46,14 @@ const getFormElements = () => {
         license: screen.getByTestId("license_field"),
         transportation: screen.getByTestId("transportation_field"),
         veteranStatus: screen.getByTestId("veteran_field"),
-        interviewAvailability: screen.getByTestId("interview_availability_field"),
+        interviewAvailability: screen.getByTestId(
+            "interview_availability_field"
+        ),
         companyBlacklist: screen.getByTestId("company_blacklist_field"),
         submitButton: screen.getByTestId("social_media_submit_button"),
     };
 };
 
 afterEach(() => {
-    // Reset screen after each test
-    cleanup();
+    cleanup(); // Reset screen after each test
 });
