@@ -81,6 +81,7 @@ const onSubmit = async () => {
                 v-model="formState.portfolioUrl"
                 class="w-full"
                 placeholder="https://example.com"
+                data-testid="portfolio_url_field"
             />
         </UFormField>
         <UFormField label="LinkedIn" name="linkedin" class="mb-0 col-span-2">
@@ -88,6 +89,7 @@ const onSubmit = async () => {
                 v-model="formState.linkedin"
                 class="w-full"
                 placeholder="linkedin.com/in/jason-bustamante"
+                data-testid="linkedin_field"
             />
         </UFormField>
         <UFormField label="Github" name="github" class="mb-0 col-span-2">
@@ -95,6 +97,7 @@ const onSubmit = async () => {
                 v-model="formState.github"
                 class="w-full"
                 placeholder="github.com/username"
+                data-testid="github_field"
             />
         </UFormField>
         <UFormField label="Instagram" name="instagram" class="mb-0 col-span-2">
@@ -102,6 +105,7 @@ const onSubmit = async () => {
                 v-model="formState.instagram"
                 class="w-full"
                 placeholder="instagram.com/username"
+                data-testid="instagram_field"
             />
         </UFormField>
         <UFormField label="Twitter" name="twitter" class="mb-0 col-span-2">
@@ -109,6 +113,7 @@ const onSubmit = async () => {
                 v-model="formState.twitter"
                 class="w-full"
                 placeholder="x.com/username"
+                data-testid="twitter_field"
             />
         </UFormField>
         <UFormField label="Tiktok" name="tiktok" class="mb-0 col-span-2">
@@ -116,6 +121,7 @@ const onSubmit = async () => {
                 v-model="formState.tiktok"
                 class="w-full"
                 placeholder="tiktok.com/@username"
+                data-testid="tiktok_field"
             />
         </UFormField>
         <UFormField label="Youtube" name="youtube" class="mb-0 col-span-2">
@@ -123,6 +129,7 @@ const onSubmit = async () => {
                 v-model="formState.youtube"
                 class="w-full"
                 placeholder="youtube.com/@username"
+                data-testid="youtube_field"
             />
         </UFormField>
         <div class="uform-submit-button-container">
@@ -130,6 +137,7 @@ const onSubmit = async () => {
                 type="submit"
                 class="w-full justify-center cursor-pointer"
                 color="secondary"
+                data-testid="socials_submit_button"
                 >Submit</UButton
             >
         </div>
