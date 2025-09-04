@@ -112,64 +112,72 @@ describe("Completed education form", () => {
         formChildren.pop(); // removes last (submit button)
 
         // Assert the input fields in the form are disabled
-        expect(formChildren.length).toEqual(8) // should be 8 disabled fields
+        expect(formChildren.length).toEqual(8); // should be 8 disabled fields
         for (const el of formChildren) {
             expect(el.classList.contains("pointer-events-none")).toBe(true);
         }
     });
 });
 
-// describe("Fresh education form", () => {
-//     let form: Element;
-//     let formElements: ReturnType<typeof getFormElements>;
-//     let mandatoryElements: HTMLElement[];
-//     let optionalElements: HTMLElement[];
-//     beforeEach(() => {
-//         const { container } = render(EducationForm, {
-//             props: EMPTY_FORM_PROPS,
-//         });
-//         form = container;
-//         formElements = getFormElements();
+describe("Fresh education form", () => {
+    let formContainer: Element;
+    let formElements: ReturnType<typeof getFormElements>;
+    let mandatoryElements: HTMLElement[];
+    let optionalElements: HTMLElement[];
+    beforeEach(() => {
+        const { container } = render(EducationForm, {
+            props: EMPTY_FORM_PROPS,
+        });
+        formContainer = container;
+        formElements = getFormElements();
 
-//         mandatoryElements = [
-//             formElements.institutionName,
-//             formElements.fieldOfStudy,
-//             formElements.institutionCity,
-//             formElements.institutionProvince,
-//             formElements.startDate,
-//             formElements.endDate,
-//             formElements.currentlyAttending,
-//         ];
-//         optionalElements = [formElements.gpa];
-//     });
+        mandatoryElements = [
+            formElements.institutionName,
+            formElements.fieldOfStudy,
+            formElements.institutionCity,
+            formElements.institutionProvince,
+            formElements.startDate,
+            formElements.endDate,
+            formElements.currentlyAttending,
+        ];
+        optionalElements = [formElements.gpa];
+    });
 
-//     it("I've attended university should be true by default, and form fields should not be disabled", async () => {
-//         // Assert the input fields in the form are disabled
-//         // const disabledInputs = [
-//         //     formElements.institutionName,
-//         //     formElements.fieldOfStudy,
-//         //     formElements.institutionCity,
-//         //     formElements.institutionProvince,
-//         //     formElements.startDate,
-//         //     formElements.endDate,
-//         //     formElements.gpa,
-//         // ];
-//         // disabledInputs.forEach((el) => {
-//         //     expect(el.classList.contains("disabled:cursor-not-allowed")).toBe(
-//         //         false
-//         //     );
-//         // });
-//         // Assert the radio is disabled
-//         // const isCurrentlyAttendingDisabled = (
-//         //     formElements.currentlyAttending.parentElement
-//         //         ?.parentElement as Element
-//         // ).classList.contains("pointer-events-none");
-//         // expect(isCurrentlyAttendingDisabled).toBe(false);
-//     });
+    it("I've attended university should be true by default, and form fields should not be disabled", async () => {
+        // Assert the input fields in the form are enabled
+        expect(
+            formElements.educationSwitch?.getAttribute("aria-checked")
+        ).toEqual("true");
 
-//     // it("Should render a red error border when mandatory fields that are not prefilled are submitted blank", async () => {});
+        const form = formContainer.querySelector("form") as HTMLFormElement;
+        const formChildren = [...form.children];
+        formChildren.shift(); // removes first element (haveHigherEducation radio)
+        formChildren.pop(); // removes last (submit button)
 
-//     // it("Should have a successful submit when you fill in the mandatory fields correctly", async () => {
+        expect(formChildren.length).toEqual(8); // should be 8 disabled fields
+        for (const el of formChildren) {
+            expect(el.classList.contains("pointer-events-none")).toBe(false);
+        }
+    });
 
-//     // });
-// });
+    it("Should render a red error border when mandatory fields that are not prefilled are submitted blank", async () => {
+        const user = userEvent.setup();
+
+        await user.click(formElements.submitButton);
+        forceLogElement(formContainer)
+    });
+
+    // it("Should have a successful submit when you fill in the mandatory fields correctly", async () => {
+    //     const user = userEvent.setup();
+
+    //     await fillInputField(user, formElements.institutionName,"Ontario Tech University"); // prettier-ignore
+    //     await fillInputField(user, formElements.fieldOfStudy, "Mechanical Engineering"); // prettier-ignore
+    //     await fillInputField(user, formElements.institutionCity, "Oshawa");
+    //     await fillInputField(user, formElements.institutionProvince, "ON");
+    //     await fillInputField(user, formElements.startDate, "2014-09");
+    //     await fillInputField(user, formElements.endDate, "2018-04");
+    //     await fillInputField(user, formElements.gpa, "3.11");
+
+    //     await user.click(formElements.submitButton)
+    // });
+});
