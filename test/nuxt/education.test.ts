@@ -1,6 +1,6 @@
 import { expect, describe, it, beforeEach, afterEach } from "vitest"; // prettier-ignore
 import userEvent from "@testing-library/user-event";
-import { render, screen, cleanup  } from "@testing-library/vue"; // prettier-ignore
+import { render, screen, cleanup, within  } from "@testing-library/vue"; // prettier-ignore
 import EducationForm from "~/ui/profiles/views/education/educationForm.vue";
 import { PROFILE_FORMS } from "~/shared/utils/globals";
 import { forceLog, forceLogElement, fillInputField, selectDropdownOption, assertDropdownValue, assertInputValue } from "../util"; // prettier-ignore
@@ -97,7 +97,7 @@ describe("Completed education form", () => {
     });
 
     it("With no education", () => {
-        render(EducationForm, {
+        const { container } = render(EducationForm, {
             props: COMPLETED_FORM_WITHOUT_EDUCATION_PROPS,
         });
         const formElements = getFormElements();
@@ -106,28 +106,16 @@ describe("Completed education form", () => {
             formElements.educationSwitch?.getAttribute("aria-checked")
         ).toEqual("false");
 
-        // Assert the input fields in the form are disabled
-        const disabledInputs = [
-            formElements.institutionName,
-            formElements.fieldOfStudy,
-            formElements.institutionCity,
-            formElements.institutionProvince,
-            formElements.startDate,
-            formElements.endDate,
-            formElements.gpa,
-        ];
-        disabledInputs.forEach((el) => {
-            expect(el.classList.contains("disabled:cursor-not-allowed")).toBe(
-                true
-            );
-        });
+        const form = container.querySelector("form") as HTMLFormElement;
+        const formChildren = [...form.children];
+        formChildren.shift(); // removes first element (haveHigherEducation radio)
+        formChildren.pop(); // removes last (submit button)
 
-        // Assert the radio is disabled
-        const isCurrentlyAttendingDisabled = (
-            formElements.currentlyAttending.parentElement
-                ?.parentElement as Element
-        ).classList.contains("pointer-events-none");
-        expect(isCurrentlyAttendingDisabled).toBe(true);
+        // Assert the input fields in the form are disabled
+        expect(formChildren.length).toEqual(8) // should be 8 disabled fields
+        for (const el of formChildren) {
+            expect(el.classList.contains("pointer-events-none")).toBe(true);
+        }
     });
 });
 
@@ -155,9 +143,33 @@ describe("Completed education form", () => {
 //         optionalElements = [formElements.gpa];
 //     });
 
-//     it("Should have Age && Years of Experience prefilled", () => {});
+//     it("I've attended university should be true by default, and form fields should not be disabled", async () => {
+//         // Assert the input fields in the form are disabled
+//         // const disabledInputs = [
+//         //     formElements.institutionName,
+//         //     formElements.fieldOfStudy,
+//         //     formElements.institutionCity,
+//         //     formElements.institutionProvince,
+//         //     formElements.startDate,
+//         //     formElements.endDate,
+//         //     formElements.gpa,
+//         // ];
+//         // disabledInputs.forEach((el) => {
+//         //     expect(el.classList.contains("disabled:cursor-not-allowed")).toBe(
+//         //         false
+//         //     );
+//         // });
+//         // Assert the radio is disabled
+//         // const isCurrentlyAttendingDisabled = (
+//         //     formElements.currentlyAttending.parentElement
+//         //         ?.parentElement as Element
+//         // ).classList.contains("pointer-events-none");
+//         // expect(isCurrentlyAttendingDisabled).toBe(false);
+//     });
 
-//     it("Should render a red error border when mandatory fields that are not prefilled are submitted blank", async () => {});
+//     // it("Should render a red error border when mandatory fields that are not prefilled are submitted blank", async () => {});
 
-//     it("Should have a successful submit when you fill in the mandatory fields correctly", async () => {});
+//     // it("Should have a successful submit when you fill in the mandatory fields correctly", async () => {
+
+//     // });
 // });
