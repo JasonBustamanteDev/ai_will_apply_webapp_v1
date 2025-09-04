@@ -49,6 +49,7 @@ const COMPLETED_FORM_WITH_EDUCATION_PROPS = {
 const getFormElements = () => {
     return {
         haveHigherEducation: screen.getByTestId("have_higher_education_field"), // switch that can disable the form
+
         institutionName: screen.getByTestId("institution_name_field"),
         fieldOfStudy: screen.getByTestId("field_of_study_field"),
         institutionCity: screen.getByTestId("institution_city_field"),
@@ -64,3 +65,51 @@ const getFormElements = () => {
 afterEach(() => {
     cleanup(); // Reset screen after each test
 });
+
+describe("Completed education form", () => {
+    it("With education + all fields", () => {
+        const { container } = render(EducationForm, {
+            props: COMPLETED_FORM_WITH_EDUCATION_PROPS,
+        });
+        const form = container;
+        const formElements = getFormElements();
+    });
+    it("With no education", () => {
+        const { container } = render(EducationForm, {
+            props: COMPLETED_FORM_WITHOUT_EDUCATION_PROPS,
+        });
+        const form = container;
+        const formElements = getFormElements();
+    });
+});
+
+// describe("Fresh education form", () => {
+//     let form: Element;
+//     let formElements: ReturnType<typeof getFormElements>;
+//     let mandatoryElements: HTMLElement[];
+//     let optionalElements: HTMLElement[];
+//     beforeEach(() => {
+//         const { container } = render(EducationForm, {
+//             props: EMPTY_FORM_PROPS,
+//         });
+//         form = container;
+//         formElements = getFormElements();
+
+//         mandatoryElements = [
+//             formElements.institutionName,
+//             formElements.fieldOfStudy,
+//             formElements.institutionCity,
+//             formElements.institutionProvince,
+//             formElements.startDate,
+//             formElements.endDate,
+//             formElements.currentlyAttending,
+//         ];
+//         optionalElements = [formElements.gpa];
+//     });
+
+//     it("Should have Age && Years of Experience prefilled", () => {});
+
+//     it("Should render a red error border when mandatory fields that are not prefilled are submitted blank", async () => {});
+
+//     it("Should have a successful submit when you fill in the mandatory fields correctly", async () => {});
+// });
