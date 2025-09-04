@@ -169,24 +169,38 @@ describe("Fresh education form", () => {
         expect(noButton?.getAttribute("aria-checked")).toEqual("true");
     });
 
-    // it("Should render a red error border when mandatory fields that are not prefilled are submitted blank", async () => {
-    //     const user = userEvent.setup();
+    it("Should render a red error border when mandatory fields that are not prefilled are submitted blank", async () => {
+        const user = userEvent.setup();
+        await user.click(formElements.submitButton);
 
-    //     await user.click(formElements.submitButton);
-    //     forceLogElement(formContainer)
-    // });
+        const mandatoryNonPrefilledElements = [
+            formElements.institutionName,
+            formElements.fieldOfStudy,
+            formElements.institutionCity,
+            formElements.institutionProvince,
+            formElements.startDate,
+            formElements.endDate,
+        ];
+        mandatoryNonPrefilledElements.forEach((el) => {
+            expect(el.classList.contains("ring-error")).toBe(true);
+        });
+    });
 
-    // it("Should have a successful submit when you fill in the mandatory fields correctly", async () => {
-    //     const user = userEvent.setup();
+    it("Should have a successful submit when you fill in the mandatory fields correctly", async () => {
+        const user = userEvent.setup();
 
-    //     await fillInputField(user, formElements.institutionName,"Ontario Tech University"); // prettier-ignore
-    //     await fillInputField(user, formElements.fieldOfStudy, "Mechanical Engineering"); // prettier-ignore
-    //     await fillInputField(user, formElements.institutionCity, "Oshawa");
-    //     await fillInputField(user, formElements.institutionProvince, "ON");
-    //     await fillInputField(user, formElements.startDate, "2014-09");
-    //     await fillInputField(user, formElements.endDate, "2018-04");
-    //     await fillInputField(user, formElements.gpa, "3.11");
+        await fillInputField(user, formElements.institutionName,"Ontario Tech University"); // prettier-ignore
+        await fillInputField(user, formElements.fieldOfStudy, "Mechanical Engineering"); // prettier-ignore
+        await fillInputField(user, formElements.institutionCity, "Oshawa");
+        await fillInputField(user, formElements.institutionProvince, "ON");
+        await fillInputField(user, formElements.startDate, "2014-09");
+        await fillInputField(user, formElements.endDate, "2018-04");
+        await fillInputField(user, formElements.gpa, "3.11");
 
-    //     await user.click(formElements.submitButton)
-    // });
+        await user.click(formElements.submitButton);
+
+        mandatoryElements.forEach((el) => {
+            expect(el.classList.contains("ring-error")).toBe(false);
+        });
+    });
 });
