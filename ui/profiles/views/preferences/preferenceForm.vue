@@ -87,6 +87,7 @@ const onSubmit = async () => {
                 :step="1000"
                 class="w-full"
                 color="neutral"
+                data-testid="current_salary_field"
             />
         </UFormField>
         <UFormField
@@ -101,6 +102,7 @@ const onSubmit = async () => {
                 :step="1000"
                 class="w-full"
                 color="neutral"
+                data-testid="expected_salary_field"
             />
         </UFormField>
         <UFormField
@@ -115,6 +117,7 @@ const onSubmit = async () => {
                 :step="1"
                 class="w-full"
                 color="neutral"
+                data-testid="notice_period_field"
             />
         </UFormField>
 
@@ -131,6 +134,7 @@ const onSubmit = async () => {
                 class="mt-2"
                 size="xl"
                 :ui="radioStyleObject"
+                data-testid="relocation_field"
             />
         </UFormField>
         <UFormField
@@ -146,6 +150,7 @@ const onSubmit = async () => {
                 class="mt-2"
                 size="xl"
                 :ui="radioStyleObject"
+                data-testid="license_field"
             />
         </UFormField>
         <UFormField
@@ -161,6 +166,7 @@ const onSubmit = async () => {
                 class="mt-2"
                 size="xl"
                 :ui="radioStyleObject"
+                data-testid="transportation_field"
             />
         </UFormField>
         <UFormField
@@ -176,6 +182,7 @@ const onSubmit = async () => {
                 class="mt-2"
                 size="xl"
                 :ui="radioStyleObject"
+                data-testid="veteran_field"
             />
         </UFormField>
         <UFormField
@@ -187,6 +194,7 @@ const onSubmit = async () => {
                 v-model="formState.interviewAvailability"
                 class="w-full"
                 placeholder=""
+                data-testid="interview_availability_field"
             />
         </UFormField>
         <UFormField
@@ -198,6 +206,7 @@ const onSubmit = async () => {
                 v-model="formState.companyBlacklist"
                 :max="20"
                 class="w-full h-auto mb-12"
+                data-testid="company_blacklist_field"
             />
         </UFormField>
 
@@ -206,6 +215,7 @@ const onSubmit = async () => {
                 type="submit"
                 class="w-full justify-center cursor-pointer"
                 color="secondary"
+                data-testid="social_media_submit_button"
                 >Submit</UButton
             >
         </div>
