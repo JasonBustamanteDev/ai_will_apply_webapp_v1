@@ -102,34 +102,54 @@ describe("Completed preferences form", () => {
     });
 });
 
-// describe("Fresh preferences form", () => {
-//     let form: Element;
-//     let formElements: ReturnType<typeof getFormElements>;
-//     let mandatoryElements: HTMLElement[];
-//     let optionalElements: HTMLElement[];
-//     beforeEach(() => {
-//         const { container } = render(PreferenceForm, {
-//             props: EMPTY_FORM_PROPS,
-//         });
-//         form = container;
-//         formElements = getFormElements();
+describe("Fresh preferences form", () => {
+    let form: Element;
+    let formElements: ReturnType<typeof getFormElements>;
+    let mandatoryElements: HTMLElement[];
+    let optionalElements: HTMLElement[];
+    beforeEach(() => {
+        const { container } = render(PreferenceForm, {
+            props: EMPTY_FORM_PROPS,
+        });
+        form = container;
+        formElements = getFormElements();
 
-//         mandatoryElements = [
-//             formElements.currentSalary,
-//             formElements.expectedSalary,
-//             formElements.noticePeriod,
-//             formElements.relocation,
-//             formElements.license,
-//             formElements.transportation,
-//             formElements.veteranStatus,
-//             formElements.interviewAvailability,
-//         ];
-//         optionalElements = [formElements.companyBlacklist];
-//     });
+        mandatoryElements = [
+            formElements.currentSalary,
+            formElements.expectedSalary,
+            formElements.noticePeriod,
+            formElements.relocation,
+            formElements.license,
+            formElements.transportation,
+            formElements.veteranStatus,
+            formElements.interviewAvailability,
+        ];
+        optionalElements = [formElements.companyBlacklist];
+    });
 
-//     it("Should have the boolean fields prefilled by default", async () => {});
+    it("Should have the boolean fields prefilled by default", async () => {
+        const defaultCheckboxes = [
+            { field: formElements.relocation, isTrue: true },
+            { field: formElements.license, isTrue: true },
+            { field: formElements.transportation, isTrue: true },
+            { field: formElements.veteranStatus, isTrue: false },
+        ];
+        defaultCheckboxes.forEach((obj) => {
+            const field = obj.field;
+            const yesButton = field.querySelector('button[value="true"]');
+            const noButton = field.querySelector('button[value="false"]');
 
-//     it("Should render a red error border when mandatory fields are submitted blank", async () => {});
+            const expectedYes = obj.isTrue ? "true" : "false";
+            const expectedNo = obj.isTrue ? "false" : "true";
 
-//     it("Should have a successful submit when you fill in the mandatory fields correctly", async () => {});
-// });
+            expect(yesButton?.getAttribute("aria-checked")).toEqual(
+                expectedYes
+            );
+            expect(noButton?.getAttribute("aria-checked")).toEqual(expectedNo);
+        });
+    });
+
+    // it("Should render a red error border when mandatory fields are submitted blank", async () => {});
+
+    // it("Should have a successful submit when you fill in the mandatory fields correctly", async () => {});
+});
