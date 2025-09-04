@@ -149,7 +149,33 @@ describe("Fresh preferences form", () => {
         });
     });
 
-    // it("Should render a red error border when mandatory fields are submitted blank", async () => {});
+    it("Should render a red error border when mandatory fields are submitted blank", async () => {
+        const user = userEvent.setup();
+
+        const {
+            currentSalary,
+            expectedSalary,
+            noticePeriod,
+            interviewAvailability,
+            submitButton,
+        } = formElements;
+
+        await user.clear(currentSalary);
+        await user.clear(expectedSalary);
+        await user.clear(noticePeriod);
+        await user.clear(interviewAvailability);
+        await user.click(submitButton);
+
+        const mandatoryNotPrefilledFields = [
+            currentSalary,
+            expectedSalary,
+            noticePeriod,
+            interviewAvailability,
+        ];
+        mandatoryNotPrefilledFields.forEach((el) => {
+            expect(el.classList.contains("ring-error")).toBe(true);
+        });
+    });
 
     // it("Should have a successful submit when you fill in the mandatory fields correctly", async () => {});
 });
