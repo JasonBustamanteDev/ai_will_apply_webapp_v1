@@ -44,10 +44,87 @@ const getFormElements = () => {
         twitter: screen.getByTestId("twitter_field"),
         tiktok: screen.getByTestId("tiktok_field"),
         youtube: screen.getByTestId("youtube_field"),
-        submitButton: screen.getByTestId("submit-button"),
+        submitButton: screen.getByTestId("socials_submit_button"),
     };
 };
 
 afterEach(() => {
     cleanup(); // Reset screen after each test
+});
+
+describe("Completed socials form", () => {
+    let form: Element;
+    let formElements: ReturnType<typeof getFormElements>;
+    beforeEach(() => {
+        const { container } = render(SocialsForm, {
+            props: COMPLETED_FORM_PROPS,
+        });
+        form = container;
+        formElements = getFormElements();
+    });
+
+    // prettier-ignore
+    it("Should have all form fields filled in", () => {
+        assertInputValue(formElements.portfolioUrl, "https://brittanychiang.com/")
+        assertInputValue(formElements.linkedin, "https://www.linkedin.com/in/jason-bustamante/")
+        assertInputValue(formElements.github, "https://github.com/johnthebrit")
+        assertInputValue(formElements.instagram, "https://www.instagram.com/lilnasx")
+        assertInputValue(formElements.twitter, "https://x.com/markiplier")
+        assertInputValue(formElements.tiktok, "https://www.tiktok.com/@snarkymarky")
+        assertInputValue(formElements.youtube, "https://www.youtube.com/@Fortunate")
+    });
+});
+
+describe("Fresh socials form", () => {
+    let form: Element;
+    let formElements: ReturnType<typeof getFormElements>;
+    let mandatoryElements: HTMLElement[];
+    let optionalElements: HTMLElement[];
+    beforeEach(() => {
+        const { container } = render(SocialsForm, {
+            props: EMPTY_FORM_PROPS,
+        });
+        form = container;
+        formElements = getFormElements();
+
+        mandatoryElements = [];
+        optionalElements = [
+            formElements.portfolioUrl,
+            formElements.linkedin,
+            formElements.github,
+            formElements.instagram,
+            formElements.twitter,
+            formElements.tiktok,
+            formElements.youtube,
+        ];
+    });
+
+    it("Blank form submit should work", async () => {
+        const user = userEvent.setup();
+        await user.click(formElements.submitButton);
+        mandatoryElements.forEach((el) => {
+            expect(el.classList.contains("ring-error")).toBe(false);
+        });
+    });
+
+    // prettier-ignore
+    it("Submit should work when all form fields are filled", async () => {
+        const user = userEvent.setup();
+
+        await fillInputField(user, formElements.portfolioUrl, "https://brittanychiang.com/");
+        await fillInputField(user, formElements.linkedin, "https://www.linkedin.com/in/jason-bustamante/");
+        await fillInputField(user, formElements.github, "https://github.com/johnthebrit");
+        await fillInputField(user, formElements.instagram, "https://www.instagram.com/lilnasx");
+        await fillInputField(user, formElements.twitter, "https://x.com/markiplier");
+        await fillInputField(user, formElements.tiktok, "https://www.tiktok.com/@snarkymarky");
+        await fillInputField(user, formElements.youtube, "https://www.youtube.com/@Fortunate");
+        await user.click(formElements.submitButton);
+
+        mandatoryElements.forEach((el) => {
+            expect(el.classList.contains("ring-error")).toBe(false);
+        });
+        optionalElements.forEach((el) => {
+            expect(el.classList.contains("ring-error")).toBe(false);
+        });
+    });
 });
