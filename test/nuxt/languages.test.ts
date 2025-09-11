@@ -104,16 +104,34 @@ describe("Fresh languages form", () => {
         expect(languageField.classList.contains("ring-error")).toBe(true);
     });
 
-    // it("Should disable trash button if we only have 1 row", async () => {
-    //     // Find trash icon and press it
-    //     const { trashIcon } = getFormElements(0);
-    //     forceLogElement(trashIcon)
-    //     // await user.click(trashIcon);
-    // });
+    it("Should disable trash button if we only have 1 row", async () => {
+        const row0 = getFormElements(0);
+
+        // Enter a language: French
+        await fillInputField(user, row0.languageField, "French");
+
+        // Hit add language button
+        const addLangButton = screen.getByTestId("lang_add_button");
+        await user.click(addLangButton);
+
+        // Second row should appear
+        const langInputs = screen.queryAllByTestId(/lang_field_/);
+        expect(langInputs.length).toEqual(2);
+
+        // Enter 2nd Language: Russian with Fluency as Intermediate
+        const {
+            fluencyDropdown: fluencyDropdown1,
+            languageField: languageField1,
+        } = getFormElements(1);
+
+        await fillInputField(user, languageField1, "Russian");
+        await selectDropdownOption(user, fluencyDropdown1, 4);
+
+        const fluencyDropdown1Text = fluencyDropdown1.textContent.trim();
+        expect(fluencyDropdown1Text).toEqual("Intermediate");
+
+        // Submit
+        const submitButton = screen.getByTestId("lang_submit_button");
+        await user.click(submitButton);
+    });
 });
-
-/*
-Entering in English → select fluent from dropdown → then submitting should work
-Fill english then add language should add a new row. fill it then submit
-
-*/

@@ -152,7 +152,7 @@ const onSubmit = async () => {
                 v-if="index === languages.length - 1 || languages.length === 1"
                 :isDisabled="false"
                 @addRow="addLanguage"
-                :name="`lang_add_button`"
+                name="lang_add_button"
                 :data-testid="`lang_add_button`"
                 >Add Language</AddRowButton
             >
@@ -163,7 +163,7 @@ const onSubmit = async () => {
                 class="w-full justify-center cursor-pointer"
                 @click="onSubmit"
                 color="secondary"
-                :data-testid="`lang_submit_button`"
+                data-testid="lang_submit_button"
                 >Submit</UButton
             >
         </div>
