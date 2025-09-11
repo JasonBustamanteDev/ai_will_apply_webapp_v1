@@ -152,8 +152,8 @@ const onSubmit = async () => {
                 v-if="index === languages.length - 1 || languages.length === 1"
                 :isDisabled="false"
                 @addRow="addLanguage"
-                :name="`lang_add_button_${index}`"
-                :data-testid="`lang_add_button_${index}`"
+                :name="`lang_add_button`"
+                :data-testid="`lang_add_button`"
                 >Add Language</AddRowButton
             >
         </div>
