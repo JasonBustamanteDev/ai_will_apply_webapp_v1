@@ -126,6 +126,8 @@ const onSubmit = async () => {
                 class="w-64"
                 :highlight="lang.langError"
                 :color="lang.langError ? 'error' : 'neutral'"
+                :name="`lang_field_${index}`"
+                :data-testid="`lang_field_${index}`"
             />
             <USelect
                 v-model="lang.proficiency"
@@ -133,6 +135,8 @@ const onSubmit = async () => {
                 class="w-36"
                 :highlight="lang.proficiencyError"
                 :color="lang.proficiencyError ? 'error' : 'neutral'"
+                :name="`lang_select_${index}`"
+                :data-testid="`lang_select_${index}`"
             />
             <UButton
                 icon="i-heroicons-trash"
@@ -141,11 +145,15 @@ const onSubmit = async () => {
                 @click="removeLanguage(index)"
                 :disabled="languages.length === 1"
                 class="mb-1"
+                :name="`lang_trash_icon_${index}`"
+                :data-testid="`lang_trash_icon_${index}`"
             />
             <AddRowButton
                 v-if="index === languages.length - 1 || languages.length === 1"
                 :isDisabled="false"
                 @addRow="addLanguage"
+                :name="`lang_add_button_${index}`"
+                :data-testid="`lang_add_button_${index}`"
                 >Add Language</AddRowButton
             >
         </div>
@@ -155,6 +163,7 @@ const onSubmit = async () => {
                 class="w-full justify-center cursor-pointer"
                 @click="onSubmit"
                 color="secondary"
+                :data-testid="`lang_submit_button`"
                 >Submit</UButton
             >
         </div>
