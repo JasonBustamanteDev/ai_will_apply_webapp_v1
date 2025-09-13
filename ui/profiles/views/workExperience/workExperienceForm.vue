@@ -147,12 +147,14 @@ const onSubmit = async () => {
             v-for="(row, index) in workExperienceList"
             :key="index"
             class="experience-list-container"
+            :data-testid="`job_row_${index}`"
         >
             <UInput
                 v-model="row.jobTitle"
                 placeholder=""
                 :highlight="row.jobTitleError"
                 :color="row.jobTitleError ? 'error' : 'neutral'"
+                :data-testid="`job_title_${index}`"
             >
                 <InputLabelSlot labelText="Job Title **" />
             </UInput>
@@ -161,6 +163,7 @@ const onSubmit = async () => {
                 placeholder=""
                 :highlight="row.companyError"
                 :color="row.companyError ? 'error' : 'neutral'"
+                :data-testid="`job_company_${index}`"
             >
                 <InputLabelSlot labelText="Company **" />
             </UInput>
@@ -170,6 +173,7 @@ const onSubmit = async () => {
                 placeholder="number"
                 :highlight="row.yearsError"
                 :color="row.yearsError ? 'error' : 'neutral'"
+                :data-testid="`job_years_${index}`"
                 ><InputLabelSlot labelText="Years **"
             /></UInput>
 
@@ -182,6 +186,7 @@ const onSubmit = async () => {
                 size="lg"
                 :ui="radioStyleObject"
                 class="my-auto"
+                :data-testid="`job_radio_${index}`"
             />
         </div>
     </section>
@@ -194,6 +199,7 @@ const onSubmit = async () => {
             :disabled="false"
             @click="addExperienceRow"
             class="w-auto px-4"
+            data-testid="add_job_button"
         >
             Add
         </UButton>
@@ -203,6 +209,7 @@ const onSubmit = async () => {
             color="neutral"
             @click="removeExperienceRow"
             class="w-auto px-4"
+            data-testid="remove_last_job_button"
         >
             Remove last
         </UButton>
@@ -212,6 +219,7 @@ const onSubmit = async () => {
             color="neutral"
             @click="clearExperience"
             class="w-auto px-4"
+            data-testid="no_job_exp_button"
         >
             I have no work experience
         </UButton>
@@ -223,6 +231,7 @@ const onSubmit = async () => {
             class="w-full justify-center cursor-pointer"
             @click="onSubmit"
             color="secondary"
+            data-testid="work_exp_submit_button"
             >Submit</UButton
         >
     </div>

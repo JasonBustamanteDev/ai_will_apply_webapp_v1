@@ -39,3 +39,60 @@ const COMPLETED_FORM_PROPS = {
         isComplete: true,
     },
 };
+
+const getFormElements = (rowIndex: number) => {
+    return {
+        title: screen.getByTestId(`job_title_${rowIndex}`),
+        company: screen.getByTestId(`job_company_${rowIndex}`),
+        years: screen.getByTestId(`job_years_${rowIndex}`),
+        stillThere: screen.getByTestId(`job_radio_${rowIndex}`),
+    };
+};
+
+const getFormButtons = () => {
+    return {
+        add: screen.getByTestId("add_job_button"),
+        removeLast: screen.getByTestId("remove_last_job_button"),
+        removeAll: screen.getByTestId("no_job_exp_button"),
+    };
+};
+
+afterEach(() => {
+    cleanup(); // Reset screen after each test
+});
+
+describe("Filled workExperience form", () => {
+    let form: Element;
+    let user: UserEvent;
+    beforeEach(() => {
+        const { container } = render(WorkExperienceForm, {
+            props: COMPLETED_FORM_PROPS,
+        });
+        form = container;
+        user = userEvent.setup();
+    });
+
+    it("Shows a dynamic number of rows", async () => {
+        const jobTitles = screen.queryAllByTestId(/job_title_/);
+        const companies = screen.queryAllByTestId(/job_company_/);
+        const yearsExp = screen.queryAllByTestId(/job_years_/);
+        
+        expect(jobTitles.length).toEqual(2);
+        expect(companies.length).toEqual(2);
+        expect(yearsExp.length).toEqual(2);
+
+        assertInputValue(jobTitles[0] as HTMLElement, "Software Engineer");
+        assertInputValue(companies[0] as HTMLElement, "Geotrace");
+        assertInputValue(yearsExp[0] as HTMLElement, "3");
+
+        assertInputValue(jobTitles[1] as HTMLElement, "Janitor");
+        assertInputValue(companies[1] as HTMLElement, "Dollarama");
+        assertInputValue(yearsExp[1] as HTMLElement, "1");
+    });
+
+    // it("Removes a row after pressing the remove last button", async () => {});
+
+    // it("Renders 'I have no work experience' after pressing Remove Last Experience button enough times", async () => {});
+
+    // it("Renders 'I have no work experience' after pressing the I have no experience button", async () => {});
+});
