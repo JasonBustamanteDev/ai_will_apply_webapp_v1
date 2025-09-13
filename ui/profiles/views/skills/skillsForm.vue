@@ -110,6 +110,7 @@ const onSubmit = async () => {
                 :color="skill.nameError ? 'error' : 'neutral'"
                 placeholder="Type skill"
                 class="w-64"
+                :data-testid="`skill_field_${index}`"
             />
             <UInputNumber
                 v-model="skill.years"
@@ -117,6 +118,7 @@ const onSubmit = async () => {
                 :max="MAX_YEARS"
                 class="w-36"
                 color="neutral"
+                :data-testid="`skill_years_${index}`"
             />
             <UButton
                 icon="i-heroicons-trash"
@@ -125,11 +127,13 @@ const onSubmit = async () => {
                 @click="removeSkill(index)"
                 :disabled="skills.length === 1"
                 class="mb-1"
+                :data-testid="`skill_trash_icon_${index}`"
             />
             <AddRowButton
                 v-if="index === skills.length - 1 || skills.length === 1"
                 :isDisabled="false"
                 @addRow="addSkill"
+                :data-testid="`add_skill_button_${index}`"
                 >Add Skill</AddRowButton
             >
         </div>
@@ -140,6 +144,7 @@ const onSubmit = async () => {
             class="w-full justify-center cursor-pointer"
             @click="onSubmit"
             color="secondary"
+            data-testid="submit_skills_button"
             >Submit</UButton
         >
     </div>

@@ -30,3 +30,11 @@ const COMPLETED_FORM_PROPS = {
         isComplete: true,
     },
 };
+
+const getFormElements = (rowIndex: number) => {
+    return {
+        skillField: screen.getByTestId(`skill_field_${rowIndex}`),
+        years: screen.getByTestId(`skill_years_${rowIndex}`),
+        trashIcon: screen.getByTestId(`skill_trash_icon_${rowIndex}`),
+    };
+};
