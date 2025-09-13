@@ -1,5 +1,5 @@
 import { expect, describe, it, beforeEach, afterEach } from "vitest"; // prettier-ignore
-import userEvent from "@testing-library/user-event";
+import userEvent, { type UserEvent } from "@testing-library/user-event";
 import { render, screen, cleanup  } from "@testing-library/vue"; // prettier-ignore
 import SkillsForm from "~/ui/profiles/views/skills/skillsForm.vue";
 import { PROFILE_FORMS } from "~/shared/utils/globals";
@@ -25,7 +25,6 @@ const COMPLETED_FORM_PROPS = {
         data: [
             { name: "SQL", years: 2 },
             { name: "JS", years: 4 },
-            { name: "MongoDB", years: 2 },
         ],
         isComplete: true,
     },
@@ -38,3 +37,46 @@ const getFormElements = (rowIndex: number) => {
         trashIcon: screen.getByTestId(`skill_trash_icon_${rowIndex}`),
     };
 };
+
+afterEach(() => {
+    cleanup(); // Reset screen after each test
+});
+
+describe("Filled languages form", () => {
+    let form: Element;
+    let user: UserEvent;
+    beforeEach(() => {
+        const { container } = render(SkillsForm, {
+            props: COMPLETED_FORM_PROPS,
+        });
+        form = container;
+        user = userEvent.setup();
+    });
+
+    it("Should show 2 rows", async () => {
+        const skillInputs = screen.queryAllByTestId(/skill_field_/);
+        expect(skillInputs.length).toEqual(2);
+        assertInputValue(skillInputs[0] as HTMLElement, "SQL");
+        assertInputValue(skillInputs[1] as HTMLElement, "JS");
+    });
+
+    it("Should delete a row when trash icon is pressed when 2+ rows exist", async () => {
+        // Last 1 should be disabled for trash
+        const row1 = getFormElements(0);
+        const row2 = getFormElements(1); // remains saved in memory even after test deletes it
+
+        // The delete icon should be enabled for both
+        expect(row1.trashIcon.hasAttribute("disabled")).toEqual(false);
+        expect(row2.trashIcon.hasAttribute("disabled")).toEqual(false);
+
+        // Pressing trash icon on row #1 should delete it
+        await user.click(row1.trashIcon);
+
+        // Only 1 row should be left now
+        const skillInputsAtEnd = screen.queryAllByTestId(/skill_field_/);
+        expect(skillInputsAtEnd.length).toEqual(1);
+
+        // Delete icon should be disabled on the final row
+        expect(row1.trashIcon.hasAttribute("disabled")).toEqual(true);
+    });
+});
