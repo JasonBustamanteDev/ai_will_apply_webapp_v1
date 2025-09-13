@@ -71,10 +71,8 @@ const addExperienceRow = () => {
     workExperienceList.value.push(generateEmptyRow());
 };
 
-const removeExperienceRow = () => {
-    if (workExperienceList.value.length) {
-        workExperienceList.value.pop();
-    }
+const removeExperienceRow = (index: number) => {
+    workExperienceList.value.splice(index, 1)
 };
 
 const clearExperience = () => {
@@ -149,6 +147,15 @@ const onSubmit = async () => {
             class="experience-list-container"
             :data-testid="`job_row_${index}`"
         >
+            <UButton
+                icon="i-heroicons-trash"
+                color="neutral"
+                variant="ghost"
+                @click="removeExperienceRow(index)"
+                class="mb-1"
+                :name="`job_trash_icon_${index}`"
+                :data-testid="`job_trash_icon_${index}`"
+            />
             <UInput
                 v-model="row.jobTitle"
                 placeholder=""
@@ -204,16 +211,6 @@ const onSubmit = async () => {
             Add
         </UButton>
         <UButton
-            icon="i-heroicons-minus"
-            variant="outline"
-            color="neutral"
-            @click="removeExperienceRow"
-            class="w-auto px-4"
-            data-testid="remove_last_job_button"
-        >
-            Remove last
-        </UButton>
-        <UButton
             icon="akar-icons:cross"
             variant="outline"
             color="neutral"
@@ -240,7 +237,7 @@ const onSubmit = async () => {
 <style lang="scss">
 .experience-list-container {
     display: grid;
-    grid-template-columns: 0.8fr 1fr 0.5fr 1.5fr;
+    grid-template-columns: auto 0.8fr 1fr 0.3fr 1.5fr;
     gap: 2rem 1rem;
     width: 100%;
 }
