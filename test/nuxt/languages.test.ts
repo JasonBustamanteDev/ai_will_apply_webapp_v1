@@ -59,13 +59,16 @@ describe("Filled languages form", () => {
         user = userEvent.setup();
     });
 
-    it("Pressing trash icon should delete a row if we have 2 or more of them", async () => {
-        // 2 rows should be rendere
+    it("Should show 2 rows", async () => {
         const langInputsAtStart = screen.queryAllByTestId(/lang_field_/);
         expect(langInputsAtStart.length).toEqual(2);
+        assertInputValue(langInputsAtStart[0] as HTMLElement, "English");
+        assertInputValue(langInputsAtStart[1] as HTMLElement, "Spanish");
+    });
 
+    it("Pressing trash icon should delete a row if we have 2 or more of them", async () => {
         const row1 = getFormElements(0);
-        const row2 = getFormElements(1);
+        const row2 = getFormElements(1); // remains saved in memory even after test deletes it
 
         // The delete icon should be enabled for both
         expect(row1.trashIcon.hasAttribute("disabled")).toEqual(false);
