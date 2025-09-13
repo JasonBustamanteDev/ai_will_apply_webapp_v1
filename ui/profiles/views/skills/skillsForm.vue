@@ -97,12 +97,14 @@ const onSubmit = async () => {
                 :max="MAX_YEARS"
                 class="w-36"
                 color="neutral"
+                data-testid="skill_default_years"
             />
         </div>
         <div
             v-for="(skill, index) in skills"
             :key="index"
             class="flex items-end gap-3"
+            :data-testid="`skill_row_${index}`"
         >
             <UInput
                 v-model="skill.name"
