@@ -46,7 +46,7 @@ const getRowElements = (rowIndex: number) => {
         company: screen.getByTestId(`job_company_${rowIndex}`),
         years: screen.getByTestId(`job_years_${rowIndex}`),
         stillThere: screen.getByTestId(`job_radio_${rowIndex}`),
-        trashIcon : screen.getByTestId(`job_trash_icon_${rowIndex}`),
+        trashIcon: screen.getByTestId(`job_trash_icon_${rowIndex}`),
     };
 };
 
@@ -60,6 +60,13 @@ const getFormButtons = () => {
 afterEach(() => {
     cleanup(); // Reset screen after each test
 });
+
+const assertZeroExperienceIndicatorIsRendered = () => {
+    const kbdElement = getByText(document.body, "I have no work experience", {
+        selector: "kbd",
+    });
+    expect(kbdElement).toBeTruthy();
+};
 
 describe("Filled workExperience form", () => {
     let form: Element;
@@ -91,25 +98,22 @@ describe("Filled workExperience form", () => {
     });
 
     it("Removes a row after pressing the remove last button", async () => {
-        const row0 = getRowElements(0)
-        const row1 = getRowElements(1)
+        const row0 = getRowElements(0);
+        const row1 = getRowElements(1);
 
-        await user.click(row1.trashIcon)
+        await user.click(row1.trashIcon);
         expect(screen.queryAllByTestId(/job_row_/).length).toEqual(1);
 
-        await user.click(row0.trashIcon)
+        await user.click(row0.trashIcon);
         expect(screen.queryAllByTestId(/job_row_/).length).toEqual(0);
 
-        // Should render 'I have no work experience' after pressing Remove Last Experience button enough times"
-        const kbdElement = getByText(document.body, 'I have no work experience', { selector: 'kbd' })
-        expect(kbdElement).toBeTruthy()
+        // Should render 'I have no work experience' after pressing Remove Last Experience button enough times
+        assertZeroExperienceIndicatorIsRendered();
     });
 
     it("Renders 'I have no work experience' after pressing the I have no experience button", async () => {
-        const buttons = getFormButtons()
-        await user.click(buttons.removeAll)
-
-        const kbdElement = getByText(document.body, 'I have no work experience', { selector: 'kbd' })
-        expect(kbdElement).toBeTruthy()
+        const buttons = getFormButtons();
+        await user.click(buttons.removeAll);
+        assertZeroExperienceIndicatorIsRendered();
     });
 });
