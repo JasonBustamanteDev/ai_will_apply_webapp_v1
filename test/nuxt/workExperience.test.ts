@@ -105,5 +105,11 @@ describe("Filled workExperience form", () => {
         expect(kbdElement).toBeTruthy()
     });
 
-    // it("Renders 'I have no work experience' after pressing the I have no experience button", async () => {});
+    it("Renders 'I have no work experience' after pressing the I have no experience button", async () => {
+        const buttons = getFormButtons()
+        await user.click(buttons.removeAll)
+
+        const kbdElement = getByText(document.body, 'I have no work experience', { selector: 'kbd' })
+        expect(kbdElement).toBeTruthy()
+    });
 });

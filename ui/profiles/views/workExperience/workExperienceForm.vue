@@ -237,7 +237,7 @@ const onSubmit = async () => {
 <style lang="scss">
 .experience-list-container {
     display: grid;
-    grid-template-columns: auto 0.8fr 1fr 0.3fr 1.5fr;
+    grid-template-columns: auto 0.8fr 1fr 0.35fr 1.5fr;
     gap: 2rem 1rem;
     width: 100%;
 }
