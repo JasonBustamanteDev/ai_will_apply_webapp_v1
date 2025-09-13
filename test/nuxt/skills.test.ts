@@ -7,7 +7,7 @@ import { forceLog, forceLogElement, fillInputField, selectDropdownOption, assert
 
 // Prop data
 const ENCODED_PROFILE_NAME = "test";
-const FORM_NAME = PROFILE_FORMS.PERSONAL_DETAILS;
+const FORM_NAME = PROFILE_FORMS.SKILLS;
 
 const EMPTY_FORM_PROPS = {
     formName: FORM_NAME,
