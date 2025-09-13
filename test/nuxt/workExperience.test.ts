@@ -1,6 +1,6 @@
 import { expect, describe, it, beforeEach, afterEach } from "vitest"; // prettier-ignore
 import userEvent, { type UserEvent } from "@testing-library/user-event";
-import { render, screen, cleanup  } from "@testing-library/vue"; // prettier-ignore
+import { render, screen, cleanup, getByText  } from "@testing-library/vue"; // prettier-ignore
 import WorkExperienceForm from "~/ui/profiles/views/workExperience/workExperienceForm.vue";
 import { PROFILE_FORMS } from "~/shared/utils/globals";
 import { forceLog, forceLogElement, fillInputField, selectDropdownOption, assertDropdownValue, assertInputValue } from "../util"; // prettier-ignore
@@ -40,19 +40,19 @@ const COMPLETED_FORM_PROPS = {
     },
 };
 
-const getFormElements = (rowIndex: number) => {
+const getRowElements = (rowIndex: number) => {
     return {
         title: screen.getByTestId(`job_title_${rowIndex}`),
         company: screen.getByTestId(`job_company_${rowIndex}`),
         years: screen.getByTestId(`job_years_${rowIndex}`),
         stillThere: screen.getByTestId(`job_radio_${rowIndex}`),
+        trashIcon : screen.getByTestId(`job_trash_icon_${rowIndex}`),
     };
 };
 
 const getFormButtons = () => {
     return {
         add: screen.getByTestId("add_job_button"),
-        removeLast: screen.getByTestId("remove_last_job_button"),
         removeAll: screen.getByTestId("no_job_exp_button"),
     };
 };
@@ -76,7 +76,7 @@ describe("Filled workExperience form", () => {
         const jobTitles = screen.queryAllByTestId(/job_title_/);
         const companies = screen.queryAllByTestId(/job_company_/);
         const yearsExp = screen.queryAllByTestId(/job_years_/);
-        
+
         expect(jobTitles.length).toEqual(2);
         expect(companies.length).toEqual(2);
         expect(yearsExp.length).toEqual(2);
@@ -90,9 +90,20 @@ describe("Filled workExperience form", () => {
         assertInputValue(yearsExp[1] as HTMLElement, "1");
     });
 
-    // it("Removes a row after pressing the remove last button", async () => {});
+    it("Removes a row after pressing the remove last button", async () => {
+        const row0 = getRowElements(0)
+        const row1 = getRowElements(1)
 
-    // it("Renders 'I have no work experience' after pressing Remove Last Experience button enough times", async () => {});
+        await user.click(row1.trashIcon)
+        expect(screen.queryAllByTestId(/job_row_/).length).toEqual(1);
+
+        await user.click(row0.trashIcon)
+        expect(screen.queryAllByTestId(/job_row_/).length).toEqual(0);
+
+        // Should render 'I have no work experience' after pressing Remove Last Experience button enough times"
+        const kbdElement = getByText(document.body, 'I have no work experience', { selector: 'kbd' })
+        expect(kbdElement).toBeTruthy()
+    });
 
     // it("Renders 'I have no work experience' after pressing the I have no experience button", async () => {});
 });
