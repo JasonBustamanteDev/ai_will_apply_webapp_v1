@@ -54,14 +54,14 @@ describe("Filled skills form", () => {
         user = userEvent.setup();
     });
 
-    it("Should show 2 rows", async () => {
+    it("Should show a dynamic number of rows", async () => {
         const skillInputs = screen.queryAllByTestId(/skill_field_/);
         expect(skillInputs.length).toEqual(2);
         assertInputValue(skillInputs[0] as HTMLElement, "SQL");
         assertInputValue(skillInputs[1] as HTMLElement, "JS");
     });
 
-    it("Should delete a row when trash icon is pressed when 2+ rows exist, unless we only have 1 row left", async () => {
+    it("Should delete a row when the trash icon is pressed while 2+ rows exist", async () => {
         // Last 1 should be disabled for trash
         const row1 = getFormElements(0);
         const row2 = getFormElements(1); // remains saved in memory even after test deletes it
