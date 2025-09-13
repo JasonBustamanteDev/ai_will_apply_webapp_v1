@@ -21,5 +21,12 @@ const EMPTY_FORM_PROPS = {
 const COMPLETED_FORM_PROPS = {
     formName: FORM_NAME,
     encodedProfileName: ENCODED_PROFILE_NAME,
-    rawFormData: []
+    rawFormData: {
+        data: [
+            { name: "SQL", years: 2 },
+            { name: "JS", years: 4 },
+            { name: "MongoDB", years: 2 },
+        ],
+        isComplete: true,
+    },
 };
