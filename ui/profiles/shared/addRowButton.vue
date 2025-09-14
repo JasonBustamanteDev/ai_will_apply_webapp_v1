@@ -14,7 +14,7 @@ const props = defineProps({
         color="neutral"
         :disabled="props.isDisabled"
         @click="$emit('addRow')"
-        class="w-48"
+        class="w-48 cursor-pointer"
     >
         <slot></slot>
     </UButton>

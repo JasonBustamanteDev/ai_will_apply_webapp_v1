@@ -144,7 +144,7 @@ const onSubmit = async () => {
                 variant="ghost"
                 @click="removeLanguage(index)"
                 :disabled="languages.length === 1"
-                class="mb-1"
+                class="mb-1 cursor-pointer"
                 :name="`lang_trash_icon_${index}`"
                 :data-testid="`lang_trash_icon_${index}`"
             />

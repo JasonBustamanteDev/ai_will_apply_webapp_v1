@@ -128,7 +128,7 @@ const onSubmit = async () => {
                 variant="ghost"
                 @click="removeSkill(index)"
                 :disabled="skills.length === 1"
-                class="mb-1"
+                class="mb-1 cursor-pointer"
                 :data-testid="`skill_trash_icon_${index}`"
             />
             <AddRowButton

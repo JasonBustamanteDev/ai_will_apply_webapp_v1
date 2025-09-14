@@ -152,7 +152,7 @@ const onSubmit = async () => {
                 color="neutral"
                 variant="ghost"
                 @click="removeExperienceRow(index)"
-                class="mb-1"
+                class="mb-1 cursor-pointer"
                 :name="`job_trash_icon_${index}`"
                 :data-testid="`job_trash_icon_${index}`"
             />
@@ -205,7 +205,7 @@ const onSubmit = async () => {
             color="neutral"
             :disabled="false"
             @click="addExperienceRow"
-            class="w-auto px-4"
+            class="w-auto px-4 cursor-pointer"
             data-testid="add_job_button"
         >
             Add
@@ -215,7 +215,7 @@ const onSubmit = async () => {
             variant="outline"
             color="neutral"
             @click="clearExperience"
-            class="w-auto px-4"
+            class="w-auto px-4 cursor-pointer"
             data-testid="no_job_exp_button"
         >
             I have no work experience
