@@ -124,13 +124,29 @@ describe("Fresh workExperience form", () => {
     let user: UserEvent;
     beforeEach(() => {
         const { container } = render(WorkExperienceForm, {
-            props: COMPLETED_FORM_PROPS,
+            props: EMPTY_FORM_PROPS,
         });
         form = container;
         user = userEvent.setup();
     });
 
-    it("Renders 'I have no work experience' by default", async () => {});
+    it("Renders 'I have no work experience' by default", async () => {
+        assertZeroExperienceIndicatorIsRendered();
+    });
 
-    // it("Renders a form when the add button is pressed, then allows you to fill it", async () => {});
+    it("Renders a form when the add button is pressed, then allows you to fill it", async () => {
+        // Press Add button to render a new form row
+        const { add, removeAll } = getFormButtons();
+        await user.click(add);
+
+        // Fill out the form row
+        const row1 = getRowElements(0);
+        await fillInputField(user, row1.title, "Software Engineer");
+        await fillInputField(user, row1.company, "Google");
+        await fillInputField(user, row1.years, "2");
+
+        // Clicking the 'I have no experience' button should render a new visual
+        await user.click(removeAll)
+        assertZeroExperienceIndicatorIsRendered();
+    });
 });
