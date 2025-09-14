@@ -41,12 +41,12 @@ const COMPLETED_FORM_PROPS = {
 
 const getFormElements = () => {
     return {
-        firstName: screen.getByTestId("first_name_field"),
-        lastName: screen.getByTestId("last_name_field"),
-        email: screen.getByTestId("email_field"),
-        phoneNumber: screen.getByTestId("phone_number_field"),
-        yearsExp: screen.getByTestId("years_experience_field"),
-        age: screen.getByTestId("age_field"),
+        firstName: screen.getByTestId("first_name_field") as HTMLInputElement,
+        lastName: screen.getByTestId("last_name_field")  as HTMLInputElement,
+        email: screen.getByTestId("email_field")  as HTMLInputElement,
+        phoneNumber: screen.getByTestId("phone_number_field") as HTMLInputElement,
+        yearsExp: screen.getByTestId("years_experience_field") as HTMLInputElement,
+        age: screen.getByTestId("age_field") as HTMLInputElement,
         highestEducation: screen.getByTestId("highest_education_field"),
         gender: screen.getByTestId("gender_field"),
         ethnicity: screen.getByTestId("ethnicity_field"),

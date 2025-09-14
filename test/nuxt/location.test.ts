@@ -38,10 +38,10 @@ const getFormElements = () => {
     return {
         country: screen.getByTestId("country_field"),
         citizenship: screen.getByTestId("citizenship_field"),
-        city: screen.getByTestId("city_field"),
-        postalCode: screen.getByTestId("postal_code_field"),
-        provinceState: screen.getByTestId("province_field"),
-        address: screen.getByTestId("address_field"),
+        city: screen.getByTestId("city_field") as HTMLInputElement,
+        postalCode: screen.getByTestId("postal_code_field") as HTMLInputElement,
+        provinceState: screen.getByTestId("province_field") as HTMLInputElement,
+        address: screen.getByTestId("address_field") as HTMLInputElement,
         submitButton: screen.getByTestId("location_submit_button"),
     };
 };

@@ -36,14 +36,15 @@ const COMPLETED_FORM_PROPS = {
 };
 
 const getFormElements = () => {
+    // prettier-ignore
     return {
-        portfolioUrl: screen.getByTestId("portfolio_url_field"),
-        linkedin: screen.getByTestId("linkedin_field"),
-        github: screen.getByTestId("github_field"),
-        instagram: screen.getByTestId("instagram_field"),
-        twitter: screen.getByTestId("twitter_field"),
-        tiktok: screen.getByTestId("tiktok_field"),
-        youtube: screen.getByTestId("youtube_field"),
+        portfolioUrl: screen.getByTestId("portfolio_url_field") as HTMLInputElement,
+        linkedin: screen.getByTestId("linkedin_field") as HTMLInputElement,
+        github: screen.getByTestId("github_field") as HTMLInputElement,
+        instagram: screen.getByTestId("instagram_field") as HTMLInputElement,
+        twitter: screen.getByTestId("twitter_field") as HTMLInputElement,
+        tiktok: screen.getByTestId("tiktok_field") as HTMLInputElement,
+        youtube: screen.getByTestId("youtube_field") as HTMLInputElement,
         submitButton: screen.getByTestId("socials_submit_button"),
     };
 };

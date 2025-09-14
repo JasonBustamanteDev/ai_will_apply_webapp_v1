@@ -39,16 +39,22 @@ const COMPLETED_FORM_PROPS = {
 
 const getFormElements = () => {
     return {
-        currentSalary: screen.getByTestId("current_salary_field"),
-        expectedSalary: screen.getByTestId("expected_salary_field"),
-        noticePeriod: screen.getByTestId("notice_period_field"),
+        currentSalary: screen.getByTestId(
+            "current_salary_field"
+        ) as HTMLInputElement,
+        expectedSalary: screen.getByTestId(
+            "expected_salary_field"
+        ) as HTMLInputElement,
+        noticePeriod: screen.getByTestId(
+            "notice_period_field"
+        ) as HTMLInputElement,
         relocation: screen.getByTestId("relocation_field"),
         license: screen.getByTestId("license_field"),
         transportation: screen.getByTestId("transportation_field"),
         veteranStatus: screen.getByTestId("veteran_field"),
         interviewAvailability: screen.getByTestId(
             "interview_availability_field"
-        ),
+        ) as HTMLInputElement,
         companyBlacklist: screen.getByTestId("company_blacklist_field"),
 
         submitButton: screen.getByTestId("preference_submit_button"),

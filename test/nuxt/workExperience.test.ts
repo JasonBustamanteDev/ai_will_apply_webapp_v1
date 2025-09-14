@@ -41,10 +41,11 @@ const COMPLETED_FORM_PROPS = {
 };
 
 const getRowElements = (rowIndex: number) => {
+    // prettier-ignore
     return {
-        title: screen.getByTestId(`job_title_${rowIndex}`),
-        company: screen.getByTestId(`job_company_${rowIndex}`),
-        years: screen.getByTestId(`job_years_${rowIndex}`),
+        title: screen.getByTestId(`job_title_${rowIndex}`)  as HTMLInputElement,
+        company: screen.getByTestId(`job_company_${rowIndex}`) as HTMLInputElement,
+        years: screen.getByTestId(`job_years_${rowIndex}`) as HTMLInputElement,
         stillThere: screen.getByTestId(`job_radio_${rowIndex}`),
         trashIcon: screen.getByTestId(`job_trash_icon_${rowIndex}`),
     };
@@ -88,13 +89,13 @@ describe("Filled workExperience form", () => {
         expect(companies.length).toEqual(2);
         expect(yearsExp.length).toEqual(2);
 
-        assertInputValue(jobTitles[0] as HTMLElement, "Software Engineer");
-        assertInputValue(companies[0] as HTMLElement, "Geotrace");
-        assertInputValue(yearsExp[0] as HTMLElement, "3");
+        assertInputValue(jobTitles[0] as HTMLInputElement, "Software Engineer");
+        assertInputValue(companies[0] as HTMLInputElement, "Geotrace");
+        assertInputValue(yearsExp[0] as HTMLInputElement, "3");
 
-        assertInputValue(jobTitles[1] as HTMLElement, "Janitor");
-        assertInputValue(companies[1] as HTMLElement, "Dollarama");
-        assertInputValue(yearsExp[1] as HTMLElement, "1");
+        assertInputValue(jobTitles[1] as HTMLInputElement, "Janitor");
+        assertInputValue(companies[1] as HTMLInputElement, "Dollarama");
+        assertInputValue(yearsExp[1] as HTMLInputElement, "1");
     });
 
     it("Removes a row after pressing the remove last button", async () => {
@@ -129,9 +130,7 @@ describe("Fresh workExperience form", () => {
         user = userEvent.setup();
     });
 
-    it("Renders 'I have no work experience' by default", async () => {
-        
-    });
+    it("Renders 'I have no work experience' by default", async () => {});
 
     // it("Renders a form when the add button is pressed, then allows you to fill it", async () => {});
 });

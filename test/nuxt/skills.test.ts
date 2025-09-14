@@ -31,10 +31,11 @@ const COMPLETED_FORM_PROPS = {
 };
 
 const getFormElements = (rowIndex: number) => {
+    // prettier-ignore
     return {
         skillRow: screen.getByTestId(`skill_row_${rowIndex}`),
-        skillField: screen.getByTestId(`skill_field_${rowIndex}`),
-        years: screen.getByTestId(`skill_years_${rowIndex}`),
+        skillField: screen.getByTestId(`skill_field_${rowIndex}`) as HTMLInputElement,
+        years: screen.getByTestId(`skill_years_${rowIndex}`) as HTMLInputElement,
         trashIcon: screen.getByTestId(`skill_trash_icon_${rowIndex}`),
     };
 };
@@ -57,8 +58,8 @@ describe("Filled skills form", () => {
     it("Should show a dynamic number of rows", async () => {
         const skillInputs = screen.queryAllByTestId(/skill_field_/);
         expect(skillInputs.length).toEqual(2);
-        assertInputValue(skillInputs[0] as HTMLElement, "SQL");
-        assertInputValue(skillInputs[1] as HTMLElement, "JS");
+        assertInputValue(skillInputs[0] as HTMLInputElement, "SQL");
+        assertInputValue(skillInputs[1] as HTMLInputElement, "JS");
     });
 
     it("Should delete a row when the trash icon is pressed while 2+ rows exist", async () => {

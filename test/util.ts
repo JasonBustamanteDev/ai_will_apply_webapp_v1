@@ -45,7 +45,7 @@ export async function selectDropdownOption(
 }
 
 export function assertInputValue(
-    element: HTMLElement,
+    element: HTMLInputElement,
     value: string | number
 ) {
     expect(element.value).toBe(value);

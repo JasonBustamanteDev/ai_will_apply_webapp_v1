@@ -50,14 +50,14 @@ const getFormElements = () => {
     return {
         educationSwitch: screen.getByTestId("have_higher_education_field"), // switch that can disable the form
 
-        institutionName: screen.getByTestId("institution_name_field"),
-        fieldOfStudy: screen.getByTestId("field_of_study_field"),
-        institutionCity: screen.getByTestId("institution_city_field"),
-        institutionProvince: screen.getByTestId("institution_province_field"),
-        startDate: screen.getByTestId("start_date_field"),
-        endDate: screen.getByTestId("end_date_field"),
+        institutionName: screen.getByTestId("institution_name_field") as HTMLInputElement,
+        fieldOfStudy: screen.getByTestId("field_of_study_field") as HTMLInputElement,
+        institutionCity: screen.getByTestId("institution_city_field") as HTMLInputElement,
+        institutionProvince: screen.getByTestId("institution_province_field") as HTMLInputElement,
+        startDate: screen.getByTestId("start_date_field") as HTMLInputElement,
+        endDate: screen.getByTestId("end_date_field") as HTMLInputElement,
         currentlyAttending: screen.getByTestId("currently_attending_field"),
-        gpa: screen.getByTestId("gpa_field"),
+        gpa: screen.getByTestId("gpa_field") as HTMLInputElement,
         submitButton: screen.getByTestId("education_submit_button"),
     };
 };

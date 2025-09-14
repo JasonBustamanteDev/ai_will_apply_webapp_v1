@@ -38,7 +38,9 @@ const COMPLETED_FORM_PROPS = {
 
 const getFormElements = (rowIndex: number) => {
     return {
-        languageField: screen.getByTestId(`lang_field_${rowIndex}`),
+        languageField: screen.getByTestId(
+            `lang_field_${rowIndex}`
+        ) as HTMLInputElement,
         fluencyDropdown: screen.getByTestId(`lang_select_${rowIndex}`),
         trashIcon: screen.getByTestId(`lang_trash_icon_${rowIndex}`),
     };
@@ -62,8 +64,8 @@ describe("Filled languages form", () => {
     it("Should show 2 rows", async () => {
         const langInputsAtStart = screen.queryAllByTestId(/lang_field_/);
         expect(langInputsAtStart.length).toEqual(2);
-        assertInputValue(langInputsAtStart[0] as HTMLElement, "English");
-        assertInputValue(langInputsAtStart[1] as HTMLElement, "Spanish");
+        assertInputValue(langInputsAtStart[0] as HTMLInputElement, "English");
+        assertInputValue(langInputsAtStart[1] as HTMLInputElement, "Spanish");
     });
 
     it("Pressing trash icon should delete a row if we have 2 or more of them", async () => {
