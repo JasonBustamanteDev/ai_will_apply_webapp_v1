@@ -117,3 +117,21 @@ describe("Filled workExperience form", () => {
         assertZeroExperienceIndicatorIsRendered();
     });
 });
+
+describe("Fresh workExperience form", () => {
+    let form: Element;
+    let user: UserEvent;
+    beforeEach(() => {
+        const { container } = render(WorkExperienceForm, {
+            props: COMPLETED_FORM_PROPS,
+        });
+        form = container;
+        user = userEvent.setup();
+    });
+
+    it("Renders 'I have no work experience' by default", async () => {
+        
+    });
+
+    // it("Renders a form when the add button is pressed, then allows you to fill it", async () => {});
+});
