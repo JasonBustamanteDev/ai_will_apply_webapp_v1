@@ -10,6 +10,7 @@ const supabaseProjectURL = env_config.public.SUPABASE_PROJECT_URL;
 const isMissingExtensionModalOpen = ref(false);
 
 const sendAuthDataToExtension = () => {
+    // If the chrome extension is not installed, open a modal which can direct users to the store page
     const isExtensionInstalled = document.documentElement.hasAttribute(
         "aiwillapply-extension-installed"
     );
