@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import ExtensionNotInstalledModal from '~/ui/search/views/extensionNotInstalledModal.vue';
+import ExtensionNotInstalledModal from "~/ui/search/views/extensionNotInstalledModal.vue";
 definePageMeta({
     middleware: ["redirect-if-no-auth-session-client"],
 });
@@ -7,11 +7,17 @@ definePageMeta({
 const env_config = useRuntimeConfig();
 const supabaseProjectURL = env_config.public.SUPABASE_PROJECT_URL;
 
-const sendAuthDataToExtension = () => {
-    const isExtensionInstalled = document.documentElement.hasAttribute('aiwillapply-extension-installed');
-    if (isExtensionInstalled === false) {
+const isMissingExtensionModalOpen = ref(false);
 
+const sendAuthDataToExtension = () => {
+    const isExtensionInstalled = document.documentElement.hasAttribute(
+        "aiwillapply-extension-installed"
+    );
+    if (isExtensionInstalled === false) {
+        isMissingExtensionModalOpen.value = true;
     }
+
+
     // DO NOT DO THIS (SECURITY RISK)
     // DO NOT DO THIS (SECURITY RISK)
     // DO NOT DO THIS (SECURITY RISK)
@@ -43,7 +49,7 @@ const sendAuthDataToExtension = () => {
             <UButton @click="sendAuthDataToExtension"
                 >FIRE MESSAGE TO EXT</UButton
             >
-            <ExtensionNotInstalledModal/>
+            <ExtensionNotInstalledModal v-model:isModalOpen="isMissingExtensionModalOpen" />
         </div>
     </div>
 </template>

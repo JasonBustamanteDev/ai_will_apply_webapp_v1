@@ -1,13 +1,22 @@
 <script setup>
-const isModalOpen = ref(true);
-
 const env_config = useRuntimeConfig();
 const chromeExtensionURL = env_config.public.CHROME_STORE_URL;
+
+const props = defineProps({
+    isModalOpen: { type: Boolean },
+});
+
+const emit = defineEmits(['update:isModalOpen']);
+
+const isOpen = computed({
+    get: () => props.isModalOpen,
+    set: (value) => emit('update:isModalOpen', value)
+});
 </script>
 
 <template>
     <UModal
-        v-model:open="isModalOpen"
+        v-model:open="isOpen"
         title="Install our 'AI will Apply' extension first"
         description=""
         :ui="{ footer: 'justify-end' }"
@@ -16,7 +25,7 @@ const chromeExtensionURL = env_config.public.CHROME_STORE_URL;
             <p class="mb-1">
                 Once you install the extension, reload this page and try again
             </p>
-            <a :href="chromeExtensionURL" class="text-blue-500"
+            <a :href="chromeExtensionURL" target="_blank" rel="noopener noreferrer" class="text-blue-500"
                 >Click here to visit the Google Chrome store page</a
             >
             <NuxtImg
