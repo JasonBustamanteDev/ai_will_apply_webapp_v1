@@ -1,5 +1,8 @@
 <script setup>
 const isModalOpen = ref(true);
+
+const env_config = useRuntimeConfig();
+const chromeExtensionURL = env_config.public.CHROME_STORE_URL;
 </script>
 
 <template>
@@ -10,9 +13,16 @@ const isModalOpen = ref(true);
         :ui="{ footer: 'justify-end' }"
     >
         <template #body>
-            <p class="mb-1">Once you install the extension, reload this page and try again</p>
-            <a href="" class="text-blue-500">Click here to visit the Google Chrome store page</a>
-            <NuxtImg src="/images/misc/loom_extension.png" class="w-200px mt-4" />
+            <p class="mb-1">
+                Once you install the extension, reload this page and try again
+            </p>
+            <a :href="chromeExtensionURL" class="text-blue-500"
+                >Click here to visit the Google Chrome store page</a
+            >
+            <NuxtImg
+                src="/images/misc/loom_extension.png"
+                class="w-200px mt-4"
+            />
         </template>
 
         <template #footer="{ close }">

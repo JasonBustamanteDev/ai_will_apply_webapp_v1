@@ -28,7 +28,7 @@ export default defineNuxtConfig({
         "@nuxt/test-utils",
         "@nuxt/ui",
         "@pinia/nuxt",
-        '@nuxt/test-utils/module'
+        "@nuxt/test-utils/module",
     ],
 
     // TS
@@ -36,7 +36,7 @@ export default defineNuxtConfig({
         // Turns typechecks on/off when we deploy locally or build
         // We set it to false since vue-tsc has an issue where it type checks node_modules (even if we exclude it in tsconfig.json)
         typeCheck: false,
-        
+
         strict: true,
     },
 
@@ -54,6 +54,7 @@ export default defineNuxtConfig({
             SUPABASE_PUBLIC_ANON_API_KEY:
                 process.env.SUPABASE_PUBLIC_ANON_API_KEY,
             BASE_URL: process.env.BASE_URL,
+            CHROME_STORE_URL: process.env.CHROME_STORE_URL,
         },
     },
 });
