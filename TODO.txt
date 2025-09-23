@@ -1,0 +1,5 @@
+TODO
+
+ENV CHANGES
+- Change CHROME_STORE_URL to the URL your extension is deployed on
+- Change BASE_URL to domain we deploy on
