@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useFetchAllProfiles } from "~/shared/composables/useFetchAllProfiles";
-import { formatMessageForExtension } from "~/ui/search/shared/message_utils";
+import { flattenFormData, formatMessageForExtension } from "~/ui/search/shared/message_utils"; // prettier-ignore
 import ExtensionNotInstalledModal from "~/ui/search/views/extensionNotInstalledModal.vue";
 
 definePageMeta({
@@ -13,6 +13,7 @@ const chromeExtensionId = env_config.public.CHROME_EXTENSION_ID;
 const { profileList, fetchProfiles, showErrorToast } = useFetchAllProfiles();
 
 const isMissingExtensionModalOpen = ref(false);
+const selectedProfileName = ref("");
 
 const sendAuthDataToExtension = () => {
     // If the chrome extension is not installed, open a modal which can direct users to the store page
@@ -23,14 +24,21 @@ const sendAuthDataToExtension = () => {
         isMissingExtensionModalOpen.value = true;
     }
 
+    const selectedProfileData = profileList.value.find((obj) => {
+        return obj.profileName === selectedProfileName.value;
+    });
+
     // If the chrome extension is installed, send a message to its service worker file
     const authObject = JSON.parse(
         localStorage.getItem(`sb-${supabaseProjectId}-auth-token`) || "{}"
     );
-    const messagePayload = formatMessageForExtension(
-        "SHARE_AUTH_DETAILS",
-        authObject
-    );
+    const messagePayload = formatMessageForExtension("SHARE_PROFILE_AND_AUTH_DATA", {
+        currentProfile: {
+            name: selectedProfileName.value,
+            data: flattenFormData(selectedProfileData as Object),
+        },
+        auth: authObject, //! TODO: extract relevant details only (user.id which matches auth table id. access_token)
+    });
 
     // @ts-expect-error
     chrome.runtime.sendMessage(
@@ -42,7 +50,6 @@ const sendAuthDataToExtension = () => {
             if (chrome.runtime.lastError) {
                 console.log("Extension not available");
             }
-            console.log(response);
         }
     );
 };
@@ -62,6 +69,9 @@ const completedProfileNames = computed(() =>
         return accumulator;
     }, [] as string[])
 );
+
+//! TODO: Not selecting a profile should render error visuals when you hit the button that sends a message
+//! TODO If no profiles are present, render a button that redirects to the profile page (instead of showing the page. Or disable everything)
 </script>
 
 <template>
@@ -72,8 +82,13 @@ const completedProfileNames = computed(() =>
                 FUTURE CONTENT: All the supported platforms and prefilled
                 filters
             </p>
-            <p>{{ completedProfilesCount }}</p>
-            <p>{{ completedProfileNames }}</p>
+            <USelect
+                v-model="selectedProfileName"
+                :items="completedProfileNames"
+                placeholder="Select profile"
+                class="w-full"
+            />
+            <br class="mt-4" />
             <UButton @click="sendAuthDataToExtension"
                 >FIRE MESSAGE TO EXT</UButton
             >
