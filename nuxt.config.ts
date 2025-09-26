@@ -50,11 +50,13 @@ export default defineNuxtConfig({
 
         public: {
             // Public keys (available on both client and server)
+            SUPABASE_PROJECT_ID: process.env.SUPABASE_PROJECT_ID,
             SUPABASE_PROJECT_URL: process.env.SUPABASE_PROJECT_URL,
             SUPABASE_PUBLIC_ANON_API_KEY:
                 process.env.SUPABASE_PUBLIC_ANON_API_KEY,
             BASE_URL: process.env.BASE_URL,
             CHROME_STORE_URL: process.env.CHROME_STORE_URL,
+            CHROME_EXTENSION_ID: process.env.CHROME_EXTENSION_ID,
         },
     },
 });

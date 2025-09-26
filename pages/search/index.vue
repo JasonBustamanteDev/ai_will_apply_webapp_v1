@@ -1,11 +1,13 @@
 <script setup lang="ts">
+import { formatMessageForExtension } from "~/ui/search/shared/message_utils";
 import ExtensionNotInstalledModal from "~/ui/search/views/extensionNotInstalledModal.vue";
 definePageMeta({
     middleware: ["redirect-if-no-auth-session-client"],
 });
 
 const env_config = useRuntimeConfig();
-const supabaseProjectURL = env_config.public.SUPABASE_PROJECT_URL;
+const supabaseProjectId = env_config.public.SUPABASE_PROJECT_ID;
+const chromeExtensionId = env_config.public.CHROME_EXTENSION_ID;
 
 const isMissingExtensionModalOpen = ref(false);
 
@@ -18,24 +20,28 @@ const sendAuthDataToExtension = () => {
         isMissingExtensionModalOpen.value = true;
     }
 
+    // If the chrome extension is installed, send a message to its service worker file
+    const authObject = JSON.parse(
+        localStorage.getItem(`sb-${supabaseProjectId}-auth-token`) || "{}"
+    );
+    const messagePayload = formatMessageForExtension(
+        "SHARE_AUTH_DETAILS",
+        authObject
+    );
 
-    // DO NOT DO THIS (SECURITY RISK)
-    // DO NOT DO THIS (SECURITY RISK)
-    // DO NOT DO THIS (SECURITY RISK)
-    // DO NOT DO THIS (SECURITY RISK)
-    // DO NOT DO THIS (SECURITY RISK)
-    // // Send a message to your extension - it should have a content script running on your own site
-    // const supabasePublic = "jgvuigssexmkwtoqfvbt";
-    // const authObject =
-    //     localStorage.getItem(`sb-${supabasePublic}-auth-token`) || "{}";
-
-    // window.postMessage(
-    //     {
-    //         type: "EXTENSION_AUTH_INIT",
-    //         payload: JSON.parse(authObject), //! security risk - any malicious extension can see this
-    //     },
-    //     "*" // The * here just means "send to same page"
-    // );
+    // @ts-expect-error
+    chrome.runtime.sendMessage(
+        chromeExtensionId,
+        messagePayload,
+        // @ts-expect-error
+        (response) => {
+            // @ts-expect-error
+            if (chrome.runtime.lastError) {
+                console.log("Extension not available");
+            }
+            console.log(response);
+        }
+    );
 };
 </script>
 
@@ -50,7 +56,9 @@ const sendAuthDataToExtension = () => {
             <UButton @click="sendAuthDataToExtension"
                 >FIRE MESSAGE TO EXT</UButton
             >
-            <ExtensionNotInstalledModal v-model:isModalOpen="isMissingExtensionModalOpen" />
+            <ExtensionNotInstalledModal
+                v-model:isModalOpen="isMissingExtensionModalOpen"
+            />
         </div>
     </div>
 </template>
