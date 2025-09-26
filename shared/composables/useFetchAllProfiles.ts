@@ -12,7 +12,6 @@ export function useFetchAllProfiles() {
     const fetchProfiles = async () => {
         try {
             profileList.value = await getProfiles(supabaseProjectURL);
-            console.log(profileList.value);
         } catch (err: any) {
             console.error(err);
             showErrorToast(
@@ -25,5 +24,5 @@ export function useFetchAllProfiles() {
         }
     };
 
-    return { profileList, fetchProfiles };
+    return { profileList, fetchProfiles, showErrorToast };
 }

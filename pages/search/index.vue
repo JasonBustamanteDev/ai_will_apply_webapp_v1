@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import { useFetchAllProfiles } from "~/shared/composables/useFetchAllProfiles";
 import { formatMessageForExtension } from "~/ui/search/shared/message_utils";
 import ExtensionNotInstalledModal from "~/ui/search/views/extensionNotInstalledModal.vue";
+
 definePageMeta({
     middleware: ["redirect-if-no-auth-session-client"],
 });
@@ -8,6 +10,7 @@ definePageMeta({
 const env_config = useRuntimeConfig();
 const supabaseProjectId = env_config.public.SUPABASE_PROJECT_ID;
 const chromeExtensionId = env_config.public.CHROME_EXTENSION_ID;
+const { profileList, fetchProfiles, showErrorToast } = useFetchAllProfiles();
 
 const isMissingExtensionModalOpen = ref(false);
 
@@ -43,6 +46,22 @@ const sendAuthDataToExtension = () => {
         }
     );
 };
+
+onMounted(async () => {
+    await fetchProfiles();
+});
+
+const completedProfilesCount = computed(() =>
+    profileList.value.reduce((accumulator, currentItem) => {
+        return accumulator + (currentItem.isReady ? 1 : 0);
+    }, 0)
+);
+const completedProfileNames = computed(() =>
+    profileList.value.reduce((accumulator, currentItem) => {
+        if (currentItem.isReady) accumulator.push(currentItem.profileName);
+        return accumulator;
+    }, [] as string[])
+);
 </script>
 
 <template>
@@ -53,6 +72,8 @@ const sendAuthDataToExtension = () => {
                 FUTURE CONTENT: All the supported platforms and prefilled
                 filters
             </p>
+            <p>{{ completedProfilesCount }}</p>
+            <p>{{ completedProfileNames }}</p>
             <UButton @click="sendAuthDataToExtension"
                 >FIRE MESSAGE TO EXT</UButton
             >

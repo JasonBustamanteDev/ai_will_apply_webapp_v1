@@ -1,12 +1,10 @@
 <script setup lang="ts">
 import ProfileListItemCard from "~/ui/profiles/shared/profile-dashboard/profileListItemCard.vue";
 import InitializeProfileCard from "~/ui/profiles/shared/profile-dashboard/initializeProfileCard.vue";
-import { useCustomToast } from "~/pinia_stores/toast";
-import { getProfiles } from "~/ui/profiles/apiCalls/getProfiles.js";
 import { deleteProfile } from "~/ui/profiles/apiCalls/deleteProfile";
 import { renameProfile } from "~/ui/profiles/apiCalls/renameProfile";
 import { initializeProfile } from "@/ui/profiles/apiCalls/initializeProfile";
-import type { ProfileListType } from "~/ui/profiles/apiCalls/getProfiles";
+import { useFetchAllProfiles } from "~/shared/composables/useFetchAllProfiles";
 
 definePageMeta({
     middleware: ["redirect-if-no-auth-session-client"],
@@ -15,23 +13,7 @@ definePageMeta({
 const env_config = useRuntimeConfig();
 const supabaseProjectURL = env_config.public.SUPABASE_PROJECT_URL;
 
-const profileList: Ref<ProfileListType> = ref([]);
-const { showErrorToast } = useCustomToast();
-
-const fetchProfiles = async () => {
-    try {
-        profileList.value = await getProfiles(supabaseProjectURL);
-    } catch (err: any) {
-        console.error(err);
-        showErrorToast(
-            "ERROR: FETCHING PROFILES",
-            err?.data?.detail ||
-                err?.message ||
-                "Request to get profiles failed.",
-            true
-        );
-    }
-};
+const { profileList, fetchProfiles, showErrorToast } = useFetchAllProfiles();
 
 onMounted(async () => {
     await fetchProfiles();
