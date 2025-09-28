@@ -2,6 +2,7 @@
 import { useFetchAllProfiles } from "~/shared/composables/useFetchAllProfiles";
 import { flattenFormData, formatMessageForExtension } from "~/ui/search/shared/message_utils"; // prettier-ignore
 import ExtensionNotInstalledModal from "~/ui/search/views/extensionNotInstalledModal.vue";
+import { get } from "lodash";
 
 definePageMeta({
     middleware: ["redirect-if-no-auth-session-client"],
@@ -32,13 +33,19 @@ const sendAuthDataToExtension = () => {
     const authObject = JSON.parse(
         localStorage.getItem(`sb-${supabaseProjectId}-auth-token`) || "{}"
     );
-    const messagePayload = formatMessageForExtension("SHARE_PROFILE_AND_AUTH_DATA", {
-        currentProfile: {
-            name: selectedProfileName.value,
-            data: flattenFormData(selectedProfileData as Object),
-        },
-        auth: authObject, //! TODO: extract relevant details only (user.id which matches auth table id. access_token)
-    });
+    const messagePayload = formatMessageForExtension(
+        "SHARE_PROFILE_AND_AUTH_DATA",
+        {
+            currentProfile: {
+                name: selectedProfileName.value,
+                data: flattenFormData(selectedProfileData as Object),
+            },
+            auth: {
+                id: get(authObject, ["user", "id"], null),
+                accessToken: `Bearer ${get(authObject, ["access_token"], "")}`,
+            },
+        }
+    );
 
     // @ts-expect-error
     chrome.runtime.sendMessage(
