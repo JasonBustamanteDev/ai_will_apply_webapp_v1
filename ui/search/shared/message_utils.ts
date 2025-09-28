@@ -42,6 +42,7 @@ export const flattenFormData = (data: Object) => {
 
 export function recycleFormData(formData: Object) {
     // Ex. 'firstName' field's value will be used by 'first name' as well
+    // NOTE: In the extension we convert all questions to lowercase - so all our equivalent strings will be in lowercase as well
     const equivalentPairs = {
         firstName: ["first name"],
         lastName: ["last name"],
@@ -62,6 +63,7 @@ export function recycleFormData(formData: Object) {
             "province",
             "state",
             "province/state",
+            "province / state",
             "province or state",
         ],
         citizenship: [],
@@ -112,6 +114,8 @@ export function recycleFormData(formData: Object) {
     };
 
     for (const field in equivalentPairs) {
+        if (field in formData === false) continue;
+
         // @ts-expect-error
         const equivalentQuestionsList = equivalentPairs[field];
         // @ts-expect-error

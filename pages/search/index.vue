@@ -37,14 +37,16 @@ const sendAuthDataToExtension = () => {
         const authObject = JSON.parse(
             localStorage.getItem(`sb-${supabaseProjectId}-auth-token`) || "{}"
         );
-        const coreFormData = flattenFormData(selectedProfileData as Object)
+        const coreFormData = flattenFormData(selectedProfileData as Object);
         const messagePayload = formatMessageForExtension(
             "SHARE_PROFILE_AND_AUTH_DATA",
             {
                 currentProfile: {
                     name: selectedProfileName.value,
-                    coreData: coreFormData,
-                    expandedData: recycleFormData(coreFormData), // recycles key value pairs
+                    data: {
+                        core: coreFormData, // will show to AI
+                        recycled: recycleFormData(coreFormData), // will use for 0(1) kvp matching
+                    },
                 },
                 auth: {
                     id: get(authObject, ["user", "id"], null),
@@ -64,7 +66,7 @@ const sendAuthDataToExtension = () => {
             messagePayload,
             // @ts-expect-error
             (response) => {
-                console.log(response)
+                console.log(response);
                 // @ts-expect-error
                 if (chrome.runtime.lastError) {
                     console.log("Extension not available");
