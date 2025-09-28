@@ -37,5 +37,91 @@ export const flattenFormData = (data: Object) => {
         }
     }
 
-    return output;
+    return recycleFormData(output);
 };
+
+export function recycleFormData(formData: Object) {
+    // Ex. 'firstName' field's value will be used by 'first name' as well
+    const equivalentPairs = {
+        firstName: ["first name"],
+        lastName: ["last name"],
+        age: [],
+        yearsOfExperience: ["years experience", "years of experience"],
+        email: [],
+        gender: ["sexual identity", "identify as"],
+        phoneNumber: ["phone number"],
+        ethnicity: [],
+        securityClearance: ["security clearance"],
+        disability: [],
+        educationLevel: ["education", "education level"],
+        country: ["nation of birth"],
+        address: ["home address"],
+        city: ["town"],
+        postalCode: ["postal code"],
+        provinceState: [
+            "province",
+            "state",
+            "province/state",
+            "province or state",
+        ],
+        citizenship: [],
+        currentAnnualSalary: ["current salary"],
+        expectedAnnualSalary: [
+            "expected salary",
+            "salary expectation",
+            "target salary",
+            "compensation",
+            "expected compensation",
+        ],
+        noticePeriod: ["notice period", "when can you start"],
+        willingToRelocate: ["willing to relocate"],
+        driversLicense: [
+            "drivers license",
+            "valid drivers license",
+            "do you have a valid drivers license",
+        ],
+        reliableTransportation: [
+            "reliable source of transportation",
+            "own a car",
+        ],
+        veteranStatus: ["veteran status"],
+        companyBlacklist: [],
+        interviewAvailability: [
+            "interview availability",
+            "when are you available for interviews",
+        ],
+
+        // Probably won't ask these questions directly
+        // currentlyAttending: [],
+        // endDate: [],
+        // startDate: [],
+        // gpa: [],
+        // institutionProvince: [],
+        // institutionCity: [],
+        // fieldOfStudy: [],
+        // institutionName: [],
+        // haveHigherEducation: [],
+
+        linkedin: [],
+        portfolioUrl: ["portfolio site", "portfolio website"],
+        twitter: ["x account"],
+        instagram: ["ig"],
+        github: ["github page"],
+        tiktok: ["tiktok account"],
+        youtube: ["youtube channel", "yt channel"],
+    };
+
+    for (const field in equivalentPairs) {
+        // @ts-expect-error
+        const equivalentQuestionsList = equivalentPairs[field];
+        // @ts-expect-error
+        const answer = formData[field];
+
+        for (const eq of equivalentQuestionsList) {
+            // @ts-expect-error
+            formData[eq] = answer;
+        }
+    }
+
+    return formData;
+}

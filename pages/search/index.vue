@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useFetchAllProfiles } from "~/shared/composables/useFetchAllProfiles";
-import { flattenFormData, formatMessageForExtension } from "~/ui/search/shared/message_utils"; // prettier-ignore
+import { flattenFormData, formatMessageForExtension, recycleFormData } from "~/ui/search/shared/message_utils"; // prettier-ignore
 import ExtensionNotInstalledModal from "~/ui/search/views/extensionNotInstalledModal.vue";
 import { get } from "lodash";
 import DownloadChromeModal from "~/ui/search/views/downloadChromeModal.vue";
@@ -37,12 +37,14 @@ const sendAuthDataToExtension = () => {
         const authObject = JSON.parse(
             localStorage.getItem(`sb-${supabaseProjectId}-auth-token`) || "{}"
         );
+        const coreFormData = flattenFormData(selectedProfileData as Object)
         const messagePayload = formatMessageForExtension(
             "SHARE_PROFILE_AND_AUTH_DATA",
             {
                 currentProfile: {
                     name: selectedProfileName.value,
-                    data: flattenFormData(selectedProfileData as Object),
+                    coreData: coreFormData,
+                    expandedData: recycleFormData(coreFormData), // recycles key value pairs
                 },
                 auth: {
                     id: get(authObject, ["user", "id"], null),
@@ -62,6 +64,7 @@ const sendAuthDataToExtension = () => {
             messagePayload,
             // @ts-expect-error
             (response) => {
+                console.log(response)
                 // @ts-expect-error
                 if (chrome.runtime.lastError) {
                     console.log("Extension not available");
@@ -73,6 +76,12 @@ const sendAuthDataToExtension = () => {
             // console.error(err.message);
             isNotOnChromeModalOpen.value = true;
         }
+        console.error(err);
+        showErrorToast(
+            "ERROR: STARTING JOB SEARCH",
+            err?.message || "Request to start job search failed.",
+            true
+        );
     }
 };
 
