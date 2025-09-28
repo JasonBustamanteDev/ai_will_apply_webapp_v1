@@ -26,6 +26,7 @@ const sendAuthDataToExtension = () => {
         );
         if (isExtensionInstalled === false) {
             isMissingExtensionModalOpen.value = true;
+            return;
         }
 
         const selectedProfileData = profileList.value.find((obj) => {
@@ -70,7 +71,7 @@ const sendAuthDataToExtension = () => {
     } catch (err: any) {
         if (err.message === "chrome is not defined") {
             // console.error(err.message);
-            isNotOnChromeModalOpen.value = true
+            isNotOnChromeModalOpen.value = true;
         }
     }
 };
@@ -116,9 +117,7 @@ const completedProfileNames = computed(() =>
             <ExtensionNotInstalledModal
                 v-model:isModalOpen="isMissingExtensionModalOpen"
             />
-            <DownloadChromeModal
-                v-model:isModalOpen="isNotOnChromeModalOpen"
-            />
+            <DownloadChromeModal v-model:isModalOpen="isNotOnChromeModalOpen" />
         </div>
     </div>
 </template>
