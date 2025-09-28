@@ -43,6 +43,7 @@ const sendAuthDataToExtension = () => {
             auth: {
                 id: get(authObject, ["user", "id"], null),
                 accessToken: `Bearer ${get(authObject, ["access_token"], "")}`,
+                expiryUnixTimestamp: get(authObject, ["expires_at"], null)
             },
         }
     );
