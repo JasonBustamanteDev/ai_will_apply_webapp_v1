@@ -3,6 +3,7 @@ import { useFetchAllProfiles } from "~/shared/composables/useFetchAllProfiles";
 import { flattenFormData, formatMessageForExtension } from "~/ui/search/shared/message_utils"; // prettier-ignore
 import ExtensionNotInstalledModal from "~/ui/search/views/extensionNotInstalledModal.vue";
 import { get } from "lodash";
+import DownloadChromeModal from "~/ui/search/views/downloadChromeModal.vue";
 
 definePageMeta({
     middleware: ["redirect-if-no-auth-session-client"],
@@ -14,52 +15,64 @@ const chromeExtensionId = env_config.public.CHROME_EXTENSION_ID;
 const { profileList, fetchProfiles, showErrorToast } = useFetchAllProfiles();
 
 const isMissingExtensionModalOpen = ref(false);
+const isNotOnChromeModalOpen = ref(false);
 const selectedProfileName = ref("");
 
 const sendAuthDataToExtension = () => {
-    // If the chrome extension is not installed, open a modal which can direct users to the store page
-    const isExtensionInstalled = document.documentElement.hasAttribute(
-        "aiwillapply-extension-installed"
-    );
-    if (isExtensionInstalled === false) {
-        isMissingExtensionModalOpen.value = true;
-    }
-
-    const selectedProfileData = profileList.value.find((obj) => {
-        return obj.profileName === selectedProfileName.value;
-    });
-
-    // If the chrome extension is installed, send a message to its service worker file
-    const authObject = JSON.parse(
-        localStorage.getItem(`sb-${supabaseProjectId}-auth-token`) || "{}"
-    );
-    const messagePayload = formatMessageForExtension(
-        "SHARE_PROFILE_AND_AUTH_DATA",
-        {
-            currentProfile: {
-                name: selectedProfileName.value,
-                data: flattenFormData(selectedProfileData as Object),
-            },
-            auth: {
-                id: get(authObject, ["user", "id"], null),
-                accessToken: `Bearer ${get(authObject, ["access_token"], "")}`,
-                expiryUnixTimestamp: get(authObject, ["expires_at"], null)
-            },
+    try {
+        // If the chrome extension is not installed, open a modal which can direct users to the store page
+        const isExtensionInstalled = document.documentElement.hasAttribute(
+            "aiwillapply-extension-installed"
+        );
+        if (isExtensionInstalled === false) {
+            isMissingExtensionModalOpen.value = true;
         }
-    );
 
-    // @ts-expect-error
-    chrome.runtime.sendMessage(
-        chromeExtensionId,
-        messagePayload,
-        // @ts-expect-error
-        (response) => {
-            // @ts-expect-error
-            if (chrome.runtime.lastError) {
-                console.log("Extension not available");
+        const selectedProfileData = profileList.value.find((obj) => {
+            return obj.profileName === selectedProfileName.value;
+        });
+
+        // If the chrome extension is installed, send a message to its service worker file
+        const authObject = JSON.parse(
+            localStorage.getItem(`sb-${supabaseProjectId}-auth-token`) || "{}"
+        );
+        const messagePayload = formatMessageForExtension(
+            "SHARE_PROFILE_AND_AUTH_DATA",
+            {
+                currentProfile: {
+                    name: selectedProfileName.value,
+                    data: flattenFormData(selectedProfileData as Object),
+                },
+                auth: {
+                    id: get(authObject, ["user", "id"], null),
+                    accessToken: `Bearer ${get(
+                        authObject,
+                        ["access_token"],
+                        ""
+                    )}`,
+                    expiryUnixTimestamp: get(authObject, ["expires_at"], null),
+                },
             }
+        );
+
+        // @ts-expect-error
+        chrome.runtime.sendMessage(
+            chromeExtensionId,
+            messagePayload,
+            // @ts-expect-error
+            (response) => {
+                // @ts-expect-error
+                if (chrome.runtime.lastError) {
+                    console.log("Extension not available");
+                }
+            }
+        );
+    } catch (err: any) {
+        if (err.message === "chrome is not defined") {
+            // console.error(err.message);
+            isNotOnChromeModalOpen.value = true
         }
-    );
+    }
 };
 
 onMounted(async () => {
@@ -102,6 +115,9 @@ const completedProfileNames = computed(() =>
             >
             <ExtensionNotInstalledModal
                 v-model:isModalOpen="isMissingExtensionModalOpen"
+            />
+            <DownloadChromeModal
+                v-model:isModalOpen="isNotOnChromeModalOpen"
             />
         </div>
     </div>
