@@ -19,3 +19,4 @@ const formatData = async (profileList: JobSearchProfilesRow[]) => {
 };
 
 export type ProfileListType = Awaited<ReturnType<typeof getProfiles>>;
+export type SingleProfileType = ProfileListType[number];

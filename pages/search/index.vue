@@ -4,6 +4,7 @@ import { flattenFormData, formatMessageForExtension, recycleFormData } from "~/u
 import ExtensionNotInstalledModal from "~/ui/search/views/extensionNotInstalledModal.vue";
 import { get } from "lodash";
 import DownloadChromeModal from "~/ui/search/views/downloadChromeModal.vue";
+import type { ProfileListType } from "~/ui/profiles/apiCalls/getProfiles";
 
 definePageMeta({
     middleware: ["redirect-if-no-auth-session-client"],
@@ -33,11 +34,13 @@ const sendAuthDataToExtension = () => {
             return obj.profileName === selectedProfileName.value;
         });
 
+        if (!selectedProfileData) return;
+
         // If the chrome extension is installed, send a message to its service worker file
         const authObject = JSON.parse(
             localStorage.getItem(`sb-${supabaseProjectId}-auth-token`) || "{}"
         );
-        const coreFormData = flattenFormData(selectedProfileData as Object);
+        const coreFormData = flattenFormData(selectedProfileData);
         const messagePayload = formatMessageForExtension(
             "SHARE_PROFILE_AND_AUTH_DATA",
             {

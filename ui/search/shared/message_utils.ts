@@ -1,4 +1,5 @@
 import { get } from "lodash";
+import type { SingleProfileType } from "~/ui/profiles/apiCalls/getProfiles";
 
 export const formatMessageForExtension = (
     description: string,
@@ -10,13 +11,15 @@ export const formatMessageForExtension = (
     };
 };
 
-export const flattenFormData = (data: Object) => {
+export const flattenFormData = (data: SingleProfileType) => {
     const formData = get(data, ["forms"]);
     const output = {};
 
     for (const formName in formData) {
+        // @ts-expect-error
         if (!formData[formName]["isComplete"]) continue;
 
+        // @ts-expect-error
         const rawData = formData[formName]["data"];
 
         switch (formName) {
