@@ -2,9 +2,8 @@
 import { useFetchAllProfiles } from "~/shared/composables/useFetchAllProfiles";
 import { flattenFormData, formatMessageForExtension, recycleFormData } from "~/ui/search/shared/message_utils"; // prettier-ignore
 import ExtensionNotInstalledModal from "~/ui/search/views/extensionNotInstalledModal.vue";
-import { get } from "lodash";
 import DownloadChromeModal from "~/ui/search/views/downloadChromeModal.vue";
-import type { ProfileListType } from "~/ui/profiles/apiCalls/getProfiles";
+import { get } from "lodash";
 
 definePageMeta({
     middleware: ["redirect-if-no-auth-session-client"],
