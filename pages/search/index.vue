@@ -43,7 +43,7 @@ const sendAuthDataToExtension = () => {
         const messagePayload = formatMessageForExtension(
             "SHARE_PROFILE_AND_AUTH_DATA",
             {
-                currentProfile: {
+                activeProfile: {
                     name: selectedProfileName.value,
                     data: {
                         core: coreFormData, // will show to AI
@@ -68,7 +68,6 @@ const sendAuthDataToExtension = () => {
             messagePayload,
             // @ts-expect-error
             (response) => {
-                console.log(response);
                 // @ts-expect-error
                 if (chrome.runtime.lastError) {
                     console.log("Extension not available");
