@@ -1,4 +1,4 @@
-import { get } from "lodash";
+import { get, cloneDeep } from "lodash";
 import type { SingleProfileType } from "~/ui/profiles/apiCalls/getProfiles";
 
 export const formatMessageForExtension = (
@@ -40,12 +40,13 @@ export const flattenFormData = (data: SingleProfileType) => {
         }
     }
 
-    return recycleFormData(output);
+    return output;
 };
 
 export function recycleFormData(formData: Object) {
     // Ex. 'firstName' field's value will be used by 'first name' as well
     // NOTE: In the extension we convert all questions to lowercase - so all our equivalent strings will be in lowercase as well
+    const clonedFormData = cloneDeep(formData);
     const equivalentPairs = {
         firstName: ["first name"],
         lastName: ["last name"],
@@ -126,9 +127,9 @@ export function recycleFormData(formData: Object) {
 
         for (const eq of equivalentQuestionsList) {
             // @ts-expect-error
-            formData[eq] = answer;
+            clonedFormData[eq] = answer;
         }
     }
 
-    return formData;
+    return clonedFormData;
 }
