@@ -3,6 +3,7 @@ import { useFetchAllProfiles } from "~/shared/composables/useFetchAllProfiles";
 import { flattenFormData, formatMessageForExtension, recycleFormData } from "~/ui/search/shared/message_utils"; // prettier-ignore
 import LinkedinSearchFilters from "~/ui/search/views/searchFilters/linkedinSearchFilters.vue";
 import { get } from "lodash";
+import type { OptionObject, LinkedInSearchPayload } from "@/ui/search/shared/search_filter_options"; // prettier-ignore
 
 definePageMeta({
     middleware: ["redirect-if-no-auth-session-client"],
@@ -79,10 +80,13 @@ const sendAuthDataToExtension = () => {
             }
         );
     } catch (err: any) {
+        // If using the web app on a different browser than chrome, render an error modal
         if (err.message === "chrome is not defined") {
             // console.error(err.message);
             isNotOnChromeModalOpen.value = true;
+            return;
         }
+
         console.error(err);
         showErrorToast(
             "ERROR: STARTING JOB SEARCH",
@@ -103,6 +107,10 @@ const completedProfileNames = computed(() =>
     }, [] as string[])
 );
 
+const handleLinkedInSearch = (linkedin_filters: LinkedInSearchPayload) => {
+    console.log(linkedin_filters);
+};
+
 //! TODO: Not selecting a profile should render error visuals when you hit the button that sends a message
 //! TODO If no profiles are present, render some error text and an anchor, plus disable the fire button and form
 </script>
@@ -111,24 +119,18 @@ const completedProfileNames = computed(() =>
     <div>
         <SharedNavbar />
         <div class="global-layout-container">
-            <LinkedinSearchFilters>
-                <UFormField label="Applicant Profile">
-                    <USelect
-                        v-model="selectedProfileName"
-                        :items="completedProfileNames"
-                        placeholder="Select profile"
-                        class="w-full"
-                    />
-                </UFormField>
-            </LinkedinSearchFilters>
+            <UFormField label="Applicant Profile">
+                <USelect
+                    v-model="selectedProfileName"
+                    :items="completedProfileNames"
+                    placeholder="Select profile"
+                    class="w-full"
+                />
+            </UFormField>
 
-            <UButton
-                @click="sendAuthDataToExtension"
-                color="secondary"
-                trailingIcon="heroicons:rocket-launch-16-solid"
-                class="mt-4"
-                >Auto apply to jobs on LinkedIn</UButton
-            >
+            <LinkedinSearchFilters
+                @fire_up_linkedin_search="handleLinkedInSearch"
+            />
 
             <!-- Extension not installed Modal -->
             <SharedPictureModal

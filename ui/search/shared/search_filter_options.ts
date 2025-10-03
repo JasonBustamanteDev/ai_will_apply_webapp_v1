@@ -41,4 +41,11 @@ export const LINKEDIN_FILTER_OPTIONS = {
     ],
 };
 
-export type optionObject = typeof LINKEDIN_FILTER_OPTIONS.DATE_POSTED[number];
+export type OptionObject = typeof LINKEDIN_FILTER_OPTIONS.DATE_POSTED[number];
+
+export interface LinkedInSearchPayload {
+    datePosted: string;
+    salary: string;
+    experienceLevel: OptionObject[];
+    remote: OptionObject[];
+}

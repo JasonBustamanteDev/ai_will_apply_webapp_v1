@@ -1,17 +1,30 @@
 <script setup lang="ts">
 import { LINKEDIN_FILTER_OPTIONS } from "@/ui/search/shared/search_filter_options";
-import type { optionObject } from "@/ui/search/shared/search_filter_options";
+import type { OptionObject, LinkedInSearchPayload } from "@/ui/search/shared/search_filter_options"; // prettier-ignore
+
+const emit = defineEmits<{
+    fire_up_linkedin_search: [payload: LinkedInSearchPayload];
+}>();
 
 const datePosted = ref("anytime");
 const salary = ref("40000");
-const experienceLevel = ref([LINKEDIN_FILTER_OPTIONS.EXPERIENCE_LEVEL[1]] as optionObject[]);
-const remote = ref(LINKEDIN_FILTER_OPTIONS.REMOTE as optionObject[]);
+const remote = ref(LINKEDIN_FILTER_OPTIONS.REMOTE as OptionObject[]);
+const experienceLevel = ref([
+    LINKEDIN_FILTER_OPTIONS.EXPERIENCE_LEVEL[1],
+] as OptionObject[]);
+
+const rocketHandler = function () {
+    emit("fire_up_linkedin_search", {
+        datePosted: datePosted.value,
+        salary: salary.value,
+        experienceLevel: experienceLevel.value,
+        remote: remote.value,
+    });
+};
 </script>
 
 <template>
     <div class="filters_row">
-        <!-- This is the profile selector-->
-        <slot></slot>
         <UFormField label="Date Posted">
             <USelect
                 v-model="datePosted"
@@ -42,20 +55,21 @@ const remote = ref(LINKEDIN_FILTER_OPTIONS.REMOTE as optionObject[]);
                 class="w-full"
             />
         </UFormField>
-        
-        <!-- <UButton
-            label="Start Applying"
+
+        <UButton
+            label="Auto Apply on LinkedIn"
             color="info"
             trailing-icon="i-lucide-rocket"
             class="h-auto"
-        /> -->
+            @click="rocketHandler"
+        />
     </div>
 </template>
 
 <style lang="scss">
 .filters_row {
     display: grid;
-    grid-template-columns: 15% 15% 20% 25% auto;
+    grid-template-columns: 15% 15% 20% 22% auto;
     gap: 1rem;
     align-items: end;
 }
