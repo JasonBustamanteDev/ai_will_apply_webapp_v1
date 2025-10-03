@@ -67,7 +67,7 @@ const sendMessageToExtension = (
                         recycled: recycleFormData(coreFormData), // will use for O(1) kvp matching
                     },
                 },
-                filters: job_board_filters,
+                searchFilters: job_board_filters,
                 auth: {
                     id: get(authObject, ["user", "id"], null),
                     accessToken: `Bearer ${get(
@@ -125,6 +125,7 @@ const handleLinkedInSearch = (linkedin_filters: LinkedInSearchPayload) => {
                 @fire_up_linkedin_search="handleLinkedInSearch"
                 :profileList="completedProfileNames"
             />
+
 
             <!-- Extension not installed Modal -->
             <SharedPictureModal
