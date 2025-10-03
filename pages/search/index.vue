@@ -21,23 +21,35 @@ const isMissingExtensionModalOpen = ref(false);
 const isNotOnChromeModalOpen = ref(false);
 const isNoProfilesModalOpen = ref(false);
 
-const selectedProfileName = ref("");
+onMounted(async () => {
+    await fetchProfiles();
+});
 
-const sendAuthDataToExtension = () => {
+const completedProfileNames = computed(() =>
+    profileList.value.reduce((accumulator, currentItem) => {
+        if (currentItem.isReady) accumulator.push(currentItem.profileName);
+        return accumulator;
+    }, [] as string[])
+);
+
+const sendMessageToExtension = (
+    selectedProfileName: string,
+    job_board_filters: any
+) => {
     try {
         // If the chrome extension is not installed, open a modal which can direct users to the store page
         const isExtensionInstalled = document.documentElement.hasAttribute(
             "aiwillapply-extension-installed"
         );
-        if (isExtensionInstalled === false) {
+        if (!isExtensionInstalled) {
             isMissingExtensionModalOpen.value = true;
             return;
         }
 
+        // Check to see if the profile data is present
         const selectedProfileData = profileList.value.find((obj) => {
-            return obj.profileName === selectedProfileName.value;
+            return obj.profileName === selectedProfileName;
         });
-
         if (!selectedProfileData) return;
 
         // If the chrome extension is installed, send a message to its service worker file
@@ -49,12 +61,13 @@ const sendAuthDataToExtension = () => {
             "SHARE_PROFILE_AND_AUTH_DATA",
             {
                 activeProfile: {
-                    name: selectedProfileName.value,
+                    name: selectedProfileName,
                     data: {
                         core: coreFormData, // will show to AI
-                        recycled: recycleFormData(coreFormData), // will use for 0(1) kvp matching
+                        recycled: recycleFormData(coreFormData), // will use for O(1) kvp matching
                     },
                 },
+                filters: job_board_filters,
                 auth: {
                     id: get(authObject, ["user", "id"], null),
                     accessToken: `Bearer ${get(
@@ -96,19 +109,8 @@ const sendAuthDataToExtension = () => {
     }
 };
 
-onMounted(async () => {
-    await fetchProfiles();
-});
-
-const completedProfileNames = computed(() =>
-    profileList.value.reduce((accumulator, currentItem) => {
-        if (currentItem.isReady) accumulator.push(currentItem.profileName);
-        return accumulator;
-    }, [] as string[])
-);
-
 const handleLinkedInSearch = (linkedin_filters: LinkedInSearchPayload) => {
-    console.log(linkedin_filters);
+    sendMessageToExtension(linkedin_filters.profileName, linkedin_filters);
 };
 
 //! TODO: Not selecting a profile should render error visuals when you hit the button that sends a message
@@ -119,17 +121,9 @@ const handleLinkedInSearch = (linkedin_filters: LinkedInSearchPayload) => {
     <div>
         <SharedNavbar />
         <div class="global-layout-container">
-            <UFormField label="Applicant Profile">
-                <USelect
-                    v-model="selectedProfileName"
-                    :items="completedProfileNames"
-                    placeholder="Select profile"
-                    class="w-full"
-                />
-            </UFormField>
-
             <LinkedinSearchFilters
                 @fire_up_linkedin_search="handleLinkedInSearch"
+                :profileList="completedProfileNames"
             />
 
             <!-- Extension not installed Modal -->

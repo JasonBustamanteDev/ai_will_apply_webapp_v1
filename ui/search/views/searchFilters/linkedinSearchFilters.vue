@@ -2,10 +2,17 @@
 import { LINKEDIN_FILTER_OPTIONS } from "@/ui/search/shared/search_filter_options";
 import type { OptionObject, LinkedInSearchPayload } from "@/ui/search/shared/search_filter_options"; // prettier-ignore
 
+const props = defineProps({
+    profileList: { type: Array<string>, required: true },
+});
+
 const emit = defineEmits<{
     fire_up_linkedin_search: [payload: LinkedInSearchPayload];
 }>();
 
+const selectedProfileName = ref("");
+const jobLocation = ref("");
+const jobTitle = ref("");
 const datePosted = ref("anytime");
 const salary = ref("40000");
 const remote = ref(LINKEDIN_FILTER_OPTIONS.REMOTE as OptionObject[]);
@@ -15,6 +22,9 @@ const experienceLevel = ref([
 
 const rocketHandler = function () {
     emit("fire_up_linkedin_search", {
+        profileName: selectedProfileName.value,
+        jobLocation: jobLocation.value,
+        jobTitle: jobTitle.value,
         datePosted: datePosted.value,
         salary: salary.value,
         experienceLevel: experienceLevel.value,
@@ -24,7 +34,26 @@ const rocketHandler = function () {
 </script>
 
 <template>
-    <div class="filters_row">
+    <div class="filters_row_1">
+        <UFormField label="Job Title">
+            <UInput v-model="jobTitle" class="w-full" />
+        </UFormField>
+
+        <UFormField label="Job Location">
+            <UInput v-model="jobLocation" class="w-full" />
+        </UFormField>
+
+        <UFormField label="Applicant Profile">
+            <USelect
+                v-model="selectedProfileName"
+                :items="props.profileList"
+                placeholder="Select profile"
+                class="w-full"
+            />
+        </UFormField>
+    </div>
+
+    <div class="filters_row_2">
         <UFormField label="Date Posted">
             <USelect
                 v-model="datePosted"
@@ -55,22 +84,31 @@ const rocketHandler = function () {
                 class="w-full"
             />
         </UFormField>
-
-        <UButton
-            label="Auto Apply on LinkedIn"
-            color="info"
-            trailing-icon="i-lucide-rocket"
-            class="h-auto"
-            @click="rocketHandler"
-        />
     </div>
+
+    <UButton
+        label="Auto Apply on LinkedIn"
+        color="info"
+        trailing-icon="i-lucide-rocket"
+        @click="rocketHandler"
+        class="w-full justify-center cursor-pointer"
+    />
 </template>
 
 <style lang="scss">
-.filters_row {
+.filters_row_1 {
     display: grid;
-    grid-template-columns: 15% 15% 20% 22% auto;
+    grid-template-columns: 25% 25% auto;
     gap: 1rem;
     align-items: end;
+    margin-bottom: 2rem;
+}
+
+.filters_row_2 {
+    display: grid;
+    grid-template-columns: auto repeat(3, 25%);
+    gap: 1rem;
+    align-items: end;
+    margin-bottom: 2rem;
 }
 </style>
