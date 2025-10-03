@@ -153,7 +153,7 @@ const preferenceRawData = computed(() => {
             </CollapseComponent>
 
             <CollapseComponent
-                title="Location"
+                title="Your Location"
                 :checkboxId="COLLAPSE_NAMES.LOCATION"
                 :isComplete="locationRawData.isComplete"
                 :isOptional="!PROFILE_REQUIREMENTS.LOCATION"
