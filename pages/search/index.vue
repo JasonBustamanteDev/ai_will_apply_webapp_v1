@@ -3,6 +3,7 @@ import { useFetchAllProfiles } from "~/shared/composables/useFetchAllProfiles";
 import { flattenFormData, formatMessageForExtension, recycleFormData } from "~/ui/search/shared/message_utils"; // prettier-ignore
 import ExtensionNotInstalledModal from "~/ui/search/views/extensionNotInstalledModal.vue";
 import DownloadChromeModal from "~/ui/search/views/downloadChromeModal.vue";
+import LinkedinSearchFilters from "~/ui/search/views/searchFilters/linkedinSearchFilters.vue";
 import { get } from "lodash";
 
 definePageMeta({
@@ -116,6 +117,10 @@ const completedProfileNames = computed(() =>
                 FUTURE CONTENT: All the supported platforms and prefilled
                 filters
             </p>
+
+            <LinkedinSearchFilters/>
+
+            <p> ---------------------------- </p>
             <USelect
                 v-model="selectedProfileName"
                 :items="completedProfileNames"
