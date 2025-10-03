@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { useFetchAllProfiles } from "~/shared/composables/useFetchAllProfiles";
 import { flattenFormData, formatMessageForExtension, recycleFormData } from "~/ui/search/shared/message_utils"; // prettier-ignore
-import ExtensionNotInstalledModal from "~/ui/search/views/extensionNotInstalledModal.vue";
-import DownloadChromeModal from "~/ui/search/views/downloadChromeModal.vue";
+import ExtensionNotInstalledModal from "~/ui/search/views/modals/extensionNotInstalled.vue";
+import DownloadChromeModal from "~/ui/search/views/modals/downloadChrome.vue";
+import NoProfilesModal from "~/ui/search/views/modals/noProfiles.vue";
 import LinkedinSearchFilters from "~/ui/search/views/searchFilters/linkedinSearchFilters.vue";
 import { get } from "lodash";
 
@@ -17,6 +18,9 @@ const { profileList, fetchProfiles, showErrorToast } = useFetchAllProfiles();
 
 const isMissingExtensionModalOpen = ref(false);
 const isNotOnChromeModalOpen = ref(false);
+const isNoProfilesModalOpen = ref(false);
+
+
 const selectedProfileName = ref("");
 
 const sendAuthDataToExtension = () => {
@@ -113,28 +117,29 @@ const completedProfileNames = computed(() =>
     <div>
         <SharedNavbar />
         <div class="global-layout-container">
-            <p class="pb-8">
-                FUTURE CONTENT: All the supported platforms and prefilled
-                filters
-            </p>
+            <LinkedinSearchFilters>
+                <UFormField label="Applicant Profile">
+                    <USelect
+                        v-model="selectedProfileName"
+                        :items="completedProfileNames"
+                        placeholder="Select profile"
+                        class="w-full"
+                    />
+                </UFormField>
+            </LinkedinSearchFilters>
 
-            <LinkedinSearchFilters/>
-
-            <p> ---------------------------- </p>
-            <USelect
-                v-model="selectedProfileName"
-                :items="completedProfileNames"
-                placeholder="Select profile"
-                class="w-full"
-            />
-            <br class="mt-4" />
-            <UButton @click="sendAuthDataToExtension"
-                >FIRE MESSAGE TO EXT</UButton
+            <UButton
+                @click="sendAuthDataToExtension"
+                color="secondary"
+                trailingIcon="heroicons:rocket-launch-16-solid"
+                class="mt-4"
+                >Auto apply to jobs on LinkedIn</UButton
             >
             <ExtensionNotInstalledModal
                 v-model:isModalOpen="isMissingExtensionModalOpen"
             />
             <DownloadChromeModal v-model:isModalOpen="isNotOnChromeModalOpen" />
+            <NoProfilesModal v-model:isModalOpen="isNoProfilesModalOpen" />
         </div>
     </div>
 </template>

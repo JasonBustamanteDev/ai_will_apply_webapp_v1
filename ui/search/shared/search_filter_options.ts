@@ -40,3 +40,5 @@ export const LINKEDIN_FILTER_OPTIONS = {
         { label: "Other", value: "other" },
     ],
 };
+
+export type optionObject = typeof LINKEDIN_FILTER_OPTIONS.DATE_POSTED[number];
