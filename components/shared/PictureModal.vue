@@ -1,7 +1,6 @@
 <script setup>
 const props = defineProps({
     isModalOpen: { type: Boolean },
-
     title: { type: String, required: true },
     description: { type: String, required: true },
     redirectUrl: { type: String, required: true },
@@ -15,6 +14,10 @@ const isOpen = computed({
     get: () => props.isModalOpen,
     set: (value) => emit("update:isModalOpen", value),
 });
+
+const visitUrlInNewWindow = () => {
+    window.open(props.redirectUrl, "_blank");
+};
 </script>
 
 <template>
@@ -33,7 +36,11 @@ const isOpen = computed({
                 class="text-blue-500"
                 >{{ props.anchorText }}</a
             >
-            <NuxtImg :src="props.pathToImage" class="w-200px mt-4" />
+            <NuxtImg
+                :src="props.pathToImage"
+                class="w-200px mt-4 cursor-pointer"
+                @click="visitUrlInNewWindow"
+            />
         </template>
 
         <template #footer="{ close }">

@@ -17,7 +17,7 @@ const profilesUrl = `${env_config.public.BASE_URL}/profiles`;
 const { profileList, fetchProfiles, showErrorToast } = useFetchAllProfiles();
 
 const isMissingExtensionModalOpen = ref(false);
-const isNotOnChromeModalOpen = ref(true);
+const isNotOnChromeModalOpen = ref(false);
 const isNoProfilesModalOpen = ref(false);
 
 const selectedProfileName = ref("");
@@ -96,11 +96,6 @@ onMounted(async () => {
     await fetchProfiles();
 });
 
-const completedProfilesCount = computed(() =>
-    profileList.value.reduce((accumulator, currentItem) => {
-        return accumulator + (currentItem.isReady ? 1 : 0);
-    }, 0)
-);
 const completedProfileNames = computed(() =>
     profileList.value.reduce((accumulator, currentItem) => {
         if (currentItem.isReady) accumulator.push(currentItem.profileName);
@@ -109,7 +104,7 @@ const completedProfileNames = computed(() =>
 );
 
 //! TODO: Not selecting a profile should render error visuals when you hit the button that sends a message
-//! TODO If no profiles are present, render a button that redirects to the profile page (instead of showing the page. Or disable everything)
+//! TODO If no profiles are present, render some error text and an anchor, plus disable the fire button and form
 </script>
 
 <template>
