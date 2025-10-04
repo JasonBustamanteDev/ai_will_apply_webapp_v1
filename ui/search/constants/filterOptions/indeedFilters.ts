@@ -1,3 +1,5 @@
+// FUTURE FEATURE: Indeed pay filter is dynamic. If you put "engineer" vs "cashier", the salary numbers are wildly different
+// Need an additional step if you want to apply this filter ()
 export const INDEED_FILTER_OPTIONS = {
     REMOTE: [
         { label: "All jobs", value: "all" },
@@ -5,15 +7,15 @@ export const INDEED_FILTER_OPTIONS = {
         { label: "Remote", value: "remote" },
     ],
     DATE_POSTED: [
-        { label: "Jobs you haven't seen", value: "unseen" },
+        { label: "Any", value: "any" }, // UNOFFICIAL OPTION (means do not apply filter)
+        { label: "Jobs you haven't seen", value: "unseen" }, // doesn't always show for some reason
         { label: "Last 24 hours", value: "last_24_hours" },
         { label: "Last 3 days", value: "last_3_days" },
         { label: "Last 7 days", value: "last_7_days" },
         { label: "Last 14 days", value: "last_14_days" },
     ],
-    // FUTURE FEATURE: Indeed pay filter is dynamic. If you put "engineer" vs "cashier", the salary numbers are wildly different
-    // Need an additional step if you want to apply this filter ()
     JOB_TYPE: [
+        { label: "Any", value: "any" }, // UNOFFICIAL OPTION (means do not apply filter)
         { label: "Full-time", value: "full_time" },
         { label: "Permanent", value: "permanent" },
         { label: "Temporary", value: "temporary" },
@@ -25,6 +27,7 @@ export const INDEED_FILTER_OPTIONS = {
     ],
     DISTANCE: [
         // Does not always appear on page for some reason
+        // We make this filter mandatory since the site seems to always apply one
         { label: "Exact location only", value: "exact" },
         { label: "Within 5 kilometres", value: "5" },
         { label: "Within 10 kilometres", value: "10" },
@@ -39,9 +42,9 @@ export const INDEED_FILTER_OPTIONS = {
 export type OptionObject = (typeof INDEED_FILTER_OPTIONS.DATE_POSTED)[number];
 
 export interface IndeedSearchPayload {
-    profileName: string;
     role: string;
     jobLocation: string;
+    profileName: string;
 
     datePosted: string;
     remote: string;

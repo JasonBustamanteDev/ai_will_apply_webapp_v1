@@ -4,7 +4,8 @@ import { flattenFormData, formatMessageForExtension, recycleFormData } from "~/u
 import LinkedinSearchFilters from "~/ui/search/views/searchFilters/linkedinSearchFilters.vue";
 import IndeedSearchFilters from "~/ui/search/views/searchFilters/indeedSearchFilters.vue";
 import { get } from "lodash";
-import type { OptionObject, LinkedInSearchPayload } from "~/ui/search/constants/filterOptions/linkedinFilters"; // prettier-ignore
+import type { LinkedInSearchPayload } from "~/ui/search/constants/filterOptions/linkedinFilters"; // prettier-ignore
+import type { IndeedSearchPayload } from "~/ui/search/constants/filterOptions/indeedFilters"; // prettier-ignore
 
 definePageMeta({
     middleware: ["redirect-if-no-auth-session-client"],
@@ -114,6 +115,10 @@ const handleLinkedInSearch = (linkedin_filters: LinkedInSearchPayload) => {
     sendMessageToExtension(linkedin_filters.profileName, linkedin_filters);
 };
 
+const handleIndeedSearch = (indeed_filters: IndeedSearchPayload) => {
+    sendMessageToExtension(indeed_filters.profileName, indeed_filters);
+};
+
 //! TODO: Not selecting a profile should render error visuals when you hit the button that sends a message
 //! TODO If no profiles are present, render some error text and an anchor, plus disable the fire button and form
 </script>
@@ -127,7 +132,7 @@ const handleLinkedInSearch = (linkedin_filters: LinkedInSearchPayload) => {
                 :profileList="completedProfileNames"
             />
             <IndeedSearchFilters
-                @fire_up_linkedin_search="handleLinkedInSearch"
+                @fire_up_indeed_search="handleIndeedSearch"
                 :profileList="completedProfileNames"
             />
 

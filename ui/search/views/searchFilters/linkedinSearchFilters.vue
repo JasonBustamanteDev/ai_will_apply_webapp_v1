@@ -16,10 +16,10 @@ const jobLocation = ref("");
 const role = ref("");
 
 const datePosted = ref("anytime");
-const salary = ref("40000");
-const remote = ref(LINKEDIN_FILTER_OPTIONS.REMOTE as OptionObject[]);
+const salary = ref("any");
+const remote = ref([LINKEDIN_FILTER_OPTIONS.REMOTE[0]] as OptionObject[]);
 const experienceLevel = ref([
-    LINKEDIN_FILTER_OPTIONS.EXPERIENCE_LEVEL[1],
+    LINKEDIN_FILTER_OPTIONS.EXPERIENCE_LEVEL[0],
 ] as OptionObject[]);
 
 const rocketHandler = function () {

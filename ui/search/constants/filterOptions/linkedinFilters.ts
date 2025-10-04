@@ -6,6 +6,7 @@ export const LINKEDIN_FILTER_OPTIONS = {
         { label: "Past 24 hours", value: "past_24_hours" },
     ],
     EXPERIENCE_LEVEL: [
+        { label: "Any", value: "any" }, // UNOFFICIAL OPTION (means do not apply filter)
         { label: "Internship", value: "internship" },
         { label: "Entry level", value: "entry_level" },
         { label: "Associate", value: "associate" },
@@ -14,6 +15,7 @@ export const LINKEDIN_FILTER_OPTIONS = {
         { label: "Executive", value: "executive" },
     ],
     SALARY: [
+        { label: "Any", value: "any" }, // UNOFFICIAL OPTION (means do not apply filter)
         { label: "$40,000+", value: "40000" },
         { label: "$60,000+", value: "60000" },
         { label: "$80,000+", value: "80000" },
@@ -25,12 +27,14 @@ export const LINKEDIN_FILTER_OPTIONS = {
         { label: "$200,000+", value: "200000" },
     ],
     REMOTE: [
+        { label: "Any", value: "any" }, // UNOFFICIAL OPTION (means do not apply filter)
         { label: "Remote", value: "remote" },
         { label: "On-site", value: "on_site" },
         { label: "Hybrid", value: "hybrid" },
     ],
     JOB_TYPE: [
         // Only appears in all filters panel
+        { label: "Any", value: "any" }, // UNOFFICIAL OPTION (means do not apply filter in extension)
         { label: "Full-time", value: "full_time" },
         { label: "Part-time", value: "part_time" },
         { label: "Contract", value: "contract" },
@@ -44,9 +48,10 @@ export const LINKEDIN_FILTER_OPTIONS = {
 export type OptionObject = (typeof LINKEDIN_FILTER_OPTIONS.DATE_POSTED)[number];
 
 export interface LinkedInSearchPayload {
-    profileName: string;
     role: string;
     jobLocation: string;
+    profileName: string;
+
     datePosted: string;
     salary: string;
     experienceLevel: OptionObject[];

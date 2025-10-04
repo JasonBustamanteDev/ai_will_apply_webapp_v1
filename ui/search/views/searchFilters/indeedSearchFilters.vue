@@ -15,7 +15,7 @@ const selectedProfileName = ref("");
 const role = ref("");
 const jobLocation = ref("");
 
-const datePosted = ref("");
+const datePosted = ref("any");
 const remote = ref("all");
 const distance = ref("100");
 const jobType = ref([INDEED_FILTER_OPTIONS.JOB_TYPE[0]] as OptionObject[]);
