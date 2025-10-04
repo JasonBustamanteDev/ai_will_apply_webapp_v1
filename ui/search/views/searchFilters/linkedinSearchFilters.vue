@@ -14,6 +14,7 @@ const emit = defineEmits<{
 const selectedProfileName = ref("");
 const jobLocation = ref("");
 const role = ref("");
+
 const datePosted = ref("anytime");
 const salary = ref("40000");
 const remote = ref(LINKEDIN_FILTER_OPTIONS.REMOTE as OptionObject[]);

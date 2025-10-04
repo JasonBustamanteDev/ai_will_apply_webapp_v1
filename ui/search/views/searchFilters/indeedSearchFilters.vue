@@ -1,37 +1,37 @@
 <script setup lang="ts">
-import { LINKEDIN_FILTER_OPTIONS } from "~/ui/search/constants/filterOptions/linkedinFilters";
+import { INDEED_FILTER_OPTIONS } from "~/ui/search/constants/filterOptions/indeedFilters";
 import JobBoardBanner from "@/ui/search/shared/jobBoardBanner.vue";
-import type { OptionObject, LinkedInSearchPayload } from "~/ui/search/constants/filterOptions/linkedinFilters"; // prettier-ignore
+import type { IndeedSearchPayload, OptionObject } from "~/ui/search/constants/filterOptions/indeedFilters"; // prettier-ignore
 
 const props = defineProps({
     profileList: { type: Array<string>, required: true },
 });
 
 const emit = defineEmits<{
-    fire_up_linkedin_search: [payload: LinkedInSearchPayload];
+    fire_up_indeed_search: [payload: IndeedSearchPayload];
 }>();
 
 const selectedProfileName = ref("");
+const role = ref("");
 const jobLocation = ref("");
-const jobTitle = ref("");
-const datePosted = ref("anytime");
-const salary = ref("40000");
-const remote = ref(LINKEDIN_FILTER_OPTIONS.REMOTE as OptionObject[]);
-const experienceLevel = ref([
-    LINKEDIN_FILTER_OPTIONS.EXPERIENCE_LEVEL[1],
-] as OptionObject[]);
 
-const indeedThemeColor = "#e58f78"
+const datePosted = ref("");
+const remote = ref("all");
+const distance = ref("100");
+const jobType = ref([INDEED_FILTER_OPTIONS.JOB_TYPE[0]] as OptionObject[]);
+
+const indeedThemeColor = "#e58f78";
 
 const rocketHandler = function () {
-    emit("fire_up_linkedin_search", {
+    emit("fire_up_indeed_search", {
         profileName: selectedProfileName.value,
         jobLocation: jobLocation.value,
-        jobTitle: jobTitle.value,
+        role: role.value,
+
         datePosted: datePosted.value,
-        salary: salary.value,
-        experienceLevel: experienceLevel.value,
         remote: remote.value,
+        distance: distance.value,
+        jobType: jobType.value,
     });
 };
 </script>
@@ -40,8 +40,8 @@ const rocketHandler = function () {
     <JobBoardBanner title="Indeed Auto Apply" :bgColor="indeedThemeColor" />
 
     <div class="filters_row_1">
-        <UFormField label="Job Title">
-            <UInput v-model="jobTitle" class="w-full" />
+        <UFormField label="Role">
+            <UInput v-model="role" class="w-full" />
         </UFormField>
 
         <UFormField label="Job Location">
@@ -62,30 +62,29 @@ const rocketHandler = function () {
         <UFormField label="Date Posted">
             <USelect
                 v-model="datePosted"
-                :items="LINKEDIN_FILTER_OPTIONS.DATE_POSTED"
-                class="w-full"
-            />
-        </UFormField>
-        <UFormField label="Salary">
-            <USelect
-                v-model="salary"
-                :items="LINKEDIN_FILTER_OPTIONS.SALARY"
-                class="w-full"
-            />
-        </UFormField>
-        <UFormField label="Experience Level">
-            <USelectMenu
-                v-model="experienceLevel"
-                multiple
-                :items="LINKEDIN_FILTER_OPTIONS.EXPERIENCE_LEVEL"
+                :items="INDEED_FILTER_OPTIONS.DATE_POSTED"
                 class="w-full"
             />
         </UFormField>
         <UFormField label="Remote / Onsite">
-            <USelectMenu
+            <USelect
                 v-model="remote"
+                :items="INDEED_FILTER_OPTIONS.REMOTE"
+                class="w-full"
+            />
+        </UFormField>
+        <UFormField label="Distance">
+            <USelect
+                v-model="distance"
+                :items="INDEED_FILTER_OPTIONS.DISTANCE"
+                class="w-full"
+            />
+        </UFormField>
+        <UFormField label="Job Type">
+            <USelectMenu
+                v-model="jobType"
                 multiple
-                :items="LINKEDIN_FILTER_OPTIONS.REMOTE"
+                :items="INDEED_FILTER_OPTIONS.JOB_TYPE"
                 class="w-full"
             />
         </UFormField>

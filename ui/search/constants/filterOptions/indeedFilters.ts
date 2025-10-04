@@ -1,4 +1,4 @@
-export const LINKEDIN_FILTER_OPTIONS = {
+export const INDEED_FILTER_OPTIONS = {
     REMOTE: [
         { label: "All jobs", value: "all" },
         { label: "Hybrid work", value: "hybrid" },
@@ -11,14 +11,8 @@ export const LINKEDIN_FILTER_OPTIONS = {
         { label: "Last 7 days", value: "last_7_days" },
         { label: "Last 14 days", value: "last_14_days" },
     ],
-    PAY: [
-        { label: "All Salaries", value: "all" },
-        { label: "$80,000+", value: "80000" },
-        { label: "$100,000+", value: "100000" },
-        { label: "$120,000+", value: "120000" },
-        { label: "$140,000+", value: "140000" },
-        { label: "$160,000+", value: "160000" },
-    ],
+    // FUTURE FEATURE: Indeed pay filter is dynamic. If you put "engineer" vs "cashier", the salary numbers are wildly different
+    // Need an additional step if you want to apply this filter ()
     JOB_TYPE: [
         { label: "Full-time", value: "full_time" },
         { label: "Permanent", value: "permanent" },
@@ -41,3 +35,16 @@ export const LINKEDIN_FILTER_OPTIONS = {
         { label: "Within 100 kilometres", value: "100" },
     ],
 };
+
+export type OptionObject = (typeof INDEED_FILTER_OPTIONS.DATE_POSTED)[number];
+
+export interface IndeedSearchPayload {
+    profileName: string;
+    role: string;
+    jobLocation: string;
+
+    datePosted: string;
+    remote: string;
+    distance: string;
+    jobType: OptionObject[];
+}
