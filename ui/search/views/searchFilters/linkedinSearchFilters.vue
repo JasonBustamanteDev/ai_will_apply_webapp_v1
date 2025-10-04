@@ -15,8 +15,8 @@ const selectedProfileName = ref("");
 const jobLocation = ref("");
 const role = ref("");
 
-const datePosted = ref("anytime");
-const salary = ref("any");
+const datePosted = ref(LINKEDIN_FILTER_OPTIONS.DATE_POSTED[0]?.value as string);
+const salary = ref(LINKEDIN_FILTER_OPTIONS.SALARY[0]?.value as string);
 const remote = ref([LINKEDIN_FILTER_OPTIONS.REMOTE[0]] as OptionObject[]);
 const experienceLevel = ref([
     LINKEDIN_FILTER_OPTIONS.EXPERIENCE_LEVEL[0],
