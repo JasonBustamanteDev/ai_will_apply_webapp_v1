@@ -11,7 +11,7 @@ const props = defineProps({
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
     >
-        <circle cx="12" cy="6" r="2" :fill="props.bgColor" />
+        <circle cx="12" cy="6" r="2" fill="#2557A7" />
         <rect x="10" y="10" width="4" height="10" rx="1" fill="#2557A7" />
     </svg>
 </template>
