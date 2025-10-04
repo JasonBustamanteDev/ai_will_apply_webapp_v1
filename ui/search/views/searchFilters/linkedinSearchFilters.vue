@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { LINKEDIN_FILTER_OPTIONS } from "~/ui/search/constants/filterOptions/linkedinFilters";
 import JobBoardBanner from "@/ui/search/shared/jobBoardBanner.vue";
+import LinkedinSvg from "../../shared/linkedinSvg.vue";
 import type { OptionObject, LinkedInSearchPayload } from "~/ui/search/constants/filterOptions/linkedinFilters"; // prettier-ignore
 
 const props = defineProps({
@@ -37,7 +38,9 @@ const rocketHandler = function () {
 
 <template>
     <section class="mb-16">
-        <JobBoardBanner title="LinkedIn Auto Apply" bgColor="#2596be" />
+        <JobBoardBanner title="LinkedIn Auto Apply" bgColor="#2596be" >
+            <LinkedinSvg bgColor="#2596be" />
+        </JobBoardBanner>
         <div class="filters_row_1">
             <UFormField label="Role">
                 <UInput v-model="role" class="w-full" />

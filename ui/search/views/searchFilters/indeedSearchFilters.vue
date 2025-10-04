@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { INDEED_FILTER_OPTIONS } from "~/ui/search/constants/filterOptions/indeedFilters";
 import JobBoardBanner from "@/ui/search/shared/jobBoardBanner.vue";
+import IndeedSvg from "../../shared/indeedSvg.vue";
 import type { IndeedSearchPayload, OptionObject } from "~/ui/search/constants/filterOptions/indeedFilters"; // prettier-ignore
 
 const props = defineProps({
@@ -39,7 +40,9 @@ const rocketHandler = function () {
 </script>
 
 <template>
-    <JobBoardBanner title="Indeed Auto Apply" :bgColor="indeedThemeColor" />
+    <JobBoardBanner title="Indeed Auto Apply" :bgColor="indeedThemeColor">
+        <IndeedSvg :bgColor="indeedThemeColor" />
+    </JobBoardBanner>
 
     <div class="filters_row_1">
         <UFormField label="Role">
