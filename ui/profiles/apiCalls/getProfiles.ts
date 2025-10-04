@@ -1,5 +1,5 @@
 import { getAuthSessionFromLocalStorage } from "~/shared/client_helpers";
-import { calculateProfileKpi } from "../shared/profileKpi";
+import { calculateProfileKpi } from "../constants/profileKpi";
 
 export const getProfiles = async (supabaseProjectUrl: string) => {
     const session = await getAuthSessionFromLocalStorage(supabaseProjectUrl);

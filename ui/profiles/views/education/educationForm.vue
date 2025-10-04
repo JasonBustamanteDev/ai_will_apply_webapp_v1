@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { educationSchema } from "../formValidation";
-import { booleanOptions, radioStyleObject } from "~/ui/profiles/shared/constants.js"; // prettier-ignore
+import { booleanOptions, radioStyleObject } from "~/ui/profiles/constants/constants.js"; // prettier-ignore
 import { updateProfile } from "~/ui/profiles/apiCalls/updateProfile.js";
 import { useCustomToast } from "~/pinia_stores/toast";
 import type { EducationRaw } from "~/types/forms/education";

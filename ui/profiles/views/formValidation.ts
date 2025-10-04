@@ -3,7 +3,7 @@ import { emptyOrMinLengthStringAccepted, verifyMinStringLength, cleanPhoneNumber
 import { genders, ethnicGroups, educationLevels } from "~/ui/profiles/views/personalDetails/personalDetailsForm.js"; // prettier-ignore
 import { countriesList } from "./location/countries";
 import { usaDict, canadaDict } from "./location/provinces";
-import { isValidProfileName } from "../shared/constants";
+import { isValidProfileName } from "../constants/constants";
 import { isValidNumericString } from "~/shared/client_helpers";
 import type { NullableLanguageList } from "~/types/forms/languages";
 import type { NullableWorkExperienceList } from "~/types/forms/workExperience"; // prettier-ignore

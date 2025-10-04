@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { genders, ethnicGroups, educationLevels } from "~/ui/profiles/views/personalDetails/personalDetailsForm.js"; // prettier-ignore
-import { booleanPlusEmptyOptions } from "~/ui/profiles/shared/constants.js";
+import { booleanPlusEmptyOptions } from "~/ui/profiles/constants/constants.js";
 import { personalDetailsSchema } from "../formValidation.js";
 import { updateProfile } from "~/ui/profiles/apiCalls/updateProfile.js";
 import { useCustomToast } from "~/pinia_stores/toast";
