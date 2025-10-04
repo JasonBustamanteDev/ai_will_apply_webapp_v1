@@ -15,9 +15,11 @@ const selectedProfileName = ref("");
 const role = ref("");
 const jobLocation = ref("");
 
-const datePosted = ref("any");
-const remote = ref("all");
-const distance = ref("100");
+const datePosted = ref(INDEED_FILTER_OPTIONS.DATE_POSTED[0]?.value as string);
+const remote = ref(INDEED_FILTER_OPTIONS.REMOTE[0]?.value as string);
+const distance = ref(
+    (INDEED_FILTER_OPTIONS.DISTANCE.at(-1)?.value || "") as string
+);
 const jobType = ref([INDEED_FILTER_OPTIONS.JOB_TYPE[0]] as OptionObject[]);
 
 const indeedThemeColor = "#e58f78";

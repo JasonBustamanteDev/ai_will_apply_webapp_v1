@@ -8,7 +8,7 @@ export const INDEED_FILTER_OPTIONS = {
     ],
     DATE_POSTED: [
         { label: "Any", value: "any" }, // UNOFFICIAL OPTION (means do not apply filter)
-        { label: "Jobs you haven't seen", value: "unseen" }, // doesn't always show for some reason
+        { label: "Unseen jobs", value: "unseen" }, // doesn't always show for some reason
         { label: "Last 24 hours", value: "last_24_hours" },
         { label: "Last 3 days", value: "last_3_days" },
         { label: "Last 7 days", value: "last_7_days" },
