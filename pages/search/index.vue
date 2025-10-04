@@ -126,7 +126,10 @@ const handleLinkedInSearch = (linkedin_filters: LinkedInSearchPayload) => {
                 @fire_up_linkedin_search="handleLinkedInSearch"
                 :profileList="completedProfileNames"
             />
-
+            <IndeedSearchFilters
+                @fire_up_linkedin_search="handleLinkedInSearch"
+                :profileList="completedProfileNames"
+            />
 
             <!-- Extension not installed Modal -->
             <SharedPictureModal

@@ -45,7 +45,7 @@ export type OptionObject = (typeof LINKEDIN_FILTER_OPTIONS.DATE_POSTED)[number];
 
 export interface LinkedInSearchPayload {
     profileName: string;
-    jobTitle: string;
+    role: string;
     jobLocation: string;
     datePosted: string;
     salary: string;

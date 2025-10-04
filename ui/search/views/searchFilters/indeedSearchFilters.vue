@@ -21,6 +21,8 @@ const experienceLevel = ref([
     LINKEDIN_FILTER_OPTIONS.EXPERIENCE_LEVEL[1],
 ] as OptionObject[]);
 
+const indeedThemeColor = "#e58f78"
+
 const rocketHandler = function () {
     emit("fire_up_linkedin_search", {
         profileName: selectedProfileName.value,
@@ -35,7 +37,7 @@ const rocketHandler = function () {
 </script>
 
 <template>
-    <JobBoardBanner title="LinkedIn Auto Apply" bgColor="#2596be" />
+    <JobBoardBanner title="Indeed Auto Apply" :bgColor="indeedThemeColor" />
 
     <div class="filters_row_1">
         <UFormField label="Job Title">
@@ -94,7 +96,7 @@ const rocketHandler = function () {
         color="info"
         trailing-icon="i-lucide-rocket"
         @click="rocketHandler"
-        class="w-full justify-center cursor-pointer bg-[#2596be] hover:!bg-[#1e7a9a]"
+        class="w-full justify-center cursor-pointer bg-[#e58f78] hover:!bg-[#e58f78]"
     />
 </template>
 

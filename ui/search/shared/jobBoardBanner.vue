@@ -4,15 +4,15 @@ const props = defineProps({
     bgColor: { type: String, required: true },
 });
 </script>
-
 <template>
-    <header :class="`bg-[${props.bgColor}] rounded-lg`">
+    <header :style="{ backgroundColor: props.bgColor }" class="rounded-lg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 mb-10">
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-4">
                     <div class="bg-white rounded-lg p-2 shadow-md">
                         <svg
-                            :class="`w-8 h-8 text-[${props.bgColor}]`"
+                            :style="{ color: props.bgColor }"
+                            class="w-8 h-8"
                             fill="currentColor"
                             viewBox="0 0 24 24"
                         >
@@ -40,5 +40,3 @@ const props = defineProps({
         </div>
     </header>
 </template>
-
-<style lang="scss"></style>
