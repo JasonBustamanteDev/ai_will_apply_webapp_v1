@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { useFetchAllProfiles } from "~/shared/composables/useFetchAllProfiles";
-import { flattenFormData, formatMessageForExtension, recycleFormData } from "~/ui/search/shared/message_utils"; // prettier-ignore
+import { flattenFormData, formatMessageForExtension, recycleFormData } from "~/ui/search/constants/message_utils"; // prettier-ignore
 import LinkedinSearchFilters from "~/ui/search/views/searchFilters/linkedinSearchFilters.vue";
 import IndeedSearchFilters from "~/ui/search/views/searchFilters/indeedSearchFilters.vue";
 import { get } from "lodash";
-import type { OptionObject, LinkedInSearchPayload } from "@/ui/search/shared/search_filter_options"; // prettier-ignore
+import type { OptionObject, LinkedInSearchPayload } from "~/ui/search/constants/filterOptions/linkedinFilters"; // prettier-ignore
 
 definePageMeta({
     middleware: ["redirect-if-no-auth-session-client"],

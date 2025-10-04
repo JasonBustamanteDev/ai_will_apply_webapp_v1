@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { LINKEDIN_FILTER_OPTIONS } from "@/ui/search/shared/search_filter_options";
+import { LINKEDIN_FILTER_OPTIONS } from "~/ui/search/constants/filterOptions/linkedinFilters";
 import JobBoardBanner from "@/ui/search/shared/jobBoardBanner.vue";
-import type { OptionObject, LinkedInSearchPayload } from "@/ui/search/shared/search_filter_options"; // prettier-ignore
+import type { OptionObject, LinkedInSearchPayload } from "~/ui/search/constants/filterOptions/linkedinFilters"; // prettier-ignore
 
 const props = defineProps({
     profileList: { type: Array<string>, required: true },

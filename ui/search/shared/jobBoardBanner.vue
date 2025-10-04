@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const props = defineProps({
     title: { type: String, required: true },
-    bgColor: { type: String, required: true }, // #2596be
+    bgColor: { type: String, required: true },
 });
 </script>
 
