@@ -3,6 +3,8 @@ import { LINKEDIN_FILTER_OPTIONS } from "~/ui/search/constants/filterOptions/lin
 import JobBoardBanner from "@/ui/search/shared/jobBoardBanner.vue";
 import LinkedinSvg from "../../shared/linkedinSvg.vue";
 import type { OptionObject, LinkedInSearchPayload } from "~/ui/search/constants/filterOptions/linkedinFilters"; // prettier-ignore
+import { verifyMinStringLength} from "~/shared/client_helpers"; // prettier-ignore
+import { cond } from "lodash";
 
 const props = defineProps({
     profileList: { type: Array<string>, required: true },
@@ -34,11 +36,24 @@ const rocketHandler = function () {
         remote: remote.value,
     });
 };
+
+const isReadyToSubmit = computed(() => {
+    const conditions = [
+        verifyMinStringLength(role.value, 1),
+        verifyMinStringLength(jobLocation.value, 1),
+        selectedProfileName.value,
+        datePosted.value,
+        salary.value,
+        remote.value,
+        experienceLevel.value,
+    ];
+    return !conditions.some((element) => !element); // any falsys means the config is not fully filled out
+});
 </script>
 
 <template>
     <section class="mb-16">
-        <JobBoardBanner title="LinkedIn Auto Apply" bgColor="#2596be" >
+        <JobBoardBanner title="LinkedIn Auto Apply" bgColor="#2596be">
             <LinkedinSvg bgColor="#2596be" />
         </JobBoardBanner>
         <div class="filters_row_1">
@@ -94,6 +109,7 @@ const rocketHandler = function () {
             color="info"
             trailing-icon="i-lucide-rocket"
             @click="rocketHandler"
+            disabled
             class="w-full justify-center cursor-pointer bg-[#2596be] hover:!bg-[#1e7a9a]"
         />
     </section>
