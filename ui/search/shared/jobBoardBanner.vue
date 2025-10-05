@@ -6,7 +6,7 @@ const props = defineProps({
 </script>
 <template>
     <header :style="{ backgroundColor: props.bgColor }" class="rounded-lg">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 mb-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 mb-5">
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-4">
                     <div class="bg-white rounded-lg p-2 shadow-md">
