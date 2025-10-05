@@ -141,6 +141,7 @@ const handleIndeedSearch = (indeed_filters: IndeedSearchPayload) => {
             <!-- Extension not installed Modal -->
             <SharedPictureModal
                 v-model:isModalOpen="isMissingExtensionModalOpen"
+                :openUrlInNewTab="true"
                 title="Install our 'AI will Apply' extension first"
                 description="Once you install the extension, reload this page and try again"
                 anchorText="Click here to visit our Google Chrome store page"
@@ -151,6 +152,7 @@ const handleIndeedSearch = (indeed_filters: IndeedSearchPayload) => {
             <!-- Download Chrome Modal -->
             <SharedPictureModal
                 v-model:isModalOpen="isNotOnChromeModalOpen"
+                :openUrlInNewTab="false"
                 title="This product only works on Google Chrome"
                 description="Once you install the Google Chrome, visit this website again on that browser"
                 anchorText="Click here to download chrome"
@@ -161,6 +163,7 @@ const handleIndeedSearch = (indeed_filters: IndeedSearchPayload) => {
             <!-- No Profiles Found Modal -->
             <SharedPictureModal
                 v-model:isModalOpen="isNoProfilesModalOpen"
+                :openUrlInNewTab="false"
                 title="Make at least 1 Applicant Profile to start your job hunt"
                 description="Once you successfully create an Applicant Profile, try this 'Job Search' feature again."
                 anchorText="Click here to create a job profile"

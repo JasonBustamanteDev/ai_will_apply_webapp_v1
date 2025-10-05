@@ -1,6 +1,7 @@
 <script setup>
 const props = defineProps({
-    isModalOpen: { type: Boolean },
+    isModalOpen: { type: Boolean, required: true },
+    openUrlInNewTab: { type: Boolean, required: true },
     title: { type: String, required: true },
     description: { type: String, required: true },
     redirectUrl: { type: String, required: true },
@@ -15,8 +16,9 @@ const isOpen = computed({
     set: (value) => emit("update:isModalOpen", value),
 });
 
-const visitUrlInNewWindow = () => {
-    window.open(props.redirectUrl, "_blank");
+const visitUrl = () => {
+    if (props.openUrlInNewTab) window.open(props.redirectUrl, "_blank");
+    else window.location.href = props.redirectUrl;
 };
 </script>
 
@@ -30,16 +32,15 @@ const visitUrlInNewWindow = () => {
         <template #body>
             <p class="mb-1">{{ props.description }}</p>
             <a
-                :href="props.redirectUrl"
-                target="_blank"
+                @click="visitUrl"
                 rel="noopener noreferrer"
-                class="text-blue-500"
+                class="text-blue-500 cursor-pointer"
                 >{{ props.anchorText }}</a
             >
             <NuxtImg
                 :src="props.pathToImage"
                 class="w-200px mt-4 cursor-pointer"
-                @click="visitUrlInNewWindow"
+                @click="visitUrl"
             />
         </template>
 
