@@ -152,7 +152,7 @@ const handleIndeedSearch = (indeed_filters: IndeedSearchPayload) => {
             <!-- Download Chrome Modal -->
             <SharedPictureModal
                 v-model:isModalOpen="isNotOnChromeModalOpen"
-                :openUrlInNewTab="false"
+                :openUrlInNewTab="true"
                 title="This product only works on Google Chrome"
                 description="Once you install the Google Chrome, visit this website again on that browser"
                 anchorText="Click here to download chrome"
@@ -165,7 +165,7 @@ const handleIndeedSearch = (indeed_filters: IndeedSearchPayload) => {
                 v-model:isModalOpen="isNoProfilesModalOpen"
                 :openUrlInNewTab="false"
                 title="Make at least 1 Applicant Profile to start your job hunt"
-                description="Once you successfully create an Applicant Profile, try this 'Job Search' feature again."
+                description="Once you successfully create an Applicant Profile, try this 'Job Search' feature again"
                 anchorText="Click here to create a job profile"
                 :redirectUrl="profilesUrl"
                 pathToImage="/images/misc/applicant_profiles.png"
