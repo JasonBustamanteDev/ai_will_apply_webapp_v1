@@ -34,6 +34,11 @@ const completedProfileNames = computed(() =>
     }, [] as string[])
 );
 
+watch(completedProfileNames, async (newList) => {
+    // If we have no completed profiles, render an error modal
+    if (newList.length < 1) isNoProfilesModalOpen.value = true;
+});
+
 const sendMessageToExtension = (
     selectedProfileName: string,
     job_board_filters: any
@@ -119,7 +124,6 @@ const handleIndeedSearch = (indeed_filters: IndeedSearchPayload) => {
     sendMessageToExtension(indeed_filters.profileName, indeed_filters);
 };
 
-//! TODO: Not selecting a profile should render error visuals when you hit the button that sends a message
 //! TODO If no profiles are present, render some error text and an anchor, plus disable the fire button and form
 </script>
 
@@ -138,7 +142,7 @@ const handleIndeedSearch = (indeed_filters: IndeedSearchPayload) => {
 
             <!-- Extension not installed Modal -->
             <SharedPictureModal
-                v-model:isModalOpen="isNotOnChromeModalOpen"
+                v-model:isModalOpen="isMissingExtensionModalOpen"
                 title="Install our 'AI will Apply' extension first"
                 description="Once you install the extension, reload this page and try again"
                 anchorText="Click here to visit our Google Chrome store page"
@@ -159,8 +163,8 @@ const handleIndeedSearch = (indeed_filters: IndeedSearchPayload) => {
             <!-- No Profiles Found Modal -->
             <SharedPictureModal
                 v-model:isModalOpen="isNoProfilesModalOpen"
-                title="Create at least 1 Applicant Profile to start your job hunt"
-                description="Once you successfully create an Applicant Profile, try this 'Job Search' feature again"
+                title="Make at least 1 Applicant Profile to start your job hunt"
+                description="Once you successfully create an Applicant Profile, try this 'Job Search' feature again."
                 anchorText="Click here to create a job profile"
                 :redirectUrl="profilesUrl"
                 pathToImage="/images/misc/applicant_profiles.png"
