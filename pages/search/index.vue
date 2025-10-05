@@ -123,8 +123,6 @@ const handleLinkedInSearch = (linkedin_filters: LinkedInSearchPayload) => {
 const handleIndeedSearch = (indeed_filters: IndeedSearchPayload) => {
     sendMessageToExtension(indeed_filters.profileName, indeed_filters);
 };
-
-//! TODO If no profiles are present, render some error text and an anchor, plus disable the fire button and form
 </script>
 
 <template>
