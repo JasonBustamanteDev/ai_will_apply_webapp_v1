@@ -2,6 +2,7 @@
 import { INDEED_FILTER_OPTIONS } from "~/ui/search/constants/filterOptions/indeedFilters";
 import JobBoardBanner from "@/ui/search/shared/jobBoardBanner.vue";
 import IndeedSvg from "../../shared/indeedSvg.vue";
+import { verifyMinStringLength } from "~/shared/client_helpers";
 import type { IndeedSearchPayload, OptionObject } from "~/ui/search/constants/filterOptions/indeedFilters"; // prettier-ignore
 
 const props = defineProps({
@@ -12,9 +13,9 @@ const emit = defineEmits<{
     fire_up_indeed_search: [payload: IndeedSearchPayload];
 }>();
 
-const selectedProfileName = ref("");
 const role = ref("");
 const jobLocation = ref("");
+const selectedProfileName = ref("");
 
 const datePosted = ref(INDEED_FILTER_OPTIONS.DATE_POSTED[0]?.value as string);
 const remote = ref(INDEED_FILTER_OPTIONS.REMOTE[0]?.value as string);
@@ -27,16 +28,28 @@ const indeedThemeColor = "#e58f78";
 
 const rocketHandler = function () {
     emit("fire_up_indeed_search", {
-        profileName: selectedProfileName.value,
-        jobLocation: jobLocation.value,
         role: role.value,
-
+        jobLocation: jobLocation.value,
+        profileName: selectedProfileName.value,
         datePosted: datePosted.value,
         remote: remote.value,
         distance: distance.value,
         jobType: jobType.value,
     });
 };
+
+const isReadyToSubmit = computed(() => {
+    const conditions = [
+        verifyMinStringLength(role.value, 1),
+        verifyMinStringLength(jobLocation.value, 1),
+        selectedProfileName.value,
+        datePosted.value,
+        remote.value,
+        distance.value,
+        jobType.value,
+    ];
+    return !conditions.some((element) => !element); // any falsys means the config is not fully filled out
+});
 </script>
 
 <template>
@@ -97,7 +110,12 @@ const rocketHandler = function () {
                 color="info"
                 trailing-icon="i-lucide-rocket"
                 @click="rocketHandler"
-                class="w-full justify-center cursor-pointer bg-[#e58f78] hover:!bg-[#e58f78]"
+                :disabled="!isReadyToSubmit"
+                :class="{
+                    'w-full justify-center cursor-pointer': true,
+                    'bg-[#e58f78] hover:!bg-[#e58f78]': isReadyToSubmit,
+                    '!bg-[#5c5c5a] hover:!bg-[#5c5c5a]': !isReadyToSubmit,
+                }"
             />
         </div>
     </section>

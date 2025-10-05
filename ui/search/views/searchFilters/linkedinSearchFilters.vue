@@ -2,7 +2,7 @@
 import { LINKEDIN_FILTER_OPTIONS } from "~/ui/search/constants/filterOptions/linkedinFilters";
 import JobBoardBanner from "@/ui/search/shared/jobBoardBanner.vue";
 import LinkedinSvg from "../../shared/linkedinSvg.vue";
-import { verifyMinStringLength } from "~/shared/client_helpers"; // prettier-ignore
+import { verifyMinStringLength } from "~/shared/client_helpers";
 import type { OptionObject, LinkedInSearchPayload } from "~/ui/search/constants/filterOptions/linkedinFilters"; // prettier-ignore
 
 const props = defineProps({
@@ -113,7 +113,7 @@ const isReadyToSubmit = computed(() => {
                 :class="{
                     'w-full justify-center cursor-pointer': true,
                     'bg-[#2596be] hover:!bg-[#1e7a9a]': isReadyToSubmit,
-                    '!bg-[#969691] hover:!bg-[#969691]': !isReadyToSubmit,
+                    '!bg-[#5c5c5a] hover:!bg-[#5c5c5a]': !isReadyToSubmit,
                 }"
             />
         </div>
