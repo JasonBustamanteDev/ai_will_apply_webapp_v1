@@ -106,7 +106,7 @@ const isReadyToSubmit = computed(() => {
                 </UFormField>
             </div>
             <UButton
-                label="Auto Apply on LinkedIn"
+                label="Auto Apply on Indeed"
                 color="info"
                 trailing-icon="i-lucide-rocket"
                 @click="rocketHandler"
