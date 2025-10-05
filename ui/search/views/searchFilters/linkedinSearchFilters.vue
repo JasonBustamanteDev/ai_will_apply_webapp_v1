@@ -51,7 +51,7 @@ const isReadyToSubmit = computed(() => {
 </script>
 
 <template>
-    <section class="mb-16 bg-gray-200">
+    <section class="mb-16 bg-gray-200 rounded-lg">
         <JobBoardBanner title="LinkedIn Auto Apply" bgColor="#2596be">
             <LinkedinSvg bgColor="#2596be" />
         </JobBoardBanner>

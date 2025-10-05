@@ -5,7 +5,7 @@ const props = defineProps({
 });
 </script>
 <template>
-    <header :style="{ backgroundColor: props.bgColor }" class="rounded-lg">
+    <header :style="{ backgroundColor: props.bgColor }" class="rounded-t-lg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 mb-5">
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-4">

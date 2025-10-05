@@ -40,7 +40,7 @@ const rocketHandler = function () {
 </script>
 
 <template>
-    <section class="bg-gray-200">
+    <section class="bg-gray-200 rounded-lg">
         <JobBoardBanner title="Indeed Auto Apply" :bgColor="indeedThemeColor">
             <IndeedSvg :bgColor="indeedThemeColor" />
         </JobBoardBanner>
