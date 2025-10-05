@@ -46,7 +46,7 @@ const visitUrl = () => {
 
         <template #footer="{ close }">
             <UButton
-                label="Exit"
+                label="Close"
                 color="neutral"
                 variant="outline"
                 class="cursor-pointer"
