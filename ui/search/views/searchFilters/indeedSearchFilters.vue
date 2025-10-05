@@ -113,7 +113,7 @@ const isReadyToSubmit = computed(() => {
                 :disabled="!isReadyToSubmit"
                 :class="{
                     'w-full justify-center cursor-pointer': true,
-                    'bg-[#e58f78] hover:!bg-[#e58f78]': isReadyToSubmit,
+                    'bg-[#e58f78] hover:!bg-[#da5e3d]': isReadyToSubmit,
                     '!bg-[#5c5c5a] hover:!bg-[#5c5c5a]': !isReadyToSubmit,
                 }"
             />
