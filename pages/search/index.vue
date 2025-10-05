@@ -60,7 +60,7 @@ const sendMessageToExtension = (
         );
         const coreFormData = flattenFormData(selectedProfileData);
         const messagePayload = formatMessageForExtension(
-            "SHARE_PROFILE_AND_AUTH_DATA",
+            "INITIALIZE_JOB_HUNT_SESSION",
             {
                 activeProfile: {
                     name: selectedProfileName,
