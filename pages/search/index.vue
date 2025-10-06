@@ -40,6 +40,7 @@ watch(completedProfileNames, async (newList) => {
 });
 
 const sendMessageToExtension = (
+    platform: string,
     selectedProfileName: string,
     job_board_filters: any
 ) => {
@@ -65,7 +66,7 @@ const sendMessageToExtension = (
         );
         const coreFormData = flattenFormData(selectedProfileData);
         const messagePayload = formatMessageForExtension(
-            "INITIALIZE_JOB_HUNT_SESSION",
+            `INITIALIZE_${platform}_JOB_HUNT_SESSION`, // tech_debt: must match extension hardcoded string
             {
                 activeProfile: {
                     name: selectedProfileName,
@@ -117,11 +118,19 @@ const sendMessageToExtension = (
 };
 
 const handleLinkedInSearch = (linkedin_filters: LinkedInSearchPayload) => {
-    sendMessageToExtension(linkedin_filters.profileName, linkedin_filters);
+    sendMessageToExtension(
+        "LINKEDIN",
+        linkedin_filters.profileName,
+        linkedin_filters
+    );
 };
 
 const handleIndeedSearch = (indeed_filters: IndeedSearchPayload) => {
-    sendMessageToExtension(indeed_filters.profileName, indeed_filters);
+    sendMessageToExtension(
+        "INDEED",
+        indeed_filters.profileName,
+        indeed_filters
+    );
 };
 </script>
 
