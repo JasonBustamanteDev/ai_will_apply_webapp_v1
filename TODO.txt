@@ -1,4 +1,5 @@
 TODO
+Add UI instructions telling people to open a linkedin page first while logged in
 
 REGULAR CHANGES
 - Change the picture in the extensionNotInstalled modal to one of your extension hosted in chrome store
