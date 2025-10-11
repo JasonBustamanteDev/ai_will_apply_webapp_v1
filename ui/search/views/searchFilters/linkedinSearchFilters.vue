@@ -45,8 +45,10 @@ const isReadyToSubmit = computed(() => {
         selectedProfileName.value,
         datePosted.value,
         salary.value,
-        remote.value,
-        experienceLevel.value,
+
+        remote.value.length,
+        experienceLevel.value.length,
+        jobType.value.length,
     ];
     return !conditions.some((element) => !element); // any falsys means the config is not fully filled out
 });
