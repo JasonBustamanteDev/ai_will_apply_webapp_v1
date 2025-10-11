@@ -57,4 +57,5 @@ export interface LinkedInSearchPayload {
     salary: string;
     experienceLevel: OptionObject[];
     remote: OptionObject[];
+    jobType: OptionObject[];
 }

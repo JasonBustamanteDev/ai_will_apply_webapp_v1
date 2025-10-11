@@ -34,6 +34,7 @@ const rocketHandler = function () {
         salary: salary.value,
         experienceLevel: experienceLevel.value,
         remote: remote.value,
+        jobType: jobType.value,
     });
 };
 
