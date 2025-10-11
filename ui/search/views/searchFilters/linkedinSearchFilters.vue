@@ -20,6 +20,7 @@ const role = ref("");
 const datePosted = ref(LINKEDIN_FILTER_OPTIONS.DATE_POSTED[0]?.value as string);
 const salary = ref(LINKEDIN_FILTER_OPTIONS.SALARY[0]?.value as string);
 const remote = ref([LINKEDIN_FILTER_OPTIONS.REMOTE[0]] as OptionObject[]);
+const jobType = ref([LINKEDIN_FILTER_OPTIONS.JOB_TYPE[0]] as OptionObject[]);
 const experienceLevel = ref([
     LINKEDIN_FILTER_OPTIONS.EXPERIENCE_LEVEL[0],
 ] as OptionObject[]);
@@ -71,8 +72,6 @@ const isReadyToSubmit = computed(() => {
                         class="w-full"
                     />
                 </UFormField>
-            </div>
-            <div class="filters_row_2">
                 <UFormField label="Date Posted">
                     <USelect
                         v-model="datePosted"
@@ -95,6 +94,14 @@ const isReadyToSubmit = computed(() => {
                         class="w-full"
                     />
                 </UFormField>
+                <UFormField label="Job Type" class="col-span-2">
+                    <USelectMenu
+                        v-model="jobType"
+                        multiple
+                        :items="LINKEDIN_FILTER_OPTIONS.JOB_TYPE"
+                        class="w-full"
+                    />
+                </UFormField>
                 <UFormField label="Remote / Onsite">
                     <USelectMenu
                         v-model="remote"
@@ -104,6 +111,7 @@ const isReadyToSubmit = computed(() => {
                     />
                 </UFormField>
             </div>
+
             <UButton
                 label="Auto Apply on LinkedIn"
                 color="info"
@@ -123,17 +131,10 @@ const isReadyToSubmit = computed(() => {
 <style lang="scss">
 .filters_row_1 {
     display: grid;
-    grid-template-columns: 25% 25% auto;
+    grid-template-columns: 30% 30% 40%;
     gap: 1rem;
     align-items: end;
     margin-bottom: 2rem;
-}
-
-.filters_row_2 {
-    display: grid;
-    grid-template-columns: auto repeat(3, 25%);
-    gap: 1rem;
-    align-items: end;
-    margin-bottom: 2rem;
+    overflow-x: hidden;
 }
 </style>

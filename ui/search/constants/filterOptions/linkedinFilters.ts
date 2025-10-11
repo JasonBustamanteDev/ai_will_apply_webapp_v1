@@ -35,7 +35,6 @@ export const LINKEDIN_FILTER_OPTIONS = {
         { label: "Hybrid", value: "Hybrid" },
     ],
     JOB_TYPE: [
-        // Only appears in all filters panel
         { label: "Any", value: "Any" }, // UNOFFICIAL OPTION (means do not apply filter in extension)
         { label: "Full-time", value: "Full-time" },
         { label: "Part-time", value: "Part-time" },
@@ -44,7 +43,7 @@ export const LINKEDIN_FILTER_OPTIONS = {
         { label: "Volunteer", value: "Volunteer" },
         { label: "Internship", value: "Internship" },
         { label: "Other", value: "Other" },
-    ],
+    ]
 };
 
 export type OptionObject = (typeof LINKEDIN_FILTER_OPTIONS.DATE_POSTED)[number];
