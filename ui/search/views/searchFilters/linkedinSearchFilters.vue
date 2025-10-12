@@ -13,9 +13,9 @@ const emit = defineEmits<{
     fire_up_linkedin_search: [payload: LinkedInSearchPayload];
 }>();
 
-const selectedProfileName = ref("");
-const jobLocation = ref("");
-const role = ref("");
+const selectedProfileName = ref("Jason");
+const jobLocation = ref("Toronto");
+const role = ref("Retail associate");
 
 const datePosted = ref(LINKEDIN_FILTER_OPTIONS.DATE_POSTED[0]?.value as string);
 const salary = ref(LINKEDIN_FILTER_OPTIONS.SALARY[0]?.value as string);

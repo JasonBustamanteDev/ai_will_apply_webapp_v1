@@ -3,6 +3,7 @@ import { useFetchAllProfiles } from "~/shared/composables/useFetchAllProfiles";
 import { flattenFormData, formatMessageForExtension, recycleFormData } from "~/ui/search/constants/message_utils"; // prettier-ignore
 import LinkedinSearchFilters from "~/ui/search/views/searchFilters/linkedinSearchFilters.vue";
 import IndeedSearchFilters from "~/ui/search/views/searchFilters/indeedSearchFilters.vue";
+import UsageTip from "~/ui/search/views/usageTip.vue";
 import { get } from "lodash";
 import type { LinkedInSearchPayload } from "~/ui/search/constants/filterOptions/linkedinFilters"; // prettier-ignore
 import type { IndeedSearchPayload } from "~/ui/search/constants/filterOptions/indeedFilters"; // prettier-ignore
@@ -138,6 +139,7 @@ const handleIndeedSearch = (indeed_filters: IndeedSearchPayload) => {
     <div>
         <SharedNavbar />
         <div class="global-layout-container">
+            <UsageTip />
             <LinkedinSearchFilters
                 @fire_up_linkedin_search="handleLinkedInSearch"
                 :profileList="completedProfileNames"
