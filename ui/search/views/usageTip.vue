@@ -15,7 +15,7 @@
         <p class="text-gray-700 leading-relaxed">
             Set filters and start your search.<br />Use "Any" when possible — fewer
             filters mean more job matches and applications.<br />
-            Apply broadly, then choose your favorite offers.
+            Apply broadly, take all the interviews you can, then choose your favorite offers.
         </p>
     </div>
 </template>
