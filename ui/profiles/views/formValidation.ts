@@ -131,10 +131,8 @@ export const preferenceSchema = object({
     driversLicense: boolean().required(MESSAGES.REQUIRED),
     reliableTransportation: boolean().required(MESSAGES.REQUIRED),
     veteranStatus: boolean().required(MESSAGES.REQUIRED),
-    companyBlacklist: array()
-        .of(string().required())
-        .min(0)
-        .required(MESSAGES.REQUIRED),
+    companyBlacklist: array().of(string().required()).min(0),
+    redFlagWords: array().of(string().required()).min(0),
     interviewAvailability: string()
         .required(MESSAGES.REQUIRED)
         .test(
