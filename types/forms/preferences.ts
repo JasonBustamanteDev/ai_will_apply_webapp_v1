@@ -8,6 +8,7 @@ type PreferenceSchema = {
     veteranStatus: boolean;
     interviewAvailability: string;
     companyBlacklist: string[];
+    redFlagWords: string[];
 };
 
 type NullablePreference = PreferenceSchema | null;

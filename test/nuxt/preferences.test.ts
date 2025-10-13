@@ -32,6 +32,7 @@ const COMPLETED_FORM_PROPS = {
             veteranStatus: false,
             companyBlacklist: ["Amazon", "JP Morgan"],
             interviewAvailability: "Mon to Fri between 9AM to 6PM",
+            redFlagWords: ["Cleaning toilets"]
         },
         isComplete: true,
     },

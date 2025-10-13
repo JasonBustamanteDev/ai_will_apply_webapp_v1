@@ -27,6 +27,7 @@ const formState = reactive(
         veteranStatus: false,
         interviewAvailability: "Monday to Friday between 9AM and 5PM",
         companyBlacklist: ["Some terrible company"],
+        redFlagWords: ["Cleaning toilets"],
     }
 );
 
@@ -206,8 +207,21 @@ const onSubmit = async () => {
             <UInputTags
                 v-model="formState.companyBlacklist"
                 :max="20"
-                class="w-full h-auto mb-12"
+                class="w-full h-auto mb-8"
                 data-testid="company_blacklist_field"
+            />
+        </UFormField>
+        <UFormField
+            label="Words to exclude from job description:"
+            name="redFlagWords"
+            class="mb-0 col-span-2"
+            data-testid="red_flag_words_parent"
+        >
+            <UInputTags
+                v-model="formState.redFlagWords"
+                :max="20"
+                class="w-full h-auto mb-8"
+                data-testid="red_flag_words_field"
             />
         </UFormField>
 
