@@ -3,21 +3,15 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineNuxtConfig({
     ssr: false,
     compatibilityDate: "2025-05-15",
-    future: {
-        compatibilityVersion: 4,
-    },
+    future: { compatibilityVersion: 4 },
     devtools: { enabled: true },
-    devServer: {
-        port: 4010,
-    },
+    devServer: { port: 4010 },
     experimental: {
         appManifest: false, // disables a dev.json GET request from being made on each page load
     },
 
     // vite and css required for daisyUI
-    vite: {
-        plugins: [tailwindcss()],
-    },
+    vite: { plugins: [tailwindcss()] },
     css: ["~/assets/app.css"],
 
     modules: [
@@ -36,7 +30,6 @@ export default defineNuxtConfig({
         // Turns typechecks on/off when we deploy locally or build
         // We set it to false since vue-tsc has an issue where it type checks node_modules (even if we exclude it in tsconfig.json)
         typeCheck: false,
-
         strict: true,
     },
 
@@ -47,6 +40,7 @@ export default defineNuxtConfig({
         SUPABASE_SERVICE_ROLE_SECRET: process.env.SUPABASE_SERVICE_ROLE_SECRET,
         GOOGLE_OAUTH_CLIENT_ID: process.env.GOOGLE_OAUTH_CLIENT_ID,
         GOOGLE_OAUTH_CLIENT_SECRET: process.env.GOOGLE_OAUTH_CLIENT_SECRET,
+        GEMINI_API_KEY: process.env.GEMINI_API_KEY,
 
         public: {
             // Public keys (available on both client and server)

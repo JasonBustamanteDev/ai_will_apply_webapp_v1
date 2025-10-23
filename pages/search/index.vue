@@ -66,12 +66,12 @@ const sendMessageToExtension = (
             localStorage.getItem(`sb-${supabaseProjectId}-auth-token`) || "{}"
         );
         const coreFormData = flattenFormData(selectedProfileData);
-        
+
         const requestDescription = `INITIALIZE_${platform}_JOB_HUNT_SESSION`; // tech_debt: must match extension hardcoded string
         const devOnlyRequestDescription = `DEVONLY_LINKEDIN_TARGET_JOB_PAGE`;
 
         const messagePayload = formatMessageForExtension(
-            requestDescription,
+            devOnlyRequestDescription,
             {
                 activeProfile: {
                     name: selectedProfileName,
