@@ -54,7 +54,7 @@ export function recycleFormData(formData: Object) {
         yearsOfExperience: ["years experience", "years of experience"],
         email: [],
         gender: ["sexual identity", "identify as"],
-        phoneNumber: ["phone number"],
+        phoneNumber: ["phone number", "mobile phone number", "cell number", "cell phone number"],
         ethnicity: [],
         securityClearance: ["security clearance"],
         disability: [],
