@@ -1,3 +1,0 @@
-JOB SEARCH CONFIG SAVE
-- Save search configurations to localStorage
-- Prefill fields using them

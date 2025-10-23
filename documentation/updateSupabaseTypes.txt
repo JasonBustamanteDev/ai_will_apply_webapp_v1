@@ -1,5 +1,0 @@
-HOW TO GENERATE NEW TS TYPES WHEN TABLE GETS CHANGED
-1. Log in to supabase in terminal using steps in docs
-(https://supabase.com/docs/guides/api/rest/generating-types)
-
-2. Run npx supabase gen types typescript --project-id PROJECT_ID(get from dashboard) --schema public > types/supabase.ts

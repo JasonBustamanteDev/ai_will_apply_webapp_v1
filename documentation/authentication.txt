@@ -1,9 +1,0 @@
-AUTHENTICATION
-When a user logs in, their session data is saved in local storage
-In supabase_auth.js, we save the session data to state shared project-wide
-When we make requests to protected endpoints, we send the session data with the request body
-We verify the JWT using server side middleware
-
-Ran this on DB once:
-ALTER ROLE authenticator SET pgrst.db_schemas TO 'public, storage, graphql, realtime';
-NOTIFY pgrst;
