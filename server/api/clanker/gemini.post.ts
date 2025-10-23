@@ -3,14 +3,17 @@ import { checkIfUserIsAuthenticated } from "~/server/manual_middleware/checkIfUs
 import { detailObject, UNANSWERED_QUESTIONS_TABLE_NAME } from "~/server/util/server_constants"; // prettier-ignore
 import { genkit } from "genkit";
 import { googleAI } from "@genkit-ai/google-genai";
+import { Object } from "lodash";
 
 export default defineEventHandler(async (event) => {
+    const NO_ANSWER_INDICATOR = "NOT_APPLICABLE";
+
     try {
         const { accessToken } = checkIfUserIsAuthenticated(event);
         const env_config = useRuntimeConfig(event);
 
         const body = await readBody(event);
-        const NO_ANSWER_INDICATOR = "NOT_APPLICABLE";
+        const unresolvedQuestions = body["unresolvedQuestions"] as string[];
 
         const ai = genkit({
             plugins: [googleAI({ apiKey: env_config.GEMINI_API_KEY })],
@@ -46,6 +49,13 @@ export default defineEventHandler(async (event) => {
             .split("!!!")
             .map((str) => str.trim());
 
+        const answersDict: { [key: string]: string } = {};
+        for (let x = 0; x < answerList.length; x++) {
+            const currentAnswer = answerList[x];
+            const currentQuestion = unresolvedQuestions[x];
+            answersDict[currentQuestion] = currentAnswer;
+        }
+
         // RESEARCH ONLY (CAN DISABLE LATER): Save which answers the AI was not able to answer
         const failedAnswerRows = [];
         for (let i = 0; i < answerList.length; i++) {
@@ -54,16 +64,15 @@ export default defineEventHandler(async (event) => {
 
             failedAnswerRows.push({
                 ai_model: CHOSEN_MODEL,
-                question: body["unresolvedQuestions"][i],
+                question: unresolvedQuestions[i],
             });
         }
         const supabaseClient = getSupabaseClient(event, accessToken);
         const { error: insertError } = await supabaseClient
             .from(UNANSWERED_QUESTIONS_TABLE_NAME)
             .insert(failedAnswerRows);
-        console.log(insertError);
 
-        return { detail: "successor", answers: answerList };
+        return { detail: "successor", data: answersDict };
     } catch (err: any) {
         const error_code = err?.statusCode || 500;
         const error_message = err?.statusMessage || err?.message || "Something went wrong."; // prettier-ignore
