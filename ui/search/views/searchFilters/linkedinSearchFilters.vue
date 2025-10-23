@@ -13,6 +13,7 @@ const emit = defineEmits<{
     fire_up_linkedin_search: [payload: LinkedInSearchPayload];
 }>();
 
+//! DEV ONLY: Do not preselect any of these presets. use empty strings instead
 const selectedProfileName = ref("Jason");
 const jobLocation = ref("Toronto");
 const role = ref("Retail associate");
