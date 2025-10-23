@@ -1,9 +1,8 @@
-import { getSupabaseClient, getSupabaseUserDetails } from "~/server/util/getSupabaseClient"; // prettier-ignore
+import { getSupabaseClient } from "~/server/util/getSupabaseClient"; // prettier-ignore
 import { checkIfUserIsAuthenticated } from "~/server/manual_middleware/checkIfUserIsAuthenticated";
 import { detailObject, UNANSWERED_QUESTIONS_TABLE_NAME } from "~/server/util/server_constants"; // prettier-ignore
 import { genkit } from "genkit";
 import { googleAI } from "@genkit-ai/google-genai";
-import { Object } from "lodash";
 
 export default defineEventHandler(async (event) => {
     const NO_ANSWER_INDICATOR = "NOT_APPLICABLE";
@@ -56,12 +55,10 @@ export default defineEventHandler(async (event) => {
             answersDict[currentQuestion] = currentAnswer;
         }
 
-        // RESEARCH ONLY (CAN DISABLE LATER): Save which answers the AI was not able to answer
+        // DIAGNOSTICS CODE BELOW (CAN COMMENT OUT LATER): Save which answers the AI was not able to answer
         const failedAnswerRows = [];
         for (let i = 0; i < answerList.length; i++) {
-            const currentAnswer = answerList[i];
-            if (currentAnswer !== NO_ANSWER_INDICATOR) continue;
-
+            if (answerList[i] !== NO_ANSWER_INDICATOR) continue;
             failedAnswerRows.push({
                 ai_model: CHOSEN_MODEL,
                 question: unresolvedQuestions[i],
@@ -71,6 +68,7 @@ export default defineEventHandler(async (event) => {
         const { error: insertError } = await supabaseClient
             .from(UNANSWERED_QUESTIONS_TABLE_NAME)
             .insert(failedAnswerRows);
+        // DIAGNOSTICS CODE ABOVE (CAN COMMENT OUT LATER WITHOUT AFFECTING PRODUCT FUNCTIONALITY)
 
         return { detail: "successor", data: answersDict };
     } catch (err: any) {
