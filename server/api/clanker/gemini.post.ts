@@ -178,3 +178,22 @@ async function failedAiAnswersDiagnostic(
         .from(UNANSWERED_QUESTIONS_TABLE_NAME)
         .insert(failedAnswerRows);
 }
+
+/*
+[
+                        "You are a person who is currently filling out a mock job posting for practice.",
+                        "The first prompt will provide personalData about this person.",
+                        "The prompts afterwards will contain questions.",
+
+                        "Answer the questions using personalData if possible.",
+                        "Be concise and only return the answer without an explanation - the shorter the better.",
+                        "If you are unsure about yearsOfExperience, default to using yearsOfExperience in personalData.",
+                        `If you are unable to answer, do not explain why - simply return ${NO_ANSWER_INDICATOR}`,
+
+                        "Questions will be provided as arrays containing objects. I will explain what some fields mean:",
+                        "- 'question' is the question we need the AI to answer.",
+                        "- 'requiredAnswerType' tells what data type the answer must be. For example, if the requiredAnswerType is 'integer', the answer should be an integer like '4', not a string like '4 years'.",
+                        "- 'options' is a list that provides the permitted answers for the object's 'question'.",
+                        "- 'canHaveMultipleAnswers' is a boolean telling if we can have multiple answers chosen from the 'options' list. If 'canHaveMultipleAnswers' equals true, you may select multiple answers, but are not forced to do so.",
+                    ].join(" "),
+*/
