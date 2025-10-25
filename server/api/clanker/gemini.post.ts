@@ -3,9 +3,20 @@ import { checkIfUserIsAuthenticated } from "~/server/manual_middleware/checkIfUs
 import { detailObject, UNANSWERED_QUESTIONS_TABLE_NAME } from "~/server/util/server_constants"; // prettier-ignore
 import { genkit } from "genkit";
 import { googleAI } from "@genkit-ai/google-genai";
+import type { H3Event, EventHandlerRequest } from "h3";
 
 export default defineEventHandler(async (event) => {
     const NO_ANSWER_INDICATOR = "NOT_APPLICABLE";
+    const GEMINI_MODELS = {
+        0: "gemini-2.5-pro", // 1.25 + 10
+
+        1: "gemini-2.5-flash", // 0.3 + 2.50
+        2: "gemini-2.5-flash-lite", // 0.10 + 0.40 (speedy)
+
+        3: "gemini-2.0-flash", // 0.10 + 0.40
+        4: "gemini-2.0-flash-lite",
+    };
+    const CHOSEN_MODEL = GEMINI_MODELS[2];
 
     try {
         const { accessToken } = checkIfUserIsAuthenticated(event);
@@ -17,17 +28,6 @@ export default defineEventHandler(async (event) => {
         const ai = genkit({
             plugins: [googleAI({ apiKey: env_config.GEMINI_API_KEY })],
         });
-
-        const GEMINI_MODELS = {
-            0: "gemini-2.5-pro", // 1.25 + 10
-
-            1: "gemini-2.5-flash", // 0.3 + 2.50
-            2: "gemini-2.5-flash-lite", // 0.10 + 0.40 (speedy)
-
-            3: "gemini-2.0-flash", // 0.10 + 0.40
-            4: "gemini-2.0-flash-lite",
-        };
-        const CHOSEN_MODEL = GEMINI_MODELS[2];
 
         const { text: clankerAnswer } = await ai.generate({
             model: googleAI.model(CHOSEN_MODEL, { temperature: 0.1 }),
@@ -56,19 +56,7 @@ export default defineEventHandler(async (event) => {
         }
 
         // DIAGNOSTICS CODE BELOW (CAN COMMENT OUT LATER): Save which answers the AI was not able to answer
-        const failedAnswerRows = [];
-        for (let i = 0; i < answerList.length; i++) {
-            if (answerList[i] !== NO_ANSWER_INDICATOR) continue;
-            failedAnswerRows.push({
-                ai_model: CHOSEN_MODEL,
-                question: unresolvedQuestions[i],
-            });
-        }
-        const supabaseClient = getSupabaseClient(event, accessToken);
-        const { error: insertError } = await supabaseClient
-            .from(UNANSWERED_QUESTIONS_TABLE_NAME)
-            .insert(failedAnswerRows);
-        // DIAGNOSTICS CODE ABOVE (CAN COMMENT OUT LATER WITHOUT AFFECTING PRODUCT FUNCTIONALITY)
+        // await failedAiAnswersDiagnostic(answerList, NO_ANSWER_INDICATOR, CHOSEN_MODEL, unresolvedQuestions, accessToken, event); // prettier-ignore
 
         return { detail: "successor", data: answersDict };
     } catch (err: any) {
@@ -78,3 +66,25 @@ export default defineEventHandler(async (event) => {
         return detailObject(error_message);
     }
 });
+
+async function failedAiAnswersDiagnostic(
+    answerList: string[],
+    NO_ANSWER_INDICATOR: string,
+    CHOSEN_MODEL: string,
+    unresolvedQuestions: string[],
+    accessToken: string,
+    event: H3Event<EventHandlerRequest>
+) {
+    const failedAnswerRows = [];
+    for (let i = 0; i < answerList.length; i++) {
+        if (answerList[i] !== NO_ANSWER_INDICATOR) continue;
+        failedAnswerRows.push({
+            ai_model: CHOSEN_MODEL,
+            question: unresolvedQuestions[i],
+        });
+    }
+    const supabaseClient = getSupabaseClient(event, accessToken);
+    const { error: insertError } = await supabaseClient
+        .from(UNANSWERED_QUESTIONS_TABLE_NAME)
+        .insert(failedAnswerRows);
+}
