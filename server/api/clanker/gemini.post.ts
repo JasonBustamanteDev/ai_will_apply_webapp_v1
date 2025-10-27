@@ -29,6 +29,7 @@ export default defineEventHandler(async (event) => {
         });
 
         const answersDict: { [key: string]: string } = {};
+        const answersDict2: { [key: string]: string } = {};
 
         if (unresolvedTextQuestions.length) {
             const { text: textAnswers } = await ai.generate({
@@ -60,10 +61,47 @@ export default defineEventHandler(async (event) => {
             }
         }
 
+        // if (unresolvedMultipleChoiceQuestions.length) {
+        const { text: multipleChoiceAnswers } = await ai.generate({
+            model: googleAI.model(CHOSEN_MODEL, { temperature: 0.1 }),
+            prompt: [
+                "You are a job seeker who is answering mock job posting questions for practice.",
+                `My personalData is: ${JSON.stringify(sessionData)} .`,
+                "Use personalData to help when answering questions if possible.",
+                "QUESTIONS_LIST will be provided as an array of objects with 3 properties.",
+                "The 3 object properties are: 'question', 'options', 'canHaveMultipleAnswers'",
+                "'question' is the question I need you to answer.",
+                "'options' is a list permitted answers you must choose from. Pick the one that makes the most sense.",
+                "'canHaveMultipleAnswers' is a boolean telling if you can pick multiple answers from 'options'.",
+                "If 'canHaveMultipleAnswers' is true, you are allowed to pick 1 or multiple 'option' values as answers.",
+                "For your answer, return a string where each set of chosen options is between square brackets.",
+                `The seperator between individual answers is ${SEPERATOR}`,
+                // `The answers value should be a string where the seperator is ${SEPERATOR}`,
+                `QUESTIONS_LIST: ${JSON.stringify(
+                    unresolvedMultipleChoiceQuestions
+                )}`,
+            ].join(" "),
+        });
+        const multipleChoiceAnswersList = multipleChoiceAnswers
+            .trim()
+            .split(SEPERATOR)
+            .map((str) => str.trim());
+
+        // for (let x = 0; x < multipleChoiceAnswersList.length; x++) {
+        //     const currentAnswer = multipleChoiceAnswersList[x];
+        //     const currentQuestion = unresolvedMultipleChoiceQuestions[x];
+        //     answersDict2[currentQuestion] = currentAnswer;
+        // }
+        // }
+
         // DIAGNOSTICS CODE BELOW (CAN COMMENT OUT LATER): Save which answers the AI was not able to answer
         // await failedAiAnswersDiagnostic(answerList, NO_ANSWER_INDICATOR, CHOSEN_MODEL, unresolvedTextQuestions, accessToken, event); // prettier-ignore
-
-        return { detail: "successor", data: answersDict };
+        console.log(answersDict2)
+        return {
+            detail: "successor",
+            data: answersDict,
+            mc: multipleChoiceAnswersList,
+        };
     } catch (err: any) {
         const error_code = err?.statusCode || 500;
         const error_message = err?.statusMessage || err?.message || "Something went wrong."; // prettier-ignore
