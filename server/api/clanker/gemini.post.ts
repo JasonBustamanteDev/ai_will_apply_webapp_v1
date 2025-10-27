@@ -21,42 +21,43 @@ export default defineEventHandler(async (event) => {
 
     try {
         const { accessToken } = checkIfUserIsAuthenticated(event);
-
         const env_config = useRuntimeConfig(event);
-        const {
-            sessionData,
-            unresolvedMultipleChoiceQuestions,
-            unresolvedTextQuestions,
-        } = await readBody(event);
+        const { sessionData, unresolvedMultipleChoiceQuestions, unresolvedTextQuestions } = await readBody(event); // prettier-ignore
+
         const ai = genkit({
             plugins: [googleAI({ apiKey: env_config.GEMINI_API_KEY })],
         });
 
-        const { text: clankerAnswer } = await ai.generate({
-            model: googleAI.model(CHOSEN_MODEL, { temperature: 0.1 }),
-            prompt: [
-                "You are a job seeker who is answering mock job posting questions for practice.",
-                "Be concise and only return answers without an explanation - the shorter the better.",
-                `My personalData is: ${JSON.stringify(sessionData)} .`,
-                "Use personalData to answer questions when possible.",
-                "Generate reasonable answers when personalData does not suffice.",
-                `If you are absolutely unable to answer, do not explain why - simply return ${NO_ANSWER_INDICATOR}`,
-                "If you are unsure about yearsOfExperience, default to using yearsOfExperience in personalData.",
-                `For the answers, return 1 string where the seperator between individual answers is ${SEPERATOR}`,
-                `QUESTIONS LIST: ${JSON.stringify(unresolvedTextQuestions)}`,
-            ].join(" "),
-        });
-
-        const answerList = clankerAnswer
-            .trim()
-            .split(SEPERATOR)
-            .map((str) => str.trim());
-
         const answersDict: { [key: string]: string } = {};
-        for (let x = 0; x < answerList.length; x++) {
-            const currentAnswer = answerList[x];
-            const currentQuestion = unresolvedTextQuestions[x];
-            answersDict[currentQuestion] = currentAnswer;
+
+        if (unresolvedTextQuestions.length) {
+            const { text: textAnswers } = await ai.generate({
+                model: googleAI.model(CHOSEN_MODEL, { temperature: 0.1 }),
+                prompt: [
+                    "You are a job seeker who is answering mock job posting questions for practice.",
+                    "Be concise and only return answers without an explanation - the shorter the better.",
+                    `My personalData is: ${JSON.stringify(sessionData)} .`,
+                    "Use personalData to answer questions when possible.",
+                    "Generate reasonable answers when personalData does not suffice.",
+                    `If you are absolutely unable to answer, do not explain why - simply return ${NO_ANSWER_INDICATOR}`,
+                    "If you are unsure about yearsOfExperience, default to using yearsOfExperience in personalData.",
+                    `For the answers, return 1 string where the seperator between individual answers is ${SEPERATOR}`,
+                    `QUESTIONS LIST: ${JSON.stringify(
+                        unresolvedTextQuestions
+                    )}`,
+                ].join(" "),
+            });
+
+            const textAnswersList = textAnswers
+                .trim()
+                .split(SEPERATOR)
+                .map((str) => str.trim());
+
+            for (let x = 0; x < textAnswersList.length; x++) {
+                const currentAnswer = textAnswersList[x];
+                const currentQuestion = unresolvedTextQuestions[x];
+                answersDict[currentQuestion] = currentAnswer;
+            }
         }
 
         // DIAGNOSTICS CODE BELOW (CAN COMMENT OUT LATER): Save which answers the AI was not able to answer
