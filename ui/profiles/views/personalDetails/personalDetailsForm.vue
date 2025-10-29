@@ -153,7 +153,7 @@ const onSubmit = async () => {
                 class="mt-2"
                 size="xl"
                 :ui="radioStyleObject"
-                data-testid="veteran_field"
+                data-testid="work_sponsorship_field"
             />
         </UFormField>
         <UFormField label="Gender" name="gender" class="mb-0">
