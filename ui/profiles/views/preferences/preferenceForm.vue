@@ -199,7 +199,11 @@ const onSubmit = async () => {
                 data-testid="interview_availability_field"
             />
         </UFormField>
-        <UFormField label="Work Availability **" name="workAvailability" class="mb-0 col-span-2">
+        <UFormField
+            label="Work Availability **"
+            name="workAvailability"
+            class="mb-0 col-span-2"
+        >
             <UInput
                 v-model="formState.workAvailability"
                 class="w-full"
@@ -215,7 +219,7 @@ const onSubmit = async () => {
             <UInputTags
                 v-model="formState.companyBlacklist"
                 :max="20"
-                class="w-full h-auto mb-8"
+                class="w-full horizontally-scrollable"
                 data-testid="company_blacklist_field"
             />
         </UFormField>
@@ -228,7 +232,7 @@ const onSubmit = async () => {
             <UInputTags
                 v-model="formState.redFlagWords"
                 :max="20"
-                class="w-full h-auto"
+                class="w-full horizontally-scrollable"
                 data-testid="red_flag_words_field"
             />
         </UFormField>
@@ -236,7 +240,7 @@ const onSubmit = async () => {
         <div class="uform-submit-button-container">
             <UButton
                 type="submit"
-                class="w-full justify-center cursor-pointer"
+                class="w-full justify-center cursor-pointer mt-8"
                 color="secondary"
                 data-testid="preference_submit_button"
                 >Submit</UButton
@@ -256,5 +260,14 @@ const onSubmit = async () => {
 .uform-submit-button-container {
     grid-column-start: 1;
     grid-column-end: 5;
+}
+
+.horizontally-scrollable {
+    width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+    flex-wrap: nowrap;
+    padding-bottom: 12px;
+    height: 3.5rem;
 }
 </style>
