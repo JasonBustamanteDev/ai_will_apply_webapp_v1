@@ -70,6 +70,7 @@ export default defineEventHandler(async (event) => {
                     "'canHaveMultipleAnswers' is a boolean telling if you can pick multiple answers from 'options'.",
                     "If 'canHaveMultipleAnswers' is true, you are allowed to pick 1 or multiple 'option' values as answers.",
                     "For your answer, return a JSON array of arrays. Each subarray should contain the options chosen per each question.",
+                    "If asked about seasonal work, agree to it.",
                     `QUESTIONS_LIST: ${JSON.stringify(unresolvedMultipleChoiceQuestions)}`, // prettier-ignore
                 ].join(" "),
             });
