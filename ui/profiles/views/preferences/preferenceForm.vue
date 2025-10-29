@@ -210,7 +210,8 @@ const onSubmit = async () => {
                 data-testid="work_availability_field"
             />
         </UFormField>
-        <UFormField
+        <!-- TODO: Comment back in when word filter feature is included. And add a words to include field. Possibly move it out of profile and put into jobsearch kickoff page -->
+        <!-- <UFormField
             label="Avoid applying to these companies:"
             name="companyBlacklist"
             class="mb-0 col-span-2"
@@ -235,12 +236,12 @@ const onSubmit = async () => {
                 class="w-full horizontally-scrollable"
                 data-testid="red_flag_words_field"
             />
-        </UFormField>
+        </UFormField> -->
 
         <div class="uform-submit-button-container">
             <UButton
                 type="submit"
-                class="w-full justify-center cursor-pointer mt-8"
+                class="w-full justify-center cursor-pointer mt-5"
                 color="secondary"
                 data-testid="preference_submit_button"
                 >Submit</UButton
@@ -253,7 +254,7 @@ const onSubmit = async () => {
 .uform-element {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: repeat(2, 80px) auto auto;
+    grid-template-rows: repeat(2, 80px) 90px auto;
     gap: 0.5rem 1rem;
 }
 
