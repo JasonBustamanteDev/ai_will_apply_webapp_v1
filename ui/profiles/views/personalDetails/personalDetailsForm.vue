@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { genders, ethnicGroups, educationLevels } from "~/ui/profiles/views/personalDetails/personalDetailsForm.js"; // prettier-ignore
-import { booleanPlusEmptyOptions } from "~/ui/profiles/constants/constants.js";
+import { booleanPlusEmptyOptions, booleanOptions, radioStyleObject } from "~/ui/profiles/constants/constants.js"; // prettier-ignore
 import { personalDetailsSchema } from "../formValidation.js";
 import { updateProfile } from "~/ui/profiles/apiCalls/updateProfile.js";
 import { useCustomToast } from "~/pinia_stores/toast";
@@ -23,6 +23,7 @@ const formState = reactive(
         lastName: undefined,
         age: 18,
         yearsOfExperience: 2,
+        requireSponsorship: false,
         email: undefined,
         gender: undefined,
         phoneNumber: undefined,
@@ -139,6 +140,22 @@ const onSubmit = async () => {
                 class="w-full"
                 data-testid="highest_education_field"
         /></UFormField>
+        <UFormField
+            label="Require work sponsorship? **"
+            name="veteranStatus"
+            class="mb-0"
+        >
+            <URadioGroup
+                v-model="formState.requireSponsorship as any"
+                orientation="horizontal"
+                variant="list"
+                :items="booleanOptions as any"
+                class="mt-2"
+                size="xl"
+                :ui="radioStyleObject"
+                data-testid="veteran_field"
+            />
+        </UFormField>
         <UFormField label="Gender" name="gender" class="mb-0">
             <USelect
                 v-model="formState.gender"

@@ -54,6 +54,7 @@ export const personalDetailsSchema = object({
                 return /^(\+?[1-9]\d{9,14})$/.test(cleaned);
             }
         ),
+    requireSponsorship: boolean().required(MESSAGES.REQUIRED),
     gender: string()
         .nullable()
         .oneOf(
