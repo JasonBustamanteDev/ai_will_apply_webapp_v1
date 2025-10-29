@@ -19,8 +19,8 @@ const env_config = useRuntimeConfig();
 const supabaseProjectURL = env_config.public.SUPABASE_PROJECT_URL;
 
 const currentlyThereOptions = [
-    { label: "I still work here", value: true },
-    { label: "I no longer work here", value: false },
+    { label: "Still work here", value: true },
+    { label: "No longer work here", value: false },
 ];
 const generateEmptyRow = () =>
     ({
