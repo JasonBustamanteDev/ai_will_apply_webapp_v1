@@ -1,9 +1,7 @@
-import { getSupabaseClient } from "~/server/util/getSupabaseClient"; // prettier-ignore
 import { checkIfUserIsAuthenticated } from "~/server/manual_middleware/checkIfUserIsAuthenticated";
-import { detailObject, UNANSWERED_QUESTIONS_TABLE_NAME } from "~/server/util/server_constants"; // prettier-ignore
+import { detailObject } from "~/server/util/server_constants";
 import { genkit } from "genkit";
 import { googleAI } from "@genkit-ai/google-genai";
-import type { H3Event, EventHandlerRequest } from "h3";
 
 export default defineEventHandler(async (event) => {
     const GEMINI_MODELS = {
@@ -20,9 +18,13 @@ export default defineEventHandler(async (event) => {
     const SEPERATOR = "!!@!!";
 
     try {
-        // const { accessToken } = checkIfUserIsAuthenticated(event);
+        const { accessToken } = checkIfUserIsAuthenticated(event);
         const env_config = useRuntimeConfig(event);
-        const { sessionData, unresolvedMultipleChoiceQuestions, unresolvedTextQuestions } = await readBody(event); // prettier-ignore
+        const {
+            sessionData,
+            unresolvedMultipleChoiceQuestions,
+            unresolvedTextQuestions,
+        } = await readBody(event);
 
         const ai = genkit({
             plugins: [googleAI({ apiKey: env_config.GEMINI_API_KEY })],
