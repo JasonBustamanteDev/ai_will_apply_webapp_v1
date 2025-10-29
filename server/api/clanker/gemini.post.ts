@@ -15,7 +15,6 @@ export default defineEventHandler(async (event) => {
     };
     const CHOSEN_MODEL = GEMINI_MODELS[2];
     const NO_ANSWER_INDICATOR = "NOT_APPLICABLE";
-    const SEPERATOR = "!!@!!";
 
     try {
         const { accessToken } = checkIfUserIsAuthenticated(event);
@@ -44,9 +43,7 @@ export default defineEventHandler(async (event) => {
                     `If you are absolutely unable to answer, do not explain why - simply return ${NO_ANSWER_INDICATOR}`,
                     "If you are unsure about yearsOfExperience, default to using yearsOfExperience in personalData.",
                     `For the answers, return a JSON array of strings`,
-                    `QUESTIONS LIST: ${JSON.stringify(
-                        unresolvedTextQuestions
-                    )}`,
+                    `QUESTIONS LIST: ${JSON.stringify(unresolvedTextQuestions)}`, // prettier-ignore
                 ].join(" "),
             });
 
@@ -55,7 +52,7 @@ export default defineEventHandler(async (event) => {
             for (let x = 0; x < parsedTextAnswers.length; x++) {
                 const currentAnswer = parsedTextAnswers[x];
                 const currentQuestion = unresolvedTextQuestions[x];
-                answersDict[currentQuestion] = currentAnswer;
+                answersDict[currentQuestion] = [currentAnswer];
             }
         }
 
@@ -73,9 +70,7 @@ export default defineEventHandler(async (event) => {
                     "'canHaveMultipleAnswers' is a boolean telling if you can pick multiple answers from 'options'.",
                     "If 'canHaveMultipleAnswers' is true, you are allowed to pick 1 or multiple 'option' values as answers.",
                     "For your answer, return a JSON array of arrays. Each subarray should contain the options chosen per each question.",
-                    `QUESTIONS_LIST: ${JSON.stringify(
-                        unresolvedMultipleChoiceQuestions
-                    )}`,
+                    `QUESTIONS_LIST: ${JSON.stringify(unresolvedMultipleChoiceQuestions)}`, // prettier-ignore
                 ].join(" "),
             });
 
@@ -91,10 +86,7 @@ export default defineEventHandler(async (event) => {
             }
         }
 
-        return {
-            detail: "successor",
-            data: answersDict,
-        };
+        return { detail: "success", data: answersDict };
     } catch (err: any) {
         const error_code = err?.statusCode || 500;
         const error_message = err?.statusMessage || err?.message || "Something went wrong."; // prettier-ignore
