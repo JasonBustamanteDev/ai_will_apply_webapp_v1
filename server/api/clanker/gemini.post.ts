@@ -28,39 +28,37 @@ export default defineEventHandler(async (event) => {
             plugins: [googleAI({ apiKey: env_config.GEMINI_API_KEY })],
         });
 
-        const answersDict: { [key: string]: string } = {};
-        const answersDict2: { [key: string]: string } = {};
-        let multipleChoiceAnswersList;
+        const answersDict: { [key: string]: any } = {};
 
-        // if (unresolvedTextQuestions.length) {
-        //     const { text: textAnswers } = await ai.generate({
-        //         model: googleAI.model(CHOSEN_MODEL, { temperature: 0.1 }),
-        //         prompt: [
-        //             "You are a job seeker who is answering mock job posting questions for practice.",
-        //             "Be concise and only return answers without an explanation - the shorter the better.",
-        //             `My personalData is: ${JSON.stringify(sessionData)} .`,
-        //             "Use personalData to answer questions when possible.",
-        //             "Generate reasonable answers when personalData does not suffice.",
-        //             `If you are absolutely unable to answer, do not explain why - simply return ${NO_ANSWER_INDICATOR}`,
-        //             "If you are unsure about yearsOfExperience, default to using yearsOfExperience in personalData.",
-        //             `For the answers, return 1 string where the seperator between individual answers is ${SEPERATOR}`,
-        //             `QUESTIONS LIST: ${JSON.stringify(
-        //                 unresolvedTextQuestions
-        //             )}`,
-        //         ].join(" "),
-        //     });
+        if (unresolvedTextQuestions.length) {
+            const { text: textAnswers } = await ai.generate({
+                model: googleAI.model(CHOSEN_MODEL, { temperature: 0.1 }),
+                prompt: [
+                    "You are a job seeker who is answering mock job posting questions for practice.",
+                    "Be concise and only return answers without an explanation - the shorter the better.",
+                    `My personalData is: ${JSON.stringify(sessionData)} .`,
+                    "Use personalData to answer questions when possible.",
+                    "Generate reasonable answers when personalData does not suffice.",
+                    `If you are absolutely unable to answer, do not explain why - simply return ${NO_ANSWER_INDICATOR}`,
+                    "If you are unsure about yearsOfExperience, default to using yearsOfExperience in personalData.",
+                    `For the answers, return 1 string where the seperator between individual answers is ${SEPERATOR}`,
+                    `QUESTIONS LIST: ${JSON.stringify(
+                        unresolvedTextQuestions
+                    )}`,
+                ].join(" "),
+            });
 
-        //     const textAnswersList = textAnswers
-        //         .trim()
-        //         .split(SEPERATOR)
-        //         .map((str) => str.trim());
+            const textAnswersList = textAnswers
+                .trim()
+                .split(SEPERATOR)
+                .map((str) => str.trim());
 
-        //     for (let x = 0; x < textAnswersList.length; x++) {
-        //         const currentAnswer = textAnswersList[x];
-        //         const currentQuestion = unresolvedTextQuestions[x];
-        //         answersDict[currentQuestion] = currentAnswer;
-        //     }
-        // }
+            for (let x = 0; x < textAnswersList.length; x++) {
+                const currentAnswer = textAnswersList[x];
+                const currentQuestion = unresolvedTextQuestions[x];
+                answersDict[currentQuestion] = currentAnswer;
+            }
+        }
 
         if (unresolvedMultipleChoiceQuestions.length) {
             const { text: multipleChoiceAnswers } = await ai.generate({
@@ -81,28 +79,22 @@ export default defineEventHandler(async (event) => {
                     )}`,
                 ].join(" "),
             });
-            // console.log(typeof multipleChoiceAnswers);
 
-            return parseJsonAiAnswer(multipleChoiceAnswers);
-            multipleChoiceAnswersList = multipleChoiceAnswers
-                .trim()
-                .split(SEPERATOR)
-                .map((str) => str.trim());
+            const parsedMultipleChoiceAnswers = parseJsonAiAnswer(
+                multipleChoiceAnswers
+            );
 
-            // for (let x = 0; x < multipleChoiceAnswersList.length; x++) {
-            //     const currentAnswer = multipleChoiceAnswersList[x];
-            //     const currentQuestion = unresolvedMultipleChoiceQuestions[x];
-            //     answersDict2[currentQuestion] = currentAnswer;
-            // }
+            for (let x = 0; x < parsedMultipleChoiceAnswers.length; x++) {
+                const currentAnswer = parsedMultipleChoiceAnswers[x];
+                const currentQuestion =
+                    unresolvedMultipleChoiceQuestions[x]["question"];
+                answersDict[currentQuestion] = currentAnswer;
+            }
         }
 
-        // DIAGNOSTICS CODE BELOW (CAN COMMENT OUT LATER): Save which answers the AI was not able to answer
-        // await failedAiAnswersDiagnostic(answerList, NO_ANSWER_INDICATOR, CHOSEN_MODEL, unresolvedTextQuestions, accessToken, event); // prettier-ignore
-        console.log(answersDict2);
         return {
             detail: "successor",
             data: answersDict,
-            mc: multipleChoiceAnswersList,
         };
     } catch (err: any) {
         const error_code = err?.statusCode || 500;
@@ -121,44 +113,3 @@ function parseJsonAiAnswer(textAnswer: string) {
     }
     return JSON.parse(textAnswer);
 }
-
-async function failedAiAnswersDiagnostic(
-    answerList: string[],
-    NO_ANSWER_INDICATOR: string,
-    CHOSEN_MODEL: string,
-    unresolvedQuestions: string[],
-    accessToken: string,
-    event: H3Event<EventHandlerRequest>
-) {
-    const failedAnswerRows = [];
-    for (let i = 0; i < answerList.length; i++) {
-        if (answerList[i] !== NO_ANSWER_INDICATOR) continue;
-        failedAnswerRows.push({
-            ai_model: CHOSEN_MODEL,
-            question: unresolvedQuestions[i],
-        });
-    }
-    const supabaseClient = getSupabaseClient(event, accessToken);
-    const { error: insertError } = await supabaseClient
-        .from(UNANSWERED_QUESTIONS_TABLE_NAME)
-        .insert(failedAnswerRows);
-}
-
-/*
-[
-                        "You are a person who is currently filling out a mock job posting for practice.",
-                        "The first prompt will provide personalData about this person.",
-                        "The prompts afterwards will contain questions.",
-
-                        "Answer the questions using personalData if possible.",
-                        "Be concise and only return the answer without an explanation - the shorter the better.",
-                        "If you are unsure about yearsOfExperience, default to using yearsOfExperience in personalData.",
-                        `If you are unable to answer, do not explain why - simply return ${NO_ANSWER_INDICATOR}`,
-
-                        "Questions will be provided as arrays containing objects. I will explain what some fields mean:",
-                        "- 'question' is the question we need the AI to answer.",
-                        "- 'requiredAnswerType' tells what data type the answer must be. For example, if the requiredAnswerType is 'integer', the answer should be an integer like '4', not a string like '4 years'.",
-                        "- 'options' is a list that provides the permitted answers for the object's 'question'.",
-                        "- 'canHaveMultipleAnswers' is a boolean telling if we can have multiple answers chosen from the 'options' list. If 'canHaveMultipleAnswers' equals true, you may select multiple answers, but are not forced to do so.",
-                    ].join(" "),
-*/
