@@ -30,9 +30,9 @@ const COMPLETED_FORM_PROPS = {
             driversLicense: true,
             reliableTransportation: true,
             veteranStatus: false,
-            companyBlacklist: ["Amazon", "JP Morgan"],
             interviewAvailability: "Mon to Fri between 9AM to 6PM",
-            redFlagWords: ["Cleaning toilets"]
+            workAvailability: "Mon to Fri between 9AM to 6PM",
+            companyBlacklist: ["Amazon", "JP Morgan"],
         },
         isComplete: true,
     },
@@ -57,6 +57,7 @@ const getFormElements = () => {
             "interview_availability_field"
         ) as HTMLInputElement,
         companyBlacklist: screen.getByTestId("company_blacklist_field"),
+        workAvailability: screen.getByTestId("work_availability_field"),
 
         submitButton: screen.getByTestId("preference_submit_button"),
     };
@@ -190,6 +191,7 @@ describe("Fresh preferences form", () => {
         await fillInputField(user, formElements.expectedSalary, "100000");
         await fillInputField(user, formElements.noticePeriod, "14");
         await fillInputField(user, formElements.interviewAvailability, 'Mon to Fri between 9AM to 6PM'); // prettier-ignore
+        await fillInputField(user, formElements.workAvailability, 'Mon to Fri between 9AM to 6PM'); // prettier-ignore
 
         // Tick checkboxes
         const checkboxes = [

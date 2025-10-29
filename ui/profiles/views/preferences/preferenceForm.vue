@@ -28,7 +28,6 @@ const formState = reactive(
         workAvailability: "Monday to Friday between 9AM to 5PM",
         interviewAvailability: "Monday to Friday between 9AM and 5PM",
         companyBlacklist: [],
-        redFlagWords: [],
     }
 );
 
@@ -210,11 +209,10 @@ const onSubmit = async () => {
                 data-testid="work_availability_field"
             />
         </UFormField>
-        <!-- TODO: Comment back in when word filter feature is included (2 of 2). And add a words to include field. Possibly move it out of profile and put into jobsearch kickoff page -->
-        <!-- <UFormField
+        <UFormField
             label="Avoid applying to these companies:"
             name="companyBlacklist"
-            class="mb-0 col-span-2"
+            class="mb-0 col-span-4"
             data-testid="company_blacklist_parent"
         >
             <UInputTags
@@ -224,7 +222,8 @@ const onSubmit = async () => {
                 data-testid="company_blacklist_field"
             />
         </UFormField>
-        <UFormField
+        <!-- TODO: Comment back in when word filter feature is included -->
+        <!-- <UFormField
             label="Words to exclude from job description:"
             name="redFlagWords"
             class="mb-0 col-span-2"

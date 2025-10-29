@@ -133,7 +133,6 @@ export const preferenceSchema = object({
     reliableTransportation: boolean().required(MESSAGES.REQUIRED),
     veteranStatus: boolean().required(MESSAGES.REQUIRED),
     companyBlacklist: array().of(string().required()).min(0),
-    redFlagWords: array().of(string().required()).min(0),
     workAvailability: string()
         .required(MESSAGES.REQUIRED)
         .test(

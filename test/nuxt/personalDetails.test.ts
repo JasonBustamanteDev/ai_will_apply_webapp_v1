@@ -28,6 +28,7 @@ const COMPLETED_FORM_PROPS = {
             age: 51,
             yearsOfExperience: 10,
             email: "jmarkov@protonmail.com",
+            requireSponsorship: false,
             gender: "male",
             phoneNumber: "6478880000",
             ethnicity: "white",
@@ -42,10 +43,14 @@ const COMPLETED_FORM_PROPS = {
 const getFormElements = () => {
     return {
         firstName: screen.getByTestId("first_name_field") as HTMLInputElement,
-        lastName: screen.getByTestId("last_name_field")  as HTMLInputElement,
-        email: screen.getByTestId("email_field")  as HTMLInputElement,
-        phoneNumber: screen.getByTestId("phone_number_field") as HTMLInputElement,
-        yearsExp: screen.getByTestId("years_experience_field") as HTMLInputElement,
+        lastName: screen.getByTestId("last_name_field") as HTMLInputElement,
+        email: screen.getByTestId("email_field") as HTMLInputElement,
+        phoneNumber: screen.getByTestId(
+            "phone_number_field"
+        ) as HTMLInputElement,
+        yearsExp: screen.getByTestId(
+            "years_experience_field"
+        ) as HTMLInputElement,
         age: screen.getByTestId("age_field") as HTMLInputElement,
         highestEducation: screen.getByTestId("highest_education_field"),
         gender: screen.getByTestId("gender_field"),
