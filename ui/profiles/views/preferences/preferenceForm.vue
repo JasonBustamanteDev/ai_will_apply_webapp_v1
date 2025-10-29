@@ -27,8 +27,8 @@ const formState = reactive(
         veteranStatus: false,
         workAvailability: "Monday to Friday between 9AM to 5PM",
         interviewAvailability: "Monday to Friday between 9AM and 5PM",
-        companyBlacklist: ["Some terrible company"],
-        redFlagWords: ["unpaid overtime"],
+        companyBlacklist: [""],
+        redFlagWords: [""],
     }
 );
 
@@ -210,7 +210,7 @@ const onSubmit = async () => {
                 data-testid="work_availability_field"
             />
         </UFormField>
-        <!-- TODO: Comment back in when word filter feature is included. And add a words to include field. Possibly move it out of profile and put into jobsearch kickoff page -->
+        <!-- TODO: Comment back in when word filter feature is included (2 of 2). And add a words to include field. Possibly move it out of profile and put into jobsearch kickoff page -->
         <!-- <UFormField
             label="Avoid applying to these companies:"
             name="companyBlacklist"
