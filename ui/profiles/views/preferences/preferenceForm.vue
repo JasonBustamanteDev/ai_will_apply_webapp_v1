@@ -27,8 +27,8 @@ const formState = reactive(
         veteranStatus: false,
         workAvailability: "Monday to Friday between 9AM to 5PM",
         interviewAvailability: "Monday to Friday between 9AM and 5PM",
-        companyBlacklist: [""],
-        redFlagWords: [""],
+        companyBlacklist: [],
+        redFlagWords: [],
     }
 );
 
