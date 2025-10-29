@@ -52,7 +52,7 @@ export default defineEventHandler(async (event) => {
             for (let x = 0; x < parsedTextAnswers.length; x++) {
                 const currentAnswer = parsedTextAnswers[x];
                 const currentQuestion = unresolvedTextQuestions[x];
-                answersDict[currentQuestion] = [currentAnswer];
+                answersDict[currentQuestion] = currentAnswer;
             }
         }
 
