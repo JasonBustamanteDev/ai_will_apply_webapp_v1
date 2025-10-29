@@ -142,7 +142,7 @@ const onSubmit = async () => {
         /></UFormField>
         <UFormField
             label="Require work sponsorship? **"
-            name="veteranStatus"
+            name="requireSponsorship"
             class="mb-0"
         >
             <URadioGroup
