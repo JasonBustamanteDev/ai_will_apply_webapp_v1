@@ -6,6 +6,7 @@ type PreferenceSchema = {
     driversLicense: boolean;
     reliableTransportation: boolean;
     veteranStatus: boolean;
+    workAvailability: string;
     interviewAvailability: string;
     companyBlacklist: string[];
     redFlagWords: string[];

@@ -134,6 +134,15 @@ export const preferenceSchema = object({
     veteranStatus: boolean().required(MESSAGES.REQUIRED),
     companyBlacklist: array().of(string().required()).min(0),
     redFlagWords: array().of(string().required()).min(0),
+    workAvailability: string()
+        .required(MESSAGES.REQUIRED)
+        .test(
+            "work-availability-empty",
+            "Enter times when you are available to work during the week",
+            function (value) {
+                return verifyMinStringLength(value, 1);
+            }
+        ),
     interviewAvailability: string()
         .required(MESSAGES.REQUIRED)
         .test(

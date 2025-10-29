@@ -25,6 +25,7 @@ const formState = reactive(
         driversLicense: true,
         reliableTransportation: true,
         veteranStatus: false,
+        workAvailability: "Monday to Friday between 9AM to 5PM",
         interviewAvailability: "Monday to Friday between 9AM and 5PM",
         companyBlacklist: ["Some terrible company"],
         redFlagWords: ["unpaid overtime"],
@@ -198,6 +199,13 @@ const onSubmit = async () => {
                 data-testid="interview_availability_field"
             />
         </UFormField>
+        <UFormField label="Work Availability **" name="workAvailability" class="mb-0 col-span-2">
+            <UInput
+                v-model="formState.workAvailability"
+                class="w-full"
+                data-testid="work_availability_field"
+            />
+        </UFormField>
         <UFormField
             label="Avoid applying to these companies:"
             name="companyBlacklist"
@@ -214,13 +222,13 @@ const onSubmit = async () => {
         <UFormField
             label="Words to exclude from job description:"
             name="redFlagWords"
-            class="mb-0 col-span-4"
+            class="mb-0 col-span-2"
             data-testid="red_flag_words_parent"
         >
             <UInputTags
                 v-model="formState.redFlagWords"
                 :max="20"
-                class="w-full h-auto mb-8"
+                class="w-full h-auto"
                 data-testid="red_flag_words_field"
             />
         </UFormField>
