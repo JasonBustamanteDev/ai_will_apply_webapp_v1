@@ -22,8 +22,8 @@ export default defineEventHandler(async (event) => {
         const env_config = useRuntimeConfig(event);
         const {
             sessionData,
-            unresolvedMultipleChoiceQuestions,
-            unresolvedTextQuestions,
+            unresolvedMultipleChoiceQuestions = [],
+            unresolvedTextQuestions = [],
         } = await readBody(event);
 
         const ai = genkit({
@@ -40,23 +40,20 @@ export default defineEventHandler(async (event) => {
                     "Be concise and only return answers without an explanation - the shorter the better.",
                     `My personalData is: ${JSON.stringify(sessionData)} .`,
                     "Use personalData to answer questions when possible.",
-                    "Generate reasonable answers when personalData does not suffice.",
+                    "Generate reasonable answers when personalData does not suffice. Try your absolute hardest to give some sort of real sounding answer.",
                     `If you are absolutely unable to answer, do not explain why - simply return ${NO_ANSWER_INDICATOR}`,
                     "If you are unsure about yearsOfExperience, default to using yearsOfExperience in personalData.",
-                    `For the answers, return 1 string where the seperator between individual answers is ${SEPERATOR}`,
+                    `For the answers, return a JSON array of strings`,
                     `QUESTIONS LIST: ${JSON.stringify(
                         unresolvedTextQuestions
                     )}`,
                 ].join(" "),
             });
 
-            const textAnswersList = textAnswers
-                .trim()
-                .split(SEPERATOR)
-                .map((str) => str.trim());
+            const parsedTextAnswers = parseJsonAiAnswer(textAnswers);
 
-            for (let x = 0; x < textAnswersList.length; x++) {
-                const currentAnswer = textAnswersList[x];
+            for (let x = 0; x < parsedTextAnswers.length; x++) {
+                const currentAnswer = parsedTextAnswers[x];
                 const currentQuestion = unresolvedTextQuestions[x];
                 answersDict[currentQuestion] = currentAnswer;
             }
