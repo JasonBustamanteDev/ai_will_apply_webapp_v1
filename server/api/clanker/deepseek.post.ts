@@ -1,21 +1,15 @@
 import { checkIfUserIsAuthenticated } from "~/server/manual_middleware/checkIfUserIsAuthenticated";
 import { detailObject } from "~/server/util/server_constants";
 import { genkit } from "genkit";
-import { googleAI } from "@genkit-ai/google-genai";
+import { deepSeek } from "@genkit-ai/compat-oai/deepseek";
 
 export default defineEventHandler(async (event) => {
-    const GEMINI_MODELS = {
-        0: "gemini-2.5-pro", // 1.25 + 10
-
-        1: "gemini-2.5-flash", // 0.3 + 2.50
-        2: "gemini-2.5-flash-lite", // 0.10 + 0.40 (speedy)
-
-        3: "gemini-2.0-flash", // 0.10 + 0.40
-        4: "gemini-2.0-flash-lite",
-
-        // gemini docs: https://genkit.dev/docs/integrations/google-genai/
+    const DEEPSEEK_MODELS = {
+        0: "deepseek-chat", // 0.28 + 0.42 (way faster)
+        1: "deepseek-reasoner", // 0.28 + 0.42
+        // deepseek docs: https://genkit.dev/docs/integrations/deepseek/
     };
-    const CHOSEN_MODEL = GEMINI_MODELS[2];
+    const CHOSEN_MODEL = DEEPSEEK_MODELS[0];
     const NO_ANSWER_INDICATOR = "NOT_APPLICABLE";
 
     try {
@@ -28,14 +22,14 @@ export default defineEventHandler(async (event) => {
         } = await readBody(event);
 
         const ai = genkit({
-            plugins: [googleAI({ apiKey: env_config.GEMINI_API_KEY })],
+            plugins: [deepSeek({ apiKey: env_config.DEEPSEEK_API_KEY })],
         });
 
         const answersDict: { [key: string]: any } = {};
 
         if (unresolvedTextQuestions.length) {
             const { text: textAnswers } = await ai.generate({
-                model: googleAI.model(CHOSEN_MODEL, { temperature: 0 }),
+                model: deepSeek.model(CHOSEN_MODEL, { temperature: 0 }),
                 prompt: [
                     "You are a job seeker who is answering mock job posting questions for practice.",
                     "Be concise and only return answers without an explanation - the shorter the better.",
@@ -60,7 +54,7 @@ export default defineEventHandler(async (event) => {
 
         if (unresolvedMultipleChoiceQuestions.length) {
             const { text: multipleChoiceAnswers } = await ai.generate({
-                model: googleAI.model(CHOSEN_MODEL, { temperature: 0 }),
+                model: deepSeek.model(CHOSEN_MODEL, { temperature: 0 }),
                 prompt: [
                     "You are a job seeker who is answering mock job posting questions for practice.",
                     `My personalData is: ${JSON.stringify(sessionData)} .`,
@@ -73,8 +67,8 @@ export default defineEventHandler(async (event) => {
                     "If 'canHaveMultipleAnswers' is true, you are allowed to pick 1 or multiple 'option' values as answers.",
                     "For your answer, return a JSON array of arrays. Each subarray should contain the options chosen per each question.",
                     "If asked about seasonal work, or being able to work part or full time, agree to it. Answer as if you are available whenever the company needs you.",
-                    "If asked about whether you require sponsorship of any kind, refer to personalData's 'requireEmploymentSponsorship' key value pair",
-                    "If asked about whether you have a criminal record, always deny since you've never committed any crimes.",
+                    // "If asked about whether you require sponsorship of any kind, refer to personalData's 'requireEmploymentSponsorship' key value pair",
+                    // "If asked about whether you have a criminal record, always deny since you've never committed any crimes.",
                     `QUESTIONS_LIST: ${JSON.stringify(unresolvedMultipleChoiceQuestions)}`, // prettier-ignore
                 ].join(" "),
             });
