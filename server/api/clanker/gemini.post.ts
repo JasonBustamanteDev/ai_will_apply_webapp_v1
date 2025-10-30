@@ -12,6 +12,10 @@ export default defineEventHandler(async (event) => {
 
         3: "gemini-2.0-flash", // 0.10 + 0.40
         4: "gemini-2.0-flash-lite",
+
+        // grok plugin: https://genkit.dev/docs/integrations/xai/
+        // chatgpt plugin: https://genkit.dev/docs/integrations/openai/
+        // deepseek plugin: https://genkit.dev/docs/integrations/deepseek/
     };
     const CHOSEN_MODEL = GEMINI_MODELS[2];
     const NO_ANSWER_INDICATOR = "NOT_APPLICABLE";
@@ -33,7 +37,7 @@ export default defineEventHandler(async (event) => {
 
         if (unresolvedTextQuestions.length) {
             const { text: textAnswers } = await ai.generate({
-                model: googleAI.model(CHOSEN_MODEL, { temperature: 0.1 }),
+                model: googleAI.model(CHOSEN_MODEL, { temperature: 0 }),
                 prompt: [
                     "You are a job seeker who is answering mock job posting questions for practice.",
                     "Be concise and only return answers without an explanation - the shorter the better.",
@@ -58,7 +62,7 @@ export default defineEventHandler(async (event) => {
 
         if (unresolvedMultipleChoiceQuestions.length) {
             const { text: multipleChoiceAnswers } = await ai.generate({
-                model: googleAI.model(CHOSEN_MODEL, { temperature: 0.1 }),
+                model: googleAI.model(CHOSEN_MODEL, { temperature: 0 }),
                 prompt: [
                     "You are a job seeker who is answering mock job posting questions for practice.",
                     `My personalData is: ${JSON.stringify(sessionData)} .`,
@@ -70,7 +74,9 @@ export default defineEventHandler(async (event) => {
                     "'canHaveMultipleAnswers' is a boolean telling if you can pick multiple answers from 'options'.",
                     "If 'canHaveMultipleAnswers' is true, you are allowed to pick 1 or multiple 'option' values as answers.",
                     "For your answer, return a JSON array of arrays. Each subarray should contain the options chosen per each question.",
-                    "If asked about seasonal work, agree to it.",
+                    "If asked about seasonal work, or being able to work part or full time, agree to it. Answer as if you are available whenever the company needs you.",
+                    "If asked about whether you require sponsorship of any kind, refer to personalData's 'requireEmploymentSponsorship' key value pair",
+                    "If asked about whether you have a criminal record, always deny since you've never committed any crimes.",
                     `QUESTIONS_LIST: ${JSON.stringify(unresolvedMultipleChoiceQuestions)}`, // prettier-ignore
                 ].join(" "),
             });

@@ -28,7 +28,7 @@ const COMPLETED_FORM_PROPS = {
             age: 51,
             yearsOfExperience: 10,
             email: "jmarkov@protonmail.com",
-            requireSponsorship: false,
+            requireEmploymentSponsorship: false,
             gender: "male",
             phoneNumber: "6478880000",
             ethnicity: "white",
@@ -57,7 +57,9 @@ const getFormElements = () => {
         ethnicity: screen.getByTestId("ethnicity_field"),
         securityClearance: screen.getByTestId("clearance_field"),
         disability: screen.getByTestId("disability_field"),
-        requireSponsorship: screen.getByTestId("work_sponsorship_field"),
+        requireEmploymentSponsorship: screen.getByTestId(
+            "work_sponsorship_field"
+        ),
         submitButton: screen.getByTestId("personal_details_submit_button"),
     };
 };
@@ -149,11 +151,13 @@ describe("Fresh personalDetails form", () => {
         await selectDropdownOption(user, formElements.highestEducation, 2);
 
         // How to log elements despite the test --silent flag:
-        const sponsorshipField = formElements.requireSponsorship
-        const yesButton = sponsorshipField.querySelector('button[value="true"]')
-        forceLogElement(yesButton as Element)
+        const sponsorshipField = formElements.requireEmploymentSponsorship;
+        const yesButton = sponsorshipField.querySelector(
+            'button[value="true"]'
+        );
+        forceLogElement(yesButton as Element);
         await user.click(yesButton as Element);
-        forceLogElement(yesButton as Element)
+        forceLogElement(yesButton as Element);
 
         await user.click(formElements.submitButton);
         mandatoryElements.forEach((el) => {

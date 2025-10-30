@@ -3,7 +3,7 @@ type PersonalDetailsSchema = {
     lastName?: string;
     age?: number;
     yearsOfExperience?: number;
-    requireSponsorship: boolean;
+    requireEmploymentSponsorship: boolean;
     email?: string;
     gender?: string;
     phoneNumber?: string;

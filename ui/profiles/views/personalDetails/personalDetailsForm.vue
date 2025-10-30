@@ -23,7 +23,7 @@ const formState = reactive(
         lastName: undefined,
         age: 18,
         yearsOfExperience: 2,
-        requireSponsorship: false,
+        requireEmploymentSponsorship: false,
         email: undefined,
         gender: undefined,
         phoneNumber: undefined,
@@ -142,11 +142,11 @@ const onSubmit = async () => {
         /></UFormField>
         <UFormField
             label="Require work sponsorship? **"
-            name="requireSponsorship"
+            name="requireEmploymentSponsorship"
             class="mb-0"
         >
             <URadioGroup
-                v-model="formState.requireSponsorship as any"
+                v-model="formState.requireEmploymentSponsorship as any"
                 orientation="horizontal"
                 variant="list"
                 :items="booleanOptions as any"
