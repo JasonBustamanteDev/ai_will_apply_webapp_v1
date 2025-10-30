@@ -1,6 +1,6 @@
 const geminiModels = {
-    0: "gemini-2.0-flash-lite", // 0.075 + 0.30
-    1: "gemini-2.5-flash-lite", // 0.10 + 0.40 (speedy)
+    0: "gemini-2.0-flash-lite", // 0.075 + 0.30 (speedy, non thinking)
+    1: "gemini-2.5-flash-lite", // 0.10 + 0.40 (speedy, hybrid thinking)
     2: "gemini-2.0-flash", // 0.15 + 0.60
 
     // gemini docs: https://genkit.dev/docs/integrations/google-genai/
@@ -9,7 +9,7 @@ const geminiModels = {
 
 const gptModels = {
     0: "gpt-5-nano", // 0.05 + 0.40 (reasoning. Fastest, most cost-efficient version of GPT-5)
-    1: "gpt-4.1-nano", // 0.10 + 0.40 (non reasoning. Fastest, most cost-efficient version of GPT-4.1)
+    1: "gpt-4.1-nano", // 0.10 + 0.40 (non reasoning. faster than reasoning models)
 
     // openai plugin: https://genkit.dev/docs/integrations/openai/
     // openai models: https://platform.openai.com/docs/models/compare
@@ -24,9 +24,8 @@ const deepseekModels = {
 
 const NO_ANSWER_INDICATOR = "NOT_APPLICABLE";
 export const CHOSEN_GEMINI_MODEL = geminiModels[0];
-export const CHOSEN_GPT_MODEL = gptModels[0];
+export const CHOSEN_GPT_MODEL = gptModels[1];
 export const CHOSEN_DEEPSEEK_MODEL = deepseekModels[0];
-
 
 export const generateTextPrompt = (
     unresolvedTextQuestions: any,
