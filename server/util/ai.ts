@@ -27,41 +27,103 @@ export const CHOSEN_GEMINI_MODEL = geminiModels[0];
 export const CHOSEN_GPT_MODEL = gptModels[1];
 export const CHOSEN_DEEPSEEK_MODEL = deepseekModels[0];
 
+enum PromptSubstrings {
+    PERSONAL_DATA = "PERSONAL_DATA",
+    QUESTIONS_LIST = "QUESTIONS_LIST",
+}
+
 export const generateTextPrompt = (
     unresolvedTextQuestions: any,
     sessionData: any
 ) => {
-    return [
-        "You are a job seeker who is answering mock job posting questions for practice.",
-        "Be concise and only return answers without an explanation - the shorter the better.",
-        `My personalData is: ${JSON.stringify(sessionData)} .`,
-        "Use personalData to answer questions when possible.",
-        "Generate reasonable answers when personalData does not suffice. Try your absolute hardest to give some sort of real sounding answer.",
-        `If you are absolutely unable to answer, do not explain why - simply return ${NO_ANSWER_INDICATOR}`,
-        "If you are unsure about yearsOfExperience, default to using yearsOfExperience in personalData.",
-        `For the answers, return a JSON array of strings`,
-        `QUESTIONS LIST: ${JSON.stringify(unresolvedTextQuestions)}`, // prettier-ignore
-    ].join(" ");
+    const prompt =  `
+        ### ROLE ###
+        You are a job seeker who is answering mock job posting questions for practice.
+        The questions will be referred to as ${PromptSubstrings.QUESTIONS_LIST} in this prompt.
+
+        ### CONSTRAINTS ###
+        For the answers, return a JSON array of strings.
+        Be concise and only return answers without an explanation - the shorter the better.
+
+        Use ${PromptSubstrings.PERSONAL_DATA} to answer questions when possible.
+
+        Generate reasonable answers when ${PromptSubstrings.PERSONAL_DATA} does not suffice. 
+        Try your absolute hardest to give some sort of real sounding answer.
+        If you are absolutely unable to answer, do not explain why - simply return ${NO_ANSWER_INDICATOR}
+
+        ### SUGGESTIONS FOR NICHE QUESTIONS ###
+        If you are unsure about years of experience, default to using yearsOfExperience in ${PromptSubstrings.PERSONAL_DATA}.
+
+        ### ${PromptSubstrings.PERSONAL_DATA} ###
+        ${JSON.stringify(sessionData)}
+
+        ### ${PromptSubstrings.QUESTIONS_LIST} ###
+        ${JSON.stringify(unresolvedTextQuestions)}
+    `;
+
+    return prompt
 };
 
 export const generateMultipleChoicePrompt = (
     unresolvedMultipleChoiceQuestions: any,
     sessionData: any
 ) => {
-    return [
-        "You are a job seeker who is answering mock job posting questions for practice.",
-        `My personalData is: ${JSON.stringify(sessionData)} .`,
-        "Use personalData to help when answering questions if possible.",
-        "QUESTIONS_LIST will be provided as an array of objects with 3 properties.",
-        "The 3 object properties are: 'question', 'options', 'canHaveMultipleAnswers'",
-        "'question' is the question I need you to answer.",
-        "'options' is a list permitted answers you must choose from. Pick the one that makes the most sense.",
-        "'canHaveMultipleAnswers' is a boolean telling if you can pick multiple answers from 'options'.",
-        "If 'canHaveMultipleAnswers' is true, you are allowed to pick 1 or multiple 'option' values as answers.",
-        "For your answer, return a JSON array of arrays. Each subarray should contain the options chosen per each question.",
-        "If asked about seasonal work, or being able to work part or full time, agree to it. Answer as if you are available whenever the company needs you.",
-        // "If asked about whether you require sponsorship of any kind, refer to personalData's 'requireEmploymentSponsorship' key value pair",
-        // "If asked about whether you have a criminal record, always deny since you've never committed any crimes.",
-        `QUESTIONS_LIST: ${JSON.stringify(unresolvedMultipleChoiceQuestions)}`, // prettier-ignore
-    ].join(" ");
+    const prompt =  `
+        ### ROLE ###
+        You are a job seeker who is answering mock job posting questions for practice.
+        The questions will be referred to as ${PromptSubstrings.QUESTIONS_LIST} in this prompt.
+
+        ### ${PromptSubstrings.QUESTIONS_LIST} EXPLANATION ###
+        ${PromptSubstrings.QUESTIONS_LIST} will be provided as an array of objects with 3 properties.
+        The 3 object properties are: 'question', 'options', and 'canHaveMultipleAnswers' .
+        'question' is the question I need you to answer.
+        'options' is a list permitted answers you must choose from. Pick the one that makes the most sense.
+        'canHaveMultipleAnswers' is a boolean telling if you can pick multiple answers from 'options'. If 'canHaveMultipleAnswers' is true, you are allowed to pick 1 or multiple 'option' values as answers.
+
+        ### CONSTRAINTS ###
+        For your answer, return a JSON array of arrays. 
+        Each subarray should contain the options chosen per each question.
+
+        ### OPTIONS MUST REMAIN UNCHANGED WHEN PART OF THE ANSWER ###
+        Do not change any of the 'options' string values when you include them as part of the answer.
+
+        Example of incorrect answer: 
+            options = ['Lemonade', 'Pepsi Cola'] answer = ['Pepsi']
+        Explanation of incorrect answer: 
+            The 'Pepsi Cola' option was changed to be 'Pepsi' in the answer, which is an error.
+        Example of correct answer:
+            options = ['Lemonade', 'Pepsi Cola'] answer = ['Pepsi Cola']
+
+
+        ### SUGGESTIONS FOR NICHE QUESTIONS ###
+        - If asked about seasonal work, or being able to work part or full time, agree to it. Answer as if you are available whenever the company needs you.
+        - If given a list of locations that you are able to work in, select them all. Answer as if you are available to work anywhere worldwide both in-person and remote.
+        - If asked about whether you require sponsorship of any kind, refer to personalData's 'requireEmploymentSponsorship' key value pair
+        - If asked about whether you have a criminal record, always deny since you've never committed any crimes.
+
+        ### ${PromptSubstrings.PERSONAL_DATA} ###
+        ${JSON.stringify(sessionData)}
+
+        ### ${PromptSubstrings.QUESTIONS_LIST} ###
+        ${JSON.stringify(unresolvedMultipleChoiceQuestions)}
+    `;
+
+    return prompt
+
+    // return [
+    //     "You are a job seeker who is answering mock job posting questions for practice.",
+    //     `My personalData is: ${JSON.stringify(sessionData)} .`,
+    //     "Use personalData to help when answering questions if possible.",
+    //     "QUESTIONS_LIST will be provided as an array of objects with 3 properties.",
+    //     "The 3 object properties are: 'question', 'options', 'canHaveMultipleAnswers'",
+    //     "'question' is the question I need you to answer.",
+    //     "'options' is a list permitted answers you must choose from. Pick the one that makes the most sense.",
+    //     "'canHaveMultipleAnswers' is a boolean telling if you can pick multiple answers from 'options'.",
+    //     "If 'canHaveMultipleAnswers' is true, you are allowed to pick 1 or multiple 'option' values as answers.",
+    //     "For your answer, return a JSON array of arrays. Each subarray should contain the options chosen per each question.",
+    //     "If asked about seasonal work, or being able to work part or full time, agree to it. Answer as if you are available whenever the company needs you.",
+    //     // "If asked about whether you require sponsorship of any kind, refer to personalData's 'requireEmploymentSponsorship' key value pair",
+    //     // "If asked about whether you have a criminal record, always deny since you've never committed any crimes.",
+    //     `QUESTIONS_LIST: ${JSON.stringify(unresolvedMultipleChoiceQuestions)}`, // prettier-ignore
+    // ].join(" ");
 };
