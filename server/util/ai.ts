@@ -61,8 +61,8 @@ export const generateMultipleChoicePrompt = (
         "If 'canHaveMultipleAnswers' is true, you are allowed to pick 1 or multiple 'option' values as answers.",
         "For your answer, return a JSON array of arrays. Each subarray should contain the options chosen per each question.",
         "If asked about seasonal work, or being able to work part or full time, agree to it. Answer as if you are available whenever the company needs you.",
-        "If asked about whether you require sponsorship of any kind, refer to personalData's 'requireEmploymentSponsorship' key value pair",
-        "If asked about whether you have a criminal record, always deny since you've never committed any crimes.",
+        // "If asked about whether you require sponsorship of any kind, refer to personalData's 'requireEmploymentSponsorship' key value pair",
+        // "If asked about whether you have a criminal record, always deny since you've never committed any crimes.",
         `QUESTIONS_LIST: ${JSON.stringify(unresolvedMultipleChoiceQuestions)}`, // prettier-ignore
     ].join(" ");
 };
