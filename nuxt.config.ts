@@ -41,6 +41,8 @@ export default defineNuxtConfig({
         GOOGLE_OAUTH_CLIENT_ID: process.env.GOOGLE_OAUTH_CLIENT_ID,
         GOOGLE_OAUTH_CLIENT_SECRET: process.env.GOOGLE_OAUTH_CLIENT_SECRET,
         GEMINI_API_KEY: process.env.GEMINI_API_KEY,
+        DEEPSEEK_API_KEY: process.env.DEEPSEEK_API_KEY,
+        CHATGPT_API_KEY: process.env.CHATGPT_API_KEY,
 
         public: {
             // Public keys (available on both client and server)
