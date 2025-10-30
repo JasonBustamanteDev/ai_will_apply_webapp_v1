@@ -94,11 +94,10 @@ export const generateMultipleChoicePrompt = (
         Example of correct answer:
             options = ['Lemonade', 'Pepsi Cola'] answer = ['Pepsi Cola']
 
-
         ### SUGGESTIONS FOR NICHE QUESTIONS ###
         - If asked about seasonal work, or being able to work part or full time, agree to it. Answer as if you are available whenever the company needs you.
         - If given a list of locations that you are able to work in, select them all. Answer as if you are available to work anywhere worldwide both in-person and remote.
-        - If asked about whether you require sponsorship of any kind, refer to personalData's 'requireEmploymentSponsorship' key value pair
+        - If asked about whether you require sponsorship of any kind, refer to the 'requireEmploymentSponsorship' key value pair in ${PromptSubstrings.PERSONAL_DATA} 
         - If asked about whether you have a criminal record, always deny since you've never committed any crimes.
 
         ### ${PromptSubstrings.PERSONAL_DATA} ###
@@ -109,21 +108,4 @@ export const generateMultipleChoicePrompt = (
     `;
 
     return prompt
-
-    // return [
-    //     "You are a job seeker who is answering mock job posting questions for practice.",
-    //     `My personalData is: ${JSON.stringify(sessionData)} .`,
-    //     "Use personalData to help when answering questions if possible.",
-    //     "QUESTIONS_LIST will be provided as an array of objects with 3 properties.",
-    //     "The 3 object properties are: 'question', 'options', 'canHaveMultipleAnswers'",
-    //     "'question' is the question I need you to answer.",
-    //     "'options' is a list permitted answers you must choose from. Pick the one that makes the most sense.",
-    //     "'canHaveMultipleAnswers' is a boolean telling if you can pick multiple answers from 'options'.",
-    //     "If 'canHaveMultipleAnswers' is true, you are allowed to pick 1 or multiple 'option' values as answers.",
-    //     "For your answer, return a JSON array of arrays. Each subarray should contain the options chosen per each question.",
-    //     "If asked about seasonal work, or being able to work part or full time, agree to it. Answer as if you are available whenever the company needs you.",
-    //     // "If asked about whether you require sponsorship of any kind, refer to personalData's 'requireEmploymentSponsorship' key value pair",
-    //     // "If asked about whether you have a criminal record, always deny since you've never committed any crimes.",
-    //     `QUESTIONS_LIST: ${JSON.stringify(unresolvedMultipleChoiceQuestions)}`, // prettier-ignore
-    // ].join(" ");
 };
