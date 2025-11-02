@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useFetchAllProfiles } from "~/shared/composables/useFetchAllProfiles";
-import { flattenFormData, formatMessageForExtension, recycleFormData } from "~/ui/search/constants/message_utils"; // prettier-ignore
+import { flattenFormData } from "~/ui/search/constants/message_utils";
 import LinkedinSearchFilters from "~/ui/search/views/searchFilters/linkedinSearchFilters.vue";
 import IndeedSearchFilters from "~/ui/search/views/searchFilters/indeedSearchFilters.vue";
 import UsageTip from "~/ui/search/views/usageTip.vue";
@@ -71,15 +71,12 @@ const sendMessageToExtension = (
         const requestDescription = `INITIALIZE_${platform}_JOB_HUNT_SESSION`; // tech_debt: must match extension hardcoded string
         const devOnlyRequestDescription = `DEVONLY_LINKEDIN_TARGET_JOB_PAGE`;
 
-        const messagePayload = formatMessageForExtension(
-            requestDescription,
-            {
+        const messagePayload = {
+            description: requestDescription,
+            data: {
                 activeProfile: {
                     name: selectedProfileName,
-                    data: {
-                        core: coreFormData, // will show to AI
-                        recycled: recycleFormData(coreFormData), // will use for O(1) kvp matching
-                    },
+                    data: coreFormData,
                 },
                 searchFilters: job_board_filters,
                 auth: {
@@ -87,8 +84,8 @@ const sendMessageToExtension = (
                     accessToken: get(authObject, ["access_token"], ""),
                     expiryUnixTimestamp: get(authObject, ["expires_at"], null),
                 },
-            }
-        );
+            },
+        };
 
         // @ts-expect-error
         chrome.runtime.sendMessage(
