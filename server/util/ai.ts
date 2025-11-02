@@ -1,6 +1,6 @@
 const geminiModels = {
     0: "gemini-2.0-flash-lite", // 0.075 + 0.30 (speedy, non thinking)
-    1: "gemini-2.5-flash-lite", // 0.10 + 0.40 (speedy, hybrid thinking)
+    1: "gemini-2.5-flash-lite", // 0.10 + 0.40 (speedy, hybrid thinking. less nonsense answers)
     2: "gemini-2.0-flash", // 0.15 + 0.60
 
     // gemini docs: https://genkit.dev/docs/integrations/google-genai/
@@ -23,7 +23,7 @@ const deepseekModels = {
 };
 
 const NO_ANSWER_INDICATOR = "NOT_APPLICABLE";
-export const CHOSEN_GEMINI_MODEL = geminiModels[0];
+export const CHOSEN_GEMINI_MODEL = geminiModels[1];
 export const CHOSEN_GPT_MODEL = gptModels[1];
 export const CHOSEN_DEEPSEEK_MODEL = deepseekModels[0];
 
