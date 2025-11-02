@@ -99,6 +99,7 @@ export const generateMultipleChoicePrompt = (
         - If given a list of locations that you are able to work in, select them all. Answer as if you are available to work anywhere worldwide both in-person and remote.
         - If asked about whether you require sponsorship of any kind, refer to the 'requireEmploymentSponsorship' key value pair in ${PromptSubstrings.PERSONAL_DATA} 
         - If asked about whether you have a criminal record, always deny since you've never committed any crimes.
+        - If asked about whether you have gotten a specific kind of degree, answer yes if the 'fieldOfStudy' field in ${PromptSubstrings.PERSONAL_DATA} is even closely related. For example: Question = 'do you have a computer science degree'. If we have a Mathematics degree, answer yes because that is close enough.
 
         ### ${PromptSubstrings.PERSONAL_DATA} ###
         ${JSON.stringify(profileData)}

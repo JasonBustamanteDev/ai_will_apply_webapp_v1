@@ -17,6 +17,7 @@ const supabaseProjectURL = env_config.public.SUPABASE_PROJECT_URL;
 
 const MIN_YEARS = 1;
 const MAX_YEARS = 100;
+const MAX_SKILLS = 40;
 const defaultYearsOfExperience = ref(2);
 
 const generateEmptyRow = () => ({
@@ -90,6 +91,16 @@ const onSubmit = async () => {
 <template>
     <section class="multiple-forms-container">
         <div>
+            <p class="mr-6">
+                These skills will be shown to the AI that answers subjective
+                questions on the job posting.
+            </p>
+            <p class="mr-6">
+                More info about your talents equals more accurate answers!
+                (Maximum of 40)
+            </p>
+        </div>
+        <div>
             <span class="mr-6">Default years of experience</span>
             <UInputNumber
                 v-model="defaultYearsOfExperience"
@@ -132,7 +143,10 @@ const onSubmit = async () => {
                 :data-testid="`skill_trash_icon_${index}`"
             />
             <AddRowButton
-                v-if="index === skills.length - 1 || skills.length === 1"
+                v-if="
+                    (index === skills.length - 1 || skills.length === 1) &&
+                    skills.length < MAX_SKILLS
+                "
                 :isDisabled="false"
                 @addRow="addSkill"
                 :data-testid="`add_skill_button_${index}`"

@@ -72,7 +72,7 @@ const sendMessageToExtension = (
         const devOnlyRequestDescription = `DEVONLY_LINKEDIN_TARGET_JOB_PAGE`;
 
         const messagePayload = formatMessageForExtension(
-            devOnlyRequestDescription,
+            requestDescription,
             {
                 activeProfile: {
                     name: selectedProfileName,
