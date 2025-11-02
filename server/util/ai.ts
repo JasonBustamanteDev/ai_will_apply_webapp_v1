@@ -34,7 +34,7 @@ enum PromptSubstrings {
 
 export const generateTextPrompt = (
     unresolvedTextQuestions: any,
-    sessionData: any
+    profileData: any
 ) => {
     const prompt =  `
         ### ROLE ###
@@ -55,7 +55,7 @@ export const generateTextPrompt = (
         If you are unsure about years of experience, default to using yearsOfExperience in ${PromptSubstrings.PERSONAL_DATA}.
 
         ### ${PromptSubstrings.PERSONAL_DATA} ###
-        ${JSON.stringify(sessionData)}
+        ${JSON.stringify(profileData)}
 
         ### ${PromptSubstrings.QUESTIONS_LIST} ###
         ${JSON.stringify(unresolvedTextQuestions)}
@@ -66,7 +66,7 @@ export const generateTextPrompt = (
 
 export const generateMultipleChoicePrompt = (
     unresolvedMultipleChoiceQuestions: any,
-    sessionData: any
+    profileData: any
 ) => {
     const prompt =  `
         ### ROLE ###
@@ -101,7 +101,7 @@ export const generateMultipleChoicePrompt = (
         - If asked about whether you have a criminal record, always deny since you've never committed any crimes.
 
         ### ${PromptSubstrings.PERSONAL_DATA} ###
-        ${JSON.stringify(sessionData)}
+        ${JSON.stringify(profileData)}
 
         ### ${PromptSubstrings.QUESTIONS_LIST} ###
         ${JSON.stringify(unresolvedMultipleChoiceQuestions)}

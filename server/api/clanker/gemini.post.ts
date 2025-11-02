@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
         const { accessToken } = checkIfUserIsAuthenticated(event);
         const env_config = useRuntimeConfig(event);
         const {
-            sessionData,
+            profileData,
             unresolvedMultipleChoiceQuestions = [],
             unresolvedTextQuestions = [],
         } = await readBody(event);
@@ -25,7 +25,7 @@ export default defineEventHandler(async (event) => {
                 model: googleAI.model(CHOSEN_GEMINI_MODEL, { temperature: 0 }),
                 prompt: generateTextPrompt(
                     unresolvedTextQuestions,
-                    sessionData
+                    profileData
                 ),
             });
 
@@ -43,7 +43,7 @@ export default defineEventHandler(async (event) => {
                 model: googleAI.model(CHOSEN_GEMINI_MODEL, { temperature: 0 }),
                 prompt: generateMultipleChoicePrompt(
                     unresolvedMultipleChoiceQuestions,
-                    sessionData
+                    profileData
                 ),
             });
 
