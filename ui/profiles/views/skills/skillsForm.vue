@@ -96,8 +96,10 @@ const onSubmit = async () => {
                 questions on the job posting.
             </p>
             <p class="mr-6">
-                More info about your talents equals more accurate answers!
-                (Maximum of 40)
+                {{
+                    `More info about your talents equals more accurate answers!
+                (Max of ${MAX_SKILLS})`
+                }}
             </p>
         </div>
         <div>
