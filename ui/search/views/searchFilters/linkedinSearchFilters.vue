@@ -14,9 +14,14 @@ const emit = defineEmits<{
 }>();
 
 //! DEV ONLY: Do not preselect any of these presets. use empty strings instead
-const selectedProfileName = ref("Jason");
-const jobLocation = ref("Toronto");
-const role = ref("Retail associate");
+// const selectedProfileName = ref("Jason");
+// const jobLocation = ref("Toronto");
+// const role = ref("Retail associate");
+
+// Production state values
+const selectedProfileName = ref("");
+const jobLocation = ref("");
+const role = ref("");
 
 const datePosted = ref(LINKEDIN_FILTER_OPTIONS.DATE_POSTED[0]?.value as string);
 const salary = ref(LINKEDIN_FILTER_OPTIONS.SALARY[0]?.value as string);
