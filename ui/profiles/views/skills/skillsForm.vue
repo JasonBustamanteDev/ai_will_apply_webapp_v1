@@ -17,7 +17,7 @@ const supabaseProjectURL = env_config.public.SUPABASE_PROJECT_URL;
 
 const MIN_YEARS = 1;
 const MAX_YEARS = 100;
-const MAX_SKILLS = 40;
+const MAX_SKILLS = 60;
 const defaultYearsOfExperience = ref(2);
 
 const generateEmptyRow = () => ({
