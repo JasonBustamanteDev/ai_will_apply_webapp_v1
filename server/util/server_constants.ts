@@ -1,4 +1,4 @@
-export const MAX_PROFILES = 3;
+export const MAX_PROFILES = 4;
 export const PROFILES_TABLE_NAME = "jobSearchProfiles";
 export const UNANSWERED_QUESTIONS_TABLE_NAME = "unansweredQuestions";
 
