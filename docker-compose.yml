@@ -1,0 +1,29 @@
+services:
+  ai-will-apply-webapp:
+    image: jasonxdev1996/ai_will_apply_webapp:1.0.0
+    container_name: ai-will-apply-webapp
+    ports: 
+      # Match port 4010 in nuxt.config's devServer: { port: 4010 },
+      - 4010:4010
+    environment:
+      # Public
+      - SUPABASE_PROJECT_ID=jgvuigssexmkwtoqfvbt
+      - SUPABASE_PROJECT_URL=https://jgvuigssexmkwtoqfvbt.supabase.co
+      - SUPABASE_PUBLIC_ANON_API_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpndnVpZ3NzZXhta3d0b3FmdmJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDkwODk0MTIsImV4cCI6MjA2NDY2NTQxMn0.bmpRNYTgue3b1fGX6oooJQFZMaLWlNDfo4plcYsQ1HE
+      
+      # TODO: THESE MUST BE CHANGED WHEN YOU DEPLOY THE PROJECT
+      - BASE_URL=http://localhost:4010
+      - CHROME_STORE_URL=https://chromewebstore.google.com/detail/loom-%E2%80%93-screen-recorder-sc/liecbddmkiiihnedobmlmillhodjkdmb
+      - CHROME_EXTENSION_ID=npbhdnhnjljjfbgeamigfhbbpaldjkjb      
+      
+      # Private (in prod you prob don't want this visible)
+      - SUPABASE_DB_PASSWORD=cQsTbgNVLqnSB21F
+      - SUPABASE_JWT_SECRET=jG4xRenSDngiuIZGpKpTr7glSt/6ZA/ExLSZJaC/IUYdqaEYufEyVlLlHeyW/y9wgB+BoN+d3xEUb2zmXKiM9Q==
+      - SUPABASE_SERVICE_ROLE_SECRET=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpndnVpZ3NzZXhta3d0b3FmdmJ0Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0OTA4OTQxMiwiZXhwIjoyMDY0NjY1NDEyfQ.Dnulon4QtU2j295oAttWkJNPTYQAembXcLN9kGFS8K8
+
+      - GOOGLE_OAUTH_CLIENT_ID=337424801017-vtdfrjl2vk7rb466kd8pstjhl129jhcu.apps.googleusercontent.com
+      - GOOGLE_OAUTH_CLIENT_SECRET=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
+
+      - GEMINI_API_KEY=AIzaSyB6U-jls53bUOlYi8zS_zqmtzJLnx0n5Vk
+      - DEEPSEEK_API_KEY=sk-884671b1315d42e78ce0546feaf9f931
+      - CHATGPT_API_KEY=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
