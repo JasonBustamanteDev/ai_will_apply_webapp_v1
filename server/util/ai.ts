@@ -51,9 +51,6 @@ export const generateTextPrompt = (
         Try your absolute hardest to give some sort of real sounding answer.
         If you are absolutely unable to answer, do not explain why - simply return ${NO_ANSWER_INDICATOR}
 
-        ### SUGGESTIONS FOR NICHE QUESTIONS ###
-        If you are unsure about years of experience, default to using yearsOfExperience in ${PromptSubstrings.PERSONAL_DATA}.
-
         ### ${PromptSubstrings.PERSONAL_DATA} ###
         ${JSON.stringify(profileData)}
 

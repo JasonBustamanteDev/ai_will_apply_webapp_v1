@@ -68,8 +68,8 @@ const sendMessageToExtension = (
         const coreFormData = flattenFormData(selectedProfileData);
 
         //! DEV_ONLY: use diff variable
-        const requestDescription = `INITIALIZE_${platform}_JOB_HUNT_SESSION`; // tech_debt: must match extension hardcoded string
-        const devOnlyRequestDescription = `DEVONLY_LINKEDIN_TARGET_JOB_PAGE`;
+        const requestDescription = `${platform}_INITIALIZE_JOB_HUNT_SESSION`; // tech_debt: must match extension hardcoded string
+        const devOnlyRequestDescription = `LINKEDIN_DEVONLY_TARGET_JOB_PAGE`;
 
         const messagePayload = {
             description: requestDescription,
