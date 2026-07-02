@@ -43,6 +43,7 @@ export default defineNuxtConfig({
         GEMINI_API_KEY: process.env.GEMINI_API_KEY,
         DEEPSEEK_API_KEY: process.env.DEEPSEEK_API_KEY,
         CHATGPT_API_KEY: process.env.CHATGPT_API_KEY,
+        CRON_SECRET: process.env.CRON_SECRET,
 
         public: {
             // Public keys (available on both client and server)
